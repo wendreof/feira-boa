@@ -4,6 +4,7 @@ const offerSources = {
   sempre: {
     name: "Sempre Vale",
     branch: "Durval Nicolau",
+    logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
     source: "Folheto oficial · Durval Nicolau",
     sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/12c6dae5-141f-4b0c-8068-67f752874a71-campanha-575-crop-baixa%283%29.pdf",
     from: "2026-10-15",
@@ -12,6 +13,7 @@ const offerSources = {
   bigbom: {
     name: "Big Bom",
     branch: "Vila Zanetti · São João",
+    logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
     source: "Folheto oficial · São João da Boa Vista",
     sourceUrl: "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
     from: "2026-10-13",
@@ -20,6 +22,7 @@ const offerSources = {
   paguemenos: {
     name: "Pague Menos",
     branch: "Loja 33 · Jardim Santo André",
+    logo: "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
     source: "Ofertas online oficiais · Loja 33",
     sourceUrl: "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
     from: "2026-10-15",
@@ -31,6 +34,7 @@ function makeOffer(storeId, name, brand, detail, category, price, previousPrice,
   const store = offerSources[storeId];
   return {
     store: store.name,
+    storeLogo: store.logo,
     branch: store.branch,
     name,
     brand,
@@ -168,3 +172,4 @@ window.FEIRA_OFFERS = [
   makeOffer("paguemenos", "Café tradicional a vácuo", "Caboclo", "500 g", "Mercearia", 19.99, 30.99, "☕", "Preço online · confirme o valor na loja física"),
   makeOffer("paguemenos", "Milho verde em conserva", "Quero", "170 g", "Mercearia", 3.49, 4.69, "🌽", "Preço online · confirme o valor na loja física")
 ];
+

@@ -19,6 +19,11 @@
       <h1>Encontre o que está<br>em promoção perto de você.</h1>
       <p class="subhead">Busque um produto e veja as ofertas dos mercados da cidade, com preço e validade no mesmo lugar.</p>
       <label class="searchbox" for="search-input"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar café, leite, arroz…" autocomplete="off"><kbd>/</kbd></label>
+      <p class="filter-label popular-label">Buscar item popular</p>
+      <div class="popular-items" id="popular-items" aria-label="Busca rápida por itens populares"></div>
+      <p class="filter-label">Escolha uma loja</p>
+      <div class="filters" id="store-filters" aria-label="Filtrar por supermercado"></div>
+      <p class="filter-label">Filtrar por categoria</p>
       <div class="filters" id="filters" aria-label="Filtrar por categoria"></div>
     </section>
 
@@ -28,10 +33,22 @@
       <div class="empty-state" id="empty-state" hidden><span class="empty-icon">⌕</span><strong>Nenhuma oferta encontrada</strong><span>Tente outro nome de produto ou escolha “Todas”.</span></div>
     </section>
 
-    <section class="store-source">
-      <div class="source-logo">SV</div>
-      <div class="source-copy"><span class="source-kicker">LOJA DESTA DEMONSTRAÇÃO</span><strong>Sempre Vale · Durval Nicolau</strong><span>Ofertas válidas de 15 a 18 de outubro de 2026</span></div>
-      <a class="source-button" href="https://www.semprevale.com.br/downloads/ofertas/12c6dae5-141f-4b0c-8068-67f752874a71-campanha-575-crop-baixa%283%29.pdf" target="_blank" rel="noopener">Ver folheto original ↗</a>
+    <section class="source-list" aria-label="Folhetos usados">
+      <div class="store-source">
+        <div class="source-logo">SV</div>
+        <div class="source-copy"><span class="source-kicker">FONTE OFICIAL · SÃO JOÃO DA BOA VISTA</span><strong>Sempre Vale · Durval Nicolau</strong><span>Folheto válido de 15 a 18 de outubro de 2026</span></div>
+        <a class="source-button" href="https://www.semprevale.com.br/downloads/ofertas/12c6dae5-141f-4b0c-8068-67f752874a71-campanha-575-crop-baixa%283%29.pdf" target="_blank" rel="noopener">Ver folheto ↗</a>
+      </div>
+      <div class="store-source">
+        <div class="source-logo bigbom-logo">BB</div>
+        <div class="source-copy"><span class="source-kicker">FONTE OFICIAL · SÃO JOÃO DA BOA VISTA</span><strong>Big Bom · Vila Zanetti</strong><span>Folheto válido de 13 a 15 de outubro de 2026</span></div>
+        <a class="source-button" href="https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf" target="_blank" rel="noopener">Ver folheto ↗</a>
+      </div>
+      <div class="store-source">
+        <div class="source-logo paguemenos-logo">PM</div>
+        <div class="source-copy"><span class="source-kicker">FONTE OFICIAL · LOJA 33 · SÃO JOÃO DA BOA VISTA</span><strong>Supermercados Pague Menos · Jardim Santo André</strong><span>Preços consultados em 15 de outubro de 2026. Valores online podem diferir dos preços da loja física.</span></div>
+        <a class="source-button" href="https://www.superpaguemenos.com.br/jornal-de-ofertas/" target="_blank" rel="noopener">Ver ofertas ↗</a>
+      </div>
     </section>
 
     <section class="channels" aria-label="Canais oficiais da loja">
@@ -43,6 +60,8 @@
   </main>
 
   <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Confira preço, estoque e condições na loja.</span></footer>
+  <script src="offers.js"></script>
+  <script src="source-status.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

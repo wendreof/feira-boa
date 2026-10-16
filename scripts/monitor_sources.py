@@ -7,7 +7,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OFFERS = ROOT / "offers.js"
+OFFERS = ROOT / "offers.ts"
 STATE = ROOT / ".offer-monitor-state.json"
 ALERTS = ROOT / "source-status.js"
 USER_AGENT = "FeiraBoaOfferMonitor/1.0 (official public flyer change detection)"

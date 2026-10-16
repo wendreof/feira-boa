@@ -14,7 +14,7 @@
     "needs_review": false
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
-    "sha256": "7cc7ad55caeb1a47253088f7673ebf81c710ac291b9100ca26ccadefe61006be",
+    "sha256": "cdbd03844740ed831bb02a9b4a2bd8bf49908ecf2226f3890df812a47423e047",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",

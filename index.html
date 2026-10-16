@@ -29,8 +29,9 @@
 
     <section class="results" aria-live="polite">
       <div class="results-heading"><div><h2 id="results-title">Ofertas encontradas</h2><p id="results-subtitle"></p></div><span class="updated" id="updated-label"></span></div>
+      <p class="catalog-note">A busca mostra as ofertas cadastradas aqui. Os folhetos oficiais podem ter outros produtos; abra a fonte da loja para consultar a lista completa.</p>
       <div class="offer-grid" id="offer-grid"></div>
-      <div class="empty-state" id="empty-state" hidden><span class="empty-icon">⌕</span><strong>Nenhuma oferta encontrada</strong><span>Tente outro nome de produto ou escolha “Todas”.</span></div>
+      <div class="empty-state" id="empty-state" hidden><span class="empty-icon">⌕</span><strong>Nenhuma oferta encontrada</strong><span id="empty-help">Tente outro nome de produto ou escolha “Todas”.</span><button class="empty-reset" id="reset-filters" type="button">Limpar busca e filtros</button></div>
     </section>
 
     <section class="source-list" aria-label="Folhetos usados">
@@ -65,3 +66,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+

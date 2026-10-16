@@ -8,4 +8,6 @@
 
 .filter:disabled{opacity:.48;cursor:not-allowed;background:#f3f4f1}.empty-reset{margin-top:9px;border:0;border-radius:8px;padding:9px 13px;background:var(--green);color:#fff;font:700 12px 'DM Sans',sans-serif;cursor:pointer}
 .catalog-note{margin:0 0 18px;color:var(--muted);font-size:12px;line-height:1.5}
+.offer-store{display:flex;align-items:center;gap:7px;min-height:22px}.offer-store-logo{width:30px;height:22px;border-radius:5px;background:#fff;border:1px solid #edf0ec;display:grid;place-items:center;overflow:hidden;color:var(--green);font-size:9px;font-weight:800;flex:0 0 auto}.offer-store-logo img{max-width:100%;max-height:100%;object-fit:contain}.offer-store-logo.bigbom-mark{background:#174d37;padding:3px}.offer-store-logo.logo-fallback{background:#eef4ec}.source-logo{overflow:hidden}.source-logo img{display:block;width:100%;height:100%;padding:4px;object-fit:contain}.source-logo.bigbom-logo{background:#174d37;padding:4px}.source-logo.paguemenos-logo{font-size:12px;text-align:center;line-height:1.05;background:#f3f4f1;color:#2e6b46}
+
 

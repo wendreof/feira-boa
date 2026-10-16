@@ -27,10 +27,19 @@ const offerSources = {
     sourceUrl: "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
     from: "2026-10-15",
     to: "2026-10-15"
+  },
+  spasso: {
+    name: "Spasso Sabores",
+    branch: "Av. Dr. Durval Nicolau, 1572 · São João",
+    logo: "https://spassosabores.com.br/wp-content/uploads/2021/01/logo-site-spasso-sabores-supermercados.png",
+    source: "Folheto oficial · Loja São João",
+    sourceUrl: "https://spassosabores.com.br/ofertas-sao-joao/",
+    from: "2026-10-13",
+    to: "2026-10-17"
   }
 };
 
-function makeOffer(storeId, name, brand, detail, category, price, previousPrice, icon, note = "", special = false) {
+function makeOffer(storeId, name, brand, detail, category, price, previousPrice, icon, note = "", special = false, validity = null) {
   const store = offerSources[storeId];
   return {
     store: store.name,
@@ -45,8 +54,8 @@ function makeOffer(storeId, name, brand, detail, category, price, previousPrice,
     icon,
     tone: "#edf4e9",
     note,
-    validFrom: special ? "2026-10-16" : store.from,
-    validTo: special ? "2026-10-17" : store.to,
+    validFrom: validity?.from || (special ? "2026-10-16" : store.from),
+    validTo: validity?.to || (special ? "2026-10-17" : store.to),
     source: store.source,
     sourceUrl: store.sourceUrl
   };
@@ -170,6 +179,56 @@ window.FEIRA_OFFERS = [
   makeOffer("paguemenos", "Sabão líquido Omo Ultra Power", "Omo", "1,8 L", "Limpeza", 27.99, 38.89, "🧴", "Preço online · confirme o valor na loja física"),
   makeOffer("paguemenos", "Açúcar refinado", "União", "1 kg", "Mercearia", 3.99, 4.49, "🧂", "Preço online · confirme o valor na loja física"),
   makeOffer("paguemenos", "Café tradicional a vácuo", "Caboclo", "500 g", "Mercearia", 19.99, 30.99, "☕", "Preço online · confirme o valor na loja física"),
-  makeOffer("paguemenos", "Milho verde em conserva", "Quero", "170 g", "Mercearia", 3.49, 4.69, "🌽", "Preço online · confirme o valor na loja física")
+  makeOffer("paguemenos", "Milho verde em conserva", "Quero", "170 g", "Mercearia", 3.49, 4.69, "🌽", "Preço online · confirme o valor na loja física"),
+  // Spasso Sabores · official São João flyer, valid 13–17 October 2026.
+  makeOffer("spasso", "Cerveja Amstel Lager", "Amstel", "Lata · 350 ml", "Bebidas", 3.19, 3.59, "🍺", "Preço Club Plus"),
+  makeOffer("spasso", "Cerveja Michelob Ultra", "Michelob", "Lata · 350 ml", "Bebidas", 4.89, null, "🍺"),
+  makeOffer("spasso", "Cerveja Corona Extra", "Corona", "Long neck · 330 ml", "Bebidas", 6.89, null, "🍺"),
+  makeOffer("spasso", "Refrigerante Guaraná Antarctica", "Guaraná Antarctica", "Tradicional ou zero · PET 2 L", "Bebidas", 7.99, null, "🥤"),
+  makeOffer("spasso", "Lasanha", "Seara", "Sabores · 600 g", "Congelados", 14.90, 16.90, "🍝", "Preço Club Plus"),
+  makeOffer("spasso", "Coxa com sobrecoxa de frango", "", "A granel · kg", "Carnes", 8.99, null, "🍗"),
+  makeOffer("spasso", "Linguiça toscana na brasa", "Perdigão", "A granel · kg", "Carnes", 18.90, null, "🌭"),
+  makeOffer("spasso", "Contrafilé bovino", "Frigon", "Porcionado · kg", "Carnes", 49.90, null, "🥩"),
+  makeOffer("spasso", "Batata palito congelada", "Sadia", "Pacote 2 kg", "Congelados", 24.90, 29.90, "🍟", "Preço Club Plus"),
+  makeOffer("spasso", "Feijão carioca", "Grão de Campo", "Pacote · 1 kg", "Mercearia", 6.99, 8.98, "🫘", "Preço Club Plus"),
+  makeOffer("spasso", "Arroz tipo 1", "Prato Fino", "Pacote · 5 kg", "Mercearia", 25.90, 29.98, "🍚", "Preço Club Plus"),
+  makeOffer("spasso", "Leite UHT zero lactose", "Itambé", "Semidesnatado · 1 L", "Laticínios", 5.89, 6.99, "🥛", "Preço Club Plus"),
+  makeOffer("spasso", "Maionese tradicional", "Hellmann's", "500 g", "Mercearia", 8.99, 10.99, "🥫", "Preço Club Plus"),
+  makeOffer("spasso", "Achocolatado em pó", "Nescau", "Sachê · 550 g", "Mercearia", 12.90, 14.99, "🥛", "Preço Club Plus"),
+  makeOffer("spasso", "Café tradicional ou extraforte", "Casa de Mãe", "Pacote · 500 g", "Mercearia", 17.90, 21.90, "☕", "Preço Club Plus"),
+  makeOffer("spasso", "Lava-roupas líquido", "Omo", "3 L", "Limpeza", 39.98, 44.99, "🧺", "Preço Club Plus"),
+  makeOffer("spasso", "Lava-roupas em pó", "Tixan", "Caixa · 2,2 kg", "Limpeza", 21.98, 23.99, "🧺", "Preço Club Plus"),
+  makeOffer("spasso", "Azeite extravirgem", "Gallo", "Vidro · 500 ml", "Mercearia", 28.90, 31.90, "🫒", "Preço Club Plus"),
+  makeOffer("spasso", "Ketchup ou mostarda", "Madero", "Squeeze · 320/350 g", "Mercearia", 13.90, 16.90, "🥫", "Preço Club Plus"),
+  makeOffer("spasso", "Leite UHT", "Itambé", "Integral ou semidesnatado · 1 L", "Laticínios", 4.79, 5.49, "🥛", "Preço Club Plus"),
+  makeOffer("spasso", "Azeitonas verdes fatiadas", "Diza", "Sachê · 100 g", "Mercearia", 5.99, 7.99, "🫒", "Preço Club Plus"),
+  makeOffer("spasso", "Macarrão com ovos", "Renata", "500 g · exceto ninho e gravata", "Mercearia", 3.99, 5.39, "🍝", "Preço Club Plus"),
+  makeOffer("spasso", "Queijo parmesão ralado", "Vigor", "Pacote · 50 g", "Laticínios", 4.99, 6.99, "🧀", "Preço Club Plus"),
+  makeOffer("spasso", "Seleta de legumes", "Fugini", "Sachê · 170 g", "Mercearia", 5.99, 7.99, "🥕", "Preço Club Plus"),
+  makeOffer("spasso", "Farinha de trigo", "Dona Benta", "Pacote · 1 kg", "Mercearia", 3.99, 5.99, "🌾", "Preço Club Plus"),
+  makeOffer("spasso", "Massa para lasanha", "Petybon", "200 g", "Mercearia", 3.99, 4.49, "🍝", "Preço Club Plus"),
+  makeOffer("spasso", "Leite em pó", "Aurora", "Integral ou instantâneo · 400 g", "Laticínios", 15.90, 17.90, "🥛", "Preço Club Plus"),
+  makeOffer("spasso", "Biscoito Marilan", "Marilan", "Sabores · pacote 300 g", "Mercearia", 5.69, 6.79, "🍪", "Preço Club Plus"),
+  makeOffer("spasso", "Paçoquinha", "Mindy", "Pote · 1,1 kg", "Mercearia", 19.90, 27.49, "🥜", "Preço Club Plus"),
+  makeOffer("spasso", "Chocolate Bis", "Lacta", "100,8 g", "Mercearia", 6.49, 7.99, "🍫", "Preço Club Plus"),
+  makeOffer("spasso", "Iogurte para levar", "Danoninho", "Sabores · 70 g", "Laticínios", 3.79, null, "🥣"),
+  makeOffer("spasso", "Iogurte", "Batavo", "Sabores · 1,15 kg", "Laticínios", 14.90, 16.90, "🥣", "Preço Club Plus"),
+  makeOffer("spasso", "Sorvete", "Kibon", "Cremosíssimo · 1,5 L · exceto Duo", "Congelados", 23.90, 34.90, "🍨", "Preço Club Plus"),
+  makeOffer("spasso", "Suco de laranja", "Xandó", "Pasteurizado · 900 ml", "Bebidas", 11.99, 14.49, "🧃", "Preço Club Plus"),
+  makeOffer("spasso", "Requeijão tradicional", "Batavo", "200 g", "Laticínios", 8.99, 10.49, "🧀", "Preço Club Plus"),
+  makeOffer("spasso", "Manteiga extra", "Batavo", "Tablete · 200 g", "Laticínios", 10.90, 12.99, "🧈", "Preço Club Plus"),
+  makeOffer("spasso", "Queijo parmesão", "Quatá", "A cada 100 g", "Frios", 9.99, 12.99, "🧀", "Preço Club Plus"),
+  makeOffer("spasso", "Ravioli ou capeletti", "Mezzani", "Sabores · 400 g", "Congelados", 13.99, 15.79, "🍝", "Preço Club Plus"),
+  makeOffer("spasso", "Frango inteiro", "Holambra", "A granel · kg", "Carnes", 8.99, null, "🍗", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Sobrecoxa de frango", "Sadia", "Assa Fácil · pacote 800 g", "Carnes", 12.98, 15.98, "🍗", "Preço Club Plus · oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Linguiça toscana", "Frimesa", "Pacote · 600 g", "Carnes", 13.98, 18.90, "🌭", "Preço Club Plus · oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Asa de frango", "", "A granel · kg", "Carnes", 15.90, null, "🍗", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Fígado bovino", "", "A granel · kg", "Carnes", 16.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Filezinho de frango", "Sadia", "Pacote · 1 kg", "Carnes", 21.90, 24.90, "🍗", "Preço Club Plus · oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Filé de tilápia", "Sadia", "Sem pele · 400 g", "Peixes", 21.90, 27.49, "🐟", "Preço Club Plus · oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Paleta bovina", "", "A granel · kg", "Carnes", 38.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Ponta de alcatra bovina", "", "A granel · kg", "Carnes", 42.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
+  makeOffer("spasso", "Contrafilé bovino", "Viva os Sabores", "Porcionado · kg", "Carnes", 59.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"})
 ];
+
 

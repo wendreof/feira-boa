@@ -18,14 +18,19 @@
     <section class="intro">
       <p class="eyebrow"><span class="pulse"></span> Ofertas locais, atualizadas por loja</p>
       <h1>Encontre o que está<br>em promoção perto de você.</h1>
-      <p class="subhead">Busque um produto e veja as ofertas dos mercados da cidade, com preço e validade no mesmo lugar.</p>
+      <p class="subhead">Busque produtos, filtre por tipo e faixa de preço e compare as ofertas dos mercados da cidade.</p>
       <label class="searchbox" for="search-input"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar café, leite, arroz…" autocomplete="off"><kbd>/</kbd></label>
       <p class="filter-label popular-label">Buscar item popular</p>
       <div class="popular-items" id="popular-items" aria-label="Busca rápida por itens populares"></div>
       <p class="filter-label">Escolha uma loja</p>
       <div class="filters" id="store-filters" aria-label="Filtrar por supermercado"></div>
-      <p class="filter-label">Filtrar por categoria</p>
-      <div class="filters" id="filters" aria-label="Filtrar por categoria"></div>
+      <p class="filter-label">Filtrar por setor</p>
+      <div class="filters" id="filters" aria-label="Filtrar por setor"></div>
+      <div class="advanced-filters">
+        <label class="control-label" for="product-type">Tipo de produto<select id="product-type"><option value="">Todos os tipos</option></select></label>
+        <fieldset class="price-filter"><legend>Faixa de preço</legend><label for="price-min">De R$</label><input id="price-min" type="number" min="0" step="0.01" inputmode="decimal" placeholder="mínimo" aria-label="Preço mínimo"><label for="price-max">até R$</label><input id="price-max" type="number" min="0" step="0.01" inputmode="decimal" placeholder="máximo" aria-label="Preço máximo"></fieldset>
+        <label class="control-label" for="sort-order">Ordenar<select id="sort-order"><option value="recommended">Recomendadas</option><option value="price-low">Menor preço</option><option value="price-high">Maior preço</option><option value="discount">Maior desconto</option></select></label>
+      </div>
     </section>
 
     <section class="results" aria-live="polite">

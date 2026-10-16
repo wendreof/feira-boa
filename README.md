@@ -5,7 +5,8 @@ Local supermarket offers for São João da Boa Vista.
 ## Current prototype
 
 - Search offers by product or brand.
-- Filter results by store or category.
+- Filter results by store, department, and product type.
+- Set a minimum and maximum price, then sort by price or discount.
 - Show the current price, previous price when printed, offer conditions, store, branch, and validity dates.
 - Use product illustrations in the cards instead of embedding a flyer as the main experience.
 - Link every offer back to its source flyer.
@@ -15,13 +16,13 @@ The current data file contains a transcription of both pages of the Sempre Vale 
 
 ## Run locally
 
-Open `index.html` in a browser. The prototype uses plain HTML, CSS, and JavaScript and has no package installation step.
+The app uses TypeScript for offer data and browser interactions. Run `npm ci` and `npm run build` to compile `app.ts` and `offers.ts` into the JavaScript files used by the static site. The compiled JavaScript is committed so the existing static hosting setup continues to serve the site from the repository root.
 
 ## Scheduled source monitoring and production
 
-The workflow in `.github/workflows/monitor-offers.yml` runs daily at 09:17 São Paulo time and can also be started manually from the GitHub Actions tab. It fetches the official flyer URLs already listed in `offers.js`, saves their fingerprints in `.offer-monitor-state.json`, and commits a visible alert when a source changes. If a source changes, the notice stays on the site until its offers are verified and the corresponding `needs_review` flag is cleared. The workflow never guesses prices. GitHub says scheduled runs may be delayed during high load, so this is a daily check rather than an exact-time guarantee.
+The workflow in `.github/workflows/monitor-offers.yml` runs daily at 09:17 São Paulo time and can also be started manually from the GitHub Actions tab. It fetches the official flyer URLs listed in `offers.ts`, saves their fingerprints in `.offer-monitor-state.json`, and commits a visible alert when a source changes. If a source changes, the notice stays on the site until its offers are verified and the corresponding `needs_review` flag is cleared. The workflow never guesses prices. GitHub says scheduled runs may be delayed during high load, so this is a daily check rather than an exact-time guarantee.
 
-Because the source repository is private, GitHub Pages on the free plan cannot host the public site. The free deployment path is Cloudflare Pages: create a Pages project, connect the private `wendreof/feira-boa` GitHub repository, set the production branch to `main`, set the build command to `exit 0`, and set the output directory to `.` (repository root). Cloudflare will redeploy on pushes, including the monitor's changed-source alert commit. Cloudflare's Git integration supports private repositories. The initial monitor checks known flyer links; discovering new campaigns from store pages and safely extracting prices are follow-up automation steps.
+Because the source repository is private, GitHub Pages on the free plan cannot host the public site. Cloudflare Pages builds with `npm run build` and publishes the `dist` directory. Cloudflare redeploys on pushes, including the monitor's changed-source alert commit. The initial monitor checks known flyer links; discovering new campaigns from store pages and safely extracting prices are follow-up automation steps.
 
 ## Data source
 

@@ -8,14 +8,17 @@ const popularItems = document.querySelector("#popular-items");
 const input = document.querySelector("#search-input");
 const emptyState = document.querySelector("#empty-state");
 const resultsSubtitle = document.querySelector("#results-subtitle");
+const emptyHelp = document.querySelector("#empty-help");
+const resetButton = document.querySelector("#reset-filters");
 let activeCategory = "Todas";
 let activeStore = "Todas as lojas";
+const searchEquivalents = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
 const commonItems = [
   {label:"Café", icon:"☕", query:"café"},
   {label:"Leite", icon:"🥛", query:"leite"},
   {label:"Arroz", icon:"🍚", query:"arroz"},
   {label:"Frango", icon:"🍗", query:"frango"},
-  {label:"Carne", icon:"🥩", query:"bovino"},
+  {label:"Carne", icon:"🥩", query:"carne"},
   {label:"Tomate", icon:"🍅", query:"tomate"},
   {label:"Cerveja", icon:"🍺", query:"cerveja"},
   {label:"Sabão", icon:"🧺", query:"sabão"},
@@ -32,18 +35,51 @@ function dateLabel(value) {
     .format(new Date(`${value}T12:00:00`)).replace(" de ", " ").replace(".", "");
 }
 
+function normalizeSearch(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("pt-BR")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
+}
+
+function todayInSaoPaulo() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit"
+  }).formatToParts(new Date());
+  const part = Object.fromEntries(parts.map(({type, value}) => [type, value]));
+  return `${part.year}-${part.month}-${part.day}`;
+}
+
 function isActive(offer) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const from = new Date(`${offer.validFrom}T00:00:00`);
-  const to = new Date(`${offer.validTo}T23:59:59`);
-  return today >= from && today <= to;
+  const today = todayInSaoPaulo();
+  return today >= offer.validFrom && today <= offer.validTo;
+}
+
+function matchesSearch(offer, query) {
+  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
+  if (!terms.length) return true;
+  const searchable = normalizeSearch([
+    offer.name, offer.brand, offer.detail, offer.category, offer.store,
+    offer.branch, offer.note
+  ].join(" "));
+  const words = searchable.split(" ");
+  return terms.every((term) => {
+    const variants = [term, ...(searchEquivalents[term] || [])];
+    return variants.some((variant) => searchable.includes(variant) || words.some((word) => word.startsWith(variant)));
+  });
 }
 
 function renderStoreFilters() {
-  storeFilters.innerHTML = storeNames.map((store) =>
-    `<button class="filter ${store === activeStore ? "active" : ""}" type="button" data-store="${store}">${store}</button>`
-  ).join("");
+  storeFilters.innerHTML = storeNames.map((store) => {
+    const count = store === "Todas as lojas"
+      ? offers.filter(isActive).length
+      : offers.filter((offer) => offer.store === store && isActive(offer)).length;
+    const disabled = store !== "Todas as lojas" && count === 0;
+    const label = `${store} · ${count}`;
+    return `<button class="filter ${store === activeStore ? "active" : ""}" type="button" data-store="${store}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${label}</button>`;
+  }).join("");
 }
 
 function renderPopularItems() {
@@ -53,17 +89,20 @@ function renderPopularItems() {
 }
 
 function renderFilters() {
-  filters.innerHTML = categories.map((category) =>
-    `<button class="filter ${category === activeCategory ? "active" : ""}" type="button" data-category="${category}">${category}</button>`
-  ).join("");
+  filters.innerHTML = categories.map((category) => {
+    const count = category === "Todas"
+      ? offers.filter(isActive).length
+      : offers.filter((offer) => offer.category === category && isActive(offer)).length;
+    const disabled = category !== "Todas" && count === 0;
+    return `<button class="filter ${category === activeCategory ? "active" : ""}" type="button" data-category="${category}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${category} · ${count}</button>`;
+  }).join("");
 }
 
 function renderOffers() {
-  const query = input.value.trim().toLocaleLowerCase("pt-BR");
+  const query = input.value;
   const matching = offers.filter((offer) => {
-    const searchable = `${offer.name} ${offer.brand} ${offer.detail} ${offer.category} ${offer.store} ${offer.branch}`.toLocaleLowerCase("pt-BR");
     return isActive(offer) && (activeStore === "Todas as lojas" || offer.store === activeStore) &&
-      (activeCategory === "Todas" || offer.category === activeCategory) && (!query || searchable.includes(query));
+      (activeCategory === "Todas" || offer.category === activeCategory) && matchesSearch(offer, query);
   });
   grid.innerHTML = matching.map((offer) => `
     <article class="offer-card">
@@ -76,7 +115,10 @@ function renderOffers() {
     </article>`).join("");
   emptyState.hidden = matching.length > 0;
   const storeLabel = activeStore === "Todas as lojas" ? "todas as lojas" : activeStore;
-  resultsSubtitle.textContent = `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}`;
+  resultsSubtitle.textContent = `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeCategory === "Todas" ? "" : ` · ${activeCategory}`}`;
+  if (emptyHelp) emptyHelp.textContent = offers.some(isActive)
+    ? "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros."
+    : "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
 }
 
 storeFilters.addEventListener("click", (event) => {
@@ -101,6 +143,15 @@ filters.addEventListener("click", (event) => {
   renderOffers();
 });
 input.addEventListener("input", renderOffers);
+if (resetButton) resetButton.addEventListener("click", () => {
+  activeStore = "Todas as lojas";
+  activeCategory = "Todas";
+  input.value = "";
+  renderStoreFilters();
+  renderFilters();
+  renderOffers();
+  input.focus();
+});
 document.addEventListener("keydown", (event) => {
   if (event.key === "/" && document.activeElement !== input) {
     event.preventDefault();
@@ -116,3 +167,4 @@ renderStoreFilters();
 renderPopularItems();
 renderFilters();
 renderOffers();
+

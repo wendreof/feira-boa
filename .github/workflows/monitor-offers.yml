@@ -1,6 +1,8 @@
 name: Monitor official offer sources
 
 on:
+  push:
+    branches: [main]
   schedule:
     # 12:17 UTC = 09:17 in São Paulo; avoid the top of the hour.
     - cron: "17 12 * * *"
@@ -8,19 +10,14 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: feira-boa-pages
   cancel-in-progress: true
 
 jobs:
-  monitor-and-publish:
+  monitor-official-sources:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -50,17 +47,3 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Configure GitHub Pages
-        if: steps.changes.outputs.changed == 'true'
-        uses: actions/configure-pages@v5
-
-      - name: Upload site
-        if: steps.changes.outputs.changed == 'true'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Publish site
-        if: steps.changes.outputs.changed == 'true'
-        id: deployment
-        uses: actions/deploy-pages@v4

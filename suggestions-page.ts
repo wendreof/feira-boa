@@ -10,31 +10,36 @@ const honeypot = document.querySelector<HTMLInputElement>("#suggestion-website")
 const submitButton = document.querySelector<HTMLButtonElement>("#suggestion-submit")!;
 const status = document.querySelector<HTMLParagraphElement>("#suggestion-status")!;
 
+function setSuggestionStatus(message: string, state: "success" | "error" | "pending"): void {
+  status.textContent = message;
+  status.dataset.state = state;
+}
+
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
 
   if (honeypot.value) {
-    status.textContent = "Obrigado pela sua sugestão!";
+    setSuggestionStatus("Obrigado pela sua sugestão!", "success");
     form.reset();
     return;
   }
 
   const trimmedMessage = message.value.trim();
   if (trimmedMessage.length < 10 || trimmedMessage.length > 2000) {
-    status.textContent = "Escreva uma mensagem entre 10 e 2.000 caracteres.";
+    setSuggestionStatus("Escreva uma mensagem entre 10 e 2.000 caracteres.", "error");
     message.focus();
     return;
   }
 
   submitButton.disabled = true;
-  status.textContent = "Enviando sua sugestão…";
+  setSuggestionStatus("Enviando sua sugestão…", "pending");
 
   try {
     await submitSuggestion(category.value as SuggestionCategory, trimmedMessage);
     form.reset();
-    status.textContent = "Sugestão enviada. Obrigado por ajudar a melhorar a Feira Boa!";
+    setSuggestionStatus("Sugestão enviada. Obrigado por ajudar a melhorar a Feira Boa!", "success");
   } catch (error) {
-    status.textContent = "Não foi possível enviar agora. Tente novamente em alguns instantes.";
+    setSuggestionStatus("Não foi possível enviar agora. Tente novamente em alguns instantes.", "error");
     console.error("Suggestion submission failed", error);
   } finally {
     submitButton.disabled = false;

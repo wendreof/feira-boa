@@ -40,10 +40,14 @@ const accountAccess = document.querySelector<HTMLAnchorElement>("#account-access
 const accountPanel = document.querySelector<HTMLDivElement>("#account-panel")!;
 const navAccountLink = document.querySelector<HTMLAnchorElement>("#nav-account")!;
 const navAccountLabel = navAccountLink.querySelector<HTMLElement>("[data-account-label]")!;
+const mobileNavAccountLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-account")!;
+const mobileNavAccountLabel = mobileNavAccountLink.querySelector<HTMLElement>("[data-mobile-account-label]")!;
 const accountDescription = document.querySelector<HTMLSpanElement>("#account-description")!;
 const accountStatus = document.querySelector<HTMLParagraphElement>("#account-status")!;
 const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
 const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
+const mobileNavOffersLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-offers")!;
+const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
 const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
 let activeDepartment = "Todos os setores";
 let activeStore = "Todas as lojas";
@@ -58,7 +62,12 @@ let pendingTheme: ThemePreference | null = null;
 let reactionCounts = new Map<string, OfferReactionCounts>();
 let userReactions = new Map<string, OfferReaction>();
 let sharedOfferId = new URLSearchParams(window.location.search).get("offer");
-if (favoriteOnly) navFavoritesLink.setAttribute("aria-current", "page");
+if (favoriteOnly) {
+  navFavoritesLink.setAttribute("aria-current", "page");
+  mobileNavFavoritesLink.setAttribute("aria-current", "page");
+} else {
+  mobileNavOffersLink.setAttribute("aria-current", "page");
+}
 if (sharedOfferId && !offers.some((offer) => offer.id === sharedOfferId)) sharedOfferId = null;
 
 function readGuestFavorites(): Set<string> {
@@ -106,6 +115,9 @@ function updateAccountControls(): void {
   navAccountLabel.textContent = signedIn ? "Minha conta" : "Entrar";
   navAccountLink.setAttribute("aria-label", signedIn ? "Minha conta" : "Entrar");
   navAccountLink.setAttribute("href", signedIn ? "account.html" : "login.html");
+  mobileNavAccountLabel.textContent = signedIn ? "Minha conta" : "Entrar";
+  mobileNavAccountLink.setAttribute("aria-label", signedIn ? "Minha conta" : "Entrar");
+  mobileNavAccountLink.setAttribute("href", signedIn ? "account.html" : "login.html");
   accountDescription.textContent = signedIn
     ? "Seus favoritos já estão sincronizados com a sua conta."
     : "Entre ou crie uma conta grátis para sincronizar seus favoritos.";

@@ -20,18 +20,18 @@ const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
 const signOutButton = document.querySelector<HTMLButtonElement>("#sign-out")!;
 const deleteAccountButton = document.querySelector<HTMLButtonElement>("#delete-account")!;
-const favoritesForm = document.querySelector<HTMLFormElement>("#favorite-preferences")!;
-const alertForm = document.querySelector<HTMLFormElement>("#alert-rule-form")!;
-const favoriteStores = document.querySelector<HTMLFieldSetElement>("#favorite-stores")!;
-const favoriteProductTypes = document.querySelector<HTMLFieldSetElement>("#favorite-product-types")!;
-const alertStore = document.querySelector<HTMLSelectElement>("#alert-store")!;
-const alertProduct = document.querySelector<HTMLSelectElement>("#alert-product")!;
-const targetPrice = document.querySelector<HTMLInputElement>("#target-price")!;
-const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules")!;
-const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused")!;
-const pushStatus = document.querySelector<HTMLElement>("#push-status")!;
-const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push")!;
-const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push")!;
+const favoritesForm = document.querySelector<HTMLFormElement>("#favorite-preferences");
+const alertForm = document.querySelector<HTMLFormElement>("#alert-rule-form");
+const favoriteStores = document.querySelector<HTMLFieldSetElement>("#favorite-stores");
+const favoriteProductTypes = document.querySelector<HTMLFieldSetElement>("#favorite-product-types");
+const alertStore = document.querySelector<HTMLSelectElement>("#alert-store");
+const alertProduct = document.querySelector<HTMLSelectElement>("#alert-product");
+const targetPrice = document.querySelector<HTMLInputElement>("#target-price");
+const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules");
+const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused");
+const pushStatus = document.querySelector<HTMLElement>("#push-status");
+const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push");
+const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push");
 
 let userId = "";
 let preferences: ProfilePreferences;
@@ -64,6 +64,7 @@ function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
 }
 
 function updatePushControls(isEnabled: boolean, enabledElsewhere = false): void {
+  if (!pushStatus || !enablePushButton || !disablePushButton) return;
   pushStatus.textContent = isEnabled ? "Ativado neste dispositivo" : enabledElsewhere ? "Ativado em outro dispositivo" : "Ainda não ativado";
   enablePushButton.hidden = isEnabled;
   disablePushButton.hidden = !isEnabled;
@@ -85,7 +86,8 @@ function makeOption(label: string, value: string): HTMLOptionElement {
   return option;
 }
 
-function renderCheckboxes(container: HTMLFieldSetElement, values: string[], selected: string[]): void {
+function renderCheckboxes(container: HTMLFieldSetElement | null, values: string[], selected: string[]): void {
+  if (!container) return;
   container.replaceChildren();
   for (const value of values) {
     const label = document.createElement("label");
@@ -101,11 +103,12 @@ function renderCheckboxes(container: HTMLFieldSetElement, values: string[], sele
   }
 }
 
-function checkedValues(container: HTMLFieldSetElement): string[] {
-  return Array.from(container.querySelectorAll<HTMLInputElement>("input:checked"), (input) => input.value);
+function checkedValues(container: HTMLFieldSetElement | null): string[] {
+  return container ? Array.from(container.querySelectorAll<HTMLInputElement>("input:checked"), (input) => input.value) : [];
 }
 
 function renderRules(): void {
+  if (!alertRulesList) return;
   alertRulesList.replaceChildren();
   for (const rule of rules) {
     const item = document.createElement("li");
@@ -130,6 +133,7 @@ function renderRules(): void {
 }
 
 async function refreshRules(): Promise<void> {
+  if (!alertRulesList) return;
   const settings = await loadAccountSettings(userId);
   rules = settings.alertRules;
   renderRules();
@@ -160,7 +164,7 @@ deleteAccountButton.addEventListener("click", async () => {
   }
 });
 
-favoritesForm.addEventListener("submit", async (event) => {
+if (favoritesForm && favoriteStores && favoriteProductTypes) favoritesForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const button = favoritesForm.querySelector<HTMLButtonElement>("button[type='submit']")!;
   button.disabled = true;
@@ -177,7 +181,7 @@ favoritesForm.addEventListener("submit", async (event) => {
   }
 });
 
-alertForm.addEventListener("submit", async (event) => {
+if (alertForm && alertProduct && alertStore && targetPrice) alertForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const productType = alertProduct.value;
   const price = Number(targetPrice.value);
@@ -202,7 +206,7 @@ alertForm.addEventListener("submit", async (event) => {
   }
 });
 
-alertRulesList.addEventListener("click", async (event) => {
+alertRulesList?.addEventListener("click", async (event) => {
   const button = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-rule-id]");
   const ruleId = button?.dataset.ruleId;
   if (!ruleId) return;
@@ -218,7 +222,7 @@ alertRulesList.addEventListener("click", async (event) => {
   }
 });
 
-notificationsPaused.addEventListener("change", async () => {
+notificationsPaused?.addEventListener("change", async () => {
   notificationsPaused.disabled = true;
   try {
     await setNotificationsPaused(userId, notificationsPaused.checked);
@@ -231,7 +235,7 @@ notificationsPaused.addEventListener("change", async () => {
   }
 });
 
-enablePushButton.addEventListener("click", async () => {
+enablePushButton?.addEventListener("click", async () => {
   if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
     setStatus("Este navegador não oferece suporte a notificações push.");
     return;
@@ -262,7 +266,7 @@ enablePushButton.addEventListener("click", async () => {
   }
 });
 
-disablePushButton.addEventListener("click", async () => {
+disablePushButton?.addEventListener("click", async () => {
   disablePushButton.disabled = true;
   setStatus("Desativando notificações neste dispositivo…");
   try {
@@ -302,7 +306,7 @@ void getCurrentUser()
     applyTheme(preferences.theme);
     preferencesLoaded = true;
     rules = settings.alertRules;
-    notificationsPaused.checked = settings.notificationsPaused;
+    if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
     const existingRegistration = await navigator.serviceWorker?.getRegistration();
     const currentSubscription = await existingRegistration?.pushManager.getSubscription();
     updatePushControls(Boolean(currentSubscription), settings.pushEnabled);
@@ -312,8 +316,8 @@ void getCurrentUser()
     renderCheckboxes(favoriteStores, stores, preferences.favoriteStores);
     renderCheckboxes(favoriteProductTypes, productTypes, preferences.favoriteProductTypes);
     if (pendingTheme) await saveThemePreference(pendingTheme);
-    alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
-    alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
+    if (alertStore) alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
+    if (alertProduct) alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
     renderRules();
     setStatus("Suas preferências estão sincronizadas.");
   })

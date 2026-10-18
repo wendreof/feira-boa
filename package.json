@@ -1,10 +1,19 @@
 {
   "name": "feira-boa",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && node scripts/build-offer-feed.mjs && esbuild app.ts --bundle --minify --outfile=app.js --target=es2020 && esbuild login-page.ts --bundle --minify --outfile=login.js --target=es2020 && esbuild account-page.ts --bundle --minify --outfile=account.js --target=es2020 && esbuild suggestions-page.ts --bundle --minify --outfile=suggestions.js --target=es2020",
+    "test": "node --test",
+    "check:site": "node scripts/check-site-health.mjs",
+    "send:price-alerts": "node scripts/send-price-alerts.mjs"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "web-push": "^3.6.7"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
   }
 }

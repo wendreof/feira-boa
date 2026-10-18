@@ -1,6 +1,6 @@
 # Feira Boa backend, accounts, and alerts plan
 
-**Status:** implementation plan  
+**Status:** in progress — Phases 1–4 implemented in code; Phase 5 has had a local code review, while live verification and production secret setup remain.
 **Goal:** let people save their preferences, follow products and stores, and receive relevant offer alerts while keeping browsing open to everyone and starting on free tiers.
 
 ## Recommended stack
@@ -16,13 +16,13 @@ The current app has no server-side backend. The offers are static data in `offer
 
 1. Anyone can browse without signing in.
 2. Guests can save a shopping list and favorites in the browser.
-3. Sign-in is optional and enables syncing preferences across devices. Prefer Google sign-in or email sign-in; avoid phone/SMS verification and precise location collection to keep setup and costs down.
-4. Users choose stores, product types, and a target price; they can pause alerts, remove individual rules, turn push off, and delete their account.
+3. Sign-in is optional and enables syncing preferences across devices. Use email and password for the initial release; add other sign-in providers only after a separate setup.
+4. Users choose stores, product types, a light or dark theme, and a target price; they can pause alerts, remove individual rules, turn push off, and delete their account.
 5. Ask for notification permission only after the user turns alerts on. Explain what alerts will be sent before the browser permission prompt.
 
 ## Data model
 
-- `profiles`: `user_id` (Auth user ID), `created_at`, notification/time-zone preferences.
+- `profiles`: `user_id` (Auth user ID), `created_at`, notification/time-zone preferences, and saved appearance in the `preferences` JSON object.
 - `alert_rules`: `id`, `user_id`, optional store, product or product type, `target_price`, enabled/paused state, and creation time.
 - `push_subscriptions`: `id`, `user_id`, endpoint, browser encryption keys, created/last-used timestamps.
 - `notification_log`: a unique alert/offer key, `user_id`, sent time, and result. Use this to avoid repeat alerts and diagnose failed deliveries.
@@ -39,17 +39,23 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 2 — Add optional accounts and synced preferences
 
+**Code status:** implemented on `develop`. All three Supabase migrations are applied to production; the account-deletion function still needs deployment, as described in the README.
+
 - Create a Supabase project, Auth settings, database migrations, and RLS policies.
 - Add sign-in, sign-out, and account deletion. Keep guest browsing and local favorites working if login is unavailable.
 - Add the preferences page: favorite stores/products, target price, notification pause switch, and current push status.
 
 ### Phase 3 — Add browser push
 
+**Code status:** service worker and user-initiated subscribe/unsubscribe are implemented. Subscriptions are stored per account and the scheduled sender is in place; production secrets and a live delivery check remain.
+
 - Add a service worker and a user-initiated “Enable alerts” control.
 - On approval, save the browser push subscription to `push_subscriptions`; on disable, unsubscribe and remove it from the database.
 - Store the VAPID public key in frontend configuration and the private key only in GitHub Secrets. Treat push endpoints and encryption keys as private user data.
 
 ### Phase 4 — Match offers and send alerts
+
+**Code status:** the daily matcher checks active dates, verified source state, target price, store/product-type criteria, user pause state, and sent-alert history. It removes expired subscriptions and reports aggregate outcomes. Production delivery requires the repository secrets and `SITE_URL` variable listed in the README.
 
 - Extend the daily workflow to build/read the offer feed and query enabled alert rules.
 - Match only verified, currently valid offers against the user’s chosen product/store and target price.
@@ -58,11 +64,25 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 5 — Review and operate
 
+**Progress:** The three migrations are applied to production. A live schema check confirms RLS is enabled on all four user-owned tables, all four policies are present, the theme constraint/default is installed, and existing profiles have a theme. Code review confirms deletion relies on auth-user cascades; the sender excludes expired or changed-source offers, deduplicates against `notification_log`, and removes subscriptions rejected as expired. The retry path now refreshes the notification log timestamp. Local build and tests pass. Live account-deletion, cross-user RLS isolation, unsubscribe, and push-delivery checks remain.
+
 - Check RLS policies, account deletion, unsubscribe, duplicate suppression, expired offers, and changed-source handling before enabling alerts for users.
 - Track Supabase usage, GitHub Actions minutes, failed sends, and stale subscriptions. Keep notifications opt-in and offer a visible way to pause them.
 - Consider a Cloudflare Worker scheduler only if daily GitHub Actions are insufficient. Workers Free currently has daily request and CPU limits; check current limits and measured workload before moving jobs.
 
+### Phase 6 — Admin access and operations view
+
+**Status:** planned; begin with read-only access for trusted maintainers.
+
+- Add a private admin view for offer counts and validity, per-store source status and freshness, recent import/monitor runs, and aggregate alert-delivery outcomes. Keep the public offer catalog available without an account.
+- Exclude customer email addresses, saved preferences, push endpoints, encryption keys, and message payloads from the admin dashboard. Show only aggregate operational data unless a specific support workflow later requires more.
+- Treat authorization as a backend responsibility: use a protected admin role or server-validated claim, enforce it in Supabase RLS and Edge Functions, and never grant admin access through a client-side flag or editable user metadata.
+- Start read-only. If offer editing or source-review actions are added later, require server-side validation and an audit record identifying the admin, action, affected record, and time. Keep service-role credentials out of the browser.
+- Before launch, test that ordinary users cannot load admin data or invoke admin actions, and that an admin can access only the intended operational view.
+
 ### Monitoring: Datadog and a free-first setup
+
+**Code status:** the hourly public-site/data health check is implemented. Set the Actions variable `SITE_URL` before the scheduled job can run; operational usage and failed-run monitoring remain.
 
 - Keep GitHub Actions as the first monitoring layer: retain the daily source checks and add a short hourly availability check for the live Pages site and its key data files. Fail clearly when the site or files cannot be fetched; use GitHub's workflow failure notifications. Keep this check fast and watch private-repository Actions minutes.
 - Use Cloudflare's Pages deployment history and dashboard metrics for deploy and traffic visibility, and Supabase's dashboard for database/auth usage and errors. These are the services already hosting the app and backend.
@@ -88,6 +108,8 @@ Free tiers are useful for a small pilot but can change. As checked on 2026-10-16
 **Yes, for the app and alert-matching code.** The project already uses TypeScript, and the same `Offer`, `AlertRule`, and notification types can be shared across the frontend and scheduled matcher. This helps keep fields and filtering rules consistent as the backend grows. Keep the existing Python source-monitor script for now; rewriting a working small script would add work without improving user features. TypeScript is a practical fit here, not a requirement for every tool in the project.
 
 ## Automatic grocery offer ingestion
+
+**Progress:** Official source inventory is recorded in [`docs/OFFER_SOURCE_INVENTORY.md`](docs/OFFER_SOURCE_INVENTORY.md). Big Bom's official flyer is the first adapter candidate because its offers page links a downloadable PDF; the adapter must discover the current campaign from the page rather than reuse a dated URL.
 
 **Requirement:** Offers must load and publish without manual transcription or review. Use free tiers only; do not add paid OCR, AI, or scraping services.
 

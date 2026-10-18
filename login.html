@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <meta name="robots" content="noindex, follow">
+  <title>Entrar — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
+  </header>
+  <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
+    <nav class="sidebar-nav" aria-label="Navegação principal">
+      <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
+      <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
+      <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar" aria-current="page"><span aria-hidden="true">◉</span><span data-account-label>Entrar</span></a>
+      <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
+    </nav>
+    <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
+  </aside>
+  <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu" tabindex="-1"></button>
+
+  <main class="auth-main">
+    <a class="back-link" href="index.html">← Voltar para ofertas</a>
+    <section class="auth-card" aria-labelledby="auth-title">
+      <p class="eyebrow"><span class="pulse"></span> Sua Feira Boa</p>
+      <h1 id="auth-title">Bem-vindo de volta.</h1>
+      <p class="auth-description" id="auth-description">Entre para manter seus produtos favoritos salvos em qualquer dispositivo.</p>
+      <form id="auth-form" class="auth-form">
+        <label for="auth-email">E-mail</label>
+        <input id="auth-email" name="email" type="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+        <label for="auth-password">Senha</label>
+        <input id="auth-password" name="password" type="password" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
+        <button class="account-button auth-submit" id="auth-submit" type="submit">Entrar</button>
+      </form>
+      <p class="auth-switch"><span id="auth-switch-label">Ainda não tem conta?</span> <button type="button" class="text-button" id="auth-mode-toggle">Criar conta grátis</button></p>
+      <p class="auth-status" id="auth-status" role="status" aria-live="polite"></p>
+      <div class="auth-divider"><span>Seus favoritos locais continuam disponíveis sem conta.</span></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <script src="navigation.js"></script>
+  <script src="site-version.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

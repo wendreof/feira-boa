@@ -1,11 +1,20 @@
-interface Offer {
-  store: string; storeLogo: string; branch: string; name: string; brand: string; detail: string;
-  category: string; department: string; productType: string; price: number; previousPrice: number | null;
-  icon: string; tone: string; note: string; validFrom: string; validTo: string; source: string; sourceUrl: string;
-}
-interface Window { FEIRA_OFFERS: Offer[]; FEIRA_SOURCE_ALERTS?: Array<{ url: string; message: string }> }
+import { errorMessage, getCurrentUser, loadPreferences, savePreferences } from "./account";
+import type { Offer, OfferFeed, ProfilePreferences } from "./types";
+import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
+import { loadOfferReactionCounts, loadUserOfferReactions, saveOfferReaction, type OfferReaction, type OfferReactionCounts } from "./offer-reactions";
 
-const offers = window.FEIRA_OFFERS || [];
+declare global {
+  interface Window {
+    FEIRA_SOURCE_ALERTS?: Array<{ url: string; message: string }>;
+    FEIRA_SOURCE_STATUS?: Record<string, { checkedAt?: string; lastSuccessAt?: string; error?: boolean; needsReview?: boolean }>;
+  }
+}
+
+(async function startApp(): Promise<void> {
+const feedResponse = await fetch("offers.json");
+if (!feedResponse.ok) throw new Error(`Offer feed unavailable: ${feedResponse.status}`);
+const feed = await feedResponse.json() as OfferFeed;
+const offers = feed.offers;
 const storeNames = ["Todas as lojas", ...new Set(offers.map((offer) => offer.store))];
 const departments = ["Todos os setores", ...new Set(offers.map((offer) => offer.department))];
 const grid = document.querySelector<HTMLDivElement>("#offer-grid")!;
@@ -19,11 +28,146 @@ const productTypeSelect = document.querySelector<HTMLSelectElement>("#product-ty
 const sortSelect = document.querySelector<HTMLSelectElement>("#sort-order")!;
 const emptyState = document.querySelector<HTMLDivElement>("#empty-state")!;
 const resultsSubtitle = document.querySelector<HTMLParagraphElement>("#results-subtitle")!;
+const resultsTitle = document.querySelector<HTMLHeadingElement>("#results-title")!;
+const showAllOffersButton = document.querySelector<HTMLButtonElement>("#show-all-offers")!;
+const shareStatus = document.querySelector<HTMLParagraphElement>("#share-status")!;
 const emptyHelp = document.querySelector<HTMLSpanElement>("#empty-help")!;
 const resetButton = document.querySelector<HTMLButtonElement>("#reset-filters")!;
+const viewToggle = document.querySelector<HTMLDivElement>("#view-toggle")!;
+const accountAccess = document.querySelector<HTMLAnchorElement>("#account-access")!;
+const accountPanel = document.querySelector<HTMLDivElement>("#account-panel")!;
+const navAccountLink = document.querySelector<HTMLAnchorElement>("#nav-account")!;
+const navAccountLabel = navAccountLink.querySelector<HTMLElement>("[data-account-label]")!;
+const accountDescription = document.querySelector<HTMLSpanElement>("#account-description")!;
+const accountStatus = document.querySelector<HTMLParagraphElement>("#account-status")!;
+const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
+const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
+const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
 let activeDepartment = "Todos os setores";
 let activeStore = "Todas as lojas";
 let activeProductType = "";
+let favoriteIds = readGuestFavorites();
+let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
+let viewMode: "grid" | "list" = readViewMode();
+let currentUserId: string | null = null;
+let preferencesLoaded = false;
+let pendingTheme: ThemePreference | null = null;
+let reactionCounts = new Map<string, OfferReactionCounts>();
+let userReactions = new Map<string, OfferReaction>();
+let sharedOfferId = new URLSearchParams(window.location.search).get("offer");
+if (favoriteOnly) navFavoritesLink.setAttribute("aria-current", "page");
+if (sharedOfferId && !offers.some((offer) => offer.id === sharedOfferId)) sharedOfferId = null;
+
+function readGuestFavorites(): Set<string> {
+  try {
+    const value: unknown = JSON.parse(localStorage.getItem("feira-boa:favorites:v1") ?? "[]");
+    return new Set(Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function readViewMode(): "grid" | "list" {
+  try {
+    return localStorage.getItem("feira-boa:view-mode:v1") === "list" ? "list" : "grid";
+  } catch {
+    return "grid";
+  }
+}
+
+function updateViewMode(): void {
+  grid.classList.toggle("list-view", viewMode === "list");
+  viewToggle.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.viewMode === viewMode));
+  });
+}
+
+function setAccountStatus(message: string): void {
+  accountStatus.textContent = message;
+}
+
+function updateAccountControls(): void {
+  const signedIn = currentUserId !== null;
+  accountPanel.hidden = signedIn;
+  accountAccess.hidden = signedIn;
+  navAccountLabel.textContent = signedIn ? "Minha conta" : "Entrar";
+  navAccountLink.setAttribute("aria-label", signedIn ? "Minha conta" : "Entrar");
+  navAccountLink.setAttribute("href", signedIn ? "account.html" : "login.html");
+  accountDescription.textContent = signedIn
+    ? "Seus favoritos já estão sincronizados com a sua conta."
+    : "Entre ou crie uma conta grátis para sincronizar seus favoritos.";
+  if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
+}
+
+function persistGuestFavorites(): void {
+  try {
+    localStorage.setItem("feira-boa:favorites:v1", JSON.stringify([...favoriteIds]));
+  } catch {
+    setAccountStatus("Não foi possível salvar favoritos neste navegador.");
+  }
+}
+
+async function saveFavoriteChanges(): Promise<void> {
+  persistGuestFavorites();
+  if (currentUserId) {
+    try {
+      preferences.favoriteOfferIds = [...favoriteIds];
+      await savePreferences(currentUserId, preferences);
+      setAccountStatus("Favoritos sincronizados.");
+    } catch (error) {
+      setAccountStatus(`Favoritos salvos neste dispositivo. Sincronização falhou: ${errorMessage(error)}`);
+    }
+  }
+}
+
+let preferences: ProfilePreferences = {
+  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [], theme: "light",
+};
+
+bindThemeToggle((theme) => {
+  preferences.theme = theme;
+  pendingTheme = theme;
+  if (currentUserId && preferencesLoaded) void saveThemePreference(theme);
+});
+
+async function saveThemePreference(theme: ThemePreference): Promise<void> {
+  if (!currentUserId) return;
+  try {
+    await savePreferences(currentUserId, preferences);
+    pendingTheme = null;
+    setAccountStatus("Tema salvo nas preferências da sua conta.");
+  } catch (error) {
+    setAccountStatus(`Tema aplicado neste dispositivo. Não foi possível sincronizar: ${errorMessage(error)}`);
+  }
+}
+
+async function connectAccount(userId: string): Promise<void> {
+  currentUserId = userId;
+  updateAccountControls();
+  try {
+    const remotePreferences = await loadPreferences(userId);
+    preferences = {
+      ...remotePreferences,
+      favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...favoriteIds])],
+      theme: pendingTheme ?? remotePreferences.theme,
+    };
+    applyTheme(preferences.theme);
+    favoriteIds = new Set(preferences.favoriteOfferIds);
+    await savePreferences(userId, preferences);
+    pendingTheme = null;
+    preferencesLoaded = true;
+    persistGuestFavorites();
+    try {
+      userReactions = await loadUserOfferReactions(userId);
+    } catch (reactionError) {
+      console.warn("Could not load saved offer reactions.", reactionError);
+    }
+    renderOffers();
+    setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
+  } catch (error) {
+    setAccountStatus(`Conta conectada. Não foi possível sincronizar preferências: ${errorMessage(error)}`);
+  }
+}
 
 const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
 const commonItems = [
@@ -41,6 +185,18 @@ function money(value: number): string {
 function dateLabel(value: string): string {
   return new Intl.DateTimeFormat("pt-BR", {day:"2-digit", month:"short"})
     .format(new Date(`${value}T12:00:00`)).replace(" de ", " ").replace(".", "");
+}
+
+function formatFeedUpdate(value: string): string {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return "Atualização das ofertas indisponível";
+  const dateLabel = new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit", month: "short", year: "numeric", timeZone: "America/Sao_Paulo",
+  }).format(date).replace(/\./g, "");
+  const timeLabel = new Intl.DateTimeFormat("pt-BR", {
+    hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo",
+  }).format(date);
+  return `Ofertas atualizadas em ${dateLabel}, às ${timeLabel}`;
 }
 
 function normalizeSearch(value: string): string {
@@ -62,7 +218,7 @@ function isActive(offer: Offer): boolean {
 function matchesSearch(offer: Offer, query: string): boolean {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
   if (!terms.length) return true;
-  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, offer.productType, offer.store, offer.branch, offer.note].join(" "));
+  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, offer.store, offer.branch, offer.note].join(" "));
   const words = searchable.split(" ");
   return terms.every((term) => {
     const variants = [term, ...(searchEquivalents[term] || [])];
@@ -91,7 +247,7 @@ function renderFilters(): void {
     return `<button class="filter ${department === activeDepartment ? "active" : ""}" type="button" data-department="${department}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${department} · ${count}</button>`;
   }).join("");
 
-  const types = [...new Set(offers.filter((offer) => isActive(offer) && (activeDepartment === "Todos os setores" || offer.department === activeDepartment) && (activeStore === "Todas as lojas" || offer.store === activeStore)).map((offer) => offer.productType))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+  const types = [...new Set(offers.filter((offer) => isActive(offer) && (activeDepartment === "Todos os setores" || offer.department === activeDepartment) && (activeStore === "Todas as lojas" || offer.store === activeStore)).flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
   productTypeSelect.innerHTML = `<option value="">Todos os tipos</option>${types.map((type) => `<option value="${type}">${type}</option>`).join("")}`;
   if (!types.includes(activeProductType)) activeProductType = "";
   productTypeSelect.value = activeProductType;
@@ -105,33 +261,132 @@ function getPriceBounds(): { min: number | null; max: number | null } {
 
 function renderOffers(): void {
   const {min, max} = getPriceBounds();
+  const activeCount = Number(activeStore !== "Todas as lojas") + Number(activeDepartment !== "Todos os setores") + Number(Boolean(activeProductType)) + Number(min !== null || max !== null);
+  activeFilterCount.hidden = activeCount === 0;
+  activeFilterCount.textContent = String(activeCount);
   const priceRangeReversed = min !== null && max !== null && min > max;
   let matching = priceRangeReversed ? [] : offers.filter((offer) =>
-    isActive(offer) && (activeStore === "Todas as lojas" || offer.store === activeStore) &&
-    (activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
-    (!activeProductType || offer.productType === activeProductType) &&
-    (min === null || offer.price >= min) && (max === null || offer.price <= max) && matchesSearch(offer, input.value)
+    (sharedOfferId ? offer.id === sharedOfferId : isActive(offer)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
+    (sharedOfferId || activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
+    (sharedOfferId || !activeProductType || offer.productTypes.includes(activeProductType)) &&
+    (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
+    (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
   );
   if (sortSelect.value === "price-low") matching = matching.sort((a, b) => a.price - b.price);
   if (sortSelect.value === "price-high") matching = matching.sort((a, b) => b.price - a.price);
   if (sortSelect.value === "discount") matching = matching.sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));
 
-  grid.innerHTML = matching.map((offer) => `
+  grid.innerHTML = matching.map((offer) => {
+    const storeInitials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+    const counts = reactionCounts.get(offer.id) ?? { likes: 0, dislikes: 0 };
+    const currentReaction = userReactions.get(offer.id);
+    return `
     <article class="offer-card">
-      <div class="visual" style="--tone:${offer.tone}"><span class="product-art" role="img" aria-label="Ilustração de ${offer.name}">${offer.icon}</span><span class="offer-sticker">OFERTA</span></div>
-      <div class="card-body"><div class="offer-store"><span class="offer-store-logo ${offer.store === "Big Bom" ? "bigbom-mark" : ""}">${offer.storeLogo ? `<img src="${offer.storeLogo}" alt="${offer.store}" loading="lazy" onerror="this.parentElement.classList.add('logo-fallback');this.remove()">` : offer.store.slice(0,2)}</span><span class="category">${offer.productType} · ${offer.store}</span></div><h3>${offer.name}</h3><span class="spec">${offer.brand ? `${offer.brand} · ` : ""}${offer.detail}</span>
+      <div class="visual" style="--tone:${offer.tone}"><span class="product-art" role="img" aria-label="Ilustração de ${offer.name}">${offer.icon}</span><span class="offer-sticker">OFERTA</span><button class="favorite-toggle" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos">${favoriteIds.has(offer.id) ? "♥" : "♡"}</button></div>
+      <div class="card-body"><div class="offer-store"><span class="offer-store-logo ${offer.store === "Big Bom" ? "bigbom-mark" : ""}"><span class="store-logo-fallback" aria-hidden="true">${storeInitials}</span>${offer.storeLogo ? `<img src="${offer.storeLogo}" alt="" loading="lazy" onload="this.parentElement.classList.add('has-logo')" onerror="this.remove()">` : ""}</span><span class="category">${offer.productType} · ${offer.store}</span></div><h3>${offer.name}</h3><span class="spec">${offer.brand ? `${offer.brand} · ` : ""}${offer.detail}</span>
         <div class="price-row"><div><span class="price">${money(offer.price)}</span>${offer.previousPrice ? `<span class="old-price">${money(offer.previousPrice)}</span>` : ""}</div><span class="valid-until">Válido<strong>${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}</strong></span></div>
+        <div class="offer-reactions" role="group" aria-label="Esta oferta vale a pena?">
+          <button class="offer-reaction-button${currentReaction === "like" ? " selected" : ""}" type="button" data-reaction="like" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "like"}" aria-label="Gostei desta oferta, ${counts.likes} votos" title="${currentUserId ? "Gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👍</span><span>${counts.likes}</span></button>
+          <button class="offer-reaction-button${currentReaction === "dislike" ? " selected" : ""}" type="button" data-reaction="dislike" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "dislike"}" aria-label="Não gostei desta oferta, ${counts.dislikes} votos" title="${currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👎</span><span>${counts.dislikes}</span></button>
+        </div>
         ${offer.note ? `<p class="offer-note">${offer.note}</p>` : ""}
-        <div class="card-source"><span class="source-dot"></span>${offer.branch} · <a href="${offer.sourceUrl}" target="_blank" rel="noopener">ver oferta</a></div>
+        <div class="card-source"><span class="source-dot"></span>${offer.branch} · <a href="${offer.sourceUrl}" target="_blank" rel="noopener">ver oferta</a><button class="share-offer" type="button" data-share-id="${offer.id}" aria-label="Compartilhar ${offer.name}"><span aria-hidden="true">↗</span> Compartilhar</button></div>
       </div>
-    </article>`).join("");
+    </article>`;
+  }).join("");
   emptyState.hidden = matching.length > 0;
+  favoritesToggle.textContent = favoriteOnly ? `Ver todas (${favoriteIds.size})` : `Favoritos (${favoriteIds.size})`;
+  favoritesToggle.setAttribute("aria-pressed", String(favoriteOnly));
+  resultsTitle.textContent = sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
+  showAllOffersButton.hidden = !sharedOfferId;
   const storeLabel = activeStore === "Todas as lojas" ? "todas as lojas" : activeStore;
-  resultsSubtitle.textContent = `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeDepartment === "Todos os setores" ? "" : ` · ${activeDepartment}`}${activeProductType ? ` · ${activeProductType}` : ""}`;
+  const sharedOffer = sharedOfferId ? matching[0] : null;
+  resultsSubtitle.textContent = sharedOffer
+    ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer) ? "" : " · oferta encerrada"}`
+    : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeDepartment === "Todos os setores" ? "" : ` · ${activeDepartment}`}${activeProductType ? ` · ${activeProductType}` : ""}`;
   if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
   else if (offers.some(isActive)) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
   else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
 }
+
+function shareUrlForOffer(offerId: string): string {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  url.searchParams.set("offer", offerId);
+  return url.toString();
+}
+
+grid.addEventListener("click", async (event: MouseEvent) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest<HTMLButtonElement>("[data-share-id]");
+  const offer = offers.find((item) => item.id === button?.dataset.shareId);
+  if (!button || !offer) return;
+
+  const url = shareUrlForOffer(offer.id);
+  const title = `${offer.name} por ${money(offer.price)} · Feira Boa`;
+  const text = `${offer.name} por ${money(offer.price)} no ${offer.store}. Confira a oferta:`;
+  button.disabled = true;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title, text, url });
+      shareStatus.textContent = "Oferta compartilhada.";
+    } else if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+      shareStatus.textContent = "Link da oferta copiado.";
+    } else {
+      window.prompt("Copie o link para compartilhar esta oferta:", url);
+      shareStatus.textContent = "Link da oferta pronto para copiar.";
+    }
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") return;
+    shareStatus.textContent = "Não foi possível abrir o compartilhamento. Tente novamente.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+grid.addEventListener("click", async (event: MouseEvent) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest<HTMLButtonElement>("[data-reaction]");
+  const offerId = button?.dataset.offerId;
+  const reaction = button?.dataset.reaction;
+  if (!button || !offerId || (reaction !== "like" && reaction !== "dislike")) return;
+
+  if (!currentUserId) {
+    const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    const loginUrl = new URL("login.html", window.location.href);
+    loginUrl.searchParams.set("returnTo", returnTo);
+    window.location.assign(loginUrl);
+    return;
+  }
+
+  button.disabled = true;
+  try {
+    const previousReaction = userReactions.get(offerId);
+    await saveOfferReaction(currentUserId, offerId, reaction);
+    userReactions.set(offerId, reaction);
+    const counts = { ...(reactionCounts.get(offerId) ?? { likes: 0, dislikes: 0 }) };
+    if (previousReaction && previousReaction !== reaction) counts[previousReaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[previousReaction === "like" ? "likes" : "dislikes"] - 1);
+    if (previousReaction !== reaction) counts[reaction === "like" ? "likes" : "dislikes"] += 1;
+    reactionCounts.set(offerId, counts);
+    shareStatus.textContent = "Sua avaliação foi salva.";
+    renderOffers();
+  } catch (error) {
+    shareStatus.textContent = `Não foi possível salvar sua avaliação: ${errorMessage(error)}`;
+    button.disabled = false;
+  }
+});
+
+showAllOffersButton.addEventListener("click", () => {
+  sharedOfferId = null;
+  const url = new URL(window.location.href);
+  url.searchParams.delete("offer");
+  window.history.replaceState({}, "", url);
+  renderOffers();
+});
 
 storeFilters.addEventListener("click", (event: MouseEvent) => {
   const target = event.target;
@@ -166,12 +421,82 @@ resetButton.addEventListener("click", () => {
   input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
   renderStoreFilters(); renderFilters(); renderOffers(); input.focus();
 });
+viewToggle.addEventListener("click", (event: MouseEvent) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest<HTMLButtonElement>("[data-view-mode]");
+  if (button?.dataset.viewMode !== "grid" && button?.dataset.viewMode !== "list") return;
+  viewMode = button.dataset.viewMode;
+  try {
+    localStorage.setItem("feira-boa:view-mode:v1", viewMode);
+  } catch {
+    // Keep the selected view for this page even when storage is unavailable.
+  }
+  updateViewMode();
+});
+favoritesToggle.addEventListener("click", () => {
+  favoriteOnly = !favoriteOnly;
+  renderOffers();
+});
+grid.addEventListener("click", (event: MouseEvent) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest<HTMLButtonElement>("[data-favorite-id]");
+  const offerId = button?.dataset.favoriteId;
+  if (!offerId) return;
+  if (favoriteIds.has(offerId)) favoriteIds.delete(offerId);
+  else favoriteIds.add(offerId);
+  preferences.favoriteOfferIds = [...favoriteIds];
+  renderOffers();
+  void saveFavoriteChanges();
+});
 document.addEventListener("keydown", (event: KeyboardEvent) => {
   if (event.key === "/" && document.activeElement !== input) { event.preventDefault(); input.focus(); }
 });
 
 const sourceAlerts = window.FEIRA_SOURCE_ALERTS || [];
-document.querySelector<HTMLSpanElement>("#updated-label")!.textContent = sourceAlerts.length
-  ? `${sourceAlerts.length} fonte(s) mudou(aram) · ofertas aguardam conferência`
-  : "Ofertas dos encartes oficiais · fontes monitoradas diariamente";
-renderStoreFilters(); renderPopularItems(); renderFilters(); renderOffers();
+const sourceStatus = window.FEIRA_SOURCE_STATUS || {};
+document.querySelectorAll<HTMLElement>("[data-source-url]").forEach((element) => {
+  const status = sourceStatus[element.dataset.sourceUrl || ""];
+  if (!status) return;
+  const lastSuccess = status.lastSuccessAt ? new Date(status.lastSuccessAt) : null;
+  const checked = status.checkedAt ? new Date(`${status.checkedAt}T00:00:00`) : null;
+  const checkedLabel = checked && !Number.isNaN(checked.getTime()) ? ` · verificada em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(checked)}` : "";
+  if (status.needsReview) {
+    element.textContent = `A fonte mudou e aguarda conferência${checkedLabel}`;
+    element.classList.add("source-freshness-warning");
+  } else if (status.error) {
+    const successLabel = lastSuccess && !Number.isNaN(lastSuccess.getTime()) ? ` Último acesso bem-sucedido: ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(lastSuccess)}.` : " Ainda sem acesso bem-sucedido registrado.";
+    element.textContent = `Não foi possível verificar a fonte agora.${successLabel}`;
+    element.classList.add("source-freshness-error");
+  } else if (checked) {
+    element.textContent = `Fonte consultada em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(checked)} · isso não confirma que os preços foram atualizados.`;
+  }
+});
+const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
+updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
+if (sourceAlerts.length > 0) {
+  const sourceWord = sourceAlerts.length === 1 ? "fonte" : "fontes";
+  updatedLabel.textContent += ` · ${sourceAlerts.length} ${sourceWord} aguardando conferência`;
+}
+updatedLabel.title = sourceAlerts.length
+  ? "Há mudanças detectadas nas fontes oficiais que ainda aguardam conferência"
+  : "Data da última atualização do catálogo de ofertas";
+updateViewMode(); renderStoreFilters(); renderPopularItems(); renderFilters(); renderOffers();
+void loadOfferReactionCounts().then((counts) => {
+  reactionCounts = counts;
+  renderOffers();
+}).catch((error: unknown) => {
+  console.warn("Could not load offer reaction totals.", error);
+});
+try {
+  const user = await getCurrentUser();
+  if (user) await connectAccount(user.id);
+  else setAccountStatus("Favoritos salvos neste dispositivo. Entre para sincronizar entre dispositivos.");
+} catch (error) {
+  setAccountStatus(`Favoritos locais disponíveis. Conta temporariamente indisponível: ${errorMessage(error)}`);
+}
+})().catch((error: unknown) => {
+  console.error("Feira Boa could not load offers.", error);
+  document.querySelector<HTMLParagraphElement>("#results-subtitle")!.textContent = "Não foi possível carregar as ofertas. Tente novamente mais tarde.";
+});

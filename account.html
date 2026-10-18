@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <meta name="robots" content="noindex, follow">
+  <title>Minha conta — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
+  </header>
+  <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
+    <nav class="sidebar-nav" aria-label="Navegação principal">
+      <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
+      <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
+      <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta" aria-current="page"><span aria-hidden="true">◉</span><span data-account-label>Minha conta</span></a>
+      <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
+    </nav>
+    <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
+  </aside>
+  <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu" tabindex="-1"></button>
+
+  <main class="auth-main account-settings-main">
+    <a class="back-link" href="index.html">← Voltar para ofertas</a>
+    <section class="auth-card account-settings-card" aria-labelledby="account-title">
+      <p class="eyebrow"><span class="pulse"></span> Sua Feira Boa</p>
+      <h1 id="account-title">Configurações da conta</h1>
+      <p class="auth-description">Escolha suas lojas, acompanhe preços e controle suas preferências.</p>
+      <div class="account-identity">
+        <span class="account-identity-label">Conectado como</span>
+        <strong id="account-email">Verificando sessão…</strong>
+      </div>
+      <section class="preferences-section" aria-labelledby="favorites-title">
+        <h2 id="favorites-title">Lojas e produtos favoritos</h2>
+        <p class="preferences-help">Essas escolhas ficam salvas na sua conta.</p>
+        <form id="favorite-preferences" class="preferences-form">
+          <fieldset><legend>Lojas</legend><div id="favorite-stores" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <fieldset><legend>Tipos de produto</legend><div id="favorite-product-types" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <button class="account-button" type="submit">Salvar favoritos</button>
+        </form>
+      </section>
+
+      <section class="preferences-section" aria-labelledby="alerts-title">
+        <h2 id="alerts-title">Alertas de preço</h2>
+        <p class="preferences-help">Defina um preço máximo para acompanhar uma categoria em uma ou todas as lojas.</p>
+        <form id="alert-rule-form" class="preferences-form">
+          <label for="alert-product">Tipo de produto</label>
+          <select id="alert-product" required><option value="">Carregando…</option></select>
+          <label for="alert-store">Loja</label>
+          <select id="alert-store"><option value="">Qualquer loja</option></select>
+          <label for="target-price">Avisar quando custar até</label>
+          <div class="price-input"><span>R$</span><input id="target-price" type="number" min="0.01" step="0.01" placeholder="0,00" required></div>
+          <button class="account-button" type="submit">Criar alerta</button>
+        </form>
+        <ul id="alert-rules" class="alert-rules"><li class="preference-empty">Carregando alertas…</li></ul>
+        <label class="pause-alerts"><input id="notifications-paused" type="checkbox"><span>Pausar alertas</span></label>
+        <div class="push-controls">
+          <p class="preferences-help push-status">Notificações neste dispositivo: <strong id="push-status">Verificando…</strong></p>
+          <button type="button" class="account-button" id="enable-push">Ativar notificações</button>
+          <button type="button" class="account-button secondary" id="disable-push" hidden>Desativar neste dispositivo</button>
+        </div>
+      </section>
+
+      <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
+      <div class="account-settings-actions">
+        <button type="button" class="account-button secondary" id="sign-out">Sair</button>
+        <button type="button" class="account-button danger" id="delete-account">Excluir conta</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <script src="navigation.js"></script>
+  <script src="site-version.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

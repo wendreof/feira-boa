@@ -1,42 +1,11 @@
 // Offer transcriptions from stores' public flyers and official offer pages.
 // Prices are in BRL. Dates are inclusive; source links point to the original offer source.
-interface OfferSource {
-  name: string;
-  branch: string;
-  logo: string;
-  source: string;
-  sourceUrl: string;
-  from: string;
-  to: string;
-}
+import type { Offer, OfferSource } from "./types";
 
-interface Offer {
-  store: string;
-  storeLogo: string;
-  branch: string;
-  name: string;
-  brand: string;
-  detail: string;
-  category: string;
-  department: string;
-  productType: string;
-  price: number;
-  previousPrice: number | null;
-  icon: string;
-  tone: string;
-  note: string;
-  validFrom: string;
-  validTo: string;
-  source: string;
-  sourceUrl: string;
-}
+// Update when the manually curated offer data below changes.
+export const offersUpdatedAt = "2026-10-18T04:41:00.000Z";
 
-interface Window {
-  FEIRA_STORES: OfferSource[];
-  FEIRA_OFFERS: Offer[];
-}
-
-const offerSources = {
+export const offerSources = {
   sempre: {
     name: "Sempre Vale",
     branch: "Durval Nicolau",
@@ -61,8 +30,8 @@ const offerSources = {
     logo: "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
     source: "Ofertas online oficiais · Loja 33",
     sourceUrl: "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
-    from: "2026-10-15",
-    to: "2026-10-15"
+    from: "2026-10-16",
+    to: "2026-10-18"
   },
   spasso: {
     name: "Spasso Sabores",
@@ -77,7 +46,7 @@ const offerSources = {
 
 type StoreId = keyof typeof offerSources;
 
-function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string } {
+function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string; productTypes: string[] } {
   const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const rules: Array<[RegExp, string]> = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado/, "Leites"],
@@ -106,13 +75,20 @@ function classifyProduct(name: string, brand: string, category: string): { depar
     "Carnes": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Frios": "Frios e laticínios", "Laticínios": "Frios e laticínios",
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados"
   };
-  return { department: departments[productType] ?? categoryDepartments[category] ?? category, productType: productType === category ? (categoryDepartments[category] ?? category) : productType };
+  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango/.test(text);
+  const primaryProductType = productType === category ? (categoryDepartments[category] ?? category) : productType;
+  return {
+    department: departments[productType] ?? categoryDepartments[category] ?? category,
+    productType: primaryProductType,
+    productTypes: isBarbecueProduct ? [primaryProductType, "Churrasco"] : [primaryProductType],
+  };
 }
 
 function makeOffer(storeId: StoreId, name: string, brand: string, detail: string, category: string, price: number, previousPrice: number | null, icon: string, note = "", special = false, validity: { from: string; to: string } | null = null): Offer {
   const store = offerSources[storeId];
   const taxonomy = classifyProduct(name, brand, category);
   return {
+    id: `${storeId}-${slug(`${name}-${brand}-${detail}-${validity?.from || (special ? "2026-10-16" : store.from)}`)}`,
     store: store.name,
     storeLogo: store.logo,
     branch: store.branch,
@@ -133,8 +109,12 @@ function makeOffer(storeId: StoreId, name: string, brand: string, detail: string
   };
 }
 
-window.FEIRA_STORES = Object.values(offerSources);
-window.FEIRA_OFFERS = [
+function slug(value: string): string {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+export const offers: Offer[] = [
   // Sempre Vale · complete two-page flyer. Five highlighted offers have their own dates.
   makeOffer("sempre", "Panceta suína congelada", "", "A granel · kg", "Carnes", 18.90, 23.90, "🥓"),
   makeOffer("sempre", "Fraldinha bovina", "Friboi", "Peça a vácuo · kg", "Carnes", 45.90, 50.90, "🥩"),
@@ -252,6 +232,8 @@ window.FEIRA_OFFERS = [
   makeOffer("paguemenos", "Açúcar refinado", "União", "1 kg", "Mercearia", 3.99, 4.49, "🧂", "Preço online · confirme o valor na loja física"),
   makeOffer("paguemenos", "Café tradicional a vácuo", "Caboclo", "500 g", "Mercearia", 19.99, 30.99, "☕", "Preço online · confirme o valor na loja física"),
   makeOffer("paguemenos", "Milho verde em conserva", "Quero", "170 g", "Mercearia", 3.49, 4.69, "🌽", "Preço online · confirme o valor na loja física"),
+  makeOffer("paguemenos", "Vinho tinto chileno Casillero del Diablo Cabernet Sauvignon", "Casillero del Diablo", "750 ml", "Bebidas", 49.99, 76.99, "🍷", "35% de desconto · preço online · confirme o valor na loja física"),
+  makeOffer("paguemenos", "Refrigerante Pepsi Cola", "Pepsi", "2 L", "Bebidas", 7.49, 8.49, "🥤", "12% de desconto · preço online · confirme o valor na loja física"),
   // Spasso Sabores · official São João flyer, valid 13–17 October 2026.
   makeOffer("spasso", "Cerveja Amstel Lager", "Amstel", "Lata · 350 ml", "Bebidas", 3.19, 3.59, "🍺", "Preço Club Plus"),
   makeOffer("spasso", "Cerveja Michelob Ultra", "Michelob", "Lata · 350 ml", "Bebidas", 4.89, null, "🍺"),
@@ -302,3 +284,5 @@ window.FEIRA_OFFERS = [
   makeOffer("spasso", "Ponta de alcatra bovina", "", "A granel · kg", "Carnes", 42.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
   makeOffer("spasso", "Contrafilé bovino", "Viva os Sabores", "Porcionado · kg", "Carnes", 59.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"})
 ];
+
+export const stores: OfferSource[] = Object.values(offerSources);

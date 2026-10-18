@@ -22,6 +22,7 @@
 :root[data-theme="dark"] .account-panel,
 :root[data-theme="dark"] .auth-card,
 :root[data-theme="dark"] .filter-disclosure,
+:root[data-theme="dark"] .store-filter-section,
 :root[data-theme="dark"] .price-filter,
 :root[data-theme="dark"] .list-view.offer-grid,
 :root[data-theme="dark"] .control-label.filter-control,
@@ -61,8 +62,7 @@
 }
 
 :root[data-theme="dark"] .brand-mark {
-  background: #246b43;
-  color: #d5f19c;
+  background: transparent;
 }
 
 :root[data-theme="dark"] .auth-divider,
@@ -110,6 +110,8 @@
 :root[data-theme="dark"] .valid-until,
 :root[data-theme="dark"] .updated,
 :root[data-theme="dark"] .filter-label,
+:root[data-theme="dark"] .store-filter-heading h2,
+:root[data-theme="dark"] .store-filter-heading > span,
 :root[data-theme="dark"] .preferences-form > label,
 :root[data-theme="dark"] .preferences-form legend,
 :root[data-theme="dark"] .pause-alerts {
@@ -166,6 +168,38 @@
 
 .theme-toggle:hover { border-color: #91b49a; }
 .theme-toggle:focus-visible { outline: 3px solid #70a38366; outline-offset: 2px; }
+
+:root[data-theme="dark"] .offer-disclaimer-popover { color: var(--muted); }
+:root[data-theme="dark"] .source-freshness { color: #a4b0a7; }
+:root[data-theme="dark"] .source-freshness-warning { color: #e5c677; }
+:root[data-theme="dark"] .source-freshness-error { color: #ee9a92; }
+
+:root[data-theme="dark"] .app-sidebar {
+  background: #1b241e;
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .sidebar-link { color: #c4cec7; }
+:root[data-theme="dark"] .sidebar-link:hover { background: #28382d; color: #b6e5bf; }
+:root[data-theme="dark"] .sidebar-link[aria-current="page"] { background: #28382d; color: #b6e5bf; }
+:root[data-theme="dark"] .sidebar-link[aria-current="page"] > span:first-child { color: #b6e5bf; }
+:root[data-theme="dark"] .sidebar-heading,
+:root[data-theme="dark"] .sidebar-close { color: #a4afa7; }
+:root[data-theme="dark"] .sidebar-bottom { border-color: var(--line); }
+:root[data-theme="dark"] .menu-toggle {
+  background: #1b241e;
+  border-color: var(--line);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .menu-toggle:hover { background: #28382d; }
+:root[data-theme="dark"] .offer-reaction-button,
+:root[data-theme="dark"] .suggestions-card textarea,
+:root[data-theme="dark"] .suggestions-card select {
+  background: #1b241e;
+  border-color: var(--line);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .offer-reaction-button:hover,
+:root[data-theme="dark"] .offer-reaction-button.selected { background: #28382d; color: #b6e5bf; }
 
 @media (max-width: 760px) {
   .topbar-nav { gap: 4px; margin-right: 8px; }

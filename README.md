@@ -23,9 +23,9 @@ The app uses TypeScript for offer data and browser interactions. Run `npm ci` an
 
 Email accounts are optional and use the dedicated `login.html` page. Guest favorites stay in the current browser; signed-in favorites sync through the `profiles` table. The browser uses the Supabase publishable key in `supabase-config.ts`, which is public by design. Row Level Security limits every user-owned row to its owner. Never put a database password or service-role key in frontend files.
 
-Before enabling account sync in the Supabase project:
+The first three migrations below were applied to the production Supabase project on 2026-10-18. Run every migration in order for a new environment before enabling account sync, suggestions, and offer votes:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `supabase/migrations/202610180002_favorite_product_types.sql`, and `supabase/migrations/202610180003_theme_preference.sql` in the project SQL Editor.
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `supabase/migrations/202610180002_favorite_product_types.sql`, `supabase/migrations/202610180003_theme_preference.sql`, `supabase/migrations/202610180004_suggestions.sql`, and `supabase/migrations/202610180005_offer_reactions.sql` in the project SQL Editor.
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
 3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
 
@@ -33,7 +33,7 @@ The app remains browsable without an account. Guest theme choices are saved in t
 
 The account page saves favorite stores/product types, theme, price alert rules, pause state, and optional browser push subscriptions. Push permission is requested only after the user chooses to enable it and confirms the alert contents. `service-worker.js` displays incoming alerts and opens the linked offer. The VAPID public key is safe to include in `supabase-config.ts`; the private key is kept only in the ignored local `supabase/functions/.env` during development. Move the private key to GitHub Actions Secrets before enabling the production sender. Subscriptions can be created now, but alerts are not sent until Phase 4 is deployed.
 
-The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `VAPID_PRIVATE_KEY`, and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. `SITE_URL` is also used as the VAPID subject. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and both SQL migrations are in place.
+The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `VAPID_PRIVATE_KEY`, and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. `SITE_URL` is also used as the VAPID subject. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and all SQL migrations are in place.
 
 ## Scheduled source monitoring and production
 

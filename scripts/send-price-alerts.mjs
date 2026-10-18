@@ -116,6 +116,7 @@ for (const [userId, userOffers] of matchedByUser) {
     const { error } = await supabase.from("notification_log").upsert({
       user_id: userId,
       offer_id: offer.id,
+      sent_at: new Date().toISOString(),
       result: delivered ? "sent" : "failed",
       error_code: delivered ? null : safeErrorCode,
     }, { onConflict: "user_id,offer_id" });

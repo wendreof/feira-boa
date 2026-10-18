@@ -1,6 +1,6 @@
 # Feira Boa backend, accounts, and alerts plan
 
-**Status:** in progress — Phases 1–4 implemented in code; production secret setup and Phase 5 remain.
+**Status:** in progress — Phases 1–4 implemented in code; Phase 5 has had a local code review, while live verification and production secret setup remain.
 **Goal:** let people save their preferences, follow products and stores, and receive relevant offer alerts while keeping browsing open to everyone and starting on free tiers.
 
 ## Recommended stack
@@ -39,7 +39,7 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 2 — Add optional accounts and synced preferences
 
-**Code status:** implemented on `develop`. Supabase migration and account-deletion function still need deployment, as described in the README.
+**Code status:** implemented on `develop`. All three Supabase migrations are applied to production; the account-deletion function still needs deployment, as described in the README.
 
 - Create a Supabase project, Auth settings, database migrations, and RLS policies.
 - Add sign-in, sign-out, and account deletion. Keep guest browsing and local favorites working if login is unavailable.
@@ -64,9 +64,21 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 5 — Review and operate
 
+**Progress:** The three migrations are applied to production. A live schema check confirms RLS is enabled on all four user-owned tables, all four policies are present, the theme constraint/default is installed, and existing profiles have a theme. Code review confirms deletion relies on auth-user cascades; the sender excludes expired or changed-source offers, deduplicates against `notification_log`, and removes subscriptions rejected as expired. The retry path now refreshes the notification log timestamp. Local build and tests pass. Live account-deletion, cross-user RLS isolation, unsubscribe, and push-delivery checks remain.
+
 - Check RLS policies, account deletion, unsubscribe, duplicate suppression, expired offers, and changed-source handling before enabling alerts for users.
 - Track Supabase usage, GitHub Actions minutes, failed sends, and stale subscriptions. Keep notifications opt-in and offer a visible way to pause them.
 - Consider a Cloudflare Worker scheduler only if daily GitHub Actions are insufficient. Workers Free currently has daily request and CPU limits; check current limits and measured workload before moving jobs.
+
+### Phase 6 — Admin access and operations view
+
+**Status:** planned; begin with read-only access for trusted maintainers.
+
+- Add a private admin view for offer counts and validity, per-store source status and freshness, recent import/monitor runs, and aggregate alert-delivery outcomes. Keep the public offer catalog available without an account.
+- Exclude customer email addresses, saved preferences, push endpoints, encryption keys, and message payloads from the admin dashboard. Show only aggregate operational data unless a specific support workflow later requires more.
+- Treat authorization as a backend responsibility: use a protected admin role or server-validated claim, enforce it in Supabase RLS and Edge Functions, and never grant admin access through a client-side flag or editable user metadata.
+- Start read-only. If offer editing or source-review actions are added later, require server-side validation and an audit record identifying the admin, action, affected record, and time. Keep service-role credentials out of the browser.
+- Before launch, test that ordinary users cannot load admin data or invoke admin actions, and that an admin can access only the intended operational view.
 
 ### Monitoring: Datadog and a free-first setup
 

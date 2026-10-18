@@ -123,9 +123,47 @@ export interface Database {
         };
         Relationships: [];
       };
+      suggestions: {
+        Row: {
+          id: string;
+          category: "idea" | "bug" | "content" | "other";
+          message: string;
+          status: "new" | "reviewed" | "closed";
+          created_at: string;
+        };
+        Insert: {
+          category: "idea" | "bug" | "content" | "other";
+          message: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      offer_reactions: {
+        Row: {
+          user_id: string;
+          offer_id: string;
+          reaction: "like" | "dislike";
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          offer_id: string;
+          reaction: "like" | "dislike";
+        };
+        Update: {
+          reaction?: "like" | "dislike";
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      get_offer_reaction_counts: {
+        Args: Record<string, never>;
+        Returns: { offer_id: string; likes: number; dislikes: number }[];
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

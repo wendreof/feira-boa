@@ -176,5 +176,9 @@ export async function removePushSubscription(userId: string, endpoint: string): 
 }
 
 export function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "Ocorreu um erro. Tente novamente.";
+  if (error instanceof Error) return error.message;
+  if (typeof error === "object" && error !== null && "message" in error && typeof error.message === "string") {
+    return error.message;
+  }
+  return "Ocorreu um erro. Tente novamente.";
 }

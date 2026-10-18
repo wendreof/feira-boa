@@ -1,0 +1,116 @@
+# AGENT.md
+
+## Project: Feira Boa
+
+Feira Boa is a static supermarket-offers site for São João da Boa Vista. The app shows flyer offers, filters, favorites, theme switching, and optional Supabase-backed account features without needing a server-rendered app.
+
+### Core goals
+- Surface local supermarket offers in a fast, searchable UI.
+- Keep the data source transparent and reviewable.
+- Let users save favorites and preferences per browser or signed-in account.
+- Support scheduled source monitoring and price alerts without storing secrets in frontend code.
+
+## Stack and architecture
+
+### Frontend
+- Plain static HTML/CSS/JS generated from TypeScript sources.
+- TypeScript entry points: `app.ts`, `login-page.ts`, `account-page.ts`, `suggestions-page.ts`.
+- Bundling is done with `esbuild` via `npm run build`.
+- Output artifacts are committed so static hosting can serve the site from the repo root.
+
+### Data pipeline
+- Source offer data is defined in `offers.ts`.
+- `scripts/build-offer-feed.mjs` generates `offers.json` and build metadata.
+- The generated feed is the shared source for the website and the scheduled monitoring jobs.
+- Update `offersUpdatedAt` when curated offers change.
+
+### Auth and persistence
+- Supabase handles optional account auth and account-scoped sync.
+- Browser-only guest favorites remain in local storage.
+- Signed-in data is stored in Supabase tables with RLS protection.
+- `supabase-config.ts` contains only the public publishable key.
+- Never place service-role or database secrets in browser code.
+
+### Notifications and monitoring
+- `service-worker.js` handles push notifications.
+- `scripts/send-price-alerts.mjs` sends alerts using VAPID credentials.
+- GitHub Actions monitors offer-source changes and can alert when a source changes.
+- Keep VAPID private keys and `SUPABASE_SERVICE_ROLE_KEY` in GitHub Actions secrets or local ignored env files, not in the repo.
+
+## Important files
+
+- `README.md` — project setup and operational notes
+- `BACKEND_PLAN.md` — architecture notes, pricing, and deployment constraints
+- `offers.ts` — canonical offer list and metadata
+- `app.ts` — main UI behavior and client-side state
+- `supabase-client.ts` — Supabase client setup
+- `supabase-config.ts` — public Supabase settings
+- `account.ts` — account, preferences, rules, and subscription logic
+- `theme.ts` — theme persistence
+- `scripts/build-offer-feed.mjs` — feed generation
+- `scripts/send-price-alerts.mjs` — notifications sender
+- `scripts/check-site-health.mjs` — health validation
+- `supabase/migrations/*` — database schema changes
+- `supabase/functions/delete-account/index.ts` — secure account deletion function
+
+## Working rules for this repo
+
+### Always do this
+- Prefer source edits in TypeScript files instead of editing generated `.js` bundles.
+- Run the smallest relevant validation after a change.
+- Keep the repo aligned with the static hosting build flow: `tsc` + feed generation + bundling.
+- Preserve the public/private key split: public keys in frontend config, private keys in env/secrets only.
+- Keep user-facing output brief, direct, and practical.
+
+### Never do this
+- Do not commit Supabase service-role keys or database secrets to frontend files.
+- Do not hardcode private VAPID keys into the app or repo.
+- Do not edit generated JavaScript files as the primary fix path.
+- Do not add unrelated investigation or broad refactors when a targeted fix is enough.
+
+## Local development commands
+
+```bash
+npm ci
+npm run build
+npm test
+npm run check:site
+npm run send:price-alerts
+```
+
+## Safety and auth guidance
+
+- Publishable Supabase keys are safe for the browser because they are designed for public use.
+- Service-role keys and admin secrets must stay server-side.
+- For account deletion, prefer the dedicated Supabase Edge Function and require explicit confirmation before deletion.
+- Source monitoring and price alerts should never guess prices when a source is uncertain.
+
+## Token-saving workflow preferences
+
+This repo explicitly prefers a compact, low-noise agent style.
+
+- Use Caveman Ultra style for assistant responses: short, direct, no fluff.
+- Use RTK v0.50.0 when available and configured in the shell; if the global Codex hook is not available yet, use RTK directly when possible.
+- Keep searches and file reads precise and limited to the files needed for the task.
+- Prefer targeted reads and narrow line ranges over broad scans.
+- Show summaries, not huge logs, for long-running commands.
+- Avoid repeated context gathering and unrelated exploration.
+- Treat the build/test/test-run loop as the source of truth for validation.
+
+### Practical RTK/Caveman workflow
+1. Define the exact task and the minimal file set.
+2. Run one targeted search or symbol lookup.
+3. Read only the exact file/sections needed.
+4. Make the minimal fix.
+5. Validate with the smallest relevant command.
+6. Report only the outcome, the verification, and any follow-up risk.
+
+## Response expectations for future agents
+
+When working in this repo, keep the interaction crisp:
+- State what you are checking.
+- Fix the root cause.
+- Validate with a narrow command.
+- Summarize the result and any caveats.
+
+Use the existing repo knowledge, not generic assumptions. The site is a static frontend with Supabase-backed user features, not a full backend app.

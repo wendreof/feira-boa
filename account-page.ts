@@ -5,12 +5,15 @@ import {
   getCurrentUser,
   loadAccountSettings,
   removeAlertRule,
+  removePushSubscription,
   savePreferences,
+  savePushSubscription,
   setNotificationsPaused,
   signOut,
   type AlertRule,
 } from "./account";
 import type { OfferFeed, ProfilePreferences } from "./types";
+import { vapidPublicKey } from "./supabase-config";
 
 const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
@@ -19,17 +22,33 @@ const deleteAccountButton = document.querySelector<HTMLButtonElement>("#delete-a
 const favoritesForm = document.querySelector<HTMLFormElement>("#favorite-preferences")!;
 const alertForm = document.querySelector<HTMLFormElement>("#alert-rule-form")!;
 const favoriteStores = document.querySelector<HTMLFieldSetElement>("#favorite-stores")!;
-const favoriteProducts = document.querySelector<HTMLFieldSetElement>("#favorite-products")!;
+const favoriteProductTypes = document.querySelector<HTMLFieldSetElement>("#favorite-product-types")!;
 const alertStore = document.querySelector<HTMLSelectElement>("#alert-store")!;
 const alertProduct = document.querySelector<HTMLSelectElement>("#alert-product")!;
 const targetPrice = document.querySelector<HTMLInputElement>("#target-price")!;
 const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules")!;
 const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused")!;
 const pushStatus = document.querySelector<HTMLElement>("#push-status")!;
+const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push")!;
+const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push")!;
 
 let userId = "";
 let preferences: ProfilePreferences;
 let rules: AlertRule[] = [];
+
+function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
+  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = window.atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "="));
+  const bytes = new Uint8Array(new ArrayBuffer(binary.length));
+  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  return bytes;
+}
+
+function updatePushControls(isEnabled: boolean, enabledElsewhere = false): void {
+  pushStatus.textContent = isEnabled ? "Ativado neste dispositivo" : enabledElsewhere ? "Ativado em outro dispositivo" : "Ainda não ativado";
+  enablePushButton.hidden = isEnabled;
+  disablePushButton.hidden = !isEnabled;
+}
 
 function setStatus(message: string): void {
   status.textContent = message;
@@ -128,7 +147,7 @@ favoritesForm.addEventListener("submit", async (event) => {
   button.disabled = true;
   setStatus("Salvando preferências…");
   preferences.favoriteStores = checkedValues(favoriteStores);
-  preferences.favoriteProducts = checkedValues(favoriteProducts);
+  preferences.favoriteProductTypes = checkedValues(favoriteProductTypes);
   try {
     await savePreferences(userId, preferences);
     setStatus("Preferências salvas e sincronizadas.");
@@ -193,6 +212,57 @@ notificationsPaused.addEventListener("change", async () => {
   }
 });
 
+enablePushButton.addEventListener("click", async () => {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
+    setStatus("Este navegador não oferece suporte a notificações push.");
+    return;
+  }
+  const approved = window.confirm("A Feira Boa poderá enviar alertas de preço que você criou, com produto, loja, preço e validade da oferta. Deseja ativar notificações neste dispositivo?");
+  if (!approved) return;
+
+  enablePushButton.disabled = true;
+  setStatus("Solicitando permissão para notificações…");
+  try {
+    const permission = Notification.permission === "default" ? await Notification.requestPermission() : Notification.permission;
+    if (permission !== "granted") {
+      throw new Error(permission === "denied" ? "Permissão bloqueada no navegador. Altere-a nas configurações do site." : "Permissão não concedida.");
+    }
+    const registration = await navigator.serviceWorker.register("service-worker.js");
+    const readyRegistration = await navigator.serviceWorker.ready;
+    const subscription = await readyRegistration.pushManager.getSubscription() ?? await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: decodeApplicationServerKey(vapidPublicKey),
+    });
+    await savePushSubscription(userId, subscription);
+    updatePushControls(true);
+    setStatus("Notificações ativadas neste dispositivo.");
+  } catch (error) {
+    setStatus(`Não foi possível ativar notificações: ${errorMessage(error)}`);
+  } finally {
+    enablePushButton.disabled = false;
+  }
+});
+
+disablePushButton.addEventListener("click", async () => {
+  disablePushButton.disabled = true;
+  setStatus("Desativando notificações neste dispositivo…");
+  try {
+    const registration = await navigator.serviceWorker.getRegistration();
+    const subscription = await registration?.pushManager.getSubscription();
+    if (subscription) {
+      await removePushSubscription(userId, subscription.endpoint);
+      const removed = await subscription.unsubscribe();
+      if (!removed) throw new Error("O navegador não confirmou o cancelamento.");
+    }
+    updatePushControls(false);
+    setStatus("Notificações desativadas neste dispositivo.");
+  } catch (error) {
+    setStatus(`Não foi possível desativar notificações: ${errorMessage(error)}`);
+  } finally {
+    disablePushButton.disabled = false;
+  }
+});
+
 void getCurrentUser()
   .then(async (user) => {
     if (!user) {
@@ -211,12 +281,14 @@ void getCurrentUser()
     preferences = settings.preferences;
     rules = settings.alertRules;
     notificationsPaused.checked = settings.notificationsPaused;
-    pushStatus.textContent = settings.pushEnabled ? "Ativado neste dispositivo" : "Ainda não ativado";
+    const existingRegistration = await navigator.serviceWorker?.getRegistration();
+    const currentSubscription = await existingRegistration?.pushManager.getSubscription();
+    updatePushControls(Boolean(currentSubscription), settings.pushEnabled);
 
     const stores = [...new Set(response.offers.map((offer) => offer.store))].sort((a, b) => a.localeCompare(b, "pt-BR"));
-    const productTypes = [...new Set(response.offers.map((offer) => offer.productType))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
     renderCheckboxes(favoriteStores, stores, preferences.favoriteStores);
-    renderCheckboxes(favoriteProducts, productTypes, preferences.favoriteProducts);
+    renderCheckboxes(favoriteProductTypes, productTypes, preferences.favoriteProductTypes);
     alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
     alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
     renderRules();

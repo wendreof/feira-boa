@@ -19,6 +19,7 @@ export interface Offer {
   category: string;
   department: string;
   productType: string;
+  productTypes: string[];
   price: number;
   previousPrice: number | null;
   icon: string;
@@ -38,8 +39,7 @@ export interface OfferFeed {
 }
 
 export interface ProfilePreferences {
-  [key: string]: string[];
   favoriteOfferIds: string[];
   favoriteStores: string[];
-  favoriteProducts: string[];
+  favoriteProductTypes: string[];
 }

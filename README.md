@@ -16,7 +16,7 @@ The current data file contains a transcription of both pages of the Sempre Vale 
 
 ## Run locally
 
-The app uses TypeScript for offer data and browser interactions. Run `npm ci` and `npm run build` to compile the TypeScript and generate `offers.json`. This versioned feed contains stable offer IDs and the timestamp of the latest offer-data update; update `offersUpdatedAt` in `offers.ts` whenever the curated offers change. The feed is the shared source for the website and scheduled matching jobs. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+The app uses TypeScript for offer data and browser interactions. Run `npm ci` and `npm run build` to compile the TypeScript and generate `offers.json` plus ignored `build-info.json`. The site footer shows the semantic version, commit, build time, and whether local changes were present. The offers feed contains stable offer IDs and the timestamp of the latest offer-data update; update `offersUpdatedAt` in `offers.ts` whenever the curated offers change. The feed is the shared source for the website and scheduled matching jobs. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
 
 ## Supabase accounts
 
@@ -24,11 +24,15 @@ Email accounts are optional and use the dedicated `login.html` page. Guest favor
 
 Before enabling account sync in the Supabase project:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql` in the project SQL Editor.
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql` and then `supabase/migrations/202610180002_favorite_product_types.sql` in the project SQL Editor.
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
 3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
 
 The app remains browsable without an account. Until the migration and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
+
+The account page saves favorite stores/product types, price alert rules, pause state, and optional browser push subscriptions. Push permission is requested only after the user chooses to enable it and confirms the alert contents. `service-worker.js` displays incoming alerts and opens the linked offer. The VAPID public key is safe to include in `supabase-config.ts`; the private key is kept only in the ignored local `supabase/functions/.env` during development. Move the private key to GitHub Actions Secrets before enabling the production sender. Subscriptions can be created now, but alerts are not sent until Phase 4 is deployed.
+
+The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `VAPID_PRIVATE_KEY`, and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. `SITE_URL` is also used as the VAPID subject. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and both SQL migrations are in place.
 
 ## Scheduled source monitoring and production
 

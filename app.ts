@@ -107,7 +107,7 @@ async function saveFavoriteChanges(): Promise<void> {
 }
 
 let preferences: ProfilePreferences = {
-  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProducts: [],
+  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [],
 };
 
 async function connectAccount(userId: string): Promise<void> {
@@ -178,7 +178,7 @@ function isActive(offer: Offer): boolean {
 function matchesSearch(offer: Offer, query: string): boolean {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
   if (!terms.length) return true;
-  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, offer.productType, offer.store, offer.branch, offer.note].join(" "));
+  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, offer.store, offer.branch, offer.note].join(" "));
   const words = searchable.split(" ");
   return terms.every((term) => {
     const variants = [term, ...(searchEquivalents[term] || [])];
@@ -207,7 +207,7 @@ function renderFilters(): void {
     return `<button class="filter ${department === activeDepartment ? "active" : ""}" type="button" data-department="${department}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${department} · ${count}</button>`;
   }).join("");
 
-  const types = [...new Set(offers.filter((offer) => isActive(offer) && (activeDepartment === "Todos os setores" || offer.department === activeDepartment) && (activeStore === "Todas as lojas" || offer.store === activeStore)).map((offer) => offer.productType))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+  const types = [...new Set(offers.filter((offer) => isActive(offer) && (activeDepartment === "Todos os setores" || offer.department === activeDepartment) && (activeStore === "Todas as lojas" || offer.store === activeStore)).flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
   productTypeSelect.innerHTML = `<option value="">Todos os tipos</option>${types.map((type) => `<option value="${type}">${type}</option>`).join("")}`;
   if (!types.includes(activeProductType)) activeProductType = "";
   productTypeSelect.value = activeProductType;
@@ -228,7 +228,7 @@ function renderOffers(): void {
   let matching = priceRangeReversed ? [] : offers.filter((offer) =>
     (sharedOfferId ? offer.id === sharedOfferId : isActive(offer)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
     (sharedOfferId || activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
-    (sharedOfferId || !activeProductType || offer.productType === activeProductType) &&
+    (sharedOfferId || !activeProductType || offer.productTypes.includes(activeProductType)) &&
     (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
     (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
   );

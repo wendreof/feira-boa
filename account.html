@@ -32,7 +32,7 @@
         <p class="preferences-help">Essas escolhas ficam salvas na sua conta.</p>
         <form id="favorite-preferences" class="preferences-form">
           <fieldset><legend>Lojas</legend><div id="favorite-stores" class="preference-options"><span>Carregando…</span></div></fieldset>
-          <fieldset><legend>Tipos de produto</legend><div id="favorite-products" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <fieldset><legend>Tipos de produto</legend><div id="favorite-product-types" class="preference-options"><span>Carregando…</span></div></fieldset>
           <button class="account-button" type="submit">Salvar favoritos</button>
         </form>
       </section>
@@ -51,7 +51,11 @@
         </form>
         <ul id="alert-rules" class="alert-rules"><li class="preference-empty">Carregando alertas…</li></ul>
         <label class="pause-alerts"><input id="notifications-paused" type="checkbox"><span>Pausar alertas</span></label>
-        <p class="preferences-help push-status">Notificações neste dispositivo: <strong id="push-status">Verificando…</strong></p>
+        <div class="push-controls">
+          <p class="preferences-help push-status">Notificações neste dispositivo: <strong id="push-status">Verificando…</strong></p>
+          <button type="button" class="account-button" id="enable-push">Ativar notificações</button>
+          <button type="button" class="account-button secondary" id="disable-push" hidden>Desativar neste dispositivo</button>
+        </div>
       </section>
 
       <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
@@ -62,7 +66,8 @@
     </section>
   </main>
 
-  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span></footer>
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <script src="site-version.js"></script>
   <script src="account.js"></script>
 </body>
 </html>

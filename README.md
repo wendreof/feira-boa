@@ -25,7 +25,7 @@ Email accounts are optional and use the dedicated `login.html` page. Guest favor
 
 The first three migrations below were applied to the production Supabase project on 2026-10-18. Run every migration in order for a new environment before enabling account sync, suggestions, and offer votes:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `supabase/migrations/202610180002_favorite_product_types.sql`, `supabase/migrations/202610180003_theme_preference.sql`, `supabase/migrations/202610180004_suggestions.sql`, and `supabase/migrations/202610180005_offer_reactions.sql` in the project SQL Editor.
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `supabase/migrations/202610180002_favorite_product_types.sql`, `supabase/migrations/202610180003_theme_preference.sql`, `supabase/migrations/202610180004_suggestions.sql`, `supabase/migrations/202610180005_offer_reactions.sql`, and `supabase/migrations/202610180006_offer_reaction_permissions.sql` in the project SQL Editor.
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
 3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
 

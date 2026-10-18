@@ -30,3 +30,12 @@ export async function saveOfferReaction(userId: string, offerId: string, reactio
     .upsert({ user_id: userId, offer_id: offerId, reaction }, { onConflict: "user_id,offer_id" });
   if (error) throw error;
 }
+
+export async function deleteOfferReaction(userId: string, offerId: string): Promise<void> {
+  const { error } = await supabase
+    .from("offer_reactions")
+    .delete()
+    .eq("user_id", userId)
+    .eq("offer_id", offerId);
+  if (error) throw error;
+}

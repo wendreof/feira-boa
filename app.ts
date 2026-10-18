@@ -1,7 +1,9 @@
 import { errorMessage, getCurrentUser, loadPreferences, savePreferences } from "./account";
 import type { Offer, OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
-import { loadOfferReactionCounts, loadUserOfferReactions, saveOfferReaction, type OfferReaction, type OfferReactionCounts } from "./offer-reactions";
+import { deleteOfferReaction, loadOfferReactionCounts, loadUserOfferReactions, saveOfferReaction, type OfferReaction, type OfferReactionCounts } from "./offer-reactions";
+import { resolveDefaultViewMode } from "./view-mode.js";
+import { showTransientStatus } from "./status-toast.js";
 
 declare global {
   interface Window {
@@ -48,6 +50,7 @@ let activeStore = "Todas as lojas";
 let activeProductType = "";
 let favoriteIds = readGuestFavorites();
 let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
+const mobileViewMedia = window.matchMedia("(max-width: 760px)");
 let viewMode: "grid" | "list" = readViewMode();
 let currentUserId: string | null = null;
 let preferencesLoaded = false;
@@ -69,17 +72,27 @@ function readGuestFavorites(): Set<string> {
 
 function readViewMode(): "grid" | "list" {
   try {
-    return localStorage.getItem("feira-boa:view-mode:v1") === "list" ? "list" : "grid";
+    return resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
   } catch {
-    return "grid";
+    return resolveDefaultViewMode(null, mobileViewMedia.matches);
   }
 }
 
 function updateViewMode(): void {
   grid.classList.toggle("list-view", viewMode === "list");
   viewToggle.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.viewMode === viewMode));
+    const isSelected = button.dataset.viewMode === viewMode;
+    button.setAttribute("aria-pressed", String(isSelected));
+    button.disabled = mobileViewMedia.matches && button.dataset.viewMode !== "list";
   });
+}
+
+function persistViewMode(mode: "grid" | "list"): void {
+  try {
+    localStorage.setItem("feira-boa:view-mode:v1", mode);
+  } catch {
+    // Keep the selected view for this page even when storage is unavailable.
+  }
 }
 
 function setAccountStatus(message: string): void {
@@ -282,10 +295,11 @@ function renderOffers(): void {
     const currentReaction = userReactions.get(offer.id);
     return `
     <article class="offer-card">
-      <div class="visual" style="--tone:${offer.tone}"><span class="product-art" role="img" aria-label="Ilustração de ${offer.name}">${offer.icon}</span><span class="offer-sticker">OFERTA</span><button class="favorite-toggle" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos">${favoriteIds.has(offer.id) ? "♥" : "♡"}</button></div>
-      <div class="card-body"><div class="offer-store"><span class="offer-store-logo ${offer.store === "Big Bom" ? "bigbom-mark" : ""}"><span class="store-logo-fallback" aria-hidden="true">${storeInitials}</span>${offer.storeLogo ? `<img src="${offer.storeLogo}" alt="" loading="lazy" onload="this.parentElement.classList.add('has-logo')" onerror="this.remove()">` : ""}</span><span class="category">${offer.productType} · ${offer.store}</span></div><h3>${offer.name}</h3><span class="spec">${offer.brand ? `${offer.brand} · ` : ""}${offer.detail}</span>
+      <div class="visual" style="--tone:${offer.tone}"><span class="offer-sticker">OFERTA</span><span class="product-art" role="img" aria-label="Ilustração de ${offer.name}">${offer.icon}</span><button class="favorite-toggle favorite-toggle-art" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div>
+      <div class="card-body"><div class="offer-store"><span class="offer-store-logo ${offer.store === "Big Bom" ? "bigbom-mark" : ""}"><span class="store-logo-fallback" aria-hidden="true">${storeInitials}</span>${offer.storeLogo ? `<img src="${offer.storeLogo}" alt="" loading="lazy" onload="this.parentElement.classList.add('has-logo')" onerror="this.remove()">` : ""}</span><span class="category">${offer.productType}</span></div><h3>${offer.name}</h3><span class="spec">${offer.brand ? `${offer.brand} · ` : ""}${offer.detail}</span>
         <div class="price-row"><div><span class="price">${money(offer.price)}</span>${offer.previousPrice ? `<span class="old-price">${money(offer.previousPrice)}</span>` : ""}</div><span class="valid-until">Válido<strong>${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}</strong></span></div>
         <div class="offer-reactions" role="group" aria-label="Esta oferta vale a pena?">
+          <button class="favorite-toggle favorite-toggle-reaction" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
           <button class="offer-reaction-button${currentReaction === "like" ? " selected" : ""}" type="button" data-reaction="like" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "like"}" aria-label="Gostei desta oferta, ${counts.likes} votos" title="${currentUserId ? "Gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👍</span><span>${counts.likes}</span></button>
           <button class="offer-reaction-button${currentReaction === "dislike" ? " selected" : ""}" type="button" data-reaction="dislike" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "dislike"}" aria-label="Não gostei desta oferta, ${counts.dislikes} votos" title="${currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👎</span><span>${counts.dislikes}</span></button>
         </div>
@@ -331,17 +345,17 @@ grid.addEventListener("click", async (event: MouseEvent) => {
   try {
     if (navigator.share) {
       await navigator.share({ title, text, url });
-      shareStatus.textContent = "Oferta compartilhada.";
+      showTransientStatus(shareStatus, "Oferta compartilhada.");
     } else if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(url);
-      shareStatus.textContent = "Link da oferta copiado.";
+      showTransientStatus(shareStatus, "Link da oferta copiado.");
     } else {
       window.prompt("Copie o link para compartilhar esta oferta:", url);
-      shareStatus.textContent = "Link da oferta pronto para copiar.";
+      showTransientStatus(shareStatus, "Link da oferta pronto para copiar.");
     }
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") return;
-    shareStatus.textContent = "Não foi possível abrir o compartilhamento. Tente novamente.";
+    showTransientStatus(shareStatus, "Não foi possível abrir o compartilhamento. Tente novamente.");
   } finally {
     button.disabled = false;
   }
@@ -366,16 +380,31 @@ grid.addEventListener("click", async (event: MouseEvent) => {
   button.disabled = true;
   try {
     const previousReaction = userReactions.get(offerId);
-    await saveOfferReaction(currentUserId, offerId, reaction);
-    userReactions.set(offerId, reaction);
     const counts = { ...(reactionCounts.get(offerId) ?? { likes: 0, dislikes: 0 }) };
-    if (previousReaction && previousReaction !== reaction) counts[previousReaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[previousReaction === "like" ? "likes" : "dislikes"] - 1);
-    if (previousReaction !== reaction) counts[reaction === "like" ? "likes" : "dislikes"] += 1;
-    reactionCounts.set(offerId, counts);
-    shareStatus.textContent = "Sua avaliação foi salva.";
+
+    if (previousReaction === reaction) {
+      await deleteOfferReaction(currentUserId, offerId);
+      userReactions.delete(offerId);
+      counts[reaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[reaction === "like" ? "likes" : "dislikes"] - 1);
+      reactionCounts.set(offerId, counts);
+      showTransientStatus(shareStatus, "Sua avaliação foi removida.");
+    } else {
+      await saveOfferReaction(currentUserId, offerId, reaction);
+      userReactions.set(offerId, reaction);
+      if (previousReaction && previousReaction !== reaction) {
+        counts[previousReaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[previousReaction === "like" ? "likes" : "dislikes"] - 1);
+      }
+      counts[reaction === "like" ? "likes" : "dislikes"] += 1;
+      reactionCounts.set(offerId, counts);
+      showTransientStatus(shareStatus, "Sua avaliação foi salva.");
+    }
+
+    const refreshedCounts = await loadOfferReactionCounts();
+    reactionCounts = refreshedCounts;
     renderOffers();
   } catch (error) {
-    shareStatus.textContent = `Não foi possível salvar sua avaliação: ${errorMessage(error)}`;
+    showTransientStatus(shareStatus, `Não foi possível salvar sua avaliação: ${errorMessage(error)}`);
+  } finally {
     button.disabled = false;
   }
 });
@@ -426,12 +455,20 @@ viewToggle.addEventListener("click", (event: MouseEvent) => {
   if (!(target instanceof Element)) return;
   const button = target.closest<HTMLButtonElement>("[data-view-mode]");
   if (button?.dataset.viewMode !== "grid" && button?.dataset.viewMode !== "list") return;
-  viewMode = button.dataset.viewMode;
-  try {
-    localStorage.setItem("feira-boa:view-mode:v1", viewMode);
-  } catch {
-    // Keep the selected view for this page even when storage is unavailable.
+  if (mobileViewMedia.matches) {
+    viewMode = "list";
+    persistViewMode(viewMode);
+    updateViewMode();
+    return;
   }
+  viewMode = button.dataset.viewMode;
+  persistViewMode(viewMode);
+  updateViewMode();
+});
+
+mobileViewMedia.addEventListener?.("change", () => {
+  viewMode = resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
+  persistViewMode(viewMode);
   updateViewMode();
 });
 favoritesToggle.addEventListener("click", () => {

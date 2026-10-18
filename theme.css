@@ -142,6 +142,11 @@
   color: #b6e5bf;
 }
 
+:root[data-theme="dark"] .favorite-toggle[aria-pressed="true"] {
+  background: #38533d;
+  color: #d9f2a8;
+}
+
 :root[data-theme="dark"] .offer-note {
   background: #3a321e;
   color: #f0d89a;

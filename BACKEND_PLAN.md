@@ -87,3 +87,37 @@ Free tiers are useful for a small pilot but can change. As checked on 2026-10-16
 
 **Yes, for the app and alert-matching code.** The project already uses TypeScript, and the same `Offer`, `AlertRule`, and notification types can be shared across the frontend and scheduled matcher. This helps keep fields and filtering rules consistent as the backend grows. Keep the existing Python source-monitor script for now; rewriting a working small script would add work without improving user features. TypeScript is a practical fit here, not a requirement for every tool in the project.
 
+## Automatic grocery offer ingestion
+
+**Requirement:** Offers must load and publish without manual transcription or review. Use free tiers only; do not add paid OCR, AI, or scraping services.
+
+### Design
+
+- Keep Cloudflare Pages as the static host and GitHub Actions as the scheduler. Add one scheduled workflow per grocery shop so each source has independent parsing, cadence, failures, and logs.
+- Give each shop a small adapter that fetches its official page, feed, PDF, or flyer and emits the common offer schema. Preserve store, branch, product, brand, package size, price, unit price when available, conditions, validity dates, source URL, and fetch time.
+- Prefer structured product data or readable HTML. For flyer PDFs, extract embedded text first; use free, open-source OCR on the GitHub Actions runner only when needed. Do not send source documents to paid or third-party AI APIs.
+- Write shop results to separate generated JSON files. Build the public offer feed from those files so the website and future alert matcher read the same records.
+- Publish automatically only after deterministic checks pass: required fields exist, prices and dates parse, validity is current, product/price patterns are plausible, and duplicate records are removed. Checks do not require a person.
+- If a fetch or extraction fails, retain the last known good result, record the failure, and exclude expired records from the public feed. Show last-updated time so stale data is visible. Never replace good data with an empty or malformed scrape.
+- Commit generated data only when it changes. Cloudflare Pages deploys from that commit. Keep credentials out of the frontend and avoid secrets unless a shop source truly requires authentication.
+
+### Rollout
+
+1. Inventory each store's official source and classify it as structured feed, HTML page, text PDF, or image-only flyer. Confirm robots/terms and fetch behavior.
+2. Build one adapter and scheduled workflow per shop, starting with the most structured source. Add a workflow-dispatch option for manual operational reruns; this does not introduce manual offer review.
+3. Add text extraction and, if needed, open-source OCR for flyers. Normalize results into the common schema and run automated validation.
+4. Deploy each shop's output automatically when valid. Keep a previous good snapshot and automatically omit data that has expired or cannot be refreshed safely.
+5. Track run minutes, failures, source format changes, and data age. Adjust per-shop cadence to fit GitHub's free Actions allowance; run less often for weekly flyers and more often only where offers change frequently.
+
+### Free-tier limits and accuracy trade-off
+
+- Use GitHub Actions, Cloudflare Pages, and open-source extraction tools on ephemeral runners. Avoid a database, always-on server, paid OCR, and paid AI calls for this first version.
+- Scheduled GitHub Actions are best-effort and may start late. Check current free-tier limits and measured minutes before adding schedules; no free tier guarantees permanent availability or unchanged quotas.
+- Fully automatic flyer OCR can misread prices, package sizes, or dates. Automated rules reduce obvious errors but cannot guarantee perfect extraction. To honor the no-manual-review requirement, low-confidence or invalid results are skipped and the last known good, still-valid offers remain; expired offers are hidden. This favors missing a new offer over publishing a guessed price.
+
+## Token-saving workflow preferences
+
+- Use Caveman Ultra style for concise assistant responses.
+- Caveman components and RTK v0.50.0 are installed. Configure RTK's global Codex hook after a refreshed shell can find `rtk`; until then, use RTK directly when available. RTK filters supported shell commands; it does not reduce built-in file reads or conversation text.
+- Keep searches and file reads scoped to relevant files and line ranges. Prefer summaries and failures-only output for long-running commands.
+- Avoid unrelated investigation and repeated context. Run only checks needed for the requested work.

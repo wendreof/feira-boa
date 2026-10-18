@@ -23,7 +23,8 @@
       <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
       <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta"><span aria-hidden="true">◉</span><span data-account-label>Minha conta</span></a>
       <div class="sidebar-subnav" aria-label="Seções da minha conta">
-        <a href="account-favorites.html" aria-current="page">Favoritos</a>
+        <a href="account-stores.html">Lojas favoritas</a>
+        <a href="account-favorites.html" aria-current="page">Produtos favoritos</a>
         <a href="account-alerts.html">Alertas de preço</a>
       </div>
       <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
@@ -36,16 +37,15 @@
     <a class="back-link" href="account.html">← Minha conta</a>
     <section class="auth-card account-settings-card" aria-labelledby="account-title">
       <p class="eyebrow"><span class="pulse"></span> Preferências</p>
-      <h1 id="account-title">Lojas e produtos favoritos</h1>
-      <p class="auth-description">Personalize as ofertas que mais interessam a você.</p>
+      <h1 id="account-title">Tipos de produto favoritos</h1>
+      <p class="auth-description">Escolha os produtos que deseja acompanhar.</p>
       <div class="account-identity"><span class="account-identity-label">Conectado como</span><strong id="account-email">Verificando sessão…</strong></div>
       <section class="preferences-section" aria-labelledby="favorites-title">
-        <h2 id="favorites-title">Suas preferências</h2>
-        <p class="preferences-help">Escolha as lojas e os tipos de produto que deseja acompanhar.</p>
+        <h2 id="favorites-title">Produtos</h2>
+        <p class="preferences-help">Essas escolhas ficam salvas na sua conta.</p>
         <form id="favorite-preferences" class="preferences-form">
-          <fieldset><legend>Lojas</legend><div id="favorite-stores" class="preference-options"><span>Carregando…</span></div></fieldset>
           <fieldset><legend>Tipos de produto</legend><div id="favorite-product-types" class="preference-options"><span>Carregando…</span></div></fieldset>
-          <button class="account-button" type="submit">Salvar favoritos</button>
+          <button class="account-button" type="submit">Salvar produtos favoritos</button>
         </form>
       </section>
       <p id="account-status" class="account-status" role="status" aria-live="polite"></p>

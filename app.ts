@@ -4,13 +4,7 @@ import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { deleteOfferReaction, loadOfferReactionCounts, loadUserOfferReactions, saveOfferReaction, type OfferReaction, type OfferReactionCounts } from "./offer-reactions";
 import { resolveDefaultViewMode } from "./view-mode.js";
 import { showTransientStatus } from "./status-toast.js";
-
-declare global {
-  interface Window {
-    FEIRA_SOURCE_ALERTS?: Array<{ url: string; message: string }>;
-    FEIRA_SOURCE_STATUS?: Record<string, { checkedAt?: string; lastSuccessAt?: string; error?: boolean; needsReview?: boolean }>;
-  }
-}
+import { applySourceFreshness } from "./source-freshness";
 
 (async function startApp(): Promise<void> {
 const feedResponse = await fetch("offers.json");
@@ -351,19 +345,20 @@ grid.addEventListener("click", async (event: MouseEvent) => {
   if (!button || !offer) return;
 
   const url = shareUrlForOffer(offer.id);
-  const title = `${offer.name} por ${money(offer.price)} · Feira Boa`;
-  const text = `${offer.name} por ${money(offer.price)} no ${offer.store}. Confira a oferta:`;
+  const title = `${offer.icon} ${offer.name} por ${money(offer.price)} · Feira Boa`;
+  const text = `${offer.icon} ${offer.name} por ${money(offer.price)} no ${offer.store}. Confira a oferta:`;
+  const shareMessage = `${text}\n${url}`;
   button.disabled = true;
   try {
     if (navigator.share) {
       await navigator.share({ title, text, url });
       showTransientStatus(shareStatus, "Oferta compartilhada.");
     } else if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(url);
-      showTransientStatus(shareStatus, "Link da oferta copiado.");
+      await navigator.clipboard.writeText(shareMessage);
+      showTransientStatus(shareStatus, "Mensagem da oferta copiada.");
     } else {
-      window.prompt("Copie o link para compartilhar esta oferta:", url);
-      showTransientStatus(shareStatus, "Link da oferta pronto para copiar.");
+      window.prompt("Copie a mensagem para compartilhar esta oferta:", shareMessage);
+      showTransientStatus(shareStatus, "Mensagem da oferta pronta para copiar.");
     }
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") return;
@@ -503,25 +498,7 @@ document.addEventListener("keydown", (event: KeyboardEvent) => {
   if (event.key === "/" && document.activeElement !== input) { event.preventDefault(); input.focus(); }
 });
 
-const sourceAlerts = window.FEIRA_SOURCE_ALERTS || [];
-const sourceStatus = window.FEIRA_SOURCE_STATUS || {};
-document.querySelectorAll<HTMLElement>("[data-source-url]").forEach((element) => {
-  const status = sourceStatus[element.dataset.sourceUrl || ""];
-  if (!status) return;
-  const lastSuccess = status.lastSuccessAt ? new Date(status.lastSuccessAt) : null;
-  const checked = status.checkedAt ? new Date(`${status.checkedAt}T00:00:00`) : null;
-  const checkedLabel = checked && !Number.isNaN(checked.getTime()) ? ` · verificada em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(checked)}` : "";
-  if (status.needsReview) {
-    element.textContent = `A fonte mudou e aguarda conferência${checkedLabel}`;
-    element.classList.add("source-freshness-warning");
-  } else if (status.error) {
-    const successLabel = lastSuccess && !Number.isNaN(lastSuccess.getTime()) ? ` Último acesso bem-sucedido: ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(lastSuccess)}.` : " Ainda sem acesso bem-sucedido registrado.";
-    element.textContent = `Não foi possível verificar a fonte agora.${successLabel}`;
-    element.classList.add("source-freshness-error");
-  } else if (checked) {
-    element.textContent = `Fonte consultada em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(checked)} · isso não confirma que os preços foram atualizados.`;
-  }
-});
+const sourceAlerts = applySourceFreshness();
 const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
 updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
 if (sourceAlerts.length > 0) {

@@ -30,6 +30,7 @@ const targetPrice = document.querySelector<HTMLInputElement>("#target-price");
 const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules");
 const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused");
 const pushStatus = document.querySelector<HTMLElement>("#push-status");
+const pushHelp = document.querySelector<HTMLElement>("#push-help");
 const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push");
 const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push");
 
@@ -65,9 +66,18 @@ function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
 
 function updatePushControls(isEnabled: boolean, enabledElsewhere = false): void {
   if (!pushStatus || !enablePushButton || !disablePushButton) return;
-  pushStatus.textContent = isEnabled ? "Ativado neste dispositivo" : enabledElsewhere ? "Ativado em outro dispositivo" : "Ainda não ativado";
+  const permissionDenied = "Notification" in window && Notification.permission === "denied";
+  pushStatus.textContent = isEnabled
+    ? "Ativado neste dispositivo"
+    : permissionDenied
+      ? "Bloqueado nas permissões do navegador"
+      : enabledElsewhere
+        ? "Ativado em outro dispositivo"
+        : "Ainda não ativado";
   enablePushButton.hidden = isEnabled;
+  enablePushButton.disabled = permissionDenied;
   disablePushButton.hidden = !isEnabled;
+  if (pushHelp) pushHelp.hidden = !permissionDenied;
 }
 
 function setStatus(message: string): void {
@@ -164,13 +174,13 @@ deleteAccountButton.addEventListener("click", async () => {
   }
 });
 
-if (favoritesForm && favoriteStores && favoriteProductTypes) favoritesForm.addEventListener("submit", async (event) => {
+if (favoritesForm && (favoriteStores || favoriteProductTypes)) favoritesForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const button = favoritesForm.querySelector<HTMLButtonElement>("button[type='submit']")!;
   button.disabled = true;
   setStatus("Salvando preferências…");
-  preferences.favoriteStores = checkedValues(favoriteStores);
-  preferences.favoriteProductTypes = checkedValues(favoriteProductTypes);
+  if (favoriteStores) preferences.favoriteStores = checkedValues(favoriteStores);
+  if (favoriteProductTypes) preferences.favoriteProductTypes = checkedValues(favoriteProductTypes);
   try {
     await savePreferences(userId, preferences);
     setStatus("Preferências salvas e sincronizadas.");
@@ -260,9 +270,12 @@ enablePushButton?.addEventListener("click", async () => {
     updatePushControls(true);
     setStatus("Notificações ativadas neste dispositivo.");
   } catch (error) {
-    setStatus(`Não foi possível ativar notificações: ${errorMessage(error)}`);
+    const message = errorMessage(error);
+    setStatus(message.toLowerCase().includes("push service error")
+      ? "O serviço de notificações do navegador falhou. Verifique a conexão e tente novamente."
+      : `Não foi possível ativar notificações: ${message}`);
   } finally {
-    enablePushButton.disabled = false;
+    enablePushButton.disabled = Notification.permission === "denied";
   }
 });
 

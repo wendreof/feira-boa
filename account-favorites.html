@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <meta name="robots" content="noindex, follow">
+  <title>Favoritos da conta — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
+  <link rel="stylesheet" href="styles.css?v=20261018-account-sidebar-pages">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
+  </header>
+  <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
+    <nav class="sidebar-nav" aria-label="Navegação principal">
+      <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
+      <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
+      <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta"><span aria-hidden="true">◉</span><span data-account-label>Minha conta</span></a>
+      <div class="sidebar-subnav" aria-label="Seções da minha conta">
+        <a href="account-favorites.html" aria-current="page">Favoritos</a>
+        <a href="account-alerts.html">Alertas de preço</a>
+      </div>
+      <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
+    </nav>
+    <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
+  </aside>
+  <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu" tabindex="-1"></button>
+
+  <main class="auth-main account-settings-main">
+    <a class="back-link" href="account.html">← Minha conta</a>
+    <section class="auth-card account-settings-card" aria-labelledby="account-title">
+      <p class="eyebrow"><span class="pulse"></span> Preferências</p>
+      <h1 id="account-title">Lojas e produtos favoritos</h1>
+      <p class="auth-description">Personalize as ofertas que mais interessam a você.</p>
+      <div class="account-identity"><span class="account-identity-label">Conectado como</span><strong id="account-email">Verificando sessão…</strong></div>
+      <section class="preferences-section" aria-labelledby="favorites-title">
+        <h2 id="favorites-title">Suas preferências</h2>
+        <p class="preferences-help">Escolha as lojas e os tipos de produto que deseja acompanhar.</p>
+        <form id="favorite-preferences" class="preferences-form">
+          <fieldset><legend>Lojas</legend><div id="favorite-stores" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <fieldset><legend>Tipos de produto</legend><div id="favorite-product-types" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <button class="account-button" type="submit">Salvar favoritos</button>
+        </form>
+      </section>
+      <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
+      <div class="account-settings-actions"><button type="button" class="account-button secondary" id="sign-out">Sair</button><button type="button" class="account-button danger" id="delete-account">Excluir conta</button></div>
+    </section>
+  </main>
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <script src="navigation.js"></script>
+  <script src="site-version.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

@@ -28,7 +28,7 @@
     }
   </script>
   <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
-  <link rel="stylesheet" href="styles.css?v=20261018-catalog-first-4">
+  <link rel="stylesheet" href="styles.css?v=20261018-account-icon">
   <link rel="stylesheet" href="theme.css?v=20261018-stroke-heart">
 </head>
 <body>
@@ -42,7 +42,7 @@
     <nav class="sidebar-nav" aria-label="Navegação principal">
       <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
       <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
-      <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar"><span aria-hidden="true">◉</span><span data-account-label>Entrar</span></a>
+      <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-account-label>Entrar</span></a>
       <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
     </nav>
     <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
@@ -127,11 +127,17 @@
     </section>
   </main>
 
+  <nav class="mobile-bottom-nav" aria-label="Navegação principal">
+    <a class="mobile-nav-link" id="mobile-nav-offers" href="index.html#top" aria-label="Ofertas"><span class="mobile-nav-icon" aria-hidden="true">⌂</span><span>Ofertas</span></a>
+    <a class="mobile-nav-link" id="mobile-nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span class="mobile-nav-icon" aria-hidden="true">♡</span><span>Favoritos</span></a>
+    <a class="mobile-nav-link" id="mobile-nav-account" href="login.html" aria-label="Entrar"><span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-mobile-account-label>Entrar</span></a>
+  </nav>
+
   <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Confira preço, estoque e condições na loja.</span><span class="footer-disclaimer">As ofertas podem mudar ou terminar antes da data informada. Confirme com a loja; a Feira Boa não garante a disponibilidade nem se responsabiliza por ofertas encerradas.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
   <script src="navigation.js"></script>
   <script src="site-version.js"></script>
   <script src="source-status.js"></script>
-  <script src="app.js?v=20261018-stroke-heart"></script>
+  <script src="app.js?v=20261018-mobile-bottom-nav"></script>
 </body>
 </html>
 

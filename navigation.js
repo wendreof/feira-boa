@@ -7,10 +7,10 @@
 
   if (!(menuButton instanceof HTMLButtonElement) || !(sidebar instanceof HTMLElement)) return;
 
-  document.body.classList.toggle("sidebar-collapsed", !mobileQuery.matches);
+  document.body.classList.remove("sidebar-collapsed");
   sidebar.inert = mobileQuery.matches;
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Expandir menu");
+  menuButton.setAttribute("aria-expanded", String(!mobileQuery.matches));
+  menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Recolher menu");
 
   const offersLink = sidebar.querySelector('[data-sidebar-link="offers"]');
   const currentUrl = new URL(window.location.href);
@@ -62,8 +62,8 @@
 
   mobileQuery.addEventListener("change", () => {
     setMobileMenuOpen(false);
-    document.body.classList.toggle("sidebar-collapsed", !mobileQuery.matches);
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Expandir menu");
+    document.body.classList.remove("sidebar-collapsed");
+    menuButton.setAttribute("aria-expanded", String(!mobileQuery.matches));
+    menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Recolher menu");
   });
 })();

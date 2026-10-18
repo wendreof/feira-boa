@@ -1,5 +1,6 @@
 import { errorMessage, getCurrentUser, loadPreferences, savePreferences } from "./account";
 import type { Offer, OfferFeed, ProfilePreferences } from "./types";
+import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 
 declare global {
   interface Window { FEIRA_SOURCE_ALERTS?: Array<{ url: string; message: string }> }
@@ -43,6 +44,8 @@ let favoriteIds = readGuestFavorites();
 let favoriteOnly = false;
 let viewMode: "grid" | "list" = readViewMode();
 let currentUserId: string | null = null;
+let preferencesLoaded = false;
+let pendingTheme: ThemePreference | null = null;
 let sharedOfferId = new URLSearchParams(window.location.search).get("offer");
 if (sharedOfferId && !offers.some((offer) => offer.id === sharedOfferId)) sharedOfferId = null;
 
@@ -107,8 +110,25 @@ async function saveFavoriteChanges(): Promise<void> {
 }
 
 let preferences: ProfilePreferences = {
-  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [],
+  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [], theme: "light",
 };
+
+bindThemeToggle((theme) => {
+  preferences.theme = theme;
+  pendingTheme = theme;
+  if (currentUserId && preferencesLoaded) void saveThemePreference(theme);
+});
+
+async function saveThemePreference(theme: ThemePreference): Promise<void> {
+  if (!currentUserId) return;
+  try {
+    await savePreferences(currentUserId, preferences);
+    pendingTheme = null;
+    setAccountStatus("Tema salvo nas preferências da sua conta.");
+  } catch (error) {
+    setAccountStatus(`Tema aplicado neste dispositivo. Não foi possível sincronizar: ${errorMessage(error)}`);
+  }
+}
 
 async function connectAccount(userId: string): Promise<void> {
   currentUserId = userId;
@@ -118,9 +138,13 @@ async function connectAccount(userId: string): Promise<void> {
     preferences = {
       ...remotePreferences,
       favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...favoriteIds])],
+      theme: pendingTheme ?? remotePreferences.theme,
     };
+    applyTheme(preferences.theme);
     favoriteIds = new Set(preferences.favoriteOfferIds);
     await savePreferences(userId, preferences);
+    pendingTheme = null;
+    preferencesLoaded = true;
     persistGuestFavorites();
     renderOffers();
     setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");

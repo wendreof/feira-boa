@@ -14,6 +14,7 @@ import {
 } from "./account";
 import type { OfferFeed, ProfilePreferences } from "./types";
 import { vapidPublicKey } from "./supabase-config";
+import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 
 const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
@@ -35,6 +36,24 @@ const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-pu
 let userId = "";
 let preferences: ProfilePreferences;
 let rules: AlertRule[] = [];
+let preferencesLoaded = false;
+let pendingTheme: ThemePreference | null = null;
+
+bindThemeToggle((theme) => {
+  pendingTheme = theme;
+  if (preferences) preferences.theme = theme;
+  if (userId && preferencesLoaded) void saveThemePreference(theme);
+});
+
+async function saveThemePreference(theme: ThemePreference): Promise<void> {
+  try {
+    await savePreferences(userId, preferences);
+    pendingTheme = null;
+    setStatus("Tema salvo nas preferências da sua conta.");
+  } catch (error) {
+    setStatus(`Tema aplicado neste dispositivo. Não foi possível sincronizar: ${errorMessage(error)}`);
+  }
+}
 
 function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
   const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
@@ -279,6 +298,9 @@ void getCurrentUser()
       }),
     ]);
     preferences = settings.preferences;
+    if (pendingTheme) preferences.theme = pendingTheme;
+    applyTheme(preferences.theme);
+    preferencesLoaded = true;
     rules = settings.alertRules;
     notificationsPaused.checked = settings.notificationsPaused;
     const existingRegistration = await navigator.serviceWorker?.getRegistration();
@@ -289,6 +311,7 @@ void getCurrentUser()
     const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
     renderCheckboxes(favoriteStores, stores, preferences.favoriteStores);
     renderCheckboxes(favoriteProductTypes, productTypes, preferences.favoriteProductTypes);
+    if (pendingTheme) await saveThemePreference(pendingTheme);
     alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
     alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
     renderRules();

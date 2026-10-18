@@ -6,13 +6,16 @@
   <meta name="theme-color" content="#f5f6f1">
   <title>Feira Boa — ofertas em São João da Boa Vista</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Feira Boa, início"><span class="brand-mark">f</span><span>feira boa</span></a>
     <nav class="topbar-nav" aria-label="Navegação principal">
       <a href="#top">Ofertas</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button>
       <a class="nav-account" id="nav-account" href="login.html">Entrar</a>
     </nav>
     <div class="location"><span aria-hidden="true">⌖</span> São João da Boa Vista, SP <span aria-hidden="true">⌄</span></div>

@@ -17,12 +17,12 @@ The current app has no server-side backend. The offers are static data in `offer
 1. Anyone can browse without signing in.
 2. Guests can save a shopping list and favorites in the browser.
 3. Sign-in is optional and enables syncing preferences across devices. Use email and password for the initial release; add other sign-in providers only after a separate setup.
-4. Users choose stores, product types, and a target price; they can pause alerts, remove individual rules, turn push off, and delete their account.
+4. Users choose stores, product types, a light or dark theme, and a target price; they can pause alerts, remove individual rules, turn push off, and delete their account.
 5. Ask for notification permission only after the user turns alerts on. Explain what alerts will be sent before the browser permission prompt.
 
 ## Data model
 
-- `profiles`: `user_id` (Auth user ID), `created_at`, notification/time-zone preferences.
+- `profiles`: `user_id` (Auth user ID), `created_at`, notification/time-zone preferences, and saved appearance in the `preferences` JSON object.
 - `alert_rules`: `id`, `user_id`, optional store, product or product type, `target_price`, enabled/paused state, and creation time.
 - `push_subscriptions`: `id`, `user_id`, endpoint, browser encryption keys, created/last-used timestamps.
 - `notification_log`: a unique alert/offer key, `user_id`, sent time, and result. Use this to avoid repeat alerts and diagnose failed deliveries.

@@ -6,13 +6,16 @@
   <meta name="theme-color" content="#f5f6f1">
   <title>Entrar — Feira Boa</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>try{if(localStorage.getItem("feira-boa:theme:v1")==="dark")document.documentElement.dataset.theme="dark"}catch{}</script>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body class="auth-page">
   <header class="topbar">
     <a class="brand" href="index.html" aria-label="Feira Boa, início"><span class="brand-mark">f</span><span>feira boa</span></a>
     <nav class="topbar-nav" aria-label="Navegação principal">
       <a href="index.html">Ofertas</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button>
       <a class="nav-account" href="login.html" aria-current="page">Entrar</a>
     </nav>
   </header>

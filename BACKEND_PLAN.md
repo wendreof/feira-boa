@@ -1,6 +1,6 @@
 # Feira Boa backend, accounts, and alerts plan
 
-**Status:** implementation plan  
+**Status:** in progress — Phases 1–2 implemented; Supabase deployment setup and Phases 3–5 remain.
 **Goal:** let people save their preferences, follow products and stores, and receive relevant offer alerts while keeping browsing open to everyone and starting on free tiers.
 
 ## Recommended stack
@@ -38,6 +38,8 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 - Keep the existing monitor’s rule: a changed source is marked for review; never send a price alert for an offer awaiting verification or outside its validity dates.
 
 ### Phase 2 — Add optional accounts and synced preferences
+
+**Code status:** implemented on `develop`. Supabase migration and account-deletion function still need deployment, as described in the README.
 
 - Create a Supabase project, Auth settings, database migrations, and RLS policies.
 - Add sign-in, sign-out, and account deletion. Keep guest browsing and local favorites working if login is unavailable.

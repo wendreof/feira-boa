@@ -22,11 +22,38 @@
     <section class="auth-card account-settings-card" aria-labelledby="account-title">
       <p class="eyebrow"><span class="pulse"></span> Sua Feira Boa</p>
       <h1 id="account-title">Configurações da conta</h1>
-      <p class="auth-description">Gerencie o acesso à sua conta e seus favoritos sincronizados.</p>
+      <p class="auth-description">Escolha suas lojas, acompanhe preços e controle suas preferências.</p>
       <div class="account-identity">
         <span class="account-identity-label">Conectado como</span>
         <strong id="account-email">Verificando sessão…</strong>
       </div>
+      <section class="preferences-section" aria-labelledby="favorites-title">
+        <h2 id="favorites-title">Lojas e produtos favoritos</h2>
+        <p class="preferences-help">Essas escolhas ficam salvas na sua conta.</p>
+        <form id="favorite-preferences" class="preferences-form">
+          <fieldset><legend>Lojas</legend><div id="favorite-stores" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <fieldset><legend>Tipos de produto</legend><div id="favorite-products" class="preference-options"><span>Carregando…</span></div></fieldset>
+          <button class="account-button" type="submit">Salvar favoritos</button>
+        </form>
+      </section>
+
+      <section class="preferences-section" aria-labelledby="alerts-title">
+        <h2 id="alerts-title">Alertas de preço</h2>
+        <p class="preferences-help">Defina um preço máximo para acompanhar uma categoria em uma ou todas as lojas.</p>
+        <form id="alert-rule-form" class="preferences-form">
+          <label for="alert-product">Tipo de produto</label>
+          <select id="alert-product" required><option value="">Carregando…</option></select>
+          <label for="alert-store">Loja</label>
+          <select id="alert-store"><option value="">Qualquer loja</option></select>
+          <label for="target-price">Avisar quando custar até</label>
+          <div class="price-input"><span>R$</span><input id="target-price" type="number" min="0.01" step="0.01" placeholder="0,00" required></div>
+          <button class="account-button" type="submit">Criar alerta</button>
+        </form>
+        <ul id="alert-rules" class="alert-rules"><li class="preference-empty">Carregando alertas…</li></ul>
+        <label class="pause-alerts"><input id="notifications-paused" type="checkbox"><span>Pausar alertas</span></label>
+        <p class="preferences-help push-status">Notificações neste dispositivo: <strong id="push-status">Verificando…</strong></p>
+      </section>
+
       <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
       <div class="account-settings-actions">
         <button type="button" class="account-button secondary" id="sign-out">Sair</button>

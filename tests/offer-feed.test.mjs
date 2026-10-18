@@ -21,5 +21,12 @@ test("every offer has a stable unique ID and valid price and dates", () => {
     assert.match(offer.validTo, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(offer.validFrom <= offer.validTo, `${offer.id} has reversed validity dates`);
     assert.match(offer.sourceUrl, /^https:\/\//);
+    assert.ok(offer.productTypes.includes(offer.productType), `${offer.id} is missing its primary product type`);
   }
+});
+
+test("barbecue offers also keep their primary product type", () => {
+  const barbecueOffers = feed.offers.filter((offer) => offer.productTypes.includes("Churrasco"));
+  assert.ok(barbecueOffers.length > 0);
+  assert.ok(barbecueOffers.some((offer) => offer.productType === "Carne bovina"));
 });

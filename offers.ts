@@ -46,7 +46,7 @@ export const offerSources = {
 
 type StoreId = keyof typeof offerSources;
 
-function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string } {
+function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string; productTypes: string[] } {
   const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const rules: Array<[RegExp, string]> = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado/, "Leites"],
@@ -75,7 +75,13 @@ function classifyProduct(name: string, brand: string, category: string): { depar
     "Carnes": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Frios": "Frios e laticínios", "Laticínios": "Frios e laticínios",
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados"
   };
-  return { department: departments[productType] ?? categoryDepartments[category] ?? category, productType: productType === category ? (categoryDepartments[category] ?? category) : productType };
+  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango/.test(text);
+  const primaryProductType = productType === category ? (categoryDepartments[category] ?? category) : productType;
+  return {
+    department: departments[productType] ?? categoryDepartments[category] ?? category,
+    productType: primaryProductType,
+    productTypes: isBarbecueProduct ? [primaryProductType, "Churrasco"] : [primaryProductType],
+  };
 }
 
 function makeOffer(storeId: StoreId, name: string, brand: string, detail: string, category: string, price: number, previousPrice: number | null, icon: string, note = "", special = false, validity: { from: string; to: string } | null = null): Offer {

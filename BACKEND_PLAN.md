@@ -1,6 +1,6 @@
 # Feira Boa backend, accounts, and alerts plan
 
-**Status:** in progress — Phases 1–2 implemented; Supabase deployment setup and Phases 3–5 remain.
+**Status:** in progress — Phases 1–4 implemented in code; production secret setup and Phase 5 remain.
 **Goal:** let people save their preferences, follow products and stores, and receive relevant offer alerts while keeping browsing open to everyone and starting on free tiers.
 
 ## Recommended stack
@@ -47,11 +47,15 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 3 — Add browser push
 
+**Code status:** service worker and user-initiated subscribe/unsubscribe are implemented. Subscriptions are stored per account and the scheduled sender is in place; production secrets and a live delivery check remain.
+
 - Add a service worker and a user-initiated “Enable alerts” control.
 - On approval, save the browser push subscription to `push_subscriptions`; on disable, unsubscribe and remove it from the database.
 - Store the VAPID public key in frontend configuration and the private key only in GitHub Secrets. Treat push endpoints and encryption keys as private user data.
 
 ### Phase 4 — Match offers and send alerts
+
+**Code status:** the daily matcher checks active dates, verified source state, target price, store/product-type criteria, user pause state, and sent-alert history. It removes expired subscriptions and reports aggregate outcomes. Production delivery requires the repository secrets and `SITE_URL` variable listed in the README.
 
 - Extend the daily workflow to build/read the offer feed and query enabled alert rules.
 - Match only verified, currently valid offers against the user’s chosen product/store and target price.
@@ -65,6 +69,8 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 - Consider a Cloudflare Worker scheduler only if daily GitHub Actions are insufficient. Workers Free currently has daily request and CPU limits; check current limits and measured workload before moving jobs.
 
 ### Monitoring: Datadog and a free-first setup
+
+**Code status:** the hourly public-site/data health check is implemented. Set the Actions variable `SITE_URL` before the scheduled job can run; operational usage and failed-run monitoring remain.
 
 - Keep GitHub Actions as the first monitoring layer: retain the daily source checks and add a short hourly availability check for the live Pages site and its key data files. Fail clearly when the site or files cannot be fetched; use GitHub's workflow failure notifications. Keep this check fast and watch private-repository Actions minutes.
 - Use Cloudflare's Pages deployment history and dashboard metrics for deploy and traffic visibility, and Supabase's dashboard for database/auth usage and errors. These are the services already hosting the app and backend.
@@ -90,6 +96,8 @@ Free tiers are useful for a small pilot but can change. As checked on 2026-10-16
 **Yes, for the app and alert-matching code.** The project already uses TypeScript, and the same `Offer`, `AlertRule`, and notification types can be shared across the frontend and scheduled matcher. This helps keep fields and filtering rules consistent as the backend grows. Keep the existing Python source-monitor script for now; rewriting a working small script would add work without improving user features. TypeScript is a practical fit here, not a requirement for every tool in the project.
 
 ## Automatic grocery offer ingestion
+
+**Progress:** Official source inventory is recorded in [`docs/OFFER_SOURCE_INVENTORY.md`](docs/OFFER_SOURCE_INVENTORY.md). Big Bom's official flyer is the first adapter candidate because its offers page links a downloadable PDF; the adapter must discover the current campaign from the page rather than reuse a dated URL.
 
 **Requirement:** Offers must load and publish without manual transcription or review. Use free tiers only; do not add paid OCR, AI, or scraping services.
 

@@ -28,7 +28,7 @@ export interface AccountSettings {
 const emptyPreferences: ProfilePreferences = {
   favoriteOfferIds: [],
   favoriteStores: [],
-  favoriteProducts: [],
+  favoriteProductTypes: [],
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -44,7 +44,7 @@ function parsePreferences(value: unknown): ProfilePreferences {
   return {
     favoriteOfferIds: stringList(value.favoriteOfferIds),
     favoriteStores: stringList(value.favoriteStores),
-    favoriteProducts: stringList(value.favoriteProducts),
+    favoriteProductTypes: stringList(value.favoriteProductTypes ?? value.favoriteProducts),
   };
 }
 
@@ -94,7 +94,14 @@ export async function loadPreferences(userId: string): Promise<ProfilePreference
 export async function savePreferences(userId: string, preferences: ProfilePreferences): Promise<void> {
   const { error } = await supabase
     .from("profiles")
-    .upsert({ user_id: userId, preferences }, { onConflict: "user_id" });
+    .upsert({
+      user_id: userId,
+      preferences: {
+        favoriteOfferIds: preferences.favoriteOfferIds,
+        favoriteStores: preferences.favoriteStores,
+        favoriteProductTypes: preferences.favoriteProductTypes,
+      },
+    }, { onConflict: "user_id" });
   if (error) throw error;
 }
 
@@ -139,6 +146,29 @@ export async function setNotificationsPaused(userId: string, paused: boolean): P
   const { error } = await supabase
     .from("profiles")
     .upsert({ user_id: userId, notifications_paused: paused }, { onConflict: "user_id" });
+  if (error) throw error;
+}
+
+export async function savePushSubscription(userId: string, subscription: PushSubscription): Promise<void> {
+  const payload = subscription.toJSON();
+  if (!payload.endpoint || !payload.keys?.p256dh || !payload.keys.auth) {
+    throw new Error("O navegador não forneceu os dados completos da inscrição.");
+  }
+  const { error } = await supabase.from("push_subscriptions").upsert({
+    user_id: userId,
+    endpoint: payload.endpoint,
+    p256dh: payload.keys.p256dh,
+    auth_key: payload.keys.auth,
+  }, { onConflict: "endpoint" });
+  if (error) throw error;
+}
+
+export async function removePushSubscription(userId: string, endpoint: string): Promise<void> {
+  const { error } = await supabase
+    .from("push_subscriptions")
+    .delete()
+    .eq("user_id", userId)
+    .eq("endpoint", endpoint);
   if (error) throw error;
 }
 

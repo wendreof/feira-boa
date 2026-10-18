@@ -302,5 +302,3 @@ window.FEIRA_OFFERS = [
   makeOffer("spasso", "Ponta de alcatra bovina", "", "A granel · kg", "Carnes", 42.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"}),
   makeOffer("spasso", "Contrafilé bovino", "Viva os Sabores", "Porcionado · kg", "Carnes", 59.90, null, "🥩", "Oferta do açougue válida de 14 a 16/10", false, {from:"2026-10-14",to:"2026-10-16"})
 ];
-
-

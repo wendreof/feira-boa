@@ -42,4 +42,5 @@ export interface ProfilePreferences {
   favoriteOfferIds: string[];
   favoriteStores: string[];
   favoriteProductTypes: string[];
+  theme: "light" | "dark";
 }

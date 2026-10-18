@@ -29,6 +29,7 @@ const emptyPreferences: ProfilePreferences = {
   favoriteOfferIds: [],
   favoriteStores: [],
   favoriteProductTypes: [],
+  theme: "light",
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -45,6 +46,7 @@ function parsePreferences(value: unknown): ProfilePreferences {
     favoriteOfferIds: stringList(value.favoriteOfferIds),
     favoriteStores: stringList(value.favoriteStores),
     favoriteProductTypes: stringList(value.favoriteProductTypes ?? value.favoriteProducts),
+    theme: value.theme === "dark" ? "dark" : "light",
   };
 }
 
@@ -100,6 +102,7 @@ export async function savePreferences(userId: string, preferences: ProfilePrefer
         favoriteOfferIds: preferences.favoriteOfferIds,
         favoriteStores: preferences.favoriteStores,
         favoriteProductTypes: preferences.favoriteProductTypes,
+        theme: preferences.theme,
       },
     }, { onConflict: "user_id" });
   if (error) throw error;

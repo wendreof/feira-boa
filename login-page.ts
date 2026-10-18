@@ -1,4 +1,7 @@
 import { errorMessage, getCurrentUser, signIn, signUp } from "./account";
+import { bindThemeToggle } from "./theme";
+
+bindThemeToggle();
 
 const form = document.querySelector<HTMLFormElement>("#auth-form")!;
 const emailInput = document.querySelector<HTMLInputElement>("#auth-email")!;

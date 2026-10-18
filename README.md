@@ -11,8 +11,9 @@ Local supermarket offers for São João da Boa Vista.
 - Use product illustrations in the cards instead of embedding a flyer as the main experience.
 - Link every offer back to its source flyer.
 - Hide offers outside their printed validity dates.
+- Switch between light and dark themes; signed-in users sync the choice with their account.
 
-The current data file contains a transcription of both pages of the Sempre Vale Durval Nicolau flyer (October 15–18, 2026), all 28 items in Big Bom's São João da Boa Vista flyer (October 13–15, 2026), and 10 offers shown on the official Supermercados Pague Menos page for its São João da Boa Vista store (consulted October 15, 2026). Pague Menos prices are online-only and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A free GitHub Actions workflow now checks the official offer URLs daily, compares their contents, and publishes a visible alert if a source changes. It does not invent or automatically transcribe prices: changed flyers still need their offer details verified before replacing the old entries.
+The current data file contains a transcription of both pages of the Sempre Vale Durval Nicolau flyer (October 15–18, 2026), all 28 items in Big Bom's São João da Boa Vista flyer (October 13–15, 2026), and 12 offers shown on the official Supermercados Pague Menos page for its São João da Boa Vista store (consulted October 15, 2026). Pague Menos prices are online-only and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A free GitHub Actions workflow now checks the official offer URLs daily, compares their contents, and publishes a visible alert if a source changes. It does not invent or automatically transcribe prices: changed flyers still need their offer details verified before replacing the old entries.
 
 ## Run locally
 
@@ -24,13 +25,13 @@ Email accounts are optional and use the dedicated `login.html` page. Guest favor
 
 Before enabling account sync in the Supabase project:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql` and then `supabase/migrations/202610180002_favorite_product_types.sql` in the project SQL Editor.
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `supabase/migrations/202610180002_favorite_product_types.sql`, and `supabase/migrations/202610180003_theme_preference.sql` in the project SQL Editor.
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
 3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
 
-The app remains browsable without an account. Until the migration and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
+The app remains browsable without an account. Guest theme choices are saved in the current browser; signed-in theme choices sync through `profiles.preferences`. Until the migrations and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
 
-The account page saves favorite stores/product types, price alert rules, pause state, and optional browser push subscriptions. Push permission is requested only after the user chooses to enable it and confirms the alert contents. `service-worker.js` displays incoming alerts and opens the linked offer. The VAPID public key is safe to include in `supabase-config.ts`; the private key is kept only in the ignored local `supabase/functions/.env` during development. Move the private key to GitHub Actions Secrets before enabling the production sender. Subscriptions can be created now, but alerts are not sent until Phase 4 is deployed.
+The account page saves favorite stores/product types, theme, price alert rules, pause state, and optional browser push subscriptions. Push permission is requested only after the user chooses to enable it and confirms the alert contents. `service-worker.js` displays incoming alerts and opens the linked offer. The VAPID public key is safe to include in `supabase-config.ts`; the private key is kept only in the ignored local `supabase/functions/.env` during development. Move the private key to GitHub Actions Secrets before enabling the production sender. Subscriptions can be created now, but alerts are not sent until Phase 4 is deployed.
 
 The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `VAPID_PRIVATE_KEY`, and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. `SITE_URL` is also used as the VAPID subject. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and both SQL migrations are in place.
 

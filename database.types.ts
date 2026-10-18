@@ -1,0 +1,132 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          user_id: string;
+          created_at: string;
+          timezone: string;
+          notifications_paused: boolean;
+          preferences: Json;
+        };
+        Insert: {
+          user_id: string;
+          created_at?: string;
+          timezone?: string;
+          notifications_paused?: boolean;
+          preferences?: Json;
+        };
+        Update: {
+          user_id?: string;
+          created_at?: string;
+          timezone?: string;
+          notifications_paused?: boolean;
+          preferences?: Json;
+        };
+        Relationships: [];
+      };
+      alert_rules: {
+        Row: {
+          id: string;
+          user_id: string;
+          store: string | null;
+          product: string | null;
+          product_type: string | null;
+          target_price: number;
+          enabled: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          store?: string | null;
+          product?: string | null;
+          product_type?: string | null;
+          target_price: number;
+          enabled?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          store?: string | null;
+          product?: string | null;
+          product_type?: string | null;
+          target_price?: number;
+          enabled?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      push_subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          created_at: string;
+          last_used_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          created_at?: string;
+          last_used_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          endpoint?: string;
+          p256dh?: string;
+          auth_key?: string;
+          created_at?: string;
+          last_used_at?: string | null;
+        };
+        Relationships: [];
+      };
+      notification_log: {
+        Row: {
+          id: number;
+          user_id: string;
+          offer_id: string;
+          sent_at: string;
+          result: "sent" | "failed";
+          error_code: string | null;
+        };
+        Insert: {
+          id?: number;
+          user_id: string;
+          offer_id: string;
+          sent_at?: string;
+          result: "sent" | "failed";
+          error_code?: string | null;
+        };
+        Update: {
+          id?: number;
+          user_id?: string;
+          offer_id?: string;
+          sent_at?: string;
+          result?: "sent" | "failed";
+          error_code?: string | null;
+        };
+        Relationships: [];
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
+}

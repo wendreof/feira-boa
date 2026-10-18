@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <title>Entrar — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><span class="brand-mark">f</span><span>feira boa</span></a>
+    <nav class="topbar-nav" aria-label="Navegação principal">
+      <a href="index.html">Ofertas</a>
+      <a class="nav-account" href="login.html" aria-current="page">Entrar</a>
+    </nav>
+  </header>
+
+  <main class="auth-main">
+    <a class="back-link" href="index.html">← Voltar para ofertas</a>
+    <section class="auth-card" aria-labelledby="auth-title">
+      <p class="eyebrow"><span class="pulse"></span> Sua Feira Boa</p>
+      <h1 id="auth-title">Bem-vindo de volta.</h1>
+      <p class="auth-description" id="auth-description">Entre para manter seus produtos favoritos salvos em qualquer dispositivo.</p>
+      <form id="auth-form" class="auth-form">
+        <label for="auth-email">E-mail</label>
+        <input id="auth-email" name="email" type="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+        <label for="auth-password">Senha</label>
+        <input id="auth-password" name="password" type="password" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
+        <button class="account-button auth-submit" id="auth-submit" type="submit">Entrar</button>
+      </form>
+      <p class="auth-switch"><span id="auth-switch-label">Ainda não tem conta?</span> <button type="button" class="text-button" id="auth-mode-toggle">Criar conta grátis</button></p>
+      <p class="auth-status" id="auth-status" role="status" aria-live="polite"></p>
+      <div class="auth-divider"><span>Seus favoritos locais continuam disponíveis sem conta.</span></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span></footer>
+  <script src="login.js"></script>
+</body>
+</html>

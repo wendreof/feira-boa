@@ -143,8 +143,13 @@
 }
 
 :root[data-theme="dark"] .favorite-toggle[aria-pressed="true"] {
-  background: #38533d;
-  color: #d9f2a8;
+  background: #3b2326;
+  color: #ff7380;
+}
+
+:root[data-theme="dark"] .favorite-toggle[aria-pressed="true"] svg {
+  fill: #ff7380;
+  stroke: #ff7380;
 }
 
 :root[data-theme="dark"] .offer-note {

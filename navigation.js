@@ -14,9 +14,17 @@
 
   const offersLink = sidebar.querySelector('[data-sidebar-link="offers"]');
   const currentUrl = new URL(window.location.href);
+  const storesLink = document.createElement("a");
+  storesLink.className = "sidebar-link";
+  storesLink.href = "lojas.html";
+  storesLink.setAttribute("aria-label", "Lojas");
+  storesLink.setAttribute("data-sidebar-link", "stores");
+  storesLink.innerHTML = '<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10h18M5 10v10h14V10M4 10l1.5-6h13L20 10M9 20v-6h6v6"/></svg></span><span>Lojas</span>';
+  offersLink?.after(storesLink);
   if (currentUrl.pathname.endsWith("/index.html") && currentUrl.searchParams.get("view") !== "favorites") {
     offersLink?.setAttribute("aria-current", "page");
   }
+  if (currentUrl.pathname.endsWith("/lojas.html")) storesLink.setAttribute("aria-current", "page");
   if (currentUrl.pathname.endsWith("/suggestions.html")) {
     sidebar.querySelector('[data-sidebar-link="suggestions"]')?.setAttribute("aria-current", "page");
   }

@@ -2,9 +2,14 @@
   "name": "feira-boa",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && node scripts/build-offer-feed.mjs && esbuild app.ts --bundle --minify --outfile=app.js --target=es2020 && esbuild login-page.ts --bundle --minify --outfile=login.js --target=es2020 && esbuild account-page.ts --bundle --minify --outfile=account.js --target=es2020",
+    "test": "node --test"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
   }
 }

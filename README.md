@@ -16,7 +16,19 @@ The current data file contains a transcription of both pages of the Sempre Vale 
 
 ## Run locally
 
-The app uses TypeScript for offer data and browser interactions. Run `npm ci` and `npm run build` to compile `app.ts` and `offers.ts` into the JavaScript files used by the static site. The compiled JavaScript is committed so the existing static hosting setup continues to serve the site from the repository root.
+The app uses TypeScript for offer data and browser interactions. Run `npm ci` and `npm run build` to compile the TypeScript and generate `offers.json`. This versioned feed contains stable offer IDs and the timestamp of the latest offer-data update; update `offersUpdatedAt` in `offers.ts` whenever the curated offers change. The feed is the shared source for the website and scheduled matching jobs. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+
+## Supabase accounts
+
+Email accounts are optional and use the dedicated `login.html` page. Guest favorites stay in the current browser; signed-in favorites sync through the `profiles` table. The browser uses the Supabase publishable key in `supabase-config.ts`, which is public by design. Row Level Security limits every user-owned row to its owner. Never put a database password or service-role key in frontend files.
+
+Before enabling account sync in the Supabase project:
+
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql` in the project SQL Editor.
+2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
+3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
+
+The app remains browsable without an account. Until the migration and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
 
 ## Scheduled source monitoring and production
 

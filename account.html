@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <title>Minha conta — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><span class="brand-mark">f</span><span>feira boa</span></a>
+    <nav class="topbar-nav" aria-label="Navegação principal">
+      <a href="index.html">Ofertas</a>
+      <a class="nav-account" href="account.html" aria-current="page">Minha conta</a>
+    </nav>
+  </header>
+
+  <main class="auth-main account-settings-main">
+    <a class="back-link" href="index.html">← Voltar para ofertas</a>
+    <section class="auth-card account-settings-card" aria-labelledby="account-title">
+      <p class="eyebrow"><span class="pulse"></span> Sua Feira Boa</p>
+      <h1 id="account-title">Configurações da conta</h1>
+      <p class="auth-description">Gerencie o acesso à sua conta e seus favoritos sincronizados.</p>
+      <div class="account-identity">
+        <span class="account-identity-label">Conectado como</span>
+        <strong id="account-email">Verificando sessão…</strong>
+      </div>
+      <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
+      <div class="account-settings-actions">
+        <button type="button" class="account-button secondary" id="sign-out">Sair</button>
+        <button type="button" class="account-button danger" id="delete-account">Excluir conta</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span></footer>
+  <script src="account.js"></script>
+</body>
+</html>

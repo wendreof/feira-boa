@@ -16,7 +16,7 @@ The current app has no server-side backend. The offers are static data in `offer
 
 1. Anyone can browse without signing in.
 2. Guests can save a shopping list and favorites in the browser.
-3. Sign-in is optional and enables syncing preferences across devices. Prefer Google sign-in or email sign-in; avoid phone/SMS verification and precise location collection to keep setup and costs down.
+3. Sign-in is optional and enables syncing preferences across devices. Use email and password for the initial release; add other sign-in providers only after a separate setup.
 4. Users choose stores, product types, and a target price; they can pause alerts, remove individual rules, turn push off, and delete their account.
 5. Ask for notification permission only after the user turns alerts on. Explain what alerts will be sent before the browser permission prompt.
 

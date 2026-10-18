@@ -2,6 +2,29 @@ import type { User } from "@supabase/supabase-js";
 import type { ProfilePreferences } from "./types";
 import { supabase } from "./supabase-client";
 
+export interface AlertRule {
+  id: string;
+  store: string | null;
+  product: string | null;
+  product_type: string | null;
+  target_price: number;
+  enabled: boolean;
+}
+
+export interface NewAlertRule {
+  store: string | null;
+  product: string | null;
+  product_type: string | null;
+  target_price: number;
+}
+
+export interface AccountSettings {
+  preferences: ProfilePreferences;
+  notificationsPaused: boolean;
+  pushEnabled: boolean;
+  alertRules: AlertRule[];
+}
+
 const emptyPreferences: ProfilePreferences = {
   favoriteOfferIds: [],
   favoriteStores: [],
@@ -72,6 +95,50 @@ export async function savePreferences(userId: string, preferences: ProfilePrefer
   const { error } = await supabase
     .from("profiles")
     .upsert({ user_id: userId, preferences }, { onConflict: "user_id" });
+  if (error) throw error;
+}
+
+export async function loadAccountSettings(userId: string): Promise<AccountSettings> {
+  const [{ data: profile, error: profileError }, { data: rules, error: rulesError }, { count, error: pushError }] = await Promise.all([
+    supabase.from("profiles").select("preferences, notifications_paused").eq("user_id", userId).maybeSingle(),
+    supabase.from("alert_rules").select("id, store, product, product_type, target_price, enabled").eq("user_id", userId).order("created_at"),
+    supabase.from("push_subscriptions").select("id", { count: "exact", head: true }).eq("user_id", userId),
+  ]);
+  if (profileError) throw profileError;
+  if (rulesError) throw rulesError;
+  if (pushError) throw pushError;
+  return {
+    preferences: parsePreferences(profile?.preferences),
+    notificationsPaused: profile?.notifications_paused ?? false,
+    pushEnabled: (count ?? 0) > 0,
+    alertRules: rules ?? [],
+  };
+}
+
+export async function loadAlertRules(userId: string): Promise<AlertRule[]> {
+  const { data, error } = await supabase
+    .from("alert_rules")
+    .select("id, store, product, product_type, target_price, enabled")
+    .eq("user_id", userId)
+    .order("created_at");
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function createAlertRule(userId: string, rule: NewAlertRule): Promise<void> {
+  const { error } = await supabase.from("alert_rules").insert({ user_id: userId, ...rule });
+  if (error) throw error;
+}
+
+export async function removeAlertRule(userId: string, ruleId: string): Promise<void> {
+  const { error } = await supabase.from("alert_rules").delete().eq("id", ruleId).eq("user_id", userId);
+  if (error) throw error;
+}
+
+export async function setNotificationsPaused(userId: string, paused: boolean): Promise<void> {
+  const { error } = await supabase
+    .from("profiles")
+    .upsert({ user_id: userId, notifications_paused: paused }, { onConflict: "user_id" });
   if (error) throw error;
 }
 

@@ -1,11 +1,11 @@
 {
   "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf": {
-    "sha256": "76ab2cebf3746350d4748c5fe113a2d44ac86e3c582f0e984e547bf7cb0118d9",
+    "sha256": "30bd9f699e688ebc1d333a1c06887918f0b6cc8d7eb52a711e28c1cc84e2cbf2",
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-18",
-    "last_success_at": "2026-10-18",
+    "checked_at": "2026-10-19",
+    "last_success_at": "2026-10-19",
     "last_error": null,
     "needs_review": true
   },
@@ -14,23 +14,23 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/12c6dae5-141f-4b0c-8068-67f752874a71-campanha-575-crop-baixa%283%29.pdf",
-    "checked_at": "2026-10-18",
-    "last_success_at": "2026-10-18",
+    "checked_at": "2026-10-19",
+    "last_success_at": "2026-10-19",
     "last_error": null,
     "needs_review": false
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
-    "sha256": "fbd857a0bc4cd9ae75b4bf51b933b9a93fc9db5807a11190595344f88290fd95",
+    "sha256": "0b73707e20ad837a02c6c8b8d9ff7a2b0531cde423fbf2ced286097f0a7d8b93",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-18",
-    "last_success_at": "2026-10-18",
+    "checked_at": "2026-10-19",
+    "last_success_at": "2026-10-19",
     "last_error": null,
     "needs_review": true
   },
   "https://www.superpaguemenos.com.br/jornal-de-ofertas/": {
-    "checked_at": "2026-10-18",
+    "checked_at": "2026-10-19",
     "last_error": "RemoteDisconnected",
     "needs_review": false
   }

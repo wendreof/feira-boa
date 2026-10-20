@@ -49,6 +49,10 @@
   border-color: var(--line);
 }
 
+:root[data-theme="dark"] .empty-state strong {
+  color: var(--ink);
+}
+
 :root[data-theme="dark"] .topbar-nav a:not(.nav-account),
 :root[data-theme="dark"] .topbar-nav button,
 :root[data-theme="dark"] .view-toggle button,
@@ -114,6 +118,7 @@
 :root[data-theme="dark"] .store-filter-heading > span,
 :root[data-theme="dark"] .preferences-form > label,
 :root[data-theme="dark"] .preferences-form legend,
+:root[data-theme="dark"] .auth-form label,
 :root[data-theme="dark"] .pause-alerts {
   color: var(--muted);
 }
@@ -122,6 +127,22 @@
 :root[data-theme="dark"] .card-source,
 :root[data-theme="dark"] .preferences-section {
   border-color: var(--line);
+}
+
+:root[data-theme="dark"] .control-label.filter-control {
+  background: #1b241e;
+}
+
+:root[data-theme="dark"] .control-label.filter-control select {
+  background: #1b241e;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .control-label.filter-control select:hover,
+:root[data-theme="dark"] .control-label.filter-control select:focus-visible {
+  background: #202b23;
+  border-color: #456b4d;
 }
 
 :root[data-theme="dark"] .account-status,

@@ -121,41 +121,85 @@ export function classifyProduct(name, brand, category) {
   };
 }
 
-export function assignIcon(name, productType, department) {
-  const text = `${name} ${productType} ${department}`.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  if (/cafe/.test(text)) return "☕";
-  if (/cerveja/.test(text)) return "🍺";
-  if (/vinho/.test(text)) return "🍷";
-  if (/refrigerante|h2oh|energetico/.test(text)) return "🥤";
-  if (/suco|nectar/.test(text)) return "🧃";
-  if (/agua/.test(text)) return "💧";
-  if (/leite|iogurte|requeijao|manteiga/.test(text)) return "🥛";
-  if (/queijo/.test(text)) return "🧀";
-  if (/arroz/.test(text)) return "🍚";
-  if (/feijao/.test(text)) return "🍲";
-  if (/frango|coxa|sobrecoxa|sassami/.test(text)) return "🍗";
-  if (/carne|bife|costela|alcatra|acem|contrafile/.test(text)) return "🥩";
-  if (/linguica|salsicha|bacon|panceta|mortadela/.test(text)) return "🌭";
-  if (/peixe|sardinha|atum|tilapia/.test(text)) return "🐟";
-  if (/tomate/.test(text)) return "🍅";
-  if (/batata/.test(text)) return "🥔";
-  if (/banana/.test(text)) return "🍌";
-  if (/maca|manga|melancia|melao|laranja|uva|abacaxi/.test(text)) return "🍎";
-  if (/cenoura|cebola|alho|verdura|legume|abobora|chuchu|repolho/.test(text)) return "🥦";
-  if (/sabao|lava-roupas|detergente|amaciante|limpeza|desinfetante/.test(text)) return "🧺";
-  if (/papel higienico|absorvente/.test(text)) return "🧻";
-  if (/shampoo|condicionador|sabonete|creme/.test(text)) return "🧴";
-  if (/creme dental/.test(text)) return "🪥";
-  if (/biscoito|cookie|wafer/.test(text)) return "🍪";
-  if (/chocolate|bombom/.test(text)) return "🍫";
-  if (/sorvete|acai/.test(text)) return "🍨";
-  if (/pao/.test(text)) return "🍞";
-  if (/macarrao|lasanha|massa/.test(text)) return "🍝";
-  if (/molho|azeite|oleo|condimento/.test(text)) return "🥫";
-  if (/racao|dog|pet/.test(text)) return "🐾";
-  if (/carvao|fogo/.test(text)) return "🔥";
-  if (/pilha/.test(text)) return "🔋";
-  return "🏷️";
+export function assignIcon(name, productType = "", department = "") {
+  const text = `${name} ${productType}`.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const rules = [
+    [/agua sanitaria/, "🧴"],
+    [/creme dental|fio dental|enxaguante|antisseptico bucal/, "🪥"],
+    [/papel higienico|absorvente|fralda|toalha umedecida|papel toalha|toalha de papel|guardanapo/, "🧻"],
+    [/creme de avela|nutella/, "🍫"],
+    [/racao|cachorro|\bgato\b|\bcao\b|alimento para/, "🐾"],
+    [/aparelho de barbear|barbear/, "🪒"],
+    [/requeijao|queijo|ricota/, "🧀"],
+    [/manteiga|margarina/, "🧈"],
+    [/creme de leite|leite condensado|leite|iogurte|bebida lactea|achocolatado/, "🥛"],
+    [/shampoo|condicionador|sabonete|desodorante|hidratante|protetor solar|creme\b|locao/, "🧴"],
+    [/ferro|flon/, "♨️"],
+    [/filtro de papel/, "☕"],
+    [/cafe/, "☕"],
+    [/cerveja|chopp/, "🍺"],
+    [/vinho|espumante|aperitivo|smirnoff|cachaca|\bgin\b/, "🍷"],
+    [/refrigerante|energetico|h2oh|guarana/, "🥤"],
+    [/agua mineral/, "💧"],
+    [/agua de coco/, "🥥"],
+    [/suco|nectar|refresco/, "🧃"],
+    [/\bagua\b/, "💧"],
+    [/arroz/, "🍚"],
+    [/feijao/, "🍲"],
+    [/frango|coxa|sobrecoxa|sassami|asa de/, "🍗"],
+    [/linguica|salsicha|bacon|panceta|mortadela/, "🌭"],
+    [/carne|bife|costela|alcatra|acem|contrafile|picanha|patinho|fraldinha|paleta|figado|cupim|lombo|bisteca/, "🥩"],
+    [/peixe|sardinha|atum|tilapia|merluza/, "🐟"],
+    [/hamburguer/, "🍔"],
+    [/batata palito/, "🍟"],
+    [/batata/, "🥔"],
+    [/^ovos?\b/, "🥚"],
+    [/tomate/, "🍅"],
+    [/banana/, "🍌"],
+    [/uva/, "🍇"],
+    [/melancia/, "🍉"],
+    [/melao|mamao/, "🍈"],
+    [/laranja/, "🍊"],
+    [/limao/, "🍋"],
+    [/manga/, "🥭"],
+    [/abacaxi/, "🍍"],
+    [/abacate/, "🥑"],
+    [/\bmaca\b/, "🍎"],
+    [/morango/, "🍓"],
+    [/brocolis/, "🥦"],
+    [/alface|repolho|couve|rucula|espinafre|acelga|beterraba/, "🥬"],
+    [/cenoura/, "🥕"],
+    [/cebola/, "🧅"],
+    [/alho/, "🧄"],
+    [/abobora/, "🎃"],
+    [/chuchu|pepino|abobrinha/, "🥒"],
+    [/ervilha/, "🫛"],
+    [/farinha|trigo|aveia|cereal/, "🌾"],
+    [/milho/, "🌽"],
+    [/legume|verdura/, "🥕"],
+    [/sorvete|acai|picole/, "🍨"],
+    [/chocolate|bombom/, "🍫"],
+    [/biscoito|cookie|wafer|bolacha/, "🍪"],
+    [/bolo/, "🎂"],
+    [/pao|torrada/, "🍞"],
+    [/macarrao|lasanha|massa para|ravioli|capeletti|talharim/, "🍝"],
+    [/azeitona/, "🫒"],
+    [/tempero|\bsal\b/, "🧂"],
+    [/molho|azeite|oleo|condimento/, "🥫"],
+    [/pipoca/, "🍿"],
+    [/salgadinho/, "🥨"],
+    [/bolinho/, "🧁"],
+    [/acucar|gelatina|goiabada|doce/, "🍬"],
+    [/sabao|lava-roupas|lava roupas|detergente|amaciante|desinfetante|limpador|multiuso|alcool|inseticida/, "🧺"],
+    [/esponja|bucha|pano|flanela|la de aco/, "🧽"],
+    [/lixeira|saco para lixo/, "🗑️"],
+    [/pilha|bateria/, "🔋"],
+    [/lampada/, "💡"],
+    [/carvao|fogo/, "🔥"],
+    [/sandalia|sapato|tenis/, "👟"],
+    [/filme de pvc|copo/, "🥤"],
+  ];
+  return rules.find(([pattern]) => pattern.test(text))?.[1] ?? "🏷️";
 }
 
 export function validateOffer(offer) {

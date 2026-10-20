@@ -53,6 +53,13 @@ test("assignIcon assigns appropriate emojis to products", () => {
   assert.equal(assignIcon("Cerveja Lata", "Cervejas", "Bebidas"), "🍺");
   assert.equal(assignIcon("Sabão OMO", "Lavanderia e limpeza", "Casa e limpeza"), "🧺");
   assert.equal(assignIcon("Costela", "Carne bovina", "Açougue e peixaria"), "🥩");
+  assert.equal(assignIcon("Alface", "Hortifruti", "Hortifruti"), "🥬");
+  assert.equal(assignIcon("Repolho Verde", "Hortifruti", "Hortifruti"), "🥬");
+  assert.equal(assignIcon("Brócolis Japonês", "Congelados", "Congelados"), "🥦");
+  assert.equal(assignIcon("Cenoura", "Hortifruti", "Hortifruti"), "🥕");
+  assert.equal(assignIcon("Macarrão Instantâneo", "Mercearia", "Mercearia"), "🍝");
+  assert.equal(assignIcon("Papel Higiênico", "Papel higiênico", "Casa e limpeza"), "🧻");
+  assert.equal(assignIcon("Pilha Alcalina", "Casa", "Casa e limpeza"), "🔋");
 });
 
 test("validateOffer and validateSnapshot reject invalid data and accept valid data", () => {

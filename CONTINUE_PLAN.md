@@ -1,6 +1,6 @@
 # Feira Boa Continuation Plan
 
-Last updated: 2026-10-20 (post-QA)
+Last updated: 2026-10-20 (post card and notification QA)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
 
 ## Objective
@@ -20,12 +20,12 @@ Finish the Feira Boa hardening work while preserving product behavior:
 - Source/feed freshness window: 24 hours.
 - PWA PNG icons and the 1200x630 social card are approved.
 - Suggestion abuse protection: DB constraints/retention + client cooldown + honeypot. Turnstile remains deferred.
-- Local environment has no `git` or `python`; use Node-based scripts.
+- Local `python` is unavailable. Git is available at `C:\Users\wendreof\AppData\Local\GitHubDesktop\app-3.6.7\resources\app\git\cmd\git.exe`, but is not on `PATH`.
 
 ## Current Data State
 
 - `offers.json`: 278 offers, 230 active, 5 sources.
-- Last feed timestamp: `2026-10-20T01:51:26.799Z`.
+- Last feed timestamp: `2026-10-20T02:27:00.565Z`.
 - Snapshot validity:
   - `state/sempre.json`: 19-21; campaign `af2914...campanha-583`
   - `state/bigbom.json`: 19-22
@@ -53,12 +53,15 @@ Finish the Feira Boa hardening work while preserving product behavior:
   - Focus returns to `#menu-toggle`.
   - Signed-in Supabase session updates account links to `account.html` / "Minha conta".
 - Offers nav state works at both `/` and `/index.html`.
+- Offer cards now lead with the product name, show `marca · detalhe` on the second line, and place the compact store logo in the source row.
+- Build-time presentation normalization extracts brands across all five sources, removes duplicate brand text, canonicalizes known brand casing, and normalizes note whitespace, limits, and promotional casing.
+- Brand/note regression coverage was added for Sempre, Big Bom, Corso, and descriptive product names such as `CREME AVELÃ NUTELLA`.
 
 ### Security, PWA, and Deployment
 
 - Strict CSP with no inline styles/handlers. JSON-LD remains compatible.
 - `_headers` includes CSP, nosniff, frame denial, referrer policy, permissions policy, COOP, and CORP.
-- Service worker cache is `feira-boa-shell-v5`; `/app.js` is precached.
+- Service worker cache is `feira-boa-shell-v6`; `/app.js` is precached.
 - Removed the `?v=` query from `index.html`'s app script so precache matching works.
 - Offline fallback verified for unknown routes.
 - Social metadata, canonical URLs, sitemap, PWA icons, manifest, and social card are in place.
@@ -79,6 +82,8 @@ Finish the Feira Boa hardening work while preserving product behavior:
 - Suggestion honeypot + 60-second cooldown; stale cooldown text clears automatically.
 - Push cleanup runs before sign-out and account deletion.
 - Renewed push subscriptions replace the old endpoint.
+- Account push UI now distinguishes `Ativado em outro dispositivo` from local activation, changes the action to `Ativar neste dispositivo`, and shows inline state/error feedback.
+- Push failures are mapped to actionable messages; an unsaved subscription is unsubscribed to avoid orphaned browser state.
 - New migrations created:
   - `202610200001_suggestion_retention.sql`: 180-day cleanup, `created_at` index.
   - `202610200002_account_caps.sql`: 20 alerts/user, 10 push subscriptions/user, reaction ID constraint, reaction lookup index.
@@ -102,7 +107,7 @@ Latest checks passed:
 
 - `npm run typecheck`: passed.
 - `npm run build`: passed; 34 root artifacts; 278 offers; no `Geral`.
-- `npm test`: 20/20 passed.
+- `npm test`: 25/25 passed, including presentation normalization and push-state/error coverage.
 - Local site health (`check-site-health.mjs` with full headers): `status:ok`, 278 offers.
 - Chrome 390px `lojas.html`:
   - No horizontal overflow.
@@ -111,17 +116,20 @@ Latest checks passed:
   - 0 inline handlers; no console/CSP errors.
 - Chrome 390px app:
   - 230 cards; feed status hidden after load; search works.
-  - No horizontal overflow; drawer focus trap/Escape/focus restoration passed.
+  - No horizontal overflow; card width 354px in list mode; drawer focus trap/Escape/focus restoration passed.
+  - Product name, `marca · detalhe`, and source logo fit without clipping.
 - Chrome 1280px app:
-  - 230 cards, 3-column grid, no overflow.
+  - 230 cards, 3-column grid at 313px card width, no overflow.
+  - Product name leads each card; `marca · detalhe` is the second line; source logo appears before the branch name.
   - Search "leite" returned 11 offers with announcement.
   - Desktop-to-mobile resize stayed at 390px with one column.
+  - No console/runtime errors were reported by the final CDP pass.
 - Suggestions:
   - Cooldown disables submit and counts down correctly.
   - Expired cooldown clears status and re-enables submit.
   - Honeypot submission is accepted without network access, then resets.
 - Offline:
-  - Cache `feira-boa-shell-v5`, 230 cards offline.
+  - Cache `feira-boa-shell-v6`, 230 cards offline.
   - Unknown route renders `offline.html`.
   - Only expected external resource failures were logged offline.
 - Action tag SHAs verified against the GitHub API.
@@ -153,7 +161,7 @@ Latest checks passed:
 
 ## Known Constraints and Risks
 
-- No local `git`; cannot produce diffs/commits or inspect status locally.
+- Git is not on `PATH`; use the GitHub Desktop Git executable path for status/diffs/commits.
 - No local `python`.
 - Supabase migrations are not applied; no CLI/credentials are configured locally.
 - No production domain is configured in the repository, so production health/deployment verification is pending.
@@ -171,7 +179,8 @@ Latest checks passed:
 
 ### Account and Supabase
 
-- `account.ts`, `account-page.ts`, `offer-reactions.ts`, `suggestions.ts`
+- `account.ts`, `account-page.ts`, `account-alerts.html`, `offer-reactions.ts`, `suggestions.ts`
+- `push-state.js` — device/account notification state and user-facing error mapping
 - `supabase/migrations/202610180001_profiles_and_alerts.sql`
 - `supabase/migrations/202610180002_favorite_product_types.sql`
 - `supabase/migrations/202610180003_theme_preference.sql`
@@ -197,7 +206,7 @@ Latest checks passed:
 - `scripts/build-offer-feed.mjs`, `scripts/build-structured-data.mjs`
 - `scripts/check-site-health.mjs`, `scripts/verify-root-artifacts.mjs`
 - `scripts/github-issue.mjs`
-- `tests/{adapters,offer-feed,offer-matcher,status-toast,view-mode}.test.mjs`
+- `tests/{adapters,offer-feed,offer-matcher,push-state,status-toast,view-mode}.test.mjs`
 - `.github/workflows/{pull-request-checks,check-site-health,monitor-offers,send-price-alerts}.yml`
 - `.github/dependabot.yml`
 
@@ -229,6 +238,7 @@ Playwright/Puppeteer are not installed; QA used temporary CDP scripts outside th
 
 - [ ] Confirm no newer user instruction conflicts with this plan.
 - [ ] Re-run typecheck/build/tests.
+- [ ] Spot-check card title/brand/detail/source rendering and account push inline feedback.
 - [ ] Apply and validate the two Supabase migrations.
 - [ ] Deploy to Cloudflare Pages with root output.
 - [ ] Set `SITE_URL` and run production health check with security headers.

@@ -101,6 +101,236 @@ export function slug(value) {
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+const BRAND_ALIASES = [
+  ["Avelícia", ["AVELÍCIA"]],
+  ["São Lucas / Seletto", ["SÃO LUCAS OU SELETTO", "SÃO LUCAS / SELETTO"]],
+  ["São Lucas", ["SÃO LUCAS"]],
+  ["Seletto", ["SELETTO"]],
+  ["Borges", ["BORGES"]],
+  ["Shefa", ["SHEFA"]],
+  ["Demarchi", ["DEMARCHI"]],
+  ["Colônia", ["COLÔNIA"]],
+  ["Sol", ["SOL"]],
+  ["Quatá", ["QUATÁ"]],
+  ["Pioneiro", ["PIONEIRO"]],
+  ["ABS", ["ABS"]],
+  ["Skala", ["SKALA"]],
+  ["Nestlé", ["NESTLÉ"]],
+  ["Mor", ["MOR"]],
+  ["Val", ["VAL"]],
+  ["Panco", ["PANCO"]],
+  ["Maguary", ["MAGUARY"]],
+  ["H2OH", ["H2OH"]],
+  ["Banho a Banho", ["BANHO A BANHO"]],
+  ["Seara", ["SEARA"]],
+  ["Gomes da Costa", ["GOMES DA COSTA"]],
+  ["Vitaliv", ["VITALIV"]],
+  ["Mili", ["MILI"]],
+  ["Nescau", ["NESCAU"]],
+  ["MaisDoce", ["MAISDOCE"]],
+  ["Kero Coco", ["KERO COCO"]],
+  ["Lindoya", ["LINDOYA"]],
+  ["Ypê", ["YPÊ"]],
+  ["Aurora", ["AURORA"]],
+  ["Broto Legal", ["BROTO LEGAL"]],
+  ["Prato Fino", ["PRATO FINO"]],
+  ["Bem Brasil", ["BEM BRASIL"]],
+  ["Casagrande", ["CASAGRANDE"]],
+  ["Vigor", ["VIGOR"]],
+  ["Cassini", ["CASSINI"]],
+  ["Bono / Negresco", ["BONO/ NEGRESCO", "BONO / NEGRESCO"]],
+  ["Bono", ["BONO"]],
+  ["Negresco", ["NEGRESCO"]],
+  ["Renata", ["RENATA"]],
+  ["Minueto", ["MINUETO"]],
+  ["Garoto", ["GAROTO"]],
+  ["Caboclo", ["CABOCLO"]],
+  ["Melitta", ["MELITTA"]],
+  ["Nutella", ["NUTELLA"]],
+  ["Italac", ["ITALAC"]],
+  ["Colgate", ["COLGATE"]],
+  ["Búfalo", ["BÚFALO"]],
+  ["Rexona", ["REXONA"]],
+  ["Baly", ["BALY"]],
+  ["Scotch-Brite", ["SCOTCH- BRITE", "SCOTCH BRITE"]],
+  ["Maravilha", ["MARAVILHA"]],
+  ["New Fort", ["NEW FORT"]],
+  ["Seda", ["SEDA"]],
+  ["São Caipira", ["SÃO CAIPIRA"]],
+  ["Omo", ["OMO"]],
+  ["Brilhante", ["BRILHANTE"]],
+  ["Líder", ["LÍDER"]],
+  ["Zulu", ["ZULU"]],
+  ["Basilar", ["BASILAR"]],
+  ["Doriana", ["DORIANA"]],
+  ["Heinz", ["HEINZ"]],
+  ["Perdigão", ["PERDIGÃO"]],
+  ["Del Valle", ["DEL VALLE"]],
+  ["Neve", ["NEVE"]],
+  ["Friboi", ["FRIBOI"]],
+  ["Energy Dog", ["ENERGY DOG"]],
+  ["Coca-Cola", ["COCA COLA", "COCA-COLA"]],
+  ["Frutap", ["FRUTAP"]],
+  ["Palmolive", ["PALMOLIVE"]],
+  ["Ipanema", ["IPANEMA"]],
+  ["One", ["ONE"]],
+  ["Bebê Feliz", ["BEBÊ FELIZ"]],
+  ["Concha y Toro", ["CONCHA Y TORO"]],
+  ["Rayovac", ["RAYOVAC"]],
+  ["Pururuca", ["PURURUCA"]],
+  ["Guaraná Antarctica", ["GUARANÁ ANTARCTICA"]],
+];
+
+const ACCENT_CLASSES = {
+  a: "[aáàâãä]", e: "[eéèêë]", i: "[iíìîï]", o: "[oóòôõö]", u: "[uúùûü]",
+  c: "[cç]", n: "[nñ]", y: "[yýÿ]",
+};
+
+function normalizeForMatch(value) {
+  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function brandPattern(alias) {
+  const tokens = normalizeForMatch(alias).split(" ").filter(Boolean);
+  if (!tokens.length || tokens.join("").length < 3) return null;
+  const source = tokens.map((token) => [...token]
+    .map((character) => ACCENT_CLASSES[character] ?? escapeRegex(character)).join(""))
+    .join("[^a-z0-9]+");
+  return new RegExp(`(?<![a-z0-9])${source}(?![a-z0-9])`, "gi");
+}
+
+function addBrandAlias(map, brand, alias) {
+  const pattern = brandPattern(alias);
+  if (!pattern) return;
+  const key = normalizeForMatch(alias);
+  if (!key || map.has(key)) return;
+  map.set(key, { brand, pattern });
+}
+
+function aliasesForBrand(brand) {
+  const key = normalizeForMatch(brand);
+  const aliases = new Map();
+  for (const [canonical, names] of BRAND_ALIASES) {
+    if (normalizeForMatch(canonical) === key || names.some((name) => normalizeForMatch(name) === key)) {
+      for (const name of names) addBrandAlias(aliases, canonical, name);
+    }
+  }
+  if (aliases.size === 0) addBrandAlias(aliases, brand, brand);
+  return [...aliases.values()];
+}
+
+const ALL_BRAND_ALIASES = (() => {
+  const aliases = new Map();
+  for (const [brand, names] of BRAND_ALIASES) {
+    for (const name of names) addBrandAlias(aliases, brand, name);
+  }
+  return [...aliases.values()];
+})();
+
+const BRAND_CANONICAL_NAMES = (() => {
+  const names = new Map();
+  for (const [brand, aliases] of BRAND_ALIASES) {
+    names.set(normalizeForMatch(brand), brand);
+    for (const alias of aliases) names.set(normalizeForMatch(alias), brand);
+  }
+  return names;
+})();
+
+function findBrandMatches(name, aliases) {
+  const matches = [];
+  for (const alias of aliases) {
+    alias.pattern.lastIndex = 0;
+    for (const match of name.matchAll(alias.pattern)) {
+      matches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        brand: alias.brand,
+      });
+    }
+  }
+  matches.sort((left, right) => left.start - right.start || (right.end - right.start) - (left.end - left.start));
+  const selected = [];
+  for (const match of matches) {
+    if (selected.some((item) => match.start < item.end && match.end > item.start)) continue;
+    selected.push(match);
+  }
+  return selected;
+}
+
+function cleanProductName(name) {
+  return name.replace(/\s+/g, " ")
+    .replace(/^\d{1,2}\s+a\s+\d{1,2}\s+de\s+[a-zç]{3,}\.?\s+/i, "")
+    .replace(/^(?:ou|e)\s+/i, "")
+    .replace(/\s+(?:ou|e)$/i, "")
+    .replace(/^[\s·,/;-]+|[\s·,/;-]+$/g, "")
+    .trim();
+}
+
+export function normalizeOfferNote(value) {
+  const note = String(value ?? "").replace(/\s+/g, " ").trim();
+  if (!note) return "";
+
+  const limit = note.match(/^limite (?:por cliente\s*|de\s+)(\d+(?:[.,]\d+)?)\s*(kg|g|un\.?|unid\.?|unidade?s?)(?:\s+por cliente)?$/i);
+  if (limit) {
+    const quantity = limit[1].replace(".", ",");
+    const unit = limit[2].toLowerCase().replace(".", "");
+    const unitLabel = unit === "kg" || unit === "g"
+      ? unit
+      : Number(quantity.replace(",", ".")) === 1 ? "unidade" : "unidades";
+    return `Limite de ${quantity} ${unitLabel} por cliente`;
+  }
+
+  const promotion = note.match(/^nesta oferta a unid\. sai por (.+)$/i);
+  if (promotion) {
+    const details = promotion[1]
+      .replace(/\bPOR\b/gi, "por")
+      .replace(/\bPAGUE\b/gi, "pague")
+      .replace(/\bLEVE\b/gi, "leve");
+    return `Nesta oferta, a unidade sai por ${details}`;
+  }
+
+  return note.split(" · ").map((part) => {
+    if (/^preço club plus$/i.test(part)) return "Preço Club Plus";
+    if (/^oferta do açougue/i.test(part)) return `Oferta do açougue${part.slice("Oferta do açougue".length)}`;
+    return part;
+  }).join(" · ");
+}
+
+export function normalizeOfferPresentation(offer) {
+  const originalName = String(offer?.name ?? "").replace(/\s+/g, " ").trim();
+  const originalBrand = String(offer?.brand ?? "").replace(/\s+/g, " ").trim();
+  const matches = originalBrand
+    ? findBrandMatches(originalName, aliasesForBrand(originalBrand))
+    : findBrandMatches(originalName, ALL_BRAND_ALIASES);
+  let brand = originalBrand;
+  let name = originalName;
+
+  if (matches.length > 0) {
+    name = cleanProductName(originalName
+      .slice(0, matches[0].start)
+      + matches.slice(1).reduce((result, match, index) => result + originalName.slice(matches[index].end, match.start), "")
+      + originalName.slice(matches[matches.length - 1].end));
+    if (!originalBrand) brand = [...new Set(matches.map((match) => match.brand))].join(" / ");
+    if (name.length < 2) {
+      name = originalName;
+      brand = originalBrand;
+    }
+  }
+  brand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(brand)) ?? brand;
+
+  return {
+    ...offer,
+    name: name || originalName,
+    brand,
+    note: normalizeOfferNote(offer?.note),
+  };
+}
+
 export function classifyProduct(name, brand, category) {
   const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const normalizedCategory = category === "Geral" ? "Outros" : category;

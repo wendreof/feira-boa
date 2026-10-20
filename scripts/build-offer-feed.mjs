@@ -3,7 +3,7 @@ import { readdir, readFile, rename, writeFile } from "node:fs/promises";
 import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
-import { assignIcon, classifyProduct } from "./adapters/common.mjs";
+import { assignIcon, classifyProduct, normalizeOfferPresentation } from "./adapters/common.mjs";
 
 const { outputFiles } = await build({
   entryPoints: [fileURLToPath(new URL("../offers.ts", import.meta.url))],
@@ -78,6 +78,7 @@ const offers = allOffers;
 const offersUpdatedAt = latestSnapshotDate;
 
 for (const offer of offers) {
+  Object.assign(offer, normalizeOfferPresentation(offer));
   if (offer.department !== "Geral" && offer.productType !== "Geral") continue;
   const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros");
   offer.category = taxonomy.department;

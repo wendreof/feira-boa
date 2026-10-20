@@ -22,7 +22,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 ### Data pipeline
 - `offers.ts` is the curated fallback catalog.
 - `scripts/adapters/*` fetch official sources; `npm run ingest:offers` writes snapshots in `state/`.
-- `scripts/build-offer-feed.mjs` prefers snapshots, normalizes legacy taxonomy, and generates `offers.json` plus build metadata.
+- `scripts/build-offer-feed.mjs` prefers snapshots, applies brand/note presentation normalization plus legacy taxonomy, and generates `offers.json` plus build metadata.
+- Card presentation is name-first; `marca · detalhe` is secondary, and the store logo belongs to the source row.
 - The generated feed is the shared source for the website and the scheduled monitoring jobs.
 - New prices publish immediately; `needs_review` gates alert eligibility only.
 
@@ -35,6 +36,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 ### Notifications and monitoring
 - `service-worker.js` handles push notifications.
+- Account push state is per device, while the backend flag is account-wide; copy must distinguish “Ativado neste dispositivo” from “Ativado em outro dispositivo.”
+- `push-state.js` owns notification control state and actionable error copy.
 - `scripts/send-price-alerts.mjs` sends alerts using VAPID credentials.
 - GitHub Actions monitors offer-source changes and can alert when a source changes.
 - Keep VAPID private keys and `SUPABASE_SERVICE_ROLE_KEY` in GitHub Actions secrets or local ignored env files, not in the repo.
@@ -48,6 +51,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings
 - `account.ts` — account, preferences, rules, and subscription logic
+- `account-page.ts`, `account-alerts.html` — account UI, including device/account push states
+- `push-state.js` — push UI state and failure-message mapping
 - `theme.ts` — theme persistence
 - `scripts/build-offer-feed.mjs` — feed generation
 - `scripts/send-price-alerts.mjs` — notifications sender

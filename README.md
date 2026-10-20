@@ -13,7 +13,7 @@ Local supermarket offers for São João da Boa Vista.
 - Hide offers outside their printed validity dates.
 - Switch between light and dark themes; signed-in users sync the choice with their account.
 
-The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed contains 278 offers across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Supermercado Corso. Pague Menos prices are online-only and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
+The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed contains 1,288 offers across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Supermercado Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
 
 ## Run locally
 
@@ -39,13 +39,13 @@ The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/se
 
 The workflow in `.github/workflows/monitor-offers.yml` runs daily at 09:17 São Paulo time and can also be started manually from the GitHub Actions tab. It runs the official-source adapters, saves offers in `state/`, and records source health in `.offer-monitor-state.json` and `source-status.js`. A changed or failed source is marked for review and can open a GitHub issue; reviewed prices publish immediately, while price alerts stay blocked until the source is reviewed. The workflow never guesses prices. GitHub says scheduled runs may be delayed during high load, so this is a daily check rather than an exact-time guarantee.
 
-Because the source repository is private, GitHub Pages on the free plan cannot host the public site. Cloudflare Pages builds with `npm run build` and publishes the repository root (`.`) directory. Cloudflare redeploys on pushes, including the monitor's changed-source alert commit. The initial monitor checks known flyer links; discovering new campaigns from store pages and safely extracting prices are follow-up automation steps.
+Because the source repository is private, GitHub Pages on the free plan cannot host the public site. Cloudflare Pages builds with `npm run build` and publishes the repository root (`.`) directory. Cloudflare redeploys on pushes, including the monitor's changed-source alert commit. The monitor checks the known official source URLs; discovering unlinked campaigns and safely extracting those prices remain follow-up automation steps.
 
 ## Data source
 
 - Sempre Vale official offers: https://www.semprevale.com.br/ofertas.php
 - Sempre Vale Durval Nicolau campaign: https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf
 - Big Bom São João flyer: https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf
-- Supermercados Pague Menos official offers: https://www.superpaguemenos.com.br/jornal-de-ofertas/
+- Supermercados Pague Menos official offers: https://www.superpaguemenos.com.br/ofertas?productclusterids=161
 - Spasso Sabores São João offers: https://spassosabores.com.br/ofertas-sao-joao/
 - Supermercado Corso flyer: https://corso.com.br/jornalfrente.php

@@ -12,6 +12,7 @@ import {
   validateOffer,
   validateSnapshot,
 } from "../scripts/adapters/common.mjs";
+import { buildPagueMenosOffer, getWeekValidity } from "../scripts/adapters/paguemenos.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d1 = parseDateRange("Ofertas válidas de 19/10 até 21/10/2026");
@@ -104,6 +105,79 @@ test("classifyProduct maps products to departments and product types", () => {
   assert.equal(unknown.productType, "Outros");
 });
 
+test("buildPagueMenosOffer maps catalog products and skips unavailable items", () => {
+  const product = {
+    productName: "Café Melitta Regiões Brasileiras Sul de Minas 250g",
+    brand: "Melitta",
+    categories: ["/Mercearia/Café e Achocolatados/Café/"],
+    items: [{
+      sellers: [{
+        sellerDefault: true,
+        commertialOffer: { Price: 24.99, ListPrice: 25.99, IsAvailable: true },
+      }],
+    }],
+  };
+  const validity = { from: "2026-10-19", to: "2026-10-25" };
+  const offer = buildPagueMenosOffer(product, { validity });
+
+  assert.equal(offer.name, "Café Melitta Regiões Brasileiras Sul de Minas");
+  assert.equal(offer.brand, "Melitta");
+  assert.equal(offer.detail, "250g");
+  assert.equal(offer.price, 24.99);
+  assert.equal(offer.previousPrice, 25.99);
+  assert.equal(offer.department, "Mercearia");
+  assert.equal(offer.productType, "Café");
+  assert.equal(offer.validFrom, "2026-10-19");
+  assert.equal(offer.validTo, "2026-10-25");
+  assert.match(offer.id, /^paguemenos-cafe-melitta/);
+
+  const unavailable = { ...product, items: [{ sellers: [{ sellerDefault: true, commertialOffer: { Price: 24.99, IsAvailable: false } }] }] };
+  assert.equal(buildPagueMenosOffer(unavailable, { validity }), null);
+  const free = { ...product, items: [{ sellers: [{ sellerDefault: true, commertialOffer: { Price: 0, IsAvailable: true } }] }] };
+  assert.equal(buildPagueMenosOffer(free, { validity }), null);
+});
+
+test("getWeekValidity uses a stable Monday-Sunday window in São Paulo", () => {
+  assert.deepEqual(
+    getWeekValidity(new Date("2026-10-20T12:00:00Z")),
+    { from: "2026-10-19", to: "2026-10-25" },
+  );
+  assert.deepEqual(
+    getWeekValidity(new Date("2026-10-25T12:00:00Z")),
+    { from: "2026-10-19", to: "2026-10-25" },
+  );
+  assert.deepEqual(
+    getWeekValidity(new Date("2026-10-26T12:00:00Z")),
+    { from: "2026-10-26", to: "2026-11-01" },
+  );
+});
+
+test("buildPagueMenosOffer extracts package details and maps catalog categories", () => {
+  const validity = { from: "2026-10-19", to: "2026-10-25" };
+  const product = (productName, categories = ["/Perfumaria/"]) => ({
+    productName,
+    brand: "",
+    categories,
+    items: [{ sellers: [{ sellerDefault: true, commertialOffer: { Price: 9.99, ListPrice: 9.99, IsAvailable: true } }] }],
+  });
+
+  const floss = buildPagueMenosOffer(product("Fio Dental Colgate Menta 50m"), { validity });
+  assert.equal(floss.name, "Fio Dental Colgate Menta");
+  assert.equal(floss.detail, "50m");
+
+  const cleaner = buildPagueMenosOffer(product("Limpador Sanitário Bloco Higiênico Harpic Lavanda Unidade"), { validity });
+  assert.equal(cleaner.name, "Limpador Sanitário Bloco Higiênico Harpic Lavanda");
+  assert.equal(cleaner.detail, "Unidade");
+
+  const capsules = buildPagueMenosOffer(product("Cápsula Pilão Espresso 12 com 20 Unidades", ["/Mercearia/"]), { validity });
+  assert.equal(capsules.name, "Cápsula Pilão Espresso 12");
+  assert.equal(capsules.detail, "20 Unidades");
+
+  const cosmetic = buildPagueMenosOffer(product("Espuma de Barbear Hidratante"), { validity });
+  assert.equal(cosmetic.department, "Higiene e cuidados");
+  assert.equal(cosmetic.productType, "Higiene pessoal");
+});
+
 test("assignIcon assigns appropriate emojis to products", () => {
   assert.equal(assignIcon("Café Solúvel", "Café", "Mercearia"), "☕");
   assert.equal(assignIcon("Cerveja Lata", "Cervejas", "Bebidas"), "🍺");
@@ -154,6 +228,24 @@ test("normalizeOfferPresentation separates brands from product names", () => {
   });
   assert.equal(separate.name, "Lasanha");
   assert.equal(separate.brand, "Seara");
+
+  const accentedBrand = normalizeOfferPresentation({
+    name: "Café Pilão Tradicional 500g",
+    brand: "Pilao",
+    detail: "500g",
+    note: "",
+  });
+  assert.equal(accentedBrand.name, "Café Tradicional 500g");
+  assert.equal(accentedBrand.brand, "Pilão");
+
+  const apostropheBrand = normalizeOfferPresentation({
+    name: "Salgadinho de Batata Lay's Clássica",
+    brand: "Lays",
+    detail: "115g",
+    note: "",
+  });
+  assert.equal(apostropheBrand.name, "Salgadinho de Batata Clássica");
+  assert.equal(apostropheBrand.brand, "Lay's");
 
   const dated = normalizeOfferPresentation({
     name: "19 A 21 DE OUT. ÓLEO SOJA VITALIV",

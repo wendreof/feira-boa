@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-20T02:44:18.139Z",
-    "last_success_at": "2026-10-20T02:44:18.139Z",
+    "checked_at": "2026-10-20T13:39:26.813Z",
+    "last_success_at": "2026-10-20T13:39:26.813Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,9 +24,9 @@
     "status": 200,
     "content_type": "text/html; charset=utf-8",
     "final_url": "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
-    "checked_at": "2026-10-20T02:44:18.412Z",
+    "checked_at": "2026-10-20T13:39:28.797Z",
     "last_success_at": "2026-10-20T02:44:18.412Z",
-    "last_error": null,
+    "last_error": "TypeError",
     "needs_review": false
   },
   "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf": {
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf",
-    "checked_at": "2026-10-20T02:44:18.806Z",
-    "last_success_at": "2026-10-20T02:44:18.806Z",
+    "checked_at": "2026-10-20T13:39:33.421Z",
+    "last_success_at": "2026-10-20T13:39:33.421Z",
     "last_error": null,
     "needs_review": false
   },
@@ -50,14 +50,14 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "5d83bd3279be5afb7cf26ea2e12f08583983a25b84d477dbb88f25fdea3d60a9",
+    "sha256": "c5a2f2f2b1fcca59ba4444fe8bc28480d5e22676f5ee58ee922fa3c3c669477b",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-20T02:44:20.182Z",
-    "last_success_at": "2026-10-20T02:44:20.182Z",
+    "checked_at": "2026-10-20T13:39:35.619Z",
+    "last_success_at": "2026-10-20T13:39:35.619Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://corso.com.br/jornalfrente.php": {
     "url": "https://corso.com.br/jornalfrente.php",
@@ -69,8 +69,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-20T02:44:21.340Z",
-    "last_success_at": "2026-10-20T02:44:21.340Z",
+    "checked_at": "2026-10-20T13:39:36.726Z",
+    "last_success_at": "2026-10-20T13:39:36.726Z",
     "last_error": null,
     "needs_review": false
   }

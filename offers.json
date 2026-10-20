@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T02:27:00.565Z",
+  "updatedAt": "2026-10-20T13:39:21.311Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -420,11 +420,11 @@
       "name": "BATATA MONALISA KG OVOS BCO. GRANDE CASAGRANDE C/ 20",
       "brand": "",
       "detail": "UN.",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Hortifruti"
+        "Ovos"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -4172,11 +4172,11 @@
       "name": "Abacate",
       "brand": "",
       "detail": "Kg",
-      "category": "Pet",
-      "department": "Pet",
-      "productType": "Pet",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Pet"
+        "Hortifruti"
       ],
       "price": 5.28,
       "previousPrice": 6.28,

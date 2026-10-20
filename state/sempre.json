@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-21"
   },
-  "fetchedAt": "2026-10-20T02:26:58.093Z",
+  "fetchedAt": "2026-10-20T13:39:18.023Z",
   "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf",
   "offers": [
     {
@@ -383,11 +383,11 @@
       "name": "BATATA MONALISA KG OVOS BCO. GRANDE CASAGRANDE C/ 20",
       "brand": "",
       "detail": "UN.",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Hortifruti"
+        "Ovos"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -599,11 +599,11 @@
       "name": "OVOS VERMELHOS SÃO CAIPIRA GD 10UN",
       "brand": "",
       "detail": "Unidade",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Geral"
+        "Ovos"
       ],
       "price": 9.98,
       "previousPrice": null,
@@ -863,11 +863,11 @@
       "name": "FEIRINHA NEW FORT FLON",
       "brand": "",
       "detail": "Unidade",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Casa",
       "productTypes": [
-        "Geral"
+        "Casa"
       ],
       "price": 42.99,
       "previousPrice": 49.99,
@@ -887,11 +887,11 @@
       "name": "SANDÁLIA IPANEMA CLÁSSICA",
       "brand": "",
       "detail": "PAR",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Vestuário e calçados",
+      "department": "Vestuário e calçados",
+      "productType": "Calçados",
       "productTypes": [
-        "Geral"
+        "Calçados"
       ],
       "price": 19.99,
       "previousPrice": 23.9,
@@ -1631,11 +1631,11 @@
       "name": "CREME AVELÃ NUTELLA",
       "brand": "",
       "detail": "140G",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Geral"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.98,

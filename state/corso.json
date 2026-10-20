@@ -9,7 +9,7 @@
     "from": "2026-10-16",
     "to": "2026-10-22"
   },
-  "fetchedAt": "2026-10-20T02:27:00.565Z",
+  "fetchedAt": "2026-10-20T13:39:21.311Z",
   "sourceUrl": "https://corso.com.br/jornalfrente.php",
   "flyerHash": "1792149520",
   "offers": [
@@ -357,11 +357,11 @@
       "name": "Abacate",
       "brand": "",
       "detail": "Kg",
-      "category": "Pet",
-      "department": "Pet",
-      "productType": "Pet",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Pet"
+        "Hortifruti"
       ],
       "price": 5.28,
       "previousPrice": 6.28,

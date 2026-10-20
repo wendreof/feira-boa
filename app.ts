@@ -23,6 +23,7 @@ const priceMax = document.querySelector<HTMLInputElement>("#price-max")!;
 const productTypeSelect = document.querySelector<HTMLSelectElement>("#product-type")!;
 const sortSelect = document.querySelector<HTMLSelectElement>("#sort-order")!;
 const emptyState = document.querySelector<HTMLDivElement>("#empty-state")!;
+const storesDirectoryLink = document.querySelector<HTMLAnchorElement>(".stores-directory-link")!;
 const resultsSubtitle = document.querySelector<HTMLParagraphElement>("#results-subtitle")!;
 const resultsTitle = document.querySelector<HTMLHeadingElement>("#results-title")!;
 const showAllOffersButton = document.querySelector<HTMLButtonElement>("#show-all-offers")!;
@@ -315,6 +316,7 @@ function renderOffers(): void {
     </article>`;
   }).join("");
   emptyState.hidden = matching.length > 0;
+  storesDirectoryLink.hidden = matching.length === 0;
   const activeFavoriteCount = offers.filter((offer) => isActive(offer) && favoriteIds.has(offer.id)).length;
   favoritesToggle.textContent = favoriteOnly ? `Ver todas (${activeFavoriteCount})` : `Favoritos (${activeFavoriteCount})`;
   favoritesToggle.setAttribute("aria-pressed", String(favoriteOnly));

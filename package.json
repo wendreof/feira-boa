@@ -2,12 +2,19 @@
   "name": "feira-boa",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "tsc && node scripts/build-offer-feed.mjs && esbuild app.ts --bundle --minify --outfile=app.js --target=es2020 && esbuild stores-page.ts --bundle --minify --outfile=stores.js --target=es2020 && esbuild login-page.ts --bundle --minify --outfile=login.js --target=es2020 && esbuild account-page.ts --bundle --minify --outfile=account.js --target=es2020 && esbuild suggestions-page.ts --bundle --minify --outfile=suggestions.js --target=es2020",
+    "build": "tsc && node scripts/build-offer-feed.mjs && node scripts/build-structured-data.mjs && esbuild app.ts --bundle --minify --outfile=app.js --target=es2020 && esbuild stores-page.ts --bundle --minify --outfile=stores.js --target=es2020 && esbuild login-page.ts --bundle --minify --outfile=login.js --target=es2020 && esbuild account-page.ts --bundle --minify --outfile=account.js --target=es2020 && esbuild suggestions-page.ts --bundle --minify --outfile=suggestions.js --target=es2020 && node scripts/verify-root-artifacts.mjs",
     "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "verify:artifacts": "node scripts/verify-root-artifacts.mjs",
     "ingest:offers": "node scripts/ingest-offers.mjs",
     "check:site": "node scripts/check-site-health.mjs",
-    "send:price-alerts": "node scripts/send-price-alerts.mjs"
+    "send:price-alerts": "node scripts/send-price-alerts.mjs",
+    "send:price-alerts:dry": "node scripts/send-price-alerts.mjs --dry-run",
+    "review:source": "node scripts/review-source.mjs",
+    "monitor:sources": "node scripts/monitor-sources.mjs",
+    "monitor:status": "node scripts/write-source-status.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",

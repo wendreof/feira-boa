@@ -1,7 +1,7 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
-import { assignIcon, classifyProduct, parseDateRange, slug, validateOffer } from "./common.mjs";
+import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, slug, validateOffer } from "./common.mjs";
 
 const DURVAL_NICOLAU_ENDPOINT = "https://www.semprevale.com.br/get_unidades_ofertas.php";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
@@ -11,7 +11,7 @@ export async function extractSempreVale(customUrl = null) {
   let validity = null;
 
   if (!flyerUrl) {
-    const formRes = await fetch(DURVAL_NICOLAU_ENDPOINT, {
+    const formRes = await fetchWithRetry(DURVAL_NICOLAU_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -30,7 +30,7 @@ export async function extractSempreVale(customUrl = null) {
     validity = parseDateRange(dateMatch ? dateMatch[0] : "", 2026);
   }
 
-  const res = await fetch(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
+  const res = await fetchWithRetry(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Sempre Vale flyer PDF (${res.status})`);
 
   const buffer = Buffer.from(await res.arrayBuffer());

@@ -1,14 +1,14 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
-import { assignIcon, classifyProduct, parseDateRange, slug, validateOffer } from "./common.mjs";
+import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, slug, validateOffer } from "./common.mjs";
 
 const DEFAULT_FLYER_URL = "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 export async function extractBigBom(customUrl = null) {
   const flyerUrl = customUrl || DEFAULT_FLYER_URL;
-  const res = await fetch(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
+  const res = await fetchWithRetry(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Big Bom flyer (${res.status} ${res.statusText})`);
 
   const buffer = Buffer.from(await res.arrayBuffer());

@@ -1,531 +1,849 @@
-import { errorMessage, getCurrentUser, loadPreferences, savePreferences } from "./account";
+import { errorMessage } from "./errors";
 import type { Offer, OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
-import { deleteOfferReaction, loadOfferReactionCounts, loadUserOfferReactions, saveOfferReaction, type OfferReaction, type OfferReactionCounts } from "./offer-reactions";
 import { resolveDefaultViewMode } from "./view-mode.js";
 import { showTransientStatus } from "./status-toast.js";
 import { applySourceFreshness } from "./source-freshness";
 
+type AccountApi = typeof import("./account");
+type ReactionsApi = typeof import("./offer-reactions");
+type ViewMode = "grid" | "list";
+type ReactionCounts = { likes: number; dislikes: number };
+
+interface CardRefs {
+  root: HTMLElement;
+  art: HTMLElement;
+  name: HTMLElement;
+  category: HTMLElement;
+  spec: HTMLElement;
+  price: HTMLElement;
+  oldPrice: HTMLElement;
+  valid: HTMLElement;
+  note: HTMLElement;
+  branch: HTMLElement;
+  sourceLink: HTMLAnchorElement;
+  share: HTMLButtonElement;
+  favoriteButtons: HTMLButtonElement[];
+  like: HTMLButtonElement;
+  dislike: HTMLButtonElement;
+  likeCount: HTMLElement;
+  dislikeCount: HTMLElement;
+}
+
+const feedStatus = document.querySelector<HTMLParagraphElement>("#feed-status")!;
+const feedRetry = document.querySelector<HTMLButtonElement>("#feed-retry")!;
+const resultsAnnouncement = document.querySelector<HTMLParagraphElement>("#results-announcement")!;
+
+feedRetry.addEventListener("click", () => window.location.reload());
+
+function showFeedError(): void {
+  feedStatus.hidden = false;
+  feedStatus.dataset.state = "error";
+  feedStatus.textContent = "Não foi possível carregar as ofertas. Verifique sua conexão e tente novamente.";
+  feedRetry.hidden = false;
+  document.querySelector<HTMLParagraphElement>("#results-subtitle")!.textContent = "";
+}
+
 (async function startApp(): Promise<void> {
-const feedResponse = await fetch("offers.json");
-if (!feedResponse.ok) throw new Error(`Offer feed unavailable: ${feedResponse.status}`);
-const feed = await feedResponse.json() as OfferFeed;
-const offers = feed.offers;
-const storeNames = ["Todas as lojas", ...new Set(offers.map((offer) => offer.store))];
-const departments = ["Todos os setores", ...new Set(offers.map((offer) => offer.department))];
-const grid = document.querySelector<HTMLDivElement>("#offer-grid")!;
-const filters = document.querySelector<HTMLDivElement>("#filters")!;
-const storeFilters = document.querySelector<HTMLDivElement>("#store-filters")!;
-const popularItems = document.querySelector<HTMLDivElement>("#popular-items")!;
-const input = document.querySelector<HTMLInputElement>("#search-input")!;
-const priceMin = document.querySelector<HTMLInputElement>("#price-min")!;
-const priceMax = document.querySelector<HTMLInputElement>("#price-max")!;
-const productTypeSelect = document.querySelector<HTMLSelectElement>("#product-type")!;
-const sortSelect = document.querySelector<HTMLSelectElement>("#sort-order")!;
-const emptyState = document.querySelector<HTMLDivElement>("#empty-state")!;
-const storesDirectoryLink = document.querySelector<HTMLAnchorElement>(".stores-directory-link")!;
-const resultsSubtitle = document.querySelector<HTMLParagraphElement>("#results-subtitle")!;
-const resultsTitle = document.querySelector<HTMLHeadingElement>("#results-title")!;
-const showAllOffersButton = document.querySelector<HTMLButtonElement>("#show-all-offers")!;
-const shareStatus = document.querySelector<HTMLParagraphElement>("#share-status")!;
-const emptyHelp = document.querySelector<HTMLSpanElement>("#empty-help")!;
-const resetButton = document.querySelector<HTMLButtonElement>("#reset-filters")!;
-const viewToggle = document.querySelector<HTMLDivElement>("#view-toggle")!;
-const accountAccess = document.querySelector<HTMLAnchorElement>("#account-access")!;
-const accountPanel = document.querySelector<HTMLDivElement>("#account-panel")!;
-const navAccountLink = document.querySelector<HTMLAnchorElement>("#nav-account")!;
-const navAccountLabel = navAccountLink.querySelector<HTMLElement>("[data-account-label]")!;
-const mobileNavAccountLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-account")!;
-const mobileNavAccountLabel = mobileNavAccountLink.querySelector<HTMLElement>("[data-mobile-account-label]")!;
-const accountDescription = document.querySelector<HTMLSpanElement>("#account-description")!;
-const accountStatus = document.querySelector<HTMLParagraphElement>("#account-status")!;
-const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
-const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
-const mobileNavOffersLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-offers")!;
-const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
-const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
-let activeDepartment = "Todos os setores";
-let activeStore = "Todas as lojas";
-let activeProductType = "";
-let favoriteIds = readGuestFavorites();
-let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
-const mobileViewMedia = window.matchMedia("(max-width: 760px)");
-let viewMode: "grid" | "list" = readViewMode();
-let currentUserId: string | null = null;
-let preferencesLoaded = false;
-let pendingTheme: ThemePreference | null = null;
-let reactionCounts = new Map<string, OfferReactionCounts>();
-let userReactions = new Map<string, OfferReaction>();
-let sharedOfferId = new URLSearchParams(window.location.search).get("offer");
-if (favoriteOnly) {
-  navFavoritesLink.setAttribute("aria-current", "page");
-  mobileNavFavoritesLink.setAttribute("aria-current", "page");
-} else {
-  mobileNavOffersLink.setAttribute("aria-current", "page");
-}
-if (sharedOfferId && !offers.some((offer) => offer.id === sharedOfferId)) sharedOfferId = null;
+  feedStatus.textContent = "Carregando ofertas…";
+  const feedResponse = await fetch("offers.json", { cache: "no-cache" });
+  if (!feedResponse.ok) throw new Error(`Offer feed unavailable: ${feedResponse.status}`);
+  const feed = await feedResponse.json() as OfferFeed;
+  if (!Array.isArray(feed.offers) || !Array.isArray(feed.stores)) throw new Error("Offer feed has an invalid shape.");
 
-function readGuestFavorites(): Set<string> {
-  try {
-    const value: unknown = JSON.parse(localStorage.getItem("feira-boa:favorites:v1") ?? "[]");
-    return new Set(Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : []);
-  } catch {
-    return new Set();
-  }
-}
+  const offers = feed.offers;
+  const storeNames = ["Todas as lojas", ...new Set(offers.map((offer) => offer.store))];
+  const departments = ["Todos os setores", ...new Set(offers.map((offer) => offer.department))];
+  const grid = document.querySelector<HTMLDivElement>("#offer-grid")!;
+  const filters = document.querySelector<HTMLDivElement>("#filters")!;
+  const storeFilters = document.querySelector<HTMLDivElement>("#store-filters")!;
+  const popularItems = document.querySelector<HTMLDivElement>("#popular-items")!;
+  const input = document.querySelector<HTMLInputElement>("#search-input")!;
+  const priceMin = document.querySelector<HTMLInputElement>("#price-min")!;
+  const priceMax = document.querySelector<HTMLInputElement>("#price-max")!;
+  const productTypeSelect = document.querySelector<HTMLSelectElement>("#product-type")!;
+  const sortSelect = document.querySelector<HTMLSelectElement>("#sort-order")!;
+  const emptyState = document.querySelector<HTMLDivElement>("#empty-state")!;
+  const storesDirectoryLink = document.querySelector<HTMLAnchorElement>(".stores-directory-link")!;
+  const resultsSubtitle = document.querySelector<HTMLParagraphElement>("#results-subtitle")!;
+  const resultsTitle = document.querySelector<HTMLHeadingElement>("#results-title")!;
+  const showAllOffersButton = document.querySelector<HTMLButtonElement>("#show-all-offers")!;
+  const shareStatus = document.querySelector<HTMLParagraphElement>("#share-status")!;
+  const emptyHelp = document.querySelector<HTMLSpanElement>("#empty-help")!;
+  const resetButton = document.querySelector<HTMLButtonElement>("#reset-filters")!;
+  const viewToggle = document.querySelector<HTMLDivElement>("#view-toggle")!;
+  const accountAccess = document.querySelector<HTMLAnchorElement>("#account-access")!;
+  const accountPanel = document.querySelector<HTMLDivElement>("#account-panel")!;
+  const navAccountLink = document.querySelector<HTMLAnchorElement>("#nav-account")!;
+  const navAccountLabel = navAccountLink.querySelector<HTMLElement>("[data-account-label]")!;
+  const mobileNavAccountLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-account")!;
+  const mobileNavAccountLabel = mobileNavAccountLink.querySelector<HTMLElement>("[data-mobile-account-label]")!;
+  const accountDescription = document.querySelector<HTMLSpanElement>("#account-description")!;
+  const accountStatus = document.querySelector<HTMLParagraphElement>("#account-status")!;
+  const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
+  const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
+  const mobileNavOffersLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-offers")!;
+  const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
+  const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
+  const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
 
-function readViewMode(): "grid" | "list" {
-  try {
-    return resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
-  } catch {
-    return resolveDefaultViewMode(null, mobileViewMedia.matches);
-  }
-}
-
-function updateViewMode(): void {
-  grid.classList.toggle("list-view", viewMode === "list");
-  viewToggle.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((button) => {
-    const isSelected = button.dataset.viewMode === viewMode;
-    button.setAttribute("aria-pressed", String(isSelected));
-    button.disabled = mobileViewMedia.matches && button.dataset.viewMode !== "list";
+  const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
+  const feedDateFormatter = new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit", month: "short", year: "numeric", timeZone: "America/Sao_Paulo",
   });
-}
+  const feedTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
+    hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo",
+  });
 
-function persistViewMode(mode: "grid" | "list"): void {
-  try {
-    localStorage.setItem("feira-boa:view-mode:v1", mode);
-  } catch {
-    // Keep the selected view for this page even when storage is unavailable.
+  const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
+  const commonItems = [
+    { label: "Café", icon: "☕", query: "café" }, { label: "Leite", icon: "🥛", query: "leite" },
+    { label: "Arroz", icon: "🍚", query: "arroz" }, { label: "Frango", icon: "🍗", query: "frango" },
+    { label: "Carne", icon: "🥩", query: "carne" }, { label: "Tomate", icon: "🍅", query: "tomate" },
+    { label: "Cerveja", icon: "🍺", query: "cerveja" }, { label: "Sabão", icon: "🧺", query: "sabão" },
+    { label: "Papel higiênico", icon: "🧻", query: "papel higiênico" }, { label: "Iogurte", icon: "🥣", query: "iogurte" },
+  ];
+
+  let activeDepartment = "Todos os setores";
+  let activeStore = "Todas as lojas";
+  let activeProductType = "";
+  let favoriteIds = readGuestFavorites();
+  let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
+  const mobileViewMedia = window.matchMedia("(max-width: 760px)");
+  let viewMode: ViewMode = readViewMode();
+  let currentUserId: string | null = null;
+  let preferencesLoaded = false;
+  let pendingTheme: ThemePreference | null = null;
+  let reactionCounts = new Map<string, ReactionCounts>();
+  let userReactions = new Map<string, import("./offer-reactions").OfferReaction>();
+  let sharedOfferId = new URLSearchParams(window.location.search).get("offer");
+  let accountApi: AccountApi | null = null;
+  let reactionsApi: ReactionsApi | null = null;
+  const cards = new Map<string, CardRefs>();
+
+  if (favoriteOnly) {
+    navFavoritesLink.setAttribute("aria-current", "page");
+    mobileNavFavoritesLink.setAttribute("aria-current", "page");
+  } else {
+    mobileNavOffersLink.setAttribute("aria-current", "page");
   }
-}
+  if (sharedOfferId && !offers.some((offer) => offer.id === sharedOfferId)) sharedOfferId = null;
 
-function setAccountStatus(message: string): void {
-  accountStatus.textContent = message;
-}
-
-function updateAccountControls(): void {
-  const signedIn = currentUserId !== null;
-  accountPanel.hidden = signedIn;
-  accountAccess.hidden = signedIn;
-  navAccountLabel.textContent = signedIn ? "Minha conta" : "Entrar";
-  navAccountLink.setAttribute("aria-label", signedIn ? "Minha conta" : "Entrar");
-  navAccountLink.setAttribute("href", signedIn ? "account.html" : "login.html");
-  mobileNavAccountLabel.textContent = signedIn ? "Minha conta" : "Entrar";
-  mobileNavAccountLink.setAttribute("aria-label", signedIn ? "Minha conta" : "Entrar");
-  mobileNavAccountLink.setAttribute("href", signedIn ? "account.html" : "login.html");
-  accountDescription.textContent = signedIn
-    ? "Seus favoritos já estão sincronizados com a sua conta."
-    : "Entre ou crie uma conta grátis para sincronizar seus favoritos.";
-  if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
-}
-
-function persistGuestFavorites(): void {
-  try {
-    localStorage.setItem("feira-boa:favorites:v1", JSON.stringify([...favoriteIds]));
-  } catch {
-    setAccountStatus("Não foi possível salvar favoritos neste navegador.");
-  }
-}
-
-async function saveFavoriteChanges(): Promise<void> {
-  persistGuestFavorites();
-  if (currentUserId) {
+  function readGuestFavorites(): Set<string> {
     try {
+      const value: unknown = JSON.parse(localStorage.getItem("feira-boa:favorites:v1") ?? "[]");
+      return new Set(Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function readViewMode(): ViewMode {
+    try {
+      return resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
+    } catch {
+      return resolveDefaultViewMode(null, mobileViewMedia.matches);
+    }
+  }
+
+  function updateViewMode(): void {
+    grid.classList.toggle("list-view", viewMode === "list");
+    viewToggle.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((button) => {
+      const isSelected = button.dataset.viewMode === viewMode;
+      button.setAttribute("aria-pressed", String(isSelected));
+      button.disabled = mobileViewMedia.matches && button.dataset.viewMode !== "list";
+    });
+  }
+
+  function persistViewMode(mode: ViewMode): void {
+    try {
+      localStorage.setItem("feira-boa:view-mode:v1", mode);
+    } catch {
+      // Keep the selected view for this page even when storage is unavailable.
+    }
+  }
+
+  function setAccountStatus(message: string): void {
+    accountStatus.textContent = message;
+  }
+
+  function updateAccountControls(): void {
+    const signedIn = currentUserId !== null;
+    const label = signedIn ? "Minha conta" : "Entrar";
+    const href = signedIn ? "account.html" : "login.html";
+    accountPanel.hidden = signedIn;
+    accountAccess.hidden = signedIn;
+    navAccountLabel.textContent = label;
+    navAccountLink.setAttribute("aria-label", label);
+    navAccountLink.setAttribute("href", href);
+    mobileNavAccountLabel.textContent = label;
+    mobileNavAccountLink.setAttribute("aria-label", label);
+    mobileNavAccountLink.setAttribute("href", href);
+    accountDescription.textContent = signedIn
+      ? "Seus favoritos já estão sincronizados com a sua conta."
+      : "Entre ou crie uma conta grátis para sincronizar seus favoritos.";
+    if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
+  }
+
+  function persistGuestFavorites(): void {
+    try {
+      localStorage.setItem("feira-boa:favorites:v1", JSON.stringify([...favoriteIds]));
+    } catch {
+      setAccountStatus("Não foi possível salvar favoritos neste navegador.");
+    }
+  }
+
+  async function loadAccountApi(): Promise<AccountApi> {
+    accountApi ??= await import("./account");
+    return accountApi;
+  }
+
+  async function loadReactionsApi(): Promise<ReactionsApi> {
+    reactionsApi ??= await import("./offer-reactions");
+    return reactionsApi;
+  }
+
+  let preferences: ProfilePreferences = {
+    favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [], theme: "light",
+  };
+
+  async function saveFavoriteChanges(): Promise<void> {
+    persistGuestFavorites();
+    if (!currentUserId) return;
+    try {
+      const api = await loadAccountApi();
       preferences.favoriteOfferIds = [...favoriteIds];
-      await savePreferences(currentUserId, preferences);
+      await api.savePreferences(currentUserId, preferences);
       setAccountStatus("Favoritos sincronizados.");
     } catch (error) {
       setAccountStatus(`Favoritos salvos neste dispositivo. Sincronização falhou: ${errorMessage(error)}`);
     }
   }
-}
 
-let preferences: ProfilePreferences = {
-  favoriteOfferIds: [...favoriteIds], favoriteStores: [], favoriteProductTypes: [], theme: "light",
-};
-
-bindThemeToggle((theme) => {
-  preferences.theme = theme;
-  pendingTheme = theme;
-  if (currentUserId && preferencesLoaded) void saveThemePreference(theme);
-});
-
-async function saveThemePreference(theme: ThemePreference): Promise<void> {
-  if (!currentUserId) return;
-  try {
-    await savePreferences(currentUserId, preferences);
-    pendingTheme = null;
-    setAccountStatus("Tema salvo nas preferências da sua conta.");
-  } catch (error) {
-    setAccountStatus(`Tema aplicado neste dispositivo. Não foi possível sincronizar: ${errorMessage(error)}`);
-  }
-}
-
-async function connectAccount(userId: string): Promise<void> {
-  currentUserId = userId;
-  updateAccountControls();
-  try {
-    const remotePreferences = await loadPreferences(userId);
-    preferences = {
-      ...remotePreferences,
-      favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...favoriteIds])],
-      theme: pendingTheme ?? remotePreferences.theme,
-    };
-    applyTheme(preferences.theme);
-    favoriteIds = new Set(preferences.favoriteOfferIds);
-    await savePreferences(userId, preferences);
-    pendingTheme = null;
-    preferencesLoaded = true;
-    persistGuestFavorites();
+  async function saveThemePreference(theme: ThemePreference): Promise<void> {
+    if (!currentUserId) return;
     try {
-      userReactions = await loadUserOfferReactions(userId);
-    } catch (reactionError) {
-      console.warn("Could not load saved offer reactions.", reactionError);
+      const api = await loadAccountApi();
+      await api.savePreferences(currentUserId, preferences);
+      pendingTheme = null;
+      setAccountStatus("Tema salvo nas preferências da sua conta.");
+    } catch (error) {
+      setAccountStatus(`Tema aplicado neste dispositivo. Não foi possível sincronizar: ${errorMessage(error)}`);
     }
-    renderOffers();
-    setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
-  } catch (error) {
-    setAccountStatus(`Conta conectada. Não foi possível sincronizar preferências: ${errorMessage(error)}`);
   }
-}
 
-const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
-const commonItems = [
-  {label:"Café", icon:"☕", query:"café"}, {label:"Leite", icon:"🥛", query:"leite"},
-  {label:"Arroz", icon:"🍚", query:"arroz"}, {label:"Frango", icon:"🍗", query:"frango"},
-  {label:"Carne", icon:"🥩", query:"carne"}, {label:"Tomate", icon:"🍅", query:"tomate"},
-  {label:"Cerveja", icon:"🍺", query:"cerveja"}, {label:"Sabão", icon:"🧺", query:"sabão"},
-  {label:"Papel higiênico", icon:"🧻", query:"papel higiênico"}, {label:"Iogurte", icon:"🥣", query:"iogurte"}
-];
+  async function connectAccount(userId: string): Promise<void> {
+    currentUserId = userId;
+    updateAccountControls();
+    try {
+      const api = await loadAccountApi();
+      const remotePreferences = await api.loadPreferences(userId);
+      preferences = {
+        ...remotePreferences,
+        favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...favoriteIds])],
+        theme: pendingTheme ?? remotePreferences.theme,
+      };
+      applyTheme(preferences.theme);
+      favoriteIds = new Set(preferences.favoriteOfferIds);
+      await api.savePreferences(userId, preferences);
+      pendingTheme = null;
+      preferencesLoaded = true;
+      persistGuestFavorites();
+      try {
+        const reactions = await loadReactionsApi();
+        userReactions = await reactions.loadUserOfferReactions(userId);
+      } catch (reactionError) {
+        console.warn("Could not load saved offer reactions.", reactionError);
+      }
+      renderOffers();
+      setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
+    } catch (error) {
+      setAccountStatus(`Conta conectada. Não foi possível sincronizar preferências: ${errorMessage(error)}`);
+    }
+  }
 
-function money(value: number): string {
-  return new Intl.NumberFormat("pt-BR", {style:"currency", currency:"BRL"}).format(value);
-}
-
-function dateLabel(value: string): string {
-  return new Intl.DateTimeFormat("pt-BR", {day:"2-digit", month:"short"})
-    .format(new Date(`${value}T12:00:00`)).replace(" de ", " ").replace(".", "");
-}
-
-function formatFeedUpdate(value: string): string {
-  const date = new Date(value);
-  if (!Number.isFinite(date.getTime())) return "Atualização das ofertas indisponível";
-  const dateLabel = new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit", month: "short", year: "numeric", timeZone: "America/Sao_Paulo",
-  }).format(date).replace(/\./g, "");
-  const timeLabel = new Intl.DateTimeFormat("pt-BR", {
-    hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo",
-  }).format(date);
-  return `Ofertas atualizadas em ${dateLabel}, às ${timeLabel}`;
-}
-
-function normalizeSearch(value: string): string {
-  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase("pt-BR").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
-}
-
-function todayInSaoPaulo(): string {
-  const parts = new Intl.DateTimeFormat("en-CA", {timeZone:"America/Sao_Paulo", year:"numeric", month:"2-digit", day:"2-digit"}).formatToParts(new Date());
-  const part = Object.fromEntries(parts.map(({type, value}) => [type, value]));
-  return `${part.year}-${part.month}-${part.day}`;
-}
-
-function isActive(offer: Offer): boolean {
-  const today = todayInSaoPaulo();
-  return today >= offer.validFrom && today <= offer.validTo;
-}
-
-function matchesSearch(offer: Offer, query: string): boolean {
-  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
-  if (!terms.length) return true;
-  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, offer.store, offer.branch, offer.note].join(" "));
-  const words = searchable.split(" ");
-  return terms.every((term) => {
-    const variants = [term, ...(searchEquivalents[term] || [])];
-    return variants.some((variant) => searchable.includes(variant) || words.some((word) => word.startsWith(variant)));
+  bindThemeToggle((theme) => {
+    preferences.theme = theme;
+    pendingTheme = theme;
+    if (currentUserId && preferencesLoaded) void saveThemePreference(theme);
   });
-}
 
-function renderStoreFilters(): void {
-  storeFilters.innerHTML = storeNames.map((store) => {
-    const count = offers.filter((offer) => isActive(offer) && (store === "Todas as lojas" || offer.store === store)).length;
-    const disabled = store !== "Todas as lojas" && count === 0;
-    return `<button class="filter ${store === activeStore ? "active" : ""}" type="button" data-store="${store}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${store} · ${count}</button>`;
-  }).join("");
-}
+  function money(value: number): string {
+    return moneyFormatter.format(value);
+  }
 
-function renderPopularItems(): void {
-  popularItems.innerHTML = commonItems.map(({label, icon, query}) =>
-    `<button class="popular-item" type="button" data-query="${query}" aria-label="Buscar ${label}"><span aria-hidden="true">${icon}</span><small>${label}</small></button>`
-  ).join("");
-}
+  function dateLabel(value: string): string {
+    return dateFormatter.format(new Date(`${value}T12:00:00`)).replace(" de ", " ").replace(".", "");
+  }
 
-function renderFilters(): void {
-  filters.innerHTML = departments.map((department) => {
-    const count = offers.filter((offer) => isActive(offer) && (department === "Todos os setores" || offer.department === department)).length;
-    const disabled = department !== "Todos os setores" && count === 0;
-    return `<button class="filter ${department === activeDepartment ? "active" : ""}" type="button" data-department="${department}"${disabled ? " disabled title=\"Sem ofertas ativas hoje\"" : ""}>${department} · ${count}</button>`;
-  }).join("");
+  function formatFeedUpdate(value: string): string {
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return "Atualização das ofertas indisponível";
+    const day = feedDateFormatter.format(date).replace(/\./g, "");
+    const time = feedTimeFormatter.format(date);
+    return `Ofertas atualizadas em ${day}, às ${time}`;
+  }
 
-  const types = [...new Set(offers.filter((offer) => isActive(offer) && (activeDepartment === "Todos os setores" || offer.department === activeDepartment) && (activeStore === "Todas as lojas" || offer.store === activeStore)).flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
-  productTypeSelect.innerHTML = `<option value="">Todos os tipos</option>${types.map((type) => `<option value="${type}">${type}</option>`).join("")}`;
-  if (!types.includes(activeProductType)) activeProductType = "";
-  productTypeSelect.value = activeProductType;
-}
+  function normalizeSearch(value: string): string {
+    return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .toLocaleLowerCase("pt-BR").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  }
 
-function getPriceBounds(): { min: number | null; max: number | null } {
-  const min = priceMin.value.trim() ? Number(priceMin.value.replace(",", ".")) : null;
-  const max = priceMax.value.trim() ? Number(priceMax.value.replace(",", ".")) : null;
-  return { min: min !== null && Number.isFinite(min) ? min : null, max: max !== null && Number.isFinite(max) ? max : null };
-}
+  function todayInSaoPaulo(): string {
+    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+    const part = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+    return `${part.year}-${part.month}-${part.day}`;
+  }
 
-function renderOffers(): void {
-  const {min, max} = getPriceBounds();
-  const activeCount = Number(activeStore !== "Todas as lojas") + Number(activeDepartment !== "Todos os setores") + Number(Boolean(activeProductType)) + Number(min !== null || max !== null);
-  activeFilterCount.hidden = activeCount === 0;
-  activeFilterCount.textContent = String(activeCount);
-  const priceRangeReversed = min !== null && max !== null && min > max;
-  let matching = priceRangeReversed ? [] : offers.filter((offer) =>
-    (sharedOfferId ? offer.id === sharedOfferId : isActive(offer)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
-    (sharedOfferId || activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
-    (sharedOfferId || !activeProductType || offer.productTypes.includes(activeProductType)) &&
-    (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
-    (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
-  );
-  if (sortSelect.value === "price-low") matching = matching.sort((a, b) => a.price - b.price);
-  if (sortSelect.value === "price-high") matching = matching.sort((a, b) => b.price - a.price);
-  if (sortSelect.value === "discount") matching = matching.sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));
+  function isActive(offer: Offer, today = todayInSaoPaulo()): boolean {
+    return today >= offer.validFrom && today <= offer.validTo;
+  }
 
-  grid.innerHTML = matching.map((offer) => {
-    const storeInitials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+  function matchesSearch(offer: Offer, query: string): boolean {
+    const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
+    if (!terms.length) return true;
+    const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, offer.store, offer.branch, offer.note].join(" "));
+    const words = searchable.split(" ");
+    return terms.every((term) => {
+      const variants = [term, ...(searchEquivalents[term] || [])];
+      return variants.some((variant) => searchable.includes(variant) || words.some((word) => word.startsWith(variant)));
+    });
+  }
+
+  function element<K extends keyof HTMLElementTagNameMap>(tag: K, className = "", text = ""): HTMLElementTagNameMap[K] {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  function heartIcon(): SVGElement {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z");
+    svg.append(path);
+    return svg;
+  }
+
+  function favoriteButton(offer: Offer, className: string): HTMLButtonElement {
+    const button = element("button", className);
+    button.type = "button";
+    button.dataset.favoriteId = offer.id;
+    button.append(heartIcon());
+    return button;
+  }
+
+  function reactionButton(kind: "like" | "dislike", offer: Offer): { button: HTMLButtonElement; count: HTMLElement } {
+    const button = element("button", "offer-reaction-button");
+    button.type = "button";
+    button.dataset.reaction = kind;
+    button.dataset.offerId = offer.id;
+    const icon = element("span", "", kind === "like" ? "👍" : "👎");
+    icon.setAttribute("aria-hidden", "true");
+    const count = element("span", "", "0");
+    button.append(icon, count);
+    return { button, count };
+  }
+
+  function createOfferCard(offer: Offer): CardRefs {
+    const root = element("article", "offer-card");
+    root.dataset.offerId = offer.id;
+
+    const visual = element("div", "visual");
+    const sticker = element("span", "offer-sticker", "OFERTA");
+    const art = element("span", "product-art");
+    art.setAttribute("role", "img");
+    art.setAttribute("aria-label", `Ilustração de ${offer.name}`);
+    const favoriteArt = favoriteButton(offer, "favorite-toggle favorite-toggle-art");
+    visual.append(sticker, art, favoriteArt);
+
+    const body = element("div", "card-body");
+    const storeRow = element("div", "offer-store");
+    const storeLogo = element("span", `offer-store-logo${offer.store === "Big Bom" ? " bigbom-mark" : ""}`);
+    const initials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+    const fallback = element("span", "store-logo-fallback", initials);
+    fallback.setAttribute("aria-hidden", "true");
+    storeLogo.append(fallback);
+    if (/^https:\/\//.test(offer.storeLogo)) {
+      const logo = document.createElement("img");
+      logo.alt = "";
+      logo.loading = "lazy";
+      logo.decoding = "async";
+      logo.src = offer.storeLogo;
+      logo.addEventListener("load", () => storeLogo.classList.add("has-logo"), { once: true });
+      logo.addEventListener("error", () => logo.remove(), { once: true });
+      storeLogo.append(logo);
+    }
+    const category = element("span", "category");
+    storeRow.append(storeLogo, category);
+
+    const name = element("h3");
+    const spec = element("span", "spec");
+    const priceRow = element("div", "price-row");
+    const priceBlock = element("div");
+    const price = element("span", "price");
+    const oldPrice = element("span", "old-price");
+    priceBlock.append(price, oldPrice);
+    const valid = element("span", "valid-until", "Válido");
+    const validStrong = element("strong");
+    valid.append(validStrong);
+    priceRow.append(priceBlock, valid);
+
+    const reactionGroup = element("div", "offer-reactions");
+    reactionGroup.setAttribute("role", "group");
+    reactionGroup.setAttribute("aria-label", "Esta oferta vale a pena?");
+    const favoriteReaction = favoriteButton(offer, "favorite-toggle favorite-toggle-reaction");
+    const like = reactionButton("like", offer);
+    const dislike = reactionButton("dislike", offer);
+    reactionGroup.append(favoriteReaction, like.button, dislike.button);
+
+    const note = element("p", "offer-note");
+    const source = element("div", "card-source");
+    const dot = element("span", "source-dot");
+    dot.setAttribute("aria-hidden", "true");
+    const branch = element("span");
+    const sourceLink = element("a");
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener";
+    sourceLink.textContent = "ver oferta";
+    const share = element("button", "share-offer");
+    share.type = "button";
+    share.dataset.shareId = offer.id;
+    const shareIcon = element("span", "", "↗");
+    shareIcon.setAttribute("aria-hidden", "true");
+    share.append(shareIcon, document.createTextNode(" Compartilhar"));
+    source.append(dot, branch, document.createTextNode(" · "), sourceLink, share);
+
+    body.append(storeRow, name, spec, priceRow, reactionGroup, note, source);
+    root.append(visual, body);
+
+    const refs: CardRefs = {
+      root, art, name, category, spec, price, oldPrice, valid: validStrong, note, branch,
+      sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
+      like: like.button, dislike: dislike.button, likeCount: like.count, dislikeCount: dislike.count,
+    };
+    updateOfferCard(refs, offer);
+    return refs;
+  }
+
+  function updateOfferCard(refs: CardRefs, offer: Offer): void {
+    refs.art.textContent = offer.icon;
+    refs.art.setAttribute("aria-label", `Ilustração de ${offer.name}`);
+    refs.name.textContent = offer.name;
+    refs.category.textContent = offer.productType;
+    refs.spec.textContent = offer.brand ? `${offer.brand} · ${offer.detail}` : offer.detail;
+    refs.price.textContent = money(offer.price);
+    refs.oldPrice.textContent = offer.previousPrice ? money(offer.previousPrice) : "";
+    refs.oldPrice.hidden = !offer.previousPrice;
+    refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
+    refs.note.textContent = offer.note;
+    refs.note.hidden = !offer.note;
+    refs.branch.textContent = offer.branch;
+    refs.sourceLink.href = /^https:\/\//.test(offer.sourceUrl) ? offer.sourceUrl : "#";
+    refs.share.setAttribute("aria-label", `Compartilhar ${offer.name}`);
+
+    const favoriteLabel = favoriteIds.has(offer.id) ? "Remover dos favoritos" : "Adicionar aos favoritos";
+    for (const button of refs.favoriteButtons) {
+      button.setAttribute("aria-pressed", String(favoriteIds.has(offer.id)));
+      button.setAttribute("aria-label", favoriteLabel);
+    }
+
     const counts = reactionCounts.get(offer.id) ?? { likes: 0, dislikes: 0 };
     const currentReaction = userReactions.get(offer.id);
-    return `
-    <article class="offer-card">
-      <div class="visual" style="--tone:${offer.tone}"><span class="offer-sticker">OFERTA</span><span class="product-art" role="img" aria-label="Ilustração de ${offer.name}">${offer.icon}</span><button class="favorite-toggle favorite-toggle-art" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div>
-      <div class="card-body"><div class="offer-store"><span class="offer-store-logo ${offer.store === "Big Bom" ? "bigbom-mark" : ""}"><span class="store-logo-fallback" aria-hidden="true">${storeInitials}</span>${offer.storeLogo ? `<img src="${offer.storeLogo}" alt="" loading="lazy" onload="this.parentElement.classList.add('has-logo')" onerror="this.remove()">` : ""}</span><span class="category">${offer.productType}</span></div><h3>${offer.name}</h3><span class="spec">${offer.brand ? `${offer.brand} · ` : ""}${offer.detail}</span>
-        <div class="price-row"><div><span class="price">${money(offer.price)}</span>${offer.previousPrice ? `<span class="old-price">${money(offer.previousPrice)}</span>` : ""}</div><span class="valid-until">Válido<strong>${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}</strong></span></div>
-        <div class="offer-reactions" role="group" aria-label="Esta oferta vale a pena?">
-          <button class="favorite-toggle favorite-toggle-reaction" type="button" data-favorite-id="${offer.id}" aria-pressed="${favoriteIds.has(offer.id)}" aria-label="${favoriteIds.has(offer.id) ? "Remover dos" : "Adicionar aos"} favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-          <button class="offer-reaction-button${currentReaction === "like" ? " selected" : ""}" type="button" data-reaction="like" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "like"}" aria-label="Gostei desta oferta, ${counts.likes} votos" title="${currentUserId ? "Gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👍</span><span>${counts.likes}</span></button>
-          <button class="offer-reaction-button${currentReaction === "dislike" ? " selected" : ""}" type="button" data-reaction="dislike" data-offer-id="${offer.id}" aria-pressed="${currentReaction === "dislike"}" aria-label="Não gostei desta oferta, ${counts.dislikes} votos" title="${currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto"}"><span aria-hidden="true">👎</span><span>${counts.dislikes}</span></button>
-        </div>
-        ${offer.note ? `<p class="offer-note">${offer.note}</p>` : ""}
-        <div class="card-source"><span class="source-dot"></span>${offer.branch} · <a href="${offer.sourceUrl}" target="_blank" rel="noopener">ver oferta</a><button class="share-offer" type="button" data-share-id="${offer.id}" aria-label="Compartilhar ${offer.name}"><span aria-hidden="true">↗</span> Compartilhar</button></div>
-      </div>
-    </article>`;
-  }).join("");
-  emptyState.hidden = matching.length > 0;
-  storesDirectoryLink.hidden = matching.length === 0;
-  const activeFavoriteCount = offers.filter((offer) => isActive(offer) && favoriteIds.has(offer.id)).length;
-  favoritesToggle.textContent = favoriteOnly ? `Ver todas (${activeFavoriteCount})` : `Favoritos (${activeFavoriteCount})`;
-  favoritesToggle.setAttribute("aria-pressed", String(favoriteOnly));
-  resultsTitle.textContent = sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
-  showAllOffersButton.hidden = !sharedOfferId;
-  const storeLabel = activeStore === "Todas as lojas" ? "todas as lojas" : activeStore;
-  const sharedOffer = sharedOfferId ? matching[0] : null;
-  resultsSubtitle.textContent = sharedOffer
-    ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer) ? "" : " · oferta encerrada"}`
-    : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeDepartment === "Todos os setores" ? "" : ` · ${activeDepartment}`}${activeProductType ? ` · ${activeProductType}` : ""}`;
-  if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
-  else if (offers.some(isActive)) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
-  else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
-}
-
-function shareUrlForOffer(offerId: string): string {
-  const url = new URL(window.location.href);
-  url.search = "";
-  url.hash = "";
-  url.searchParams.set("offer", offerId);
-  return url.toString();
-}
-
-grid.addEventListener("click", async (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-share-id]");
-  const offer = offers.find((item) => item.id === button?.dataset.shareId);
-  if (!button || !offer) return;
-
-  const url = shareUrlForOffer(offer.id);
-  const title = `${offer.icon} ${offer.name} por ${money(offer.price)} · Feira Boa`;
-  const text = `${offer.icon} ${offer.name} por ${money(offer.price)} no ${offer.store}. Confira a oferta:`;
-  const shareMessage = `${text}\n${url}`;
-  button.disabled = true;
-  try {
-    if (navigator.share) {
-      await navigator.share({ title, text, url });
-      showTransientStatus(shareStatus, "Oferta compartilhada.");
-    } else if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(shareMessage);
-      showTransientStatus(shareStatus, "Mensagem da oferta copiada.");
-    } else {
-      window.prompt("Copie a mensagem para compartilhar esta oferta:", shareMessage);
-      showTransientStatus(shareStatus, "Mensagem da oferta pronta para copiar.");
-    }
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") return;
-    showTransientStatus(shareStatus, "Não foi possível abrir o compartilhamento. Tente novamente.");
-  } finally {
-    button.disabled = false;
-  }
-});
-
-grid.addEventListener("click", async (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-reaction]");
-  const offerId = button?.dataset.offerId;
-  const reaction = button?.dataset.reaction;
-  if (!button || !offerId || (reaction !== "like" && reaction !== "dislike")) return;
-
-  if (!currentUserId) {
-    const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-    const loginUrl = new URL("login.html", window.location.href);
-    loginUrl.searchParams.set("returnTo", returnTo);
-    window.location.assign(loginUrl);
-    return;
+    refs.like.classList.toggle("selected", currentReaction === "like");
+    refs.like.setAttribute("aria-pressed", String(currentReaction === "like"));
+    refs.like.setAttribute("aria-label", `Gostei desta oferta, ${counts.likes} votos`);
+    refs.like.title = currentUserId ? "Gostei" : "Entre para avaliar e salvar seu voto";
+    refs.likeCount.textContent = String(counts.likes);
+    refs.dislike.classList.toggle("selected", currentReaction === "dislike");
+    refs.dislike.setAttribute("aria-pressed", String(currentReaction === "dislike"));
+    refs.dislike.setAttribute("aria-label", `Não gostei desta oferta, ${counts.dislikes} votos`);
+    refs.dislike.title = currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto";
+    refs.dislikeCount.textContent = String(counts.dislikes);
   }
 
-  button.disabled = true;
-  try {
-    const previousReaction = userReactions.get(offerId);
-    const counts = { ...(reactionCounts.get(offerId) ?? { likes: 0, dislikes: 0 }) };
+  function renderStoreFilters(): void {
+    const today = todayInSaoPaulo();
+    storeFilters.replaceChildren(...storeNames.map((store) => {
+      const count = offers.filter((offer) => isActive(offer, today) && (store === "Todas as lojas" || offer.store === store)).length;
+      const disabled = store !== "Todas as lojas" && count === 0;
+      const button = element("button", `filter${store === activeStore ? " active" : ""}`, `${store} · ${count}`);
+      button.type = "button";
+      button.dataset.store = store;
+      button.disabled = disabled;
+      button.setAttribute("aria-pressed", String(store === activeStore));
+      if (disabled) button.title = "Sem ofertas ativas hoje";
+      return button;
+    }));
+  }
 
-    if (previousReaction === reaction) {
-      await deleteOfferReaction(currentUserId, offerId);
-      userReactions.delete(offerId);
-      counts[reaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[reaction === "like" ? "likes" : "dislikes"] - 1);
-      reactionCounts.set(offerId, counts);
-      showTransientStatus(shareStatus, "Sua avaliação foi removida.");
-    } else {
-      await saveOfferReaction(currentUserId, offerId, reaction);
-      userReactions.set(offerId, reaction);
-      if (previousReaction && previousReaction !== reaction) {
-        counts[previousReaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[previousReaction === "like" ? "likes" : "dislikes"] - 1);
+  function renderPopularItems(): void {
+    popularItems.replaceChildren(...commonItems.map(({ label, icon, query }) => {
+      const button = element("button", "popular-item");
+      button.type = "button";
+      button.dataset.query = query;
+      button.setAttribute("aria-label", `Buscar ${label}`);
+      const iconNode = element("span", "", icon);
+      iconNode.setAttribute("aria-hidden", "true");
+      button.append(iconNode, element("small", "", label));
+      return button;
+    }));
+  }
+
+  function updateProductTypeOptions(): void {
+    const today = todayInSaoPaulo();
+    const types = [...new Set(offers.filter((offer) =>
+      isActive(offer, today)
+      && (activeDepartment === "Todos os setores" || offer.department === activeDepartment)
+      && (activeStore === "Todas as lojas" || offer.store === activeStore)
+    ).flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    if (!types.includes(activeProductType)) activeProductType = "";
+    productTypeSelect.replaceChildren(
+      new Option("Todos os tipos", ""),
+      ...types.map((type) => new Option(type, type)),
+    );
+    productTypeSelect.value = activeProductType;
+  }
+
+  function renderFilters(): void {
+    const today = todayInSaoPaulo();
+    filters.replaceChildren(...departments.map((department) => {
+      const count = offers.filter((offer) => isActive(offer, today) && (department === "Todos os setores" || offer.department === department)).length;
+      const disabled = department !== "Todos os setores" && count === 0;
+      const button = element("button", `filter${department === activeDepartment ? " active" : ""}`, `${department} · ${count}`);
+      button.type = "button";
+      button.dataset.department = department;
+      button.disabled = disabled;
+      button.setAttribute("aria-pressed", String(department === activeDepartment));
+      if (disabled) button.title = "Sem ofertas ativas hoje";
+      return button;
+    }));
+    updateProductTypeOptions();
+  }
+
+  function updateFilterStates(container: HTMLElement, key: "store" | "department", value: string): void {
+    container.querySelectorAll<HTMLButtonElement>(`[data-${key}]`).forEach((button) => {
+      const selected = button.dataset[key] === value;
+      button.classList.toggle("active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+  }
+
+  function getPriceBounds(): { min: number | null; max: number | null } {
+    const min = priceMin.value.trim() ? Number(priceMin.value.replace(",", ".")) : null;
+    const max = priceMax.value.trim() ? Number(priceMax.value.replace(",", ".")) : null;
+    return { min: min !== null && Number.isFinite(min) ? min : null, max: max !== null && Number.isFinite(max) ? max : null };
+  }
+
+  function renderOffers(): void {
+    const focused = document.activeElement instanceof HTMLElement && grid.contains(document.activeElement)
+      ? document.activeElement
+      : null;
+    const today = todayInSaoPaulo();
+    const { min, max } = getPriceBounds();
+    const activeCount = Number(activeStore !== "Todas as lojas") + Number(activeDepartment !== "Todos os setores") + Number(Boolean(activeProductType)) + Number(min !== null || max !== null);
+    activeFilterCount.hidden = activeCount === 0;
+    activeFilterCount.textContent = String(activeCount);
+    const priceRangeReversed = min !== null && max !== null && min > max;
+    let matching = priceRangeReversed ? [] : offers.filter((offer) =>
+      (sharedOfferId ? offer.id === sharedOfferId : isActive(offer, today)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
+      (sharedOfferId || activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
+      (sharedOfferId || !activeProductType || offer.productTypes.includes(activeProductType)) &&
+      (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
+      (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
+    );
+    if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
+    if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
+    if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));
+
+    const matchingIds = new Set(matching.map((offer) => offer.id));
+    for (const [id, card] of cards) {
+      if (!matchingIds.has(id)) {
+        card.root.remove();
+        cards.delete(id);
       }
-      counts[reaction === "like" ? "likes" : "dislikes"] += 1;
-      reactionCounts.set(offerId, counts);
-      showTransientStatus(shareStatus, "Sua avaliação foi salva.");
+    }
+    for (const offer of matching) {
+      let card = cards.get(offer.id);
+      if (!card) {
+        card = createOfferCard(offer);
+        cards.set(offer.id, card);
+      }
+      updateOfferCard(card, offer);
+      grid.append(card.root);
+    }
+    if (matching.length === 0) grid.replaceChildren();
+    if (focused?.isConnected) focused.focus({ preventScroll: true });
+
+    feedStatus.hidden = true;
+    feedRetry.hidden = true;
+    emptyState.hidden = matching.length > 0;
+    storesDirectoryLink.hidden = matching.length === 0;
+    const activeFavoriteCount = offers.filter((offer) => isActive(offer, today) && favoriteIds.has(offer.id)).length;
+    favoritesToggle.textContent = favoriteOnly ? `Ver todas (${activeFavoriteCount})` : `Favoritos (${activeFavoriteCount})`;
+    favoritesToggle.setAttribute("aria-pressed", String(favoriteOnly));
+    resultsTitle.textContent = sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
+    showAllOffersButton.hidden = !sharedOfferId;
+    const storeLabel = activeStore === "Todas as lojas" ? "todas as lojas" : activeStore;
+    const sharedOffer = sharedOfferId ? matching[0] : null;
+    resultsSubtitle.textContent = sharedOffer
+      ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer, today) ? "" : " · oferta encerrada"}`
+      : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeDepartment === "Todos os setores" ? "" : ` · ${activeDepartment}`}${activeProductType ? ` · ${activeProductType}` : ""}`;
+    if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
+    else if (offers.some((offer) => isActive(offer, today))) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
+    else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
+    const announcement = `${matching.length} ${matching.length === 1 ? "oferta encontrada" : "ofertas encontradas"}`;
+    if (resultsAnnouncement.textContent !== announcement) {
+      resultsAnnouncement.textContent = "";
+      window.requestAnimationFrame(() => { resultsAnnouncement.textContent = announcement; });
+    }
+  }
+
+  function shareUrlForOffer(offerId: string): string {
+    const url = new URL(window.location.href);
+    url.search = "";
+    url.hash = "";
+    url.searchParams.set("offer", offerId);
+    return url.toString();
+  }
+
+  grid.addEventListener("click", async (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-share-id]");
+    const offer = offers.find((item) => item.id === button?.dataset.shareId);
+    if (!button || !offer) return;
+
+    const url = shareUrlForOffer(offer.id);
+    const title = `${offer.icon} ${offer.name} por ${money(offer.price)} · Feira Boa`;
+    const text = `${offer.icon} ${offer.name} por ${money(offer.price)} no ${offer.store}. Confira a oferta:`;
+    const shareMessage = `${text}\n${url}`;
+    button.disabled = true;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url });
+        showTransientStatus(shareStatus, "Oferta compartilhada.");
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareMessage);
+        showTransientStatus(shareStatus, "Mensagem da oferta copiada.");
+      } else {
+        window.prompt("Copie a mensagem para compartilhar esta oferta:", shareMessage);
+        showTransientStatus(shareStatus, "Mensagem da oferta pronta para copiar.");
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      showTransientStatus(shareStatus, "Não foi possível abrir o compartilhamento. Tente novamente.");
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  grid.addEventListener("click", async (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-reaction]");
+    const offerId = button?.dataset.offerId;
+    const reaction = button?.dataset.reaction;
+    if (!button || !offerId || (reaction !== "like" && reaction !== "dislike")) return;
+    if (!offers.some((offer) => offer.id === offerId)) return;
+
+    if (!currentUserId) {
+      const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      const loginUrl = new URL("login.html", window.location.href);
+      loginUrl.searchParams.set("returnTo", returnTo);
+      window.location.assign(loginUrl);
+      return;
     }
 
-    const refreshedCounts = await loadOfferReactionCounts();
-    reactionCounts = refreshedCounts;
+    button.disabled = true;
+    try {
+      const reactions = await loadReactionsApi();
+      const previousReaction = userReactions.get(offerId);
+      const counts = { ...(reactionCounts.get(offerId) ?? { likes: 0, dislikes: 0 }) };
+
+      if (previousReaction === reaction) {
+        await reactions.deleteOfferReaction(currentUserId, offerId);
+        userReactions.delete(offerId);
+        counts[reaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[reaction === "like" ? "likes" : "dislikes"] - 1);
+        reactionCounts.set(offerId, counts);
+        showTransientStatus(shareStatus, "Sua avaliação foi removida.");
+      } else {
+        await reactions.saveOfferReaction(currentUserId, offerId, reaction);
+        userReactions.set(offerId, reaction);
+        if (previousReaction && previousReaction !== reaction) {
+          counts[previousReaction === "like" ? "likes" : "dislikes"] = Math.max(0, counts[previousReaction === "like" ? "likes" : "dislikes"] - 1);
+        }
+        counts[reaction === "like" ? "likes" : "dislikes"] += 1;
+        reactionCounts.set(offerId, counts);
+        showTransientStatus(shareStatus, "Sua avaliação foi salva.");
+      }
+
+      reactionCounts = await reactions.loadOfferReactionCounts();
+      renderOffers();
+    } catch (error) {
+      showTransientStatus(shareStatus, `Não foi possível salvar sua avaliação: ${errorMessage(error)}`);
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  grid.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-favorite-id]");
+    const offerId = button?.dataset.favoriteId;
+    if (!offerId) return;
+    if (favoriteIds.has(offerId)) favoriteIds.delete(offerId);
+    else favoriteIds.add(offerId);
+    preferences.favoriteOfferIds = [...favoriteIds];
     renderOffers();
-  } catch (error) {
-    showTransientStatus(shareStatus, `Não foi possível salvar sua avaliação: ${errorMessage(error)}`);
-  } finally {
-    button.disabled = false;
+    void saveFavoriteChanges();
+  });
+
+  showAllOffersButton.addEventListener("click", () => {
+    sharedOfferId = null;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("offer");
+    window.history.replaceState({}, "", url);
+    renderOffers();
+  });
+
+  storeFilters.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-store]");
+    if (!button || button.disabled) return;
+    activeStore = button.dataset.store ?? "Todas as lojas";
+    updateFilterStates(storeFilters, "store", activeStore);
+    updateProductTypeOptions();
+    renderOffers();
+  });
+
+  popularItems.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-query]");
+    if (!button) return;
+    input.value = button.dataset.query ?? "";
+    renderOffers();
+    input.focus();
+  });
+
+  filters.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-department]");
+    if (!button || button.disabled) return;
+    activeDepartment = button.dataset.department ?? "Todos os setores";
+    updateFilterStates(filters, "department", activeDepartment);
+    updateProductTypeOptions();
+    renderOffers();
+  });
+
+  let renderTimer: number | undefined;
+  function scheduleRender(): void {
+    window.clearTimeout(renderTimer);
+    renderTimer = window.setTimeout(renderOffers, 150);
   }
-});
 
-showAllOffersButton.addEventListener("click", () => {
-  sharedOfferId = null;
-  const url = new URL(window.location.href);
-  url.searchParams.delete("offer");
-  window.history.replaceState({}, "", url);
-  renderOffers();
-});
-
-storeFilters.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-store]");
-  if (!button) return;
-  activeStore = button.dataset.store ?? "Todas as lojas";
-  renderStoreFilters(); renderFilters(); renderOffers();
-});
-popularItems.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-query]");
-  if (!button) return;
-  input.value = button.dataset.query ?? ""; renderOffers(); input.focus();
-});
-filters.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-department]");
-  if (!button) return;
-  activeDepartment = button.dataset.department ?? "Todos os setores";
-  renderFilters(); renderOffers();
-});
-input.addEventListener("input", renderOffers);
-priceMin.addEventListener("input", renderOffers);
-priceMax.addEventListener("input", renderOffers);
-productTypeSelect.addEventListener("change", () => { activeProductType = productTypeSelect.value; renderOffers(); });
-sortSelect.addEventListener("change", renderOffers);
-resetButton.addEventListener("click", () => {
-  activeStore = "Todas as lojas"; activeDepartment = "Todos os setores"; activeProductType = "";
-  input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
-  renderStoreFilters(); renderFilters(); renderOffers(); input.focus();
-});
-viewToggle.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-view-mode]");
-  if (button?.dataset.viewMode !== "grid" && button?.dataset.viewMode !== "list") return;
-  if (mobileViewMedia.matches) {
-    viewMode = "list";
+  input.addEventListener("input", scheduleRender);
+  priceMin.addEventListener("input", scheduleRender);
+  priceMax.addEventListener("input", scheduleRender);
+  productTypeSelect.addEventListener("change", () => { activeProductType = productTypeSelect.value; renderOffers(); });
+  sortSelect.addEventListener("change", renderOffers);
+  resetButton.addEventListener("click", () => {
+    activeStore = "Todas as lojas"; activeDepartment = "Todos os setores"; activeProductType = "";
+    input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
+    updateFilterStates(storeFilters, "store", activeStore);
+    updateFilterStates(filters, "department", activeDepartment);
+    updateProductTypeOptions();
+    renderOffers();
+    input.focus();
+  });
+  viewToggle.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-view-mode]");
+    if (button?.dataset.viewMode !== "grid" && button?.dataset.viewMode !== "list") return;
+    if (mobileViewMedia.matches) {
+      viewMode = "list";
+      persistViewMode(viewMode);
+      updateViewMode();
+      return;
+    }
+    viewMode = button.dataset.viewMode;
     persistViewMode(viewMode);
     updateViewMode();
-    return;
+  });
+
+  mobileViewMedia.addEventListener?.("change", () => {
+    viewMode = resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
+    persistViewMode(viewMode);
+    updateViewMode();
+  });
+  favoritesToggle.addEventListener("click", () => {
+    favoriteOnly = !favoriteOnly;
+    if (favoriteOnly) {
+      navFavoritesLink.setAttribute("aria-current", "page");
+      mobileNavFavoritesLink.setAttribute("aria-current", "page");
+      mobileNavOffersLink.removeAttribute("aria-current");
+    } else {
+      navFavoritesLink.removeAttribute("aria-current");
+      mobileNavFavoritesLink.removeAttribute("aria-current");
+      mobileNavOffersLink.setAttribute("aria-current", "page");
+    }
+    renderOffers();
+  });
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))) return;
+    if (event.key === "/") {
+      event.preventDefault();
+      input.focus();
+    }
+  });
+
+  updateViewMode();
+  renderStoreFilters();
+  renderPopularItems();
+  renderFilters();
+  renderOffers();
+  const sourceAlerts = applySourceFreshness();
+  updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
+  if (sourceAlerts.length > 0) {
+    const sourceWord = sourceAlerts.length === 1 ? "fonte" : "fontes";
+    updatedLabel.textContent += ` · ${sourceAlerts.length} ${sourceWord} aguardando conferência`;
   }
-  viewMode = button.dataset.viewMode;
-  persistViewMode(viewMode);
-  updateViewMode();
-});
+  updatedLabel.title = sourceAlerts.length
+    ? "Há mudanças detectadas nas fontes oficiais que ainda aguardam conferência"
+    : "Data da última atualização do catálogo de ofertas";
 
-mobileViewMedia.addEventListener?.("change", () => {
-  viewMode = resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
-  persistViewMode(viewMode);
-  updateViewMode();
-});
-favoritesToggle.addEventListener("click", () => {
-  favoriteOnly = !favoriteOnly;
-  renderOffers();
-});
-grid.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
-  const button = target.closest<HTMLButtonElement>("[data-favorite-id]");
-  const offerId = button?.dataset.favoriteId;
-  if (!offerId) return;
-  if (favoriteIds.has(offerId)) favoriteIds.delete(offerId);
-  else favoriteIds.add(offerId);
-  preferences.favoriteOfferIds = [...favoriteIds];
-  renderOffers();
-  void saveFavoriteChanges();
-});
-document.addEventListener("keydown", (event: KeyboardEvent) => {
-  if (event.key === "/" && document.activeElement !== input) { event.preventDefault(); input.focus(); }
-});
+  void (async () => {
+    try {
+      const reactions = await loadReactionsApi();
+      reactionCounts = await reactions.loadOfferReactionCounts();
+      renderOffers();
+    } catch (error) {
+      console.warn("Could not load offer reaction totals.", error);
+    }
+  })();
 
-const sourceAlerts = applySourceFreshness();
-const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
-updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
-if (sourceAlerts.length > 0) {
-  const sourceWord = sourceAlerts.length === 1 ? "fonte" : "fontes";
-  updatedLabel.textContent += ` · ${sourceAlerts.length} ${sourceWord} aguardando conferência`;
-}
-updatedLabel.title = sourceAlerts.length
-  ? "Há mudanças detectadas nas fontes oficiais que ainda aguardam conferência"
-  : "Data da última atualização do catálogo de ofertas";
-updateViewMode(); renderStoreFilters(); renderPopularItems(); renderFilters(); renderOffers();
-void loadOfferReactionCounts().then((counts) => {
-  reactionCounts = counts;
-  renderOffers();
-}).catch((error: unknown) => {
-  console.warn("Could not load offer reaction totals.", error);
-});
-try {
-  const user = await getCurrentUser();
-  if (user) await connectAccount(user.id);
-  else setAccountStatus("Favoritos salvos neste dispositivo. Entre para sincronizar entre dispositivos.");
-} catch (error) {
-  setAccountStatus(`Favoritos locais disponíveis. Conta temporariamente indisponível: ${errorMessage(error)}`);
-}
+  void (async () => {
+    try {
+      const api = await loadAccountApi();
+      const user = await api.getCurrentUser();
+      if (user) await connectAccount(user.id);
+      else setAccountStatus("Favoritos salvos neste dispositivo. Entre para sincronizar entre dispositivos.");
+    } catch (error) {
+      setAccountStatus(`Favoritos locais disponíveis. Conta temporariamente indisponível: ${errorMessage(error)}`);
+    }
+  })();
 })().catch((error: unknown) => {
   console.error("Feira Boa could not load offers.", error);
-  document.querySelector<HTMLParagraphElement>("#results-subtitle")!.textContent = "Não foi possível carregar as ofertas. Tente novamente mais tarde.";
+  showFeedError();
 });

@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: feira-boa-pages
@@ -18,16 +19,17 @@ concurrency:
 jobs:
   ingest-and-monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -36,25 +38,34 @@ jobs:
       - name: Ingest live offers
         run: npm run ingest:offers
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.x"
-
       - name: Check official flyer sources
-        run: python scripts/monitor_sources.py
+        id: monitor
+        continue-on-error: true
+        run: npm run monitor:sources
 
       - name: Save updated offers and source status
         id: changes
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           if ! git diff --quiet -- state/ offers.json source-status.js .offer-monitor-state.json; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add state/ offers.json source-status.js .offer-monitor-state.json
             git commit -m "Update automated store offers and source status"
-            git push
+            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Open or update failure issue
+        if: steps.monitor.outcome == 'failure'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/github-issue.mjs "[ops] Source monitor failed"
+
+      - name: Fail the workflow after saving state
+        if: steps.monitor.outcome == 'failure'
+        run: exit 1

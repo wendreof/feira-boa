@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: feira-boa-site-health
@@ -16,17 +17,27 @@ concurrency:
 jobs:
   check-public-site:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     env:
       SITE_URL: ${{ vars.SITE_URL }}
+      EXPECTED_COMMIT: ${{ github.sha }}
+      REQUIRE_SECURITY_HEADERS: "1"
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: 24
 
       - name: Check site and public data files
         run: node scripts/check-site-health.mjs
+
+      - name: Open or update failure issue
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/github-issue.mjs "[ops] Site health check failed"

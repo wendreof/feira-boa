@@ -89,6 +89,28 @@ function setActionsDisabled(disabled: boolean): void {
   deleteAccountButton.disabled = disabled;
 }
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.addEventListener("message", (event: MessageEvent) => {
+    const data = event.data as { type?: string; oldEndpoint?: string } | null;
+    if (data?.type !== "push-subscription-changed" || !userId) return;
+    void (async () => {
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        const subscription = await registration?.pushManager.getSubscription();
+        if (!subscription) return;
+        await savePushSubscription(userId, subscription);
+        if (data.oldEndpoint && data.oldEndpoint !== subscription.endpoint) {
+          await removePushSubscription(userId, data.oldEndpoint);
+        }
+        updatePushControls(true);
+        setStatus("Notificações renovadas neste dispositivo.");
+      } catch (error) {
+        console.warn("Could not renew push subscription for the account.", error);
+      }
+    })();
+  });
+}
+
 function makeOption(label: string, value: string): HTMLOptionElement {
   const option = document.createElement("option");
   option.value = value;
@@ -149,10 +171,24 @@ async function refreshRules(): Promise<void> {
   renderRules();
 }
 
+async function removeCurrentPushSubscription(): Promise<void> {
+  if (!("serviceWorker" in navigator)) return;
+  const registration = await navigator.serviceWorker.getRegistration();
+  const subscription = await registration?.pushManager.getSubscription();
+  if (!subscription) return;
+  if (userId) await removePushSubscription(userId, subscription.endpoint).catch((error: unknown) => {
+    console.warn("Could not remove push subscription during sign-out.", error);
+  });
+  await subscription.unsubscribe().catch((error: unknown) => {
+    console.warn("Could not unsubscribe this browser from push.", error);
+  });
+}
+
 signOutButton.addEventListener("click", async () => {
   setActionsDisabled(true);
   setStatus("Saindo…");
   try {
+    await removeCurrentPushSubscription();
     await signOut();
     window.location.replace("index.html");
   } catch (error) {
@@ -166,6 +202,7 @@ deleteAccountButton.addEventListener("click", async () => {
   setActionsDisabled(true);
   setStatus("Excluindo conta…");
   try {
+    await removeCurrentPushSubscription();
     await deleteAccount();
     window.location.replace("index.html");
   } catch (error) {

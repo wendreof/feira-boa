@@ -16,14 +16,15 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - Plain static HTML/CSS/JS generated from TypeScript sources.
 - TypeScript entry points: `app.ts`, `login-page.ts`, `account-page.ts`, `suggestions-page.ts`.
 - Bundling is done with `esbuild` via `npm run build`.
-- Tracked site artifacts can be served from the repository root, but `build-info.json` is generated and ignored by Git, so deployment must run `npm run build` before publishing that directory.
-- Keep the Cloudflare Pages output directory aligned with the build output. After changing build or deployment settings, verify the deployed `/build-info.json` is JSON and run `npm run check:site` against the public `SITE_URL`.
+- Tracked site artifacts are served from the repository root. `build-info.json` is generated and ignored by Git, so deployment must run `npm run build` before publishing.
+- Cloudflare Pages uses build command `npm run build` and output directory `.`. After changing build or deployment settings, verify the deployed `/build-info.json` is JSON and run `npm run check:site` against the public `SITE_URL`.
 
 ### Data pipeline
-- Source offer data is defined in `offers.ts`.
-- `scripts/build-offer-feed.mjs` generates `offers.json` and build metadata.
+- `offers.ts` is the curated fallback catalog.
+- `scripts/adapters/*` fetch official sources; `npm run ingest:offers` writes snapshots in `state/`.
+- `scripts/build-offer-feed.mjs` prefers snapshots, normalizes legacy taxonomy, and generates `offers.json` plus build metadata.
 - The generated feed is the shared source for the website and the scheduled monitoring jobs.
-- Update `offersUpdatedAt` when curated offers change.
+- New prices publish immediately; `needs_review` gates alert eligibility only.
 
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.
@@ -42,7 +43,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 - `README.md` — project setup and operational notes
 - `BACKEND_PLAN.md` — architecture notes, pricing, and deployment constraints
-- `offers.ts` — canonical offer list and metadata
+- `offers.ts` — curated fallback catalog
 - `app.ts` — main UI behavior and client-side state
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings
@@ -73,6 +74,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 ```bash
 npm ci
+npm run typecheck
 npm run build
 npm test
 npm run check:site

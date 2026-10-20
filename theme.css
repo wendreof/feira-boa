@@ -232,6 +232,23 @@
 :root[data-theme="dark"] .offer-reaction-button:hover,
 :root[data-theme="dark"] .offer-reaction-button.selected { background: #28382d; color: #b6e5bf; }
 
+:root[data-theme="dark"] .login-prompt-card {
+  background-color: #1b241e;
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] .login-prompt-primary {
+  background-color: #246b43;
+  border-color: #246b43;
+  color: #fff;
+}
+
+:root[data-theme="dark"] .login-prompt-secondary {
+  background-color: #28382d;
+  border-color: var(--line);
+  color: #b6e5bf;
+}
+
 @media (max-width: 760px) {
   .topbar-nav { gap: 4px; margin-right: 8px; }
   .topbar-nav a { padding-inline: 8px; }

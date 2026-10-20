@@ -1,4 +1,4 @@
-const CACHE_NAME = "feira-boa-shell-v6";
+const CACHE_NAME = "feira-boa-shell-v7";
 const VAPID_PUBLIC_KEY = "BLFV8pgkW21YRHFS_q-8tm5X6YZBghDNTrxUyvOEhJYSc9QmVXjbEStxd_R-7ndf5B4NrUcIdpcvTtS-OAfreyg";
 const SHELL = [
   "/",

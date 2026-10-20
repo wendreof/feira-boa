@@ -44,6 +44,7 @@ Finish the Feira Boa hardening work while preserving product behavior:
 - DOM-safe card rendering, safe URLs, keyed reuse, focus restoration.
 - Debounced filters, lazy account/reaction imports, loading/error/retry states.
 - Share, favorite, and reaction controls wired.
+- Signed-out reaction clicks open an accessible login prompt with `Entrar ou criar conta`; cancel restores focus to the reaction button, and the login return path preserves the current page/offer.
 - Mobile overflow fixes, one-column layout at 420px, reduced-motion CSS.
 - `navigation.js` mobile drawer:
   - Focus moves into the drawer.
@@ -61,7 +62,7 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 - Strict CSP with no inline styles/handlers. JSON-LD remains compatible.
 - `_headers` includes CSP, nosniff, frame denial, referrer policy, permissions policy, COOP, and CORP.
-- Service worker cache is `feira-boa-shell-v6`; `/app.js` is precached.
+- Service worker cache is `feira-boa-shell-v7`; `/app.js` is precached.
 - Removed the `?v=` query from `index.html`'s app script so precache matching works.
 - Offline fallback verified for unknown routes.
 - Social metadata, canonical URLs, sitemap, PWA icons, manifest, and social card are in place.
@@ -118,6 +119,7 @@ Latest checks passed:
   - 230 cards; feed status hidden after load; search works.
   - No horizontal overflow; card width 354px in list mode; drawer focus trap/Escape/focus restoration passed.
   - Product name, `marca · detalhe`, and source logo fit without clipping.
+  - Signed-out like opens `Entre para avaliar`; primary action is focused, cancel closes and restores focus, and continue reaches `login.html` with the current `returnTo`.
 - Chrome 1280px app:
   - 230 cards, 3-column grid at 313px card width, no overflow.
   - Product name leads each card; `marca · detalhe` is the second line; source logo appears before the branch name.
@@ -129,7 +131,7 @@ Latest checks passed:
   - Expired cooldown clears status and re-enables submit.
   - Honeypot submission is accepted without network access, then resets.
 - Offline:
-  - Cache `feira-boa-shell-v6`, 230 cards offline.
+  - Cache `feira-boa-shell-v7`, 230 cards offline.
   - Unknown route renders `offline.html`.
   - Only expected external resource failures were logged offline.
 - Action tag SHAs verified against the GitHub API.

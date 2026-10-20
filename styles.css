@@ -333,6 +333,12 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .favorite-toggle[aria-pressed="true"] svg{fill:#d33144;stroke:#d33144}
 .push-help{margin:6px 0 10px;color:#a43b40;font-size:12px;line-height:1.45}
 :root[data-theme="dark"] .push-help{color:#ffb8bd}
+.push-context{margin:6px 0 10px;color:#566a5f;font-size:12px;line-height:1.45}
+:root[data-theme="dark"] .push-context{color:#b8c9c0}
+.push-feedback{margin:9px 0 0;color:#26352e;font-size:12px;font-weight:600;line-height:1.45}
+.push-feedback:not([hidden]){padding:9px 11px;border-radius:8px;background:#f4f7f3;border:1px solid #d8e2d7}
+:root[data-theme="dark"] .push-feedback{color:#e7f0ea}
+:root[data-theme="dark"] .push-feedback:not([hidden]){background:#17251f;border-color:#31483e}
 .stores-page{padding-top:24px;padding-bottom:36px}
 .stores-heading{padding:12px 0 18px}
 .stores-heading h1{margin:10px 0 4px;font:800 32px/1.12 'Manrope',sans-serif;letter-spacing:0;color:var(--ink)}
@@ -366,3 +372,8 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.offer-card:hover{transform:none}}
 
 .show-all-offers[hidden]{display:none}
+
+.card-body h3{margin-top:0}
+.spec{display:block;line-height:1.35}
+.card-source .offer-store-logo{flex:0 0 auto;width:22px;height:18px;border-radius:4px}
+.card-source .offer-store-logo.bigbom-mark{padding:2px}

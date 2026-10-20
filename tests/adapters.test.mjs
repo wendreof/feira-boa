@@ -1,6 +1,17 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, parsePrice, slug, validateOffer, validateSnapshot } from "../scripts/adapters/common.mjs";
+import {
+  assignIcon,
+  classifyProduct,
+  fetchWithRetry,
+  normalizeOfferNote,
+  normalizeOfferPresentation,
+  parseDateRange,
+  parsePrice,
+  slug,
+  validateOffer,
+  validateSnapshot,
+} from "../scripts/adapters/common.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d1 = parseDateRange("Ofertas válidas de 19/10 até 21/10/2026");
@@ -105,6 +116,91 @@ test("assignIcon assigns appropriate emojis to products", () => {
   assert.equal(assignIcon("Macarrão Instantâneo", "Mercearia", "Mercearia"), "🍝");
   assert.equal(assignIcon("Papel Higiênico", "Papel higiênico", "Casa e limpeza"), "🧻");
   assert.equal(assignIcon("Pilha Alcalina", "Casa", "Casa e limpeza"), "🔋");
+});
+
+test("normalizeOfferPresentation separates brands from product names", () => {
+  const chicken = normalizeOfferPresentation({
+    name: "COXA C/ SOBRECOXA DE FRANGO AVELÍCIA",
+    brand: "",
+    detail: "PCT KG",
+    note: "",
+  });
+  assert.equal(chicken.name, "COXA C/ SOBRECOXA DE FRANGO");
+  assert.equal(chicken.brand, "Avelícia");
+
+  const rice = normalizeOfferPresentation({
+    name: "Arroz SÃO LUCAS ou SELETTO Tipo 1",
+    brand: "",
+    detail: "5kg",
+    note: "",
+  });
+  assert.equal(rice.name, "Arroz Tipo 1");
+  assert.equal(rice.brand, "São Lucas / Seletto");
+
+  const duplicate = normalizeOfferPresentation({
+    name: "Sabão Em Pó Omo Expert Branco Absoluto",
+    brand: "OMO",
+    detail: "720g",
+    note: "",
+  });
+  assert.equal(duplicate.name, "Sabão Em Pó Expert Branco Absoluto");
+  assert.equal(duplicate.brand, "Omo");
+
+  const separate = normalizeOfferPresentation({
+    name: "Lasanha",
+    brand: "Seara",
+    detail: "600 g",
+    note: "",
+  });
+  assert.equal(separate.name, "Lasanha");
+  assert.equal(separate.brand, "Seara");
+
+  const dated = normalizeOfferPresentation({
+    name: "19 A 21 DE OUT. ÓLEO SOJA VITALIV",
+    brand: "",
+    detail: "900ML",
+    note: "",
+  });
+  assert.equal(dated.name, "ÓLEO SOJA");
+  assert.equal(dated.brand, "Vitaliv");
+});
+
+test("normalizeOfferPresentation does not mistake produce varieties for brands", () => {
+  const pineapple = normalizeOfferPresentation({
+    name: "ABACAXI PÉROLA GRAÚDO",
+    brand: "",
+    detail: "UN.",
+    note: "",
+  });
+  assert.equal(pineapple.name, "ABACAXI PÉROLA GRAÚDO");
+  assert.equal(pineapple.brand, "");
+
+  const hazelnut = normalizeOfferPresentation({
+    name: "CREME AVELÃ NUTELLA",
+    brand: "",
+    detail: "140G",
+    note: "",
+  });
+  assert.equal(hazelnut.name, "CREME AVELÃ");
+  assert.equal(hazelnut.brand, "Nutella");
+});
+
+test("normalizeOfferNote fixes limits and promotional copy", () => {
+  assert.equal(normalizeOfferNote("Limite por cliente5 KG"), "Limite de 5 kg por cliente");
+  assert.equal(normalizeOfferNote("Limite por\ncliente 24UN"), "Limite de 24 unidades por cliente");
+  assert.equal(normalizeOfferNote("Limite por\ncliente 1 un"), "Limite de 1 unidade por cliente");
+  assert.equal(
+    normalizeOfferNote("NESTA OFERTA A UNID. SAI POR R$ 4,49 · PAGUE 3 LEVE 4"),
+    "Nesta oferta, a unidade sai por R$ 4,49 · pague 3 leve 4",
+  );
+  assert.equal(
+    normalizeOfferNote("NESTA OFERTA A UNID. SAI POR R$ 1,25 · POR R$ 10,00 · LEVE 8"),
+    "Nesta oferta, a unidade sai por R$ 1,25 · por R$ 10,00 · leve 8",
+  );
+  assert.equal(
+    normalizeOfferNote("Preço Club Plus · oferta do açougue válida de 14 a 16/10"),
+    "Preço Club Plus · Oferta do açougue válida de 14 a 16/10",
+  );
 });
 
 test("validateOffer and validateSnapshot reject invalid data and accept valid data", () => {

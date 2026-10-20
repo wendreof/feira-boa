@@ -15,6 +15,7 @@ import {
 import type { OfferFeed, ProfilePreferences } from "./types";
 import { vapidPublicKey } from "./supabase-config";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
+import { pushFailureMessage, resolvePushUiState } from "./push-state.js";
 
 const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
@@ -31,6 +32,8 @@ const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules");
 const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused");
 const pushStatus = document.querySelector<HTMLElement>("#push-status");
 const pushHelp = document.querySelector<HTMLElement>("#push-help");
+const pushContext = document.querySelector<HTMLElement>("#push-context");
+const pushFeedback = document.querySelector<HTMLElement>("#push-feedback");
 const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push");
 const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push");
 
@@ -39,6 +42,8 @@ let preferences: ProfilePreferences;
 let rules: AlertRule[] = [];
 let preferencesLoaded = false;
 let pendingTheme: ThemePreference | null = null;
+let accountPushEnabled = false;
+let devicePushEnabled = false;
 
 bindThemeToggle((theme) => {
   pendingTheme = theme;
@@ -64,20 +69,23 @@ function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
   return bytes;
 }
 
-function updatePushControls(isEnabled: boolean, enabledElsewhere = false): void {
+function updatePushControls(): void {
   if (!pushStatus || !enablePushButton || !disablePushButton) return;
   const permissionDenied = "Notification" in window && Notification.permission === "denied";
-  pushStatus.textContent = isEnabled
-    ? "Ativado neste dispositivo"
-    : permissionDenied
-      ? "Bloqueado nas permissões do navegador"
-      : enabledElsewhere
-        ? "Ativado em outro dispositivo"
-        : "Ainda não ativado";
-  enablePushButton.hidden = isEnabled;
-  enablePushButton.disabled = permissionDenied;
-  disablePushButton.hidden = !isEnabled;
-  if (pushHelp) pushHelp.hidden = !permissionDenied;
+  const state = resolvePushUiState({ deviceEnabled: devicePushEnabled, accountEnabled: accountPushEnabled, permissionDenied });
+  pushStatus.textContent = state.status;
+  enablePushButton.textContent = state.enableLabel;
+  enablePushButton.hidden = !state.showEnable;
+  enablePushButton.disabled = state.disableEnable;
+  disablePushButton.hidden = !state.showDisable;
+  if (pushHelp) pushHelp.hidden = !state.showPermissionHelp;
+  if (pushContext) pushContext.hidden = !state.showAccountContext;
+}
+
+function setPushFeedback(message = ""): void {
+  if (!pushFeedback) return;
+  pushFeedback.textContent = message;
+  pushFeedback.hidden = !message;
 }
 
 function setStatus(message: string): void {
@@ -102,8 +110,10 @@ if ("serviceWorker" in navigator) {
         if (data.oldEndpoint && data.oldEndpoint !== subscription.endpoint) {
           await removePushSubscription(userId, data.oldEndpoint);
         }
-        updatePushControls(true);
-        setStatus("Notificações renovadas neste dispositivo.");
+        accountPushEnabled = true;
+        devicePushEnabled = true;
+        setPushFeedback();
+        updatePushControls();
       } catch (error) {
         console.warn("Could not renew push subscription for the account.", error);
       }
@@ -169,6 +179,16 @@ async function refreshRules(): Promise<void> {
   const settings = await loadAccountSettings(userId);
   rules = settings.alertRules;
   renderRules();
+}
+
+async function refreshPushAccountState(): Promise<void> {
+  try {
+    const settings = await loadAccountSettings(userId);
+    accountPushEnabled = settings.pushEnabled;
+  } catch (error) {
+    console.warn("Could not refresh the account push state.", error);
+  }
+  updatePushControls();
 }
 
 async function removeCurrentPushSubscription(): Promise<void> {
@@ -284,18 +304,19 @@ notificationsPaused?.addEventListener("change", async () => {
 
 enablePushButton?.addEventListener("click", async () => {
   if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
-    setStatus("Este navegador não oferece suporte a notificações push.");
+    setPushFeedback("Este navegador não oferece suporte a notificações push.");
     return;
   }
   const approved = window.confirm("A Feira Boa poderá enviar alertas de preço que você criou, com produto, loja, preço e validade da oferta. Deseja ativar notificações neste dispositivo?");
   if (!approved) return;
 
   enablePushButton.disabled = true;
-  setStatus("Solicitando permissão para notificações…");
+  setPushFeedback();
+  if (pushStatus) pushStatus.textContent = "Solicitando permissão…";
   try {
     const permission = Notification.permission === "default" ? await Notification.requestPermission() : Notification.permission;
     if (permission !== "granted") {
-      throw new Error(permission === "denied" ? "Permissão bloqueada no navegador. Altere-a nas configurações do site." : "Permissão não concedida.");
+      throw new Error(permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
     }
     const registration = await navigator.serviceWorker.register("service-worker.js");
     const readyRegistration = await navigator.serviceWorker.ready;
@@ -303,14 +324,23 @@ enablePushButton?.addEventListener("click", async () => {
       userVisibleOnly: true,
       applicationServerKey: decodeApplicationServerKey(vapidPublicKey),
     });
-    await savePushSubscription(userId, subscription);
-    updatePushControls(true);
-    setStatus("Notificações ativadas neste dispositivo.");
+    try {
+      await savePushSubscription(userId, subscription);
+    } catch (error) {
+      console.error("Could not save the push subscription.", error);
+      await subscription.unsubscribe().catch((cleanupError: unknown) => {
+        console.warn("Could not remove an unsaved push subscription.", cleanupError);
+      });
+      throw new Error("Não foi possível salvar este dispositivo para notificações.");
+    }
+    accountPushEnabled = true;
+    devicePushEnabled = true;
+    setPushFeedback();
+    updatePushControls();
   } catch (error) {
-    const message = errorMessage(error);
-    setStatus(message.toLowerCase().includes("push service error")
-      ? "O serviço de notificações do navegador falhou. Verifique a conexão e tente novamente."
-      : `Não foi possível ativar notificações: ${message}`);
+    console.error("Could not activate push notifications.", error);
+    setPushFeedback(pushFailureMessage(error));
+    updatePushControls();
   } finally {
     enablePushButton.disabled = Notification.permission === "denied";
   }
@@ -318,7 +348,8 @@ enablePushButton?.addEventListener("click", async () => {
 
 disablePushButton?.addEventListener("click", async () => {
   disablePushButton.disabled = true;
-  setStatus("Desativando notificações neste dispositivo…");
+  setPushFeedback();
+  if (pushStatus) pushStatus.textContent = "Desativando neste dispositivo…";
   try {
     const registration = await navigator.serviceWorker.getRegistration();
     const subscription = await registration?.pushManager.getSubscription();
@@ -327,10 +358,13 @@ disablePushButton?.addEventListener("click", async () => {
       const removed = await subscription.unsubscribe();
       if (!removed) throw new Error("O navegador não confirmou o cancelamento.");
     }
-    updatePushControls(false);
-    setStatus("Notificações desativadas neste dispositivo.");
+    devicePushEnabled = false;
+    setPushFeedback("Notificações desativadas neste dispositivo.");
+    await refreshPushAccountState();
   } catch (error) {
-    setStatus(`Não foi possível desativar notificações: ${errorMessage(error)}`);
+    console.error("Could not deactivate push notifications.", error);
+    setPushFeedback(`Não foi possível desativar notificações: ${errorMessage(error)}`);
+    updatePushControls();
   } finally {
     disablePushButton.disabled = false;
   }
@@ -359,7 +393,9 @@ void getCurrentUser()
     if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
     const existingRegistration = await navigator.serviceWorker?.getRegistration();
     const currentSubscription = await existingRegistration?.pushManager.getSubscription();
-    updatePushControls(Boolean(currentSubscription), settings.pushEnabled);
+    accountPushEnabled = settings.pushEnabled;
+    devicePushEnabled = Boolean(currentSubscription);
+    updatePushControls();
 
     const stores = [...new Set(response.offers.map((offer) => offer.store))].sort((a, b) => a.localeCompare(b, "pt-BR"));
     const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));

@@ -14,7 +14,6 @@ interface CardRefs {
   root: HTMLElement;
   art: HTMLElement;
   name: HTMLElement;
-  category: HTMLElement;
   spec: HTMLElement;
   price: HTMLElement;
   oldPrice: HTMLElement;
@@ -362,25 +361,6 @@ function showFeedError(): void {
     visual.append(sticker, art, favoriteArt);
 
     const body = element("div", "card-body");
-    const storeRow = element("div", "offer-store");
-    const storeLogo = element("span", `offer-store-logo${offer.store === "Big Bom" ? " bigbom-mark" : ""}`);
-    const initials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
-    const fallback = element("span", "store-logo-fallback", initials);
-    fallback.setAttribute("aria-hidden", "true");
-    storeLogo.append(fallback);
-    if (/^https:\/\//.test(offer.storeLogo)) {
-      const logo = document.createElement("img");
-      logo.alt = "";
-      logo.loading = "lazy";
-      logo.decoding = "async";
-      logo.src = offer.storeLogo;
-      logo.addEventListener("load", () => storeLogo.classList.add("has-logo"), { once: true });
-      logo.addEventListener("error", () => logo.remove(), { once: true });
-      storeLogo.append(logo);
-    }
-    const category = element("span", "category");
-    storeRow.append(storeLogo, category);
-
     const name = element("h3");
     const spec = element("span", "spec");
     const priceRow = element("div", "price-row");
@@ -403,8 +383,21 @@ function showFeedError(): void {
 
     const note = element("p", "offer-note");
     const source = element("div", "card-source");
-    const dot = element("span", "source-dot");
-    dot.setAttribute("aria-hidden", "true");
+    const storeLogo = element("span", `offer-store-logo${offer.store === "Big Bom" ? " bigbom-mark" : ""}`);
+    const initials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+    const fallback = element("span", "store-logo-fallback", initials);
+    fallback.setAttribute("aria-hidden", "true");
+    storeLogo.append(fallback);
+    if (/^https:\/\//.test(offer.storeLogo)) {
+      const logo = document.createElement("img");
+      logo.alt = "";
+      logo.loading = "lazy";
+      logo.decoding = "async";
+      logo.src = offer.storeLogo;
+      logo.addEventListener("load", () => storeLogo.classList.add("has-logo"), { once: true });
+      logo.addEventListener("error", () => logo.remove(), { once: true });
+      storeLogo.append(logo);
+    }
     const branch = element("span");
     const sourceLink = element("a");
     sourceLink.target = "_blank";
@@ -416,13 +409,13 @@ function showFeedError(): void {
     const shareIcon = element("span", "", "↗");
     shareIcon.setAttribute("aria-hidden", "true");
     share.append(shareIcon, document.createTextNode(" Compartilhar"));
-    source.append(dot, branch, document.createTextNode(" · "), sourceLink, share);
+    source.append(storeLogo, branch, document.createTextNode(" · "), sourceLink, share);
 
-    body.append(storeRow, name, spec, priceRow, reactionGroup, note, source);
+    body.append(name, spec, priceRow, reactionGroup, note, source);
     root.append(visual, body);
 
     const refs: CardRefs = {
-      root, art, name, category, spec, price, oldPrice, valid: validStrong, note, branch,
+      root, art, name, spec, price, oldPrice, valid: validStrong, note, branch,
       sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
       like: like.button, dislike: dislike.button, likeCount: like.count, dislikeCount: dislike.count,
     };
@@ -434,8 +427,7 @@ function showFeedError(): void {
     refs.art.textContent = offer.icon;
     refs.art.setAttribute("aria-label", `Ilustração de ${offer.name}`);
     refs.name.textContent = offer.name;
-    refs.category.textContent = offer.productType;
-    refs.spec.textContent = offer.brand ? `${offer.brand} · ${offer.detail}` : offer.detail;
+    refs.spec.textContent = [offer.brand, offer.detail].filter(Boolean).join(" · ");
     refs.price.textContent = money(offer.price);
     refs.oldPrice.textContent = offer.previousPrice ? money(offer.previousPrice) : "";
     refs.oldPrice.hidden = !offer.previousPrice;

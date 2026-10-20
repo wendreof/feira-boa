@@ -1,3 +1,5 @@
+export const MAX_SOURCE_AGE_MS = 24 * 60 * 60 * 1000;
+
 export function saoPauloDate(date = new Date()) {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Sao_Paulo",
@@ -9,10 +11,38 @@ export function saoPauloDate(date = new Date()) {
   return `${values.year}-${values.month}-${values.day}`;
 }
 
-export function getVerifiedActiveOffers(offers, sourceState, today = saoPauloDate()) {
+export function storeKey(store, branch = "") {
+  return `${store ?? ""} ${branch ?? ""}`
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function lastSuccessAt(source) {
+  return Date.parse(source?.last_success_at ?? source?.lastSuccessAt ?? "");
+}
+
+function buildStoreIndex(sourceState) {
+  const byStore = new Map();
+  for (const source of Object.values(sourceState ?? {})) {
+    if (!source || typeof source !== "object") continue;
+    const exact = source.store_key || storeKey(source.store, source.branch);
+    if (exact) byStore.set(exact, source);
+    if (source.store) byStore.set(storeKey(source.store), source);
+  }
+  return byStore;
+}
+
+export function getVerifiedActiveOffers(offers, sourceState, today = saoPauloDate(), now = Date.now()) {
+  const byStore = buildStoreIndex(sourceState);
   return offers.filter((offer) => {
-    const source = sourceState[offer.sourceUrl];
-    return source && source.needs_review !== true && offer.validFrom <= today && offer.validTo >= today;
+    const source = sourceState?.[offer.sourceUrl] ?? byStore.get(storeKey(offer.store, offer.branch)) ?? byStore.get(storeKey(offer.store));
+    if (!source || source.needs_review === true) return false;
+    const success = lastSuccessAt(source);
+    if (!Number.isFinite(success) || now - success > MAX_SOURCE_AGE_MS) return false;
+    return offer.validFrom <= today && offer.validTo >= today;
   });
 }
 

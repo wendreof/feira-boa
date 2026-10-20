@@ -3,4 +3,5 @@ Thumbs.db
 .env
 node_modules/
 dist/
+tmp/
 /build-info.json

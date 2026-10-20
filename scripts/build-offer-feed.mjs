@@ -3,6 +3,7 @@ import { readdir, readFile, rename, writeFile } from "node:fs/promises";
 import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { assignIcon, classifyProduct } from "./adapters/common.mjs";
 
 const { outputFiles } = await build({
   entryPoints: [fileURLToPath(new URL("../offers.ts", import.meta.url))],
@@ -75,6 +76,16 @@ for (const storeName of allStoreNames) {
 const stores = [...storeMap.values()];
 const offers = allOffers;
 const offersUpdatedAt = latestSnapshotDate;
+
+for (const offer of offers) {
+  if (offer.department !== "Geral" && offer.productType !== "Geral") continue;
+  const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros");
+  offer.category = taxonomy.department;
+  offer.department = taxonomy.department;
+  offer.productType = taxonomy.productType;
+  offer.productTypes = taxonomy.productTypes;
+  offer.icon = assignIcon(offer.name, taxonomy.productType, taxonomy.department);
+}
 
 const ids = new Set();
 const storeUrls = new Set(stores.map((store) => store.sourceUrl));

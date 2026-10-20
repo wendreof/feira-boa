@@ -636,11 +636,11 @@
       "name": "OVOS VERMELHOS SÃO CAIPIRA GD 10UN",
       "brand": "",
       "detail": "Unidade",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Geral"
+        "Ovos"
       ],
       "price": 9.98,
       "previousPrice": null,
@@ -900,11 +900,11 @@
       "name": "FEIRINHA NEW FORT FLON",
       "brand": "",
       "detail": "Unidade",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Casa",
       "productTypes": [
-        "Geral"
+        "Casa"
       ],
       "price": 42.99,
       "previousPrice": 49.99,
@@ -924,11 +924,11 @@
       "name": "SANDÁLIA IPANEMA CLÁSSICA",
       "brand": "",
       "detail": "PAR",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Vestuário e calçados",
+      "department": "Vestuário e calçados",
+      "productType": "Calçados",
       "productTypes": [
-        "Geral"
+        "Calçados"
       ],
       "price": 19.99,
       "previousPrice": 23.9,
@@ -1668,11 +1668,11 @@
       "name": "CREME AVELÃ NUTELLA",
       "brand": "",
       "detail": "140G",
-      "category": "Geral",
-      "department": "Geral",
-      "productType": "Geral",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Geral"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.98,

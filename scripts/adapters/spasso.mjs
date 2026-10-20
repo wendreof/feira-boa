@@ -1,12 +1,12 @@
 import { readFile } from "node:fs/promises";
-import { parseDateRange } from "./common.mjs";
+import { fetchWithRetry, parseDateRange } from "./common.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 export async function extractSpasso(customUrl = null) {
   const pageUrl = customUrl || SPASSO_URL;
-  const res = await fetch(pageUrl, { headers: { "User-Agent": USER_AGENT } });
+  const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Spasso page (${res.status})`);
   const html = await res.text();
 

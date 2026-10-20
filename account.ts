@@ -1,6 +1,9 @@
 import type { User } from "@supabase/supabase-js";
 import type { ProfilePreferences } from "./types";
+import { errorMessage } from "./errors";
 import { supabase } from "./supabase-client";
+
+export { errorMessage };
 
 export interface AlertRule {
   id: string;
@@ -175,10 +178,4 @@ export async function removePushSubscription(userId: string, endpoint: string): 
   if (error) throw error;
 }
 
-export function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  if (typeof error === "object" && error !== null && "message" in error && typeof error.message === "string") {
-    return error.message;
-  }
-  return "Ocorreu um erro. Tente novamente.";
-}
+

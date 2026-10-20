@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { assignIcon, classifyProduct, parseDateRange, parsePrice, slug, validateOffer, validateSnapshot } from "../scripts/adapters/common.mjs";
+import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, parsePrice, slug, validateOffer, validateSnapshot } from "../scripts/adapters/common.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d1 = parseDateRange("Ofertas válidas de 19/10 até 21/10/2026");
@@ -17,6 +17,31 @@ test("parseDateRange handles various Brazilian flyer date formats", () => {
 
   assert.equal(parseDateRange(""), null);
   assert.equal(parseDateRange("sem data"), null);
+});
+
+test("fetchWithRetry retries transient failures but not permanent ones", async () => {
+  const originalFetch = globalThis.fetch;
+  let transientCalls = 0;
+  globalThis.fetch = async () => {
+    transientCalls += 1;
+    return new Response("", { status: transientCalls < 3 ? 503 : 200 });
+  };
+  try {
+    const response = await fetchWithRetry("https://example.com/transient", {}, { delayMs: 1 });
+    assert.equal(response.status, 200);
+    assert.equal(transientCalls, 3);
+
+    let permanentCalls = 0;
+    globalThis.fetch = async () => {
+      permanentCalls += 1;
+      return new Response("", { status: 404 });
+    };
+    const missing = await fetchWithRetry("https://example.com/missing", {}, { delayMs: 1 });
+    assert.equal(missing.status, 404);
+    assert.equal(permanentCalls, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("parsePrice converts Brazilian real strings to numbers", () => {
@@ -46,6 +71,26 @@ test("classifyProduct maps products to departments and product types", () => {
   const detergent = classifyProduct("Lava Roupas OMO", "OMO", "Limpeza");
   assert.equal(detergent.department, "Casa e limpeza");
   assert.equal(detergent.productType, "Lavanderia e limpeza");
+
+  const eggs = classifyProduct("Ovos Vermelhos São Caipira 10un", "", "Geral");
+  assert.equal(eggs.department, "Mercearia");
+  assert.equal(eggs.productType, "Ovos");
+
+  const sandals = classifyProduct("Sandália Ipanema Clássica", "", "Geral");
+  assert.equal(sandals.department, "Vestuário e calçados");
+  assert.equal(sandals.productType, "Calçados");
+
+  const kettle = classifyProduct("Feirinha New Fort Flon", "", "Geral");
+  assert.equal(kettle.department, "Casa e limpeza");
+  assert.equal(kettle.productType, "Casa");
+
+  const hazelnut = classifyProduct("Creme Avelã Nutella 140g", "", "Geral");
+  assert.equal(hazelnut.department, "Mercearia");
+  assert.equal(hazelnut.productType, "Doces e snacks");
+
+  const unknown = classifyProduct("Produto sem categoria", "", "Geral");
+  assert.equal(unknown.department, "Outros");
+  assert.equal(unknown.productType, "Outros");
 });
 
 test("assignIcon assigns appropriate emojis to products", () => {

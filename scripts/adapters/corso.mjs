@@ -1,11 +1,11 @@
-import { assignIcon, classifyProduct, slug, validateOffer } from "./common.mjs";
+import { assignIcon, classifyProduct, fetchWithRetry, slug, validateOffer } from "./common.mjs";
 
 const CORSO_URL = "https://corso.com.br/jornalfrente.php";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 export async function extractCorso(customUrl = null) {
   const pageUrl = customUrl || CORSO_URL;
-  const res = await fetch(pageUrl, { headers: { "User-Agent": USER_AGENT } });
+  const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Corso flyer page (${res.status})`);
   const html = await res.text();
 

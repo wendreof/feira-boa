@@ -1,5 +1,28 @@
 // Common utilities for offer adapters, validation, and product classification.
 
+const RETRYABLE_STATUS = new Set([408, 425, 429]);
+
+export async function fetchWithRetry(url, init = {}, { attempts = 3, timeoutMs = 30_000, delayMs = 400 } = {}) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, { ...init, signal: controller.signal });
+      const retryable = RETRYABLE_STATUS.has(response.status) || response.status >= 500;
+      if (!retryable || attempt === attempts) return response;
+      lastError = new Error(`HTTP ${response.status} from ${url}`);
+    } catch (error) {
+      lastError = error;
+      if (attempt === attempts) throw error;
+    } finally {
+      clearTimeout(timer);
+    }
+    await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+  }
+  throw lastError ?? new Error(`Could not fetch ${url}`);
+}
+
 const MONTHS = {
   janeiro: "01", jan: "01",
   fevereiro: "02", fev: "02",
@@ -80,10 +103,12 @@ export function slug(value) {
 
 export function classifyProduct(name, brand, category) {
   const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const normalizedCategory = category === "Geral" ? "Outros" : category;
   const rules = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado|leite longa vida|bebida lactea/, "Leites"],
     [/condicionador|shampoo|creme dental|absorvente|sabonete|desodorante|higiene|toalha umedecida/, "Higiene pessoal"],
     [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo|ricota/, "Queijos e requeijão"], [/manteiga|margarina/, "Manteiga"], [/mortadela|presunto/, "Frios"],
+    [/ovos?\b/, "Ovos"], [/creme de avela|nutella/, "Doces e snacks"], [/sandalia|sapato|tenis|chinelo/, "Calçados"], [/new fort|fort lar|fervedor/, "Casa"],
     [/frango|asa de|coxa|sobrecoxa|filezinho|chicken|sassami/, "Frango"], [/bovino|contrafile|paleta|alcatra|fraldinha|figado|acem|lombo|costela|patinho/, "Carne bovina"],
     [/linguica|salsicha|panceta|suina|suino|bacon|pernil|bisteca/, "Carnes suínas e embutidos"], [/tilapia|peixe|sardinha|atum/, "Peixes"],
     [/cerveja/, "Cervejas"], [/refrigerante|guarana|h2oh/, "Refrigerantes"], [/suco|nectar|agua mineral|agua de coco|energetico|refresco/, "Sucos e bebidas"], [/vinho|aperitivo|smirnoff|gin/, "Bebidas alcoólicas"],
@@ -92,11 +117,11 @@ export function classifyProduct(name, brand, category) {
     [/batata chips|biscoito|chocolate|pacoquinha|bombom|wafer/, "Doces e snacks"],
     [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|maca|maçã|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde/, "Hortifruti"],
     [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|filtro de papel/, "Mercearia"],
-    [/racao|dog|cat|pet/, "Pet"],
+    [/racao|\bdog\b|\bcat\b|\bpet\b/, "Pet"],
     [/pilha|esponja|lixeira|pano|lampada|carvao/, "Casa"],
   ];
   const matched = rules.find(([pattern]) => pattern.test(text));
-  const productType = matched ? matched[1] : category;
+  const productType = matched ? matched[1] : normalizedCategory;
 
   const departments = {
     "Frios e laticínios": "Frios e laticínios", "Iogurtes": "Frios e laticínios", "Queijos e requeijão": "Frios e laticínios", "Manteiga": "Frios e laticínios", "Frios": "Frios e laticínios",
@@ -105,17 +130,17 @@ export function classifyProduct(name, brand, category) {
     "Refrigerantes": "Bebidas", "Sucos e bebidas": "Bebidas", "Bebidas alcoólicas": "Bebidas",
     "Lavanderia e limpeza": "Casa e limpeza", "Papel higiênico": "Casa e limpeza", "Higiene pessoal": "Higiene e cuidados", "Doces e snacks": "Mercearia", "Hortifruti": "Hortifruti",
     "Congelados": "Congelados", "Mercearia": "Mercearia", "Café": "Mercearia", "Arroz": "Mercearia", "Feijão": "Mercearia", "Leites": "Frios e laticínios",
-    "Pet": "Pet", "Casa": "Casa e limpeza",
+    "Ovos": "Mercearia", "Calçados": "Vestuário e calçados", "Pet": "Pet", "Casa": "Casa e limpeza", "Outros": "Outros",
   };
   const categoryDepartments = {
     "Carnes": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Frios": "Frios e laticínios", "Laticínios": "Frios e laticínios",
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados",
-    "Pet": "Pet", "Casa": "Casa e limpeza", "Padaria": "Mercearia", "Hortifruti": "Hortifruti",
+    "Pet": "Pet", "Casa": "Casa e limpeza", "Padaria": "Mercearia", "Hortifruti": "Hortifruti", "Vestuário": "Vestuário e calçados", "Outros": "Outros",
   };
   const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango|bisteca|panceta/.test(text);
-  const primaryProductType = productType === category ? (categoryDepartments[category] ?? category) : productType;
+  const primaryProductType = productType === normalizedCategory ? (categoryDepartments[normalizedCategory] ?? normalizedCategory) : productType;
   return {
-    department: departments[productType] ?? categoryDepartments[category] ?? category,
+    department: departments[productType] ?? categoryDepartments[normalizedCategory] ?? normalizedCategory,
     productType: primaryProductType,
     productTypes: isBarbecueProduct ? [primaryProductType, "Churrasco"] : [primaryProductType],
   };

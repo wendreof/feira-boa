@@ -1,4 +1,4 @@
-import { assignIcon, classifyProduct, slug, validateOffer } from "./common.mjs";
+import { assignIcon, classifyProduct, fetchWithRetry, slug, validateOffer } from "./common.mjs";
 
 const PAGUE_MENOS_URL = "https://www.superpaguemenos.com.br/jornal-de-ofertas/";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
@@ -24,7 +24,7 @@ function getWeekValidity() {
 
 export async function extractPagueMenos(customUrl = null) {
   const pageUrl = customUrl || PAGUE_MENOS_URL;
-  const res = await fetch(pageUrl, { headers: { "User-Agent": USER_AGENT } });
+  const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Pague Menos offers page (${res.status})`);
   const html = await res.text();
 

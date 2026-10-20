@@ -344,3 +344,25 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 @media(max-width:760px){.stores-page{padding-top:10px}.stores-heading{padding:8px 0 12px}.stores-heading h1{font-size:27px}}
 :root[data-theme="dark"] .stores-directory-link{background:#1b241e}
 :root[data-theme="dark"] .stores-directory-link:hover{border-color:#456b4d;background:#202f24}
+
+.feed-status{margin:10px 0 0;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--muted);font-size:13px;line-height:1.45}
+.feed-status[data-state="error"]{border-color:#ecc7c8;background:#fff1f1;color:#a43b40}
+.feed-status[hidden],.feed-retry[hidden]{display:none}
+.feed-retry{display:inline-flex;align-items:center;justify-content:center;min-height:40px;margin-top:8px;padding:8px 13px;border:1px solid var(--green);border-radius:8px;background:#fff;color:var(--green);font:750 12px 'DM Sans',sans-serif;cursor:pointer}
+.feed-retry:hover{background:var(--mint)}
+.offline-page{display:grid;place-content:center;justify-items:start;gap:10px;min-height:calc(100vh - 76px);padding-top:40px;padding-bottom:40px}
+.offline-page h1{margin:0;font:800 clamp(30px,6vw,48px)/1.08 'Manrope',sans-serif;letter-spacing:-1.5px}
+.offline-page .subhead{margin:0}
+.offer-card{min-width:0}
+.card-body,.price-row,.card-source,.offer-store{min-width:0}
+.card-body h3{overflow-wrap:anywhere}
+.offer-note{overflow-wrap:anywhere}
+.card-source{flex-wrap:wrap;row-gap:3px}
+.card-source .share-offer{margin-left:auto}
+.price{white-space:nowrap}
+.valid-until{flex:0 0 auto}
+@media(max-width:420px){.offer-grid,.offer-grid:not(.list-view){grid-template-columns:1fr}.visual{height:150px}.product-art{font-size:70px}}
+@media(max-width:360px){.card-source{font-size:9px}.share-offer{font-size:9px}.valid-until{font-size:9px}.valid-until strong{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.offer-card:hover{transform:none}}
+
+.show-all-offers[hidden]{display:none}

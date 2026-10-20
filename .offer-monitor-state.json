@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-20T13:39:26.813Z",
-    "last_success_at": "2026-10-20T13:39:26.813Z",
+    "checked_at": "2026-10-20T17:09:41.576Z",
+    "last_success_at": "2026-10-20T17:09:41.576Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,7 +24,7 @@
     "status": 200,
     "content_type": "text/html; charset=utf-8",
     "final_url": "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
-    "checked_at": "2026-10-20T13:39:28.797Z",
+    "checked_at": "2026-10-20T17:09:43.974Z",
     "last_success_at": "2026-10-20T02:44:18.412Z",
     "last_error": "TypeError",
     "needs_review": false
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf",
-    "checked_at": "2026-10-20T13:39:33.421Z",
-    "last_success_at": "2026-10-20T13:39:33.421Z",
+    "checked_at": "2026-10-20T17:09:48.186Z",
+    "last_success_at": "2026-10-20T17:09:48.186Z",
     "last_error": null,
     "needs_review": false
   },
@@ -50,12 +50,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "c5a2f2f2b1fcca59ba4444fe8bc28480d5e22676f5ee58ee922fa3c3c669477b",
+    "sha256": "682439048d4fa1b13f0a2db118785f7959eef8186e715f14ba0a0d9103bd4fed",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-20T13:39:35.619Z",
-    "last_success_at": "2026-10-20T13:39:35.619Z",
+    "checked_at": "2026-10-20T17:09:50.699Z",
+    "last_success_at": "2026-10-20T17:09:50.699Z",
     "last_error": null,
     "needs_review": true
   },
@@ -69,8 +69,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-20T13:39:36.726Z",
-    "last_success_at": "2026-10-20T13:39:36.726Z",
+    "checked_at": "2026-10-20T17:09:51.770Z",
+    "last_success_at": "2026-10-20T17:09:51.770Z",
     "last_error": null,
     "needs_review": false
   }

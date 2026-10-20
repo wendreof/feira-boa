@@ -16,7 +16,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - Plain static HTML/CSS/JS generated from TypeScript sources.
 - TypeScript entry points: `app.ts`, `login-page.ts`, `account-page.ts`, `suggestions-page.ts`.
 - Bundling is done with `esbuild` via `npm run build`.
-- Output artifacts are committed so static hosting can serve the site from the repo root.
+- Tracked site artifacts can be served from the repository root, but `build-info.json` is generated and ignored by Git, so deployment must run `npm run build` before publishing that directory.
+- Keep the Cloudflare Pages output directory aligned with the build output. After changing build or deployment settings, verify the deployed `/build-info.json` is JSON and run `npm run check:site` against the public `SITE_URL`.
 
 ### Data pipeline
 - Source offer data is defined in `offers.ts`.

@@ -1,7 +1,24 @@
 import { submitSuggestion, type SuggestionCategory } from "./suggestions";
+import { getCurrentUser } from "./account";
 import { bindThemeToggle } from "./theme";
 
 bindThemeToggle();
+
+const accountLink = document.querySelector<HTMLAnchorElement>("#nav-account");
+const accountLabel = accountLink?.querySelector<HTMLElement>("[data-account-label]");
+
+void getCurrentUser()
+  .then((user) => {
+    if (!accountLink || !accountLabel) return;
+    const signedIn = user !== null;
+    const label = signedIn ? "Minha conta" : "Entrar";
+    accountLabel.textContent = label;
+    accountLink.setAttribute("aria-label", label);
+    accountLink.href = signedIn ? "account.html" : "login.html";
+  })
+  .catch((error: unknown) => {
+    console.error("Could not verify account navigation", error);
+  });
 
 const form = document.querySelector<HTMLFormElement>("#suggestion-form")!;
 const category = document.querySelector<HTMLSelectElement>("#suggestion-category")!;

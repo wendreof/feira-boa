@@ -315,7 +315,8 @@ function renderOffers(): void {
     </article>`;
   }).join("");
   emptyState.hidden = matching.length > 0;
-  favoritesToggle.textContent = favoriteOnly ? `Ver todas (${favoriteIds.size})` : `Favoritos (${favoriteIds.size})`;
+  const activeFavoriteCount = offers.filter((offer) => isActive(offer) && favoriteIds.has(offer.id)).length;
+  favoritesToggle.textContent = favoriteOnly ? `Ver todas (${activeFavoriteCount})` : `Favoritos (${activeFavoriteCount})`;
   favoritesToggle.setAttribute("aria-pressed", String(favoriteOnly));
   resultsTitle.textContent = sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
   showAllOffersButton.hidden = !sharedOfferId;

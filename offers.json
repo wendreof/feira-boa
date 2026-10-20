@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T20:48:59.255Z",
+  "updatedAt": "2026-10-20T22:51:33.641Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -420,11 +420,11 @@
       "name": "BATATA MONALISA KG OVOS BCO. GRANDE C/ 20",
       "brand": "Casagrande",
       "detail": "UN.",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Hortifruti"
+        "Ovos"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -1676,7 +1676,7 @@
       ],
       "price": 11.99,
       "previousPrice": 14.98,
-      "icon": "🧴",
+      "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
       "validFrom": "2026-10-19",
@@ -22031,7 +22031,7 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 10.49,
+      "price": 9.89,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -26087,7 +26087,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 15.39,
       "previousPrice": null,
       "icon": "🏷️",
       "tone": "#edf4e9",
@@ -28444,11 +28444,11 @@
       "name": "Abacate",
       "brand": "",
       "detail": "Kg",
-      "category": "Pet",
-      "department": "Pet",
-      "productType": "Pet",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Pet"
+        "Hortifruti"
       ],
       "price": 5.28,
       "previousPrice": 6.28,

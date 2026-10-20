@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-20T20:48:59.255Z",
+  "fetchedAt": "2026-10-20T22:51:33.641Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -19494,7 +19494,7 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 10.49,
+      "price": 9.89,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -23550,7 +23550,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 15.39,
       "previousPrice": null,
       "icon": "🏷️",
       "tone": "#edf4e9",

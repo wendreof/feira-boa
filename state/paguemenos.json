@@ -1,0 +1,137 @@
+{
+  "storeId": "paguemenos",
+  "store": {
+    "name": "Pague Menos",
+    "branch": "Loja 33 · Jardim Santo André",
+    "logo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+    "source": "Ofertas online oficiais · Loja 33",
+    "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
+    "from": "2026-10-19",
+    "to": "2026-10-25"
+  },
+  "fetchedAt": "2026-10-20T01:51:26.799Z",
+  "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
+  "offers": [
+    {
+      "id": "paguemenos-sabao-em-po-omo-expert-branco-absoluto-omo-720g-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Sabão Em Pó Omo Expert Branco Absoluto",
+      "brand": "Omo",
+      "detail": "720g",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 16.99,
+      "previousPrice": null,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/"
+    },
+    {
+      "id": "paguemenos-sabao-liquido-omo-ultra-power-omo-1-8l-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Sabão Líquido Omo Ultra Power",
+      "brand": "Omo",
+      "detail": "1,8l",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 38.89,
+      "previousPrice": null,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/"
+    },
+    {
+      "id": "paguemenos-amaciante-concentrado-downy-verao-tropical-refil-downy-750ml-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Amaciante Concentrado Downy Verão Tropical Refil",
+      "brand": "Downy",
+      "detail": "750ml",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 20.99,
+      "previousPrice": null,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/"
+    },
+    {
+      "id": "paguemenos-pack-shampoo-elseve-liso-dos-sonhos-375ml-condicionador-elseve-170ml-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Pack Shampoo Elseve Liso dos Sonhos 375ml + Condicionador",
+      "brand": "Elseve",
+      "detail": "170ml",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 42.99,
+      "previousPrice": null,
+      "icon": "🧴",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/"
+    },
+    {
+      "id": "paguemenos-protetor-solar-sundown-fps-50-praia-e-piscina-sundown-200ml-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Protetor Solar Sundown FPS 50 Praia e Piscina",
+      "brand": "Sundown",
+      "detail": "200ml",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 85.99,
+      "previousPrice": null,
+      "icon": "🏷️",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/jornal-de-ofertas/"
+    }
+  ],
+  "status": "ok"
+}

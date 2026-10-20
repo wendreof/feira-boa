@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { readdir, readFile, rename, writeFile } from "node:fs/promises";
 import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
@@ -16,10 +16,65 @@ const { outputFiles } = await build({
 const sandbox = {};
 vm.runInNewContext(outputFiles[0].text, sandbox, { filename: "offers.ts" });
 
-const { offers, stores, offersUpdatedAt } = sandbox.OfferCatalog;
-if (!Array.isArray(offers) || !Array.isArray(stores) || !Number.isFinite(Date.parse(offersUpdatedAt))) {
+const fallbackCatalog = sandbox.OfferCatalog;
+if (!Array.isArray(fallbackCatalog.offers) || !Array.isArray(fallbackCatalog.stores) || !Number.isFinite(Date.parse(fallbackCatalog.offersUpdatedAt))) {
   throw new Error("Offer source did not produce offers and stores.");
 }
+
+// Check state directory for automated store snapshots
+const stateDir = new URL("../state/", import.meta.url);
+const snapshotsByStore = new Map();
+let latestSnapshotDate = fallbackCatalog.offersUpdatedAt;
+
+try {
+  const files = await readdir(stateDir);
+  for (const file of files) {
+    if (!file.endsWith(".json")) continue;
+    try {
+      const content = await readFile(new URL(`../state/${file}`, import.meta.url), "utf8");
+      const snapshot = JSON.parse(content);
+      if (snapshot.store && Array.isArray(snapshot.offers) && snapshot.offers.length > 0) {
+        snapshotsByStore.set(snapshot.storeId || snapshot.store.name, snapshot);
+        if (snapshot.fetchedAt && (!latestSnapshotDate || snapshot.fetchedAt > latestSnapshotDate)) {
+          latestSnapshotDate = snapshot.fetchedAt;
+        }
+      }
+    } catch {
+      // Ignore invalid single snapshot file and fall back to curated source
+    }
+  }
+} catch {
+  // State directory doesn't exist yet
+}
+
+// Assemble stores and offers: prefer snapshots, fall back to offers.ts per store
+const storeMap = new Map();
+const allOffers = [];
+
+// Index fallback stores
+for (const store of fallbackCatalog.stores) {
+  storeMap.set(store.name, store);
+}
+
+// Index fallback offers by store name
+const fallbackByStore = Map.groupBy(fallbackCatalog.offers, (o) => o.store);
+
+// For each known store, use snapshot if available with offers, otherwise fallback
+const allStoreNames = new Set([...storeMap.keys(), ...[...snapshotsByStore.values()].map((s) => s.store.name)]);
+
+for (const storeName of allStoreNames) {
+  const snapshot = [...snapshotsByStore.values()].find((s) => s.store.name === storeName || s.storeId === storeName);
+  if (snapshot && snapshot.offers.length > 0) {
+    storeMap.set(snapshot.store.name, snapshot.store);
+    allOffers.push(...snapshot.offers);
+  } else if (fallbackByStore.has(storeName)) {
+    allOffers.push(...fallbackByStore.get(storeName));
+  }
+}
+
+const stores = [...storeMap.values()];
+const offers = allOffers;
+const offersUpdatedAt = latestSnapshotDate;
 
 const ids = new Set();
 const storeUrls = new Set(stores.map((store) => store.sourceUrl));

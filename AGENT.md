@@ -22,7 +22,9 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 ### Data pipeline
 - `offers.ts` is the curated fallback catalog.
 - `scripts/adapters/*` fetch official sources; `npm run ingest:offers` writes snapshots in `state/`.
+- Pague Menos uses the official VTEX catalog API for collection `161`, paginated 50 products at a time; it filters unavailable items, deduplicates normalized name/brand/detail groups, and keeps package details derived from product names.
 - `scripts/build-offer-feed.mjs` prefers snapshots, applies brand/note presentation normalization plus legacy taxonomy, and generates `offers.json` plus build metadata.
+- A full feed currently has about 1,288 offers; Pague Menos accounts for 1,015 of them, so preserve keyed card reuse and test large-feed rendering after data changes.
 - Card presentation is name-first; `marca · detalhe` is secondary, and the store logo belongs to the source row.
 - The generated feed is the shared source for the website and the scheduled monitoring jobs.
 - New prices publish immediately; `needs_review` gates alert eligibility only.

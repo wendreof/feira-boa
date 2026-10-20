@@ -391,3 +391,10 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .login-prompt button:hover{filter:brightness(.96)}
 .login-prompt button:focus-visible{outline:3px solid #70a38366;outline-offset:2px}
 @media(max-width:420px){.login-prompt-actions{flex-direction:column-reverse}.login-prompt button{width:100%}}
+.local-stores-heading{padding:24px 0 12px;border-top:1px solid var(--line);margin-top:22px}
+.local-stores-heading .eyebrow{margin-bottom:8px}
+.local-stores-heading h2{margin:0;font:800 23px/1.15 'Manrope',sans-serif;letter-spacing:-.5px;color:var(--ink)}
+.local-stores-heading .subhead{margin:6px 0 0;font-size:13px}
+.local-stores-missing{margin:14px 0 0;color:var(--muted);font-size:12px}
+.local-stores-missing a{color:var(--green);font-weight:750;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:760px){.local-stores-heading{padding-top:20px;margin-top:16px}.local-stores-heading h2{font-size:20px}}

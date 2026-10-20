@@ -102,6 +102,7 @@ export function slug(value) {
 }
 
 const BRAND_ALIASES = [
+  ["3 Corações", ["3 CORACOES", "3 CORAÇÕES"]],
   ["Avelícia", ["AVELÍCIA"]],
   ["São Lucas / Seletto", ["SÃO LUCAS OU SELETTO", "SÃO LUCAS / SELETTO"]],
   ["São Lucas", ["SÃO LUCAS"]],
@@ -165,6 +166,18 @@ const BRAND_ALIASES = [
   ["Doriana", ["DORIANA"]],
   ["Heinz", ["HEINZ"]],
   ["Perdigão", ["PERDIGÃO"]],
+  ["Café Pelé", ["CAFE PELE", "CAFÉ PELÉ"]],
+  ["Itambé", ["ITAMBE", "ITAMBÉ"]],
+  ["Johnson's", ["JOHNSON´S", "JOHNSON'S"]],
+  ["L'Or", ["L'OR"]],
+  ["Lay's", ["LAYS", "LAY'S", "LAY´S"]],
+  ["Mãe Terra", ["MAE TERRA", "MÃE TERRA"]],
+  ["Pilão", ["PILAO", "PILÃO"]],
+  ["Piraquê", ["PIRAQUE", "PIRAQUÊ"]],
+  ["SBP", ["SBP"]],
+  ["BR Spices", ["BR SPICES"]],
+  ["YoPRO", ["YOPRO"]],
+  ["Olá", ["OLA", "OLÁ"]],
   ["Del Valle", ["DEL VALLE"]],
   ["Neve", ["NEVE"]],
   ["Friboi", ["FRIBOI"]],

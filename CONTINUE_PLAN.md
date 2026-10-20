@@ -1,6 +1,6 @@
 # Feira Boa Continuation Plan
 
-Last updated: 2026-10-20 (post card and notification QA)
+Last updated: 2026-10-20 (post Pague Menos catalog ingestion)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
 
 ## Objective
@@ -24,15 +24,16 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 ## Current Data State
 
-- `offers.json`: 278 offers, 230 active, 5 sources.
-- Last feed timestamp: `2026-10-20T02:27:00.565Z`.
+- `offers.json`: 1,288 offers, 1,240 active, 5 sources.
+- Last feed timestamp: `2026-10-20T20:48:59.255Z`; feed size is about 1.29 MB.
 - Snapshot validity:
   - `state/sempre.json`: 19-21; campaign `af2914...campanha-583`
   - `state/bigbom.json`: 19-22
-  - `state/paguemenos.json`: 19-25
+  - `state/paguemenos.json`: 19-25; 1,015 offers from catalog collection `161`
   - `state/spasso.json`: 19-24; 0 offers
   - `state/corso.json`: 16-22
-- All five source statuses are reviewed with `needs_review:false`; last successes around `2026-10-20T02:44Z`.
+- Pague Menos fetches the VTEX catalog API in 50-product pages, deduplicates normalized products, and exposes 277 offers with a previous price.
+- Pague Menos source status was reviewed with `needs_review:false`; Spasso changed and remains under review. Last successes are around `2026-10-20T20:43Z`.
 - No generated offer has the legacy `Geral` department; current feed IDs also satisfy the new reaction ID shape.
 - `offers.ts` fallback still contains the old Sempre Vale `12c6dae5...campanha-575` campaign and 15-18 dates. Snapshots override it, but it is stale.
 - `lojas.html` also lists Forte Mix; it is not one of the five monitored flyer sources.
@@ -71,6 +72,9 @@ Finish the Feira Boa hardening work while preserving product behavior:
 ### Data Pipeline
 
 - Five adapters use shared `fetchWithRetry()` for timeout + transient retries.
+- Pague Menos now uses the official offers collection (`productclusterids=161`) through the paginated VTEX catalog API instead of the obsolete flyer `data-json` parser.
+- Pague Menos maps product names, prices, list prices, brands, categories, and package details; unavailable/zero-price products are skipped, and variants with identical normalized name/brand/detail keep the lowest price.
+- Pague Menos validity uses a stable Monday-Sunday window, and API brand variants are canonicalized (`Pilão`, `Itambé`, `Café Pelé`, `Mãe Terra`, `YoPRO`, and others).
 - Source snapshots live in `state/`; `offers.json` is generated from them.
 - Unknown `Geral` offers are normalized through `classifyProduct()` / `assignIcon()` during build.
 - Added mappings for eggs, Nutella/hazelnut cream, sandals, and "New Fort/Fervedor".
@@ -107,25 +111,18 @@ Finish the Feira Boa hardening work while preserving product behavior:
 Latest checks passed:
 
 - `npm run typecheck`: passed.
-- `npm run build`: passed; 34 root artifacts; 278 offers; no `Geral`.
-- `npm test`: 25/25 passed, including presentation normalization and push-state/error coverage.
-- Local site health (`check-site-health.mjs` with full headers): `status:ok`, 278 offers.
-- Chrome 390px `lojas.html`:
-  - No horizontal overflow.
-  - Five freshness labels show 19/10/2026 in America/Sao_Paulo.
-  - All six displayed logos loaded this run; fallback remains available.
-  - 0 inline handlers; no console/CSP errors.
-- Chrome 390px app:
-  - 230 cards; feed status hidden after load; search works.
-  - No horizontal overflow; card width 354px in list mode; drawer focus trap/Escape/focus restoration passed.
-  - Product name, `marca · detalhe`, and source logo fit without clipping.
-  - Signed-out like opens `Entre para avaliar`; primary action is focused, cancel closes and restores focus, and continue reaches `login.html` with the current `returnTo`.
-- Chrome 1280px app:
-  - 230 cards, 3-column grid at 313px card width, no overflow.
-  - Product name leads each card; `marca · detalhe` is the second line; source logo appears before the branch name.
-  - Search "leite" returned 11 offers with announcement.
-  - Desktop-to-mobile resize stayed at 390px with one column.
-  - No console/runtime errors were reported by the final CDP pass.
+- `npm run build`: passed; 34 root artifacts; 1,288 offers; 30 structured-data offers; no `Geral`.
+- `npm test`: 28/28 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, and push-state/error coverage.
+- Local site health (`check-site-health.mjs` with full headers): `status:ok`, 1,288 offers.
+- Pague Menos ingestion: 1,042 catalog products, 1,018 available/priced, 1,015 after normalized deduplication; 277 have a previous price.
+- Chrome desktop app:
+  - 1,240 active cards rendered in about one second; no duplicate IDs or console errors.
+  - Pague Menos filter shows 1,015 cards and links to the official collection.
+  - Search `pilao` returns 22 offers with canonical `Pilão` brand labels.
+- Chrome mobile app:
+  - 1,240 cards, no horizontal overflow; store filters remain horizontally scrollable.
+- Signed-out like opens `Entre para avaliar`; primary action is focused, cancel closes and restores focus, and continue reaches `login.html` with the current `returnTo`.
+- Source monitor checked 5 sources with 0 failures; Pague Menos was reviewed, while Spasso’s changed source remains flagged.
 - Suggestions:
   - Cooldown disables submit and counts down correctly.
   - Expired cooldown clears status and re-enables submit.
@@ -157,6 +154,8 @@ Latest checks passed:
 ### Product Decisions
 
 - Decide whether to replace the stale `offers.ts` Sempre fallback metadata or guarantee a snapshot is always present.
+- Decide whether a large-feed strategy is needed later (incremental “load more” or virtualized cards); the current 1,240-card render is under one second in desktop Chrome.
+- Confirm that Pague Menos online collection prices and the `Loja 33` branch label match the intended physical-store audience.
 - Decide whether ESLint/Prettier are worth adding; no linter was added. Current gate is TypeScript + esbuild + Node tests.
 - Optional: add `pg_cron` cleanup if Supabase enables it, instead of insert-triggered suggestion retention.
 - Optional: add real push enable/disable and authenticated-account QA once Supabase test credentials exist.
@@ -167,7 +166,9 @@ Latest checks passed:
 - No local `python`.
 - Supabase migrations are not applied; no CLI/credentials are configured locally.
 - No production domain is configured in the repository, so production health/deployment verification is pending.
-- Spasso currently has 0 offers by source behavior; this should remain visible as a source-health condition.
+- Spasso currently has 0 offers by source behavior and its changed source is awaiting review; this should remain visible as a source-health condition.
+- Pague Menos offers come from the online catalog; store labels state that online prices may differ from the physical store.
+- The feed is now dominated by Pague Menos (1,015 of 1,288 offers), so future source-count and UI-performance changes should account for the larger catalog.
 - Offline first load can log expected external logo/build-info failures; core feed rendering succeeds.
 - Do not gate price publishing to solve alert review concerns.
 

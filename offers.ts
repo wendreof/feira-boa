@@ -29,7 +29,7 @@ export const offerSources = {
     branch: "Loja 33 · Jardim Santo André",
     logo: "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
     source: "Ofertas online oficiais · Loja 33",
-    sourceUrl: "https://www.superpaguemenos.com.br/jornal-de-ofertas/",
+    sourceUrl: "https://www.superpaguemenos.com.br/ofertas?productclusterids=161",
     from: "2026-10-16",
     to: "2026-10-18"
   },

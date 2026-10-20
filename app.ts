@@ -133,6 +133,20 @@ function showFeedError(): void {
   });
 
   const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
+  const meatProductTypes = ["Frango", "Carne bovina", "Carnes suínas e embutidos"];
+  const restDepartmentOrder = ["Bebidas", "Frios e laticínios", "Hortifruti", "Congelados", "Casa e limpeza", "Pet", "Vestuário e calçados"];
+  function productCategoryRank(offer: Offer): number {
+    const types = new Set(offer.productTypes);
+    const searchableName = offer.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (types.has("Peixes") || /peixe|tilapia|sardinha|atum|merluza|bacalhau/.test(searchableName)) return 1;
+    if (meatProductTypes.some((type) => types.has(type))) return 0;
+    if (types.has("Bebidas alcoólicas") || types.has("Cervejas")) return 2;
+    if (types.has("Ovos")) return 4;
+    if (types.has("Higiene pessoal") || offer.department === "Higiene e cuidados") return 5;
+    if (offer.department === "Mercearia") return 3;
+    const restIndex = restDepartmentOrder.indexOf(offer.department);
+    return restIndex === -1 ? 99 : 6 + restIndex;
+  }
   const commonItems = [
     { label: "Café", icon: "☕", query: "café" }, { label: "Leite", icon: "🥛", query: "leite" },
     { label: "Arroz", icon: "🍚", query: "arroz" }, { label: "Frango", icon: "🍗", query: "frango" },
@@ -388,6 +402,7 @@ function showFeedError(): void {
   function createOfferCard(offer: Offer): CardRefs {
     const root = element("article", "offer-card");
     root.dataset.offerId = offer.id;
+    root.dataset.categoryRank = String(productCategoryRank(offer));
 
     const visual = element("div", "visual");
     const sticker = element("span", "offer-sticker", "OFERTA");
@@ -589,6 +604,7 @@ function showFeedError(): void {
       (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
       (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
     );
+    if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => productCategoryRank(a) - productCategoryRank(b));
     if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
     if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
     if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));

@@ -41,6 +41,15 @@ export const offerSources = {
     sourceUrl: "https://spassosabores.com.br/ofertas-sao-joao/",
     from: "2026-10-13",
     to: "2026-10-17"
+  },
+  corso: {
+    name: "Supermercado Corso",
+    branch: "Rua Eduardo Lopes Castilho, 495 · São João",
+    logo: "https://corso.com.br/img/logo.png",
+    source: "Folheto oficial · São João da Boa Vista",
+    sourceUrl: "https://corso.com.br/jornalfrente.php",
+    from: "2026-10-16",
+    to: "2026-10-22"
   }
 };
 

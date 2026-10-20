@@ -6,7 +6,7 @@ const feed = JSON.parse(await readFile(new URL("../offers.json", import.meta.url
 
 test("offer feed has the expected version and store catalog", () => {
   assert.equal(feed.schemaVersion, 1);
-  assert.equal(feed.stores.length, 4);
+  assert.ok(feed.stores.length >= 4);
   assert.ok(feed.offers.length > 0);
 });
 

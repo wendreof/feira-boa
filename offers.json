@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T17:09:38.097Z",
+  "updatedAt": "2026-10-20T17:41:24.370Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -1676,7 +1676,7 @@
       ],
       "price": 11.99,
       "previousPrice": 14.98,
-      "icon": "🧴",
+      "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
       "validFrom": "2026-10-19",

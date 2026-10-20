@@ -34,7 +34,7 @@
     }
   </script>
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261020-offer-cards">
+  <link rel="stylesheet" href="styles.css?v=20261020-reaction-login">
   <link rel="stylesheet" href="theme.css?v=20261018-stroke-heart">
 </head>
 <body>
@@ -108,6 +108,18 @@
     <a class="mobile-nav-link" id="mobile-nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span class="mobile-nav-icon" aria-hidden="true">♡</span><span>Favoritos</span></a>
     <a class="mobile-nav-link" id="mobile-nav-account" href="login.html" aria-label="Entrar"><span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-mobile-account-label>Entrar</span></a>
   </nav>
+
+  <dialog class="login-prompt" id="reaction-login-dialog" aria-labelledby="reaction-login-title" aria-describedby="reaction-login-description">
+    <div class="login-prompt-card">
+      <span class="login-prompt-kicker">Sua conta</span>
+      <h2 id="reaction-login-title">Entre para avaliar</h2>
+      <p id="reaction-login-description">Para curtir ou não gostar de uma oferta, entre na sua conta. Seu voto fica salvo e ajuda outros compradores.</p>
+      <div class="login-prompt-actions">
+        <button class="login-prompt-secondary" id="reaction-login-cancel" type="button">Agora não</button>
+        <button class="login-prompt-primary" id="reaction-login-continue" type="button" autofocus>Entrar ou criar conta</button>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Confira preço, estoque e condições na loja.</span><span class="footer-disclaimer">As ofertas podem mudar ou terminar antes da data informada. Confirme com a loja; a Feira Boa não garante a disponibilidade nem se responsabiliza por ofertas encerradas.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
   <script src="navigation.js"></script>

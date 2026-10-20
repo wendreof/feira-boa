@@ -32,8 +32,45 @@ interface CardRefs {
 const feedStatus = document.querySelector<HTMLParagraphElement>("#feed-status")!;
 const feedRetry = document.querySelector<HTMLButtonElement>("#feed-retry")!;
 const resultsAnnouncement = document.querySelector<HTMLParagraphElement>("#results-announcement")!;
+const reactionLoginDialog = document.querySelector<HTMLDialogElement>("#reaction-login-dialog")!;
+const reactionLoginCancel = document.querySelector<HTMLButtonElement>("#reaction-login-cancel")!;
+const reactionLoginContinue = document.querySelector<HTMLButtonElement>("#reaction-login-continue")!;
+let reactionLoginTrigger: HTMLButtonElement | null = null;
 
 feedRetry.addEventListener("click", () => window.location.reload());
+
+function loginUrlForCurrentPage(): URL {
+  const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const loginUrl = new URL("login.html", window.location.href);
+  loginUrl.searchParams.set("returnTo", returnTo);
+  return loginUrl;
+}
+
+function askForReactionLogin(trigger: HTMLButtonElement): void {
+  if (typeof reactionLoginDialog.showModal !== "function") {
+    if (window.confirm("Entre ou crie uma conta para curtir ou não gostar desta oferta.")) {
+      window.location.assign(loginUrlForCurrentPage());
+    }
+    return;
+  }
+  if (reactionLoginDialog.open) return;
+  reactionLoginTrigger = trigger;
+  reactionLoginDialog.showModal();
+}
+
+reactionLoginCancel.addEventListener("click", () => reactionLoginDialog.close());
+reactionLoginContinue.addEventListener("click", () => {
+  const loginUrl = loginUrlForCurrentPage();
+  reactionLoginDialog.close();
+  window.location.assign(loginUrl);
+});
+reactionLoginDialog.addEventListener("click", (event: MouseEvent) => {
+  if (event.target === reactionLoginDialog) reactionLoginDialog.close();
+});
+reactionLoginDialog.addEventListener("close", () => {
+  if (reactionLoginTrigger?.isConnected) reactionLoginTrigger.focus();
+  reactionLoginTrigger = null;
+});
 
 function showFeedError(): void {
   feedStatus.hidden = false;
@@ -450,11 +487,15 @@ function showFeedError(): void {
     refs.like.setAttribute("aria-pressed", String(currentReaction === "like"));
     refs.like.setAttribute("aria-label", `Gostei desta oferta, ${counts.likes} votos`);
     refs.like.title = currentUserId ? "Gostei" : "Entre para avaliar e salvar seu voto";
+    if (currentUserId) refs.like.removeAttribute("aria-haspopup");
+    else refs.like.setAttribute("aria-haspopup", "dialog");
     refs.likeCount.textContent = String(counts.likes);
     refs.dislike.classList.toggle("selected", currentReaction === "dislike");
     refs.dislike.setAttribute("aria-pressed", String(currentReaction === "dislike"));
     refs.dislike.setAttribute("aria-label", `Não gostei desta oferta, ${counts.dislikes} votos`);
     refs.dislike.title = currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto";
+    if (currentUserId) refs.dislike.removeAttribute("aria-haspopup");
+    else refs.dislike.setAttribute("aria-haspopup", "dialog");
     refs.dislikeCount.textContent = String(counts.dislikes);
   }
 
@@ -644,10 +685,7 @@ function showFeedError(): void {
     if (!offers.some((offer) => offer.id === offerId)) return;
 
     if (!currentUserId) {
-      const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-      const loginUrl = new URL("login.html", window.location.href);
-      loginUrl.searchParams.set("returnTo", returnTo);
-      window.location.assign(loginUrl);
+      askForReactionLogin(button);
       return;
     }
 

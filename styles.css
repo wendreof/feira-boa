@@ -377,3 +377,17 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .spec{display:block;line-height:1.35}
 .card-source .offer-store-logo{flex:0 0 auto;width:22px;height:18px;border-radius:4px}
 .card-source .offer-store-logo.bigbom-mark{padding:2px}
+
+.login-prompt{width:min(420px,calc(100vw - 32px));max-width:none;padding:0;border:0;border-radius:18px;background:transparent;color:var(--ink)}
+.login-prompt::backdrop{background:#122018a8;backdrop-filter:blur(3px)}
+.login-prompt-card{padding:28px 26px 24px;border:1px solid var(--line);border-radius:18px;background:var(--white);box-shadow:0 24px 70px #12201838;text-align:center}
+.login-prompt-kicker{display:block;margin-bottom:8px;color:var(--green);font:800 10px 'DM Sans',sans-serif;letter-spacing:1.2px;text-transform:uppercase}
+.login-prompt h2{margin:0;font:800 25px/1.15 'Manrope',sans-serif;letter-spacing:-.8px}
+.login-prompt p{margin:10px auto 0;max-width:320px;color:var(--muted);font-size:13px;line-height:1.55}
+.login-prompt-actions{display:flex;justify-content:center;gap:9px;margin-top:22px}
+.login-prompt button{min-height:40px;padding:8px 16px;border-radius:9px;font:750 12px 'DM Sans',sans-serif;cursor:pointer}
+.login-prompt-primary{border:1px solid var(--green);background:var(--green);color:#fff}
+.login-prompt-secondary{border:1px solid var(--line);background:var(--white);color:var(--ink)}
+.login-prompt button:hover{filter:brightness(.96)}
+.login-prompt button:focus-visible{outline:3px solid #70a38366;outline-offset:2px}
+@media(max-width:420px){.login-prompt-actions{flex-direction:column-reverse}.login-prompt button{width:100%}}

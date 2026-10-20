@@ -38,8 +38,8 @@ function getReturnPath(): string {
 function updateMode(): void {
   title.textContent = creatingAccount ? "Crie sua conta grátis." : "Bem-vindo de volta.";
   description.textContent = creatingAccount
-    ? "Salve suas ofertas favoritas e acesse em qualquer dispositivo."
-    : "Entre para manter seus produtos favoritos salvos em qualquer dispositivo.";
+    ? "Salve favoritos, avalie ofertas e acesse tudo em qualquer dispositivo."
+    : "Entre para salvar favoritos, avaliar ofertas e manter tudo em qualquer dispositivo.";
   submitButton.textContent = creatingAccount ? "Criar conta" : "Entrar";
   switchLabel.textContent = creatingAccount ? "Já tem uma conta?" : "Ainda não tem conta?";
   modeToggle.textContent = creatingAccount ? "Entrar" : "Criar conta grátis";

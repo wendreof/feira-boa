@@ -62,11 +62,13 @@ const fallbackByStore = Map.groupBy(fallbackCatalog.offers, (o) => o.store);
 
 // For each known store, use snapshot if available with offers, otherwise fallback
 const allStoreNames = new Set([...storeMap.keys(), ...[...snapshotsByStore.values()].map((s) => s.store.name)]);
+const snapshotOfferIds = new Set();
 
 for (const storeName of allStoreNames) {
   const snapshot = [...snapshotsByStore.values()].find((s) => s.store.name === storeName || s.storeId === storeName);
   if (snapshot && snapshot.offers.length > 0) {
     storeMap.set(snapshot.store.name, snapshot.store);
+    for (const offer of snapshot.offers) snapshotOfferIds.add(offer.id);
     allOffers.push(...snapshot.offers);
   } else if (fallbackByStore.has(storeName)) {
     allOffers.push(...fallbackByStore.get(storeName));
@@ -79,6 +81,10 @@ const offersUpdatedAt = latestSnapshotDate;
 
 for (const offer of offers) {
   Object.assign(offer, normalizeOfferPresentation(offer));
+  if (snapshotOfferIds.has(offer.id)) {
+    // Snapshots keep the icon captured at ingest time; refresh it so rule changes apply without re-ingesting.
+    offer.icon = assignIcon(offer.name, offer.productType, offer.department);
+  }
   if (offer.department !== "Geral" && offer.productType !== "Geral") continue;
   const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros");
   offer.category = taxonomy.department;

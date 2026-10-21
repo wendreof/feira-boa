@@ -41,10 +41,11 @@
 
   setAccountLinkState();
 
+  // No desktop o menu lateral fica sempre aberto; o botão só existe no mobile.
   document.body.classList.remove("sidebar-collapsed");
   sidebar.inert = mobileQuery.matches;
   menuButton.setAttribute("aria-expanded", String(!mobileQuery.matches));
-  menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Recolher menu");
+  menuButton.setAttribute("aria-label", "Abrir menu");
 
   const offersLink = sidebar.querySelector('[data-sidebar-link="offers"]');
   const currentUrl = new URL(window.location.href);
@@ -86,15 +87,8 @@
   }
 
   menuButton.addEventListener("click", () => {
-    if (mobileQuery.matches) {
-      setMobileMenuOpen(!document.body.classList.contains("sidebar-open"));
-      return;
-    }
-
-    document.body.classList.toggle("sidebar-collapsed");
-    const expanded = !document.body.classList.contains("sidebar-collapsed");
-    menuButton.setAttribute("aria-expanded", String(expanded));
-    menuButton.setAttribute("aria-label", expanded ? "Recolher menu" : "Expandir menu");
+    if (!mobileQuery.matches) return;
+    setMobileMenuOpen(!document.body.classList.contains("sidebar-open"));
   });
 
   closeButton?.addEventListener("click", () => setMobileMenuOpen(false));
@@ -136,6 +130,6 @@
     setMobileMenuOpen(false);
     document.body.classList.remove("sidebar-collapsed");
     menuButton.setAttribute("aria-expanded", String(!mobileQuery.matches));
-    menuButton.setAttribute("aria-label", mobileQuery.matches ? "Abrir menu" : "Recolher menu");
+    menuButton.setAttribute("aria-label", "Abrir menu");
   });
 })();

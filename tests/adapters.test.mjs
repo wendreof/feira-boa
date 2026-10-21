@@ -214,6 +214,41 @@ test("assignIcon assigns appropriate emojis to products", () => {
   assert.equal(assignIcon("Pilha Alcalina", "Casa", "Casa e limpeza"), "🔋");
 });
 
+test("assignIcon prefers the product name over the product type", () => {
+  assert.equal(assignIcon("Agua de Coco", "Sucos e bebidas", "Bebidas"), "🥥");
+  assert.equal(assignIcon("Agua Mineral", "Sucos e bebidas", "Bebidas"), "💧");
+  assert.equal(assignIcon("Salgadinho de Batata Creme de Cebola", "Doces e snacks", "Mercearia"), "🥨");
+  assert.equal(assignIcon("Ketchup Bacon com Cebola", "Mercearia", "Mercearia"), "🥫");
+  assert.equal(assignIcon("Lasanha Bolonhesa", "Congelados", "Congelados"), "🍝");
+  assert.equal(assignIcon("Hamburguer Bovino na Brasa Picanha", "Carne bovina", "Açougue e peixaria"), "🍔");
+  assert.equal(assignIcon("Shampoo Reparacao Total 5", "Higiene pessoal", "Higiene e cuidados"), "🧴");
+  assert.equal(assignIcon("Coracao de Frango Congelado", "Congelados", "Congelados"), "🍗");
+  assert.equal(assignIcon("Desinfetante Limão", "Lavanderia e limpeza", "Casa e limpeza"), "🧺");
+  assert.equal(assignIcon("Escova Dental Carvão", "Higiene pessoal", "Higiene e cuidados"), "🪥");
+  assert.equal(assignIcon("Refrigerante Zero Açúcar", "Refrigerantes", "Bebidas"), "🥤");
+  assert.equal(assignIcon("Tempero para Airfryer Frango", "Frango", "Açougue e peixaria"), "🧂");
+});
+
+test("assignIcon separates beef from pork", () => {
+  assert.equal(assignIcon("Contrafilé bovino", "Carne bovina", "Açougue e peixaria"), "🥩");
+  assert.equal(assignIcon("Costela Bovina", "Carne bovina", "Açougue e peixaria"), "🥩");
+  assert.equal(assignIcon("Ponta de alcatra bovina", "Carne bovina", "Açougue e peixaria"), "🥩");
+  assert.equal(assignIcon("Filé Mignon Suíno em Bifes", "Carnes suínas", "Açougue e peixaria"), "🐖");
+  assert.equal(assignIcon("Pernil suíno resfriado com osso", "Carnes suínas", "Açougue e peixaria"), "🐖");
+  assert.equal(assignIcon("Bisteca Suína", "Carnes suínas", "Açougue e peixaria"), "🐖");
+  assert.equal(assignIcon("Costelinha suína congelada", "Carnes suínas", "Açougue e peixaria"), "🐖");
+  assert.equal(assignIcon("Filé de Peito de Frango", "Frango", "Açougue e peixaria"), "🍗");
+});
+
+test("assignIcon gives each deli item its own icon", () => {
+  assert.equal(assignIcon("Bacon Defumado Sadia em Fatias", "Frios", "Frios e laticínios"), "🥓");
+  assert.equal(assignIcon("Linguiça Calabresa Sadia Defumada Cozida", "Frios", "Frios e laticínios"), "🌭");
+  assert.equal(assignIcon("Salsicha Sadia Hot Dog", "Frios", "Frios e laticínios"), "🫔");
+  assert.equal(assignIcon("Mortadela Defumada Sadia", "Frios", "Frios e laticínios"), "🍖");
+  assert.equal(assignIcon("Presunto Sadia Cozido Fatiado", "Frios", "Frios e laticínios"), "🍖");
+  assert.equal(assignIcon("Ketchup Bacon com Cebola Caramelizada", "Mercearia", "Mercearia"), "🥫");
+});
+
 test("normalizeOfferPresentation separates brands from product names", () => {
   const chicken = normalizeOfferPresentation({
     name: "COXA C/ SOBRECOXA DE FRANGO AVELÍCIA",

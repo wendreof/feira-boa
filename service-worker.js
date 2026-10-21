@@ -1,4 +1,5 @@
 const CACHE_NAME = "feira-boa-shell-v7";
+const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 const VAPID_PUBLIC_KEY = "BLFV8pgkW21YRHFS_q-8tm5X6YZBghDNTrxUyvOEhJYSc9QmVXjbEStxd_R-7ndf5B4NrUcIdpcvTtS-OAfreyg";
 const SHELL = [
   "/",
@@ -21,7 +22,13 @@ const NETWORK_FIRST = ["/offers.json", "/source-status.js", "/build-info.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
+    if (IS_LOCAL) {
+      // Em desenvolvimento não guardamos nada: o preview precisa refletir o build atual na hora.
+      await self.registration.unregister();
+      for (const key of await caches.keys()) await caches.delete(key);
+      return;
+    }
+    const cache = await caches.open(await shellCacheName());
     await Promise.allSettled(SHELL.map((url) => cache.add(url)));
     await self.skipWaiting();
   })());
@@ -29,11 +36,30 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
+    if (IS_LOCAL) {
+      for (const key of await caches.keys()) await caches.delete(key);
+      await self.registration.unregister();
+      return;
+    }
+    const current = await shellCacheName();
     const keys = await caches.keys();
-    await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await Promise.all(keys.filter((key) => key !== current).map((key) => caches.delete(key)));
     await self.clients.claim();
   })());
 });
+
+/** O shell é versionado pelo build para que um deploy novo invalide o cache antigo. */
+async function shellCacheName() {
+  try {
+    const response = await fetch("/build-info.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Build info unavailable");
+    const build = await response.json();
+    const stamp = build.commit && build.commit !== "local" ? build.commit : String(build.builtAt ?? "").slice(0, 10);
+    return `${CACHE_NAME}-${stamp}`;
+  } catch {
+    return CACHE_NAME;
+  }
+}
 
 async function networkFirst(request, fallbackUrl) {
   const cache = await caches.open(CACHE_NAME);
@@ -59,6 +85,7 @@ async function staleWhileRevalidate(request) {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
+  if (IS_LOCAL) return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 

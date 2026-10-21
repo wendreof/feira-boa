@@ -2,11 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   ALL_SECTORS_LABEL,
-  HIGHLIGHT_TABS,
   TAXONOMY_GROUPS,
-  applyHighlightTab,
   categoryOrder,
-  isOwnBrand,
+  discountRatio,
   resolveCategory,
 } from "../catalog-taxonomy.mjs";
 
@@ -79,22 +77,8 @@ test("categoryOrder follows the sector order", () => {
   assert.ok(mercearia[0] < bebidas[0]);
 });
 
-test("highlight tabs filter the offers", () => {
-  const offers = [
-    { id: "a", name: "Oferta com desconto", price: 8, previousPrice: 10, validFrom: "2026-10-20" },
-    { id: "b", name: "Combo especial", price: 20, previousPrice: null, validFrom: "2026-10-19" },
-    { id: "c", name: "Oferta nova", price: 5, previousPrice: null, validFrom: "2026-10-20" },
-  ];
-  assert.equal(applyHighlightTab(offers, "all", { today: "2026-10-20" }).length, 3);
-  assert.deepEqual(applyHighlightTab(offers, "promos", { today: "2026-10-20" }).map((offer) => offer.id), ["a"]);
-  assert.deepEqual(applyHighlightTab(offers, "deals-today", { today: "2026-10-20" }).map((offer) => offer.id), ["a", "c"]);
-  assert.deepEqual(applyHighlightTab(offers, "combos", { today: "2026-10-20" }).map((offer) => offer.id), ["b"]);
-  assert.deepEqual(applyHighlightTab(offers, "buy-again", { today: "2026-10-20", viewedIds: ["b"] }).map((offer) => offer.id), ["b"]);
-  assert.ok(HIGHLIGHT_TABS.some((tab) => tab.id === "own-brand"));
-});
-
-test("own brand detection matches the store brand", () => {
-  assert.equal(isOwnBrand({ brand: "Corso Premium", store: "Supermercado Corso" }), true);
-  assert.equal(isOwnBrand({ brand: "Corso Premium", store: "Pague Menos" }), false);
-  assert.equal(isOwnBrand({ brand: "", store: "Pague Menos" }), false);
+test("discountRatio returns the percentage saved on each offer", () => {
+  assert.equal(discountRatio({ price: 8, previousPrice: 10 }), 0.2);
+  assert.equal(discountRatio({ price: 10, previousPrice: null }), 0);
+  assert.equal(discountRatio({ price: 10, previousPrice: 10 }), 0);
 });

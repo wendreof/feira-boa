@@ -6,11 +6,10 @@ import { showTransientStatus } from "./status-toast.js";
 import { applySourceFreshness } from "./source-freshness";
 import {
   ALL_SECTORS_LABEL,
-  HIGHLIGHT_TABS,
   TAXONOMY_GROUPS,
-  applyHighlightTab,
   categoryLabel,
   categoryOrder,
+  discountRatio,
   resolveCategory,
 } from "./catalog-taxonomy.mjs";
 
@@ -23,9 +22,12 @@ interface CardRefs {
   root: HTMLElement;
   art: HTMLElement;
   name: HTMLElement;
+  brand: HTMLElement;
   spec: HTMLElement;
+  info: HTMLElement;
   price: HTMLElement;
   oldPrice: HTMLElement;
+  discount: HTMLElement;
   valid: HTMLElement;
   note: HTMLElement;
   branch: HTMLElement;
@@ -33,9 +35,7 @@ interface CardRefs {
   share: HTMLButtonElement;
   favoriteButtons: HTMLButtonElement[];
   like: HTMLButtonElement;
-  dislike: HTMLButtonElement;
   likeCount: HTMLElement;
-  dislikeCount: HTMLElement;
 }
 
 const feedStatus = document.querySelector<HTMLParagraphElement>("#feed-status")!;
@@ -57,7 +57,7 @@ function loginUrlForCurrentPage(): URL {
 
 function askForReactionLogin(trigger: HTMLButtonElement): void {
   if (typeof reactionLoginDialog.showModal !== "function") {
-    if (window.confirm("Entre ou crie uma conta para curtir ou não gostar desta oferta.")) {
+    if (window.confirm("Entre ou crie uma conta para curtir esta oferta.")) {
       window.location.assign(loginUrlForCurrentPage());
     }
     return;
@@ -131,7 +131,6 @@ function showFeedError(): void {
   const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
   const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
   const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
-  const highlightTabs = document.querySelector<HTMLDivElement>("#highlight-tabs")!;
 
   const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
   const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
@@ -150,18 +149,16 @@ function showFeedError(): void {
     const [groupIndex, subIndex] = categoryOrder(offerCategory(offer));
     return groupIndex * 100 + subIndex;
   }
-  const commonItems = [
-    { label: "Café", icon: "☕", query: "café" }, { label: "Leite", icon: "🥛", query: "leite" },
-    { label: "Arroz", icon: "🍚", query: "arroz" }, { label: "Frango", icon: "🍗", query: "frango" },
-    { label: "Carne", icon: "🥩", query: "carne" }, { label: "Tomate", icon: "🍅", query: "tomate" },
-    { label: "Cerveja", icon: "🍺", query: "cerveja" }, { label: "Sabão", icon: "🧺", query: "sabão" },
-    { label: "Papel higiênico", icon: "🧻", query: "papel higiênico" }, { label: "Iogurte", icon: "🥣", query: "iogurte" },
-  ];
+  const CATEGORY_ICONS: Record<string, string> = {
+    frescos: "🥬", mercearia: "🥫", bebidas: "🥤", congelados: "🧊", saudaveis: "🥗", limpeza: "🧺",
+    higiene: "🧴", infantil: "🍼", pet: "🐾", casa: "🏠", churrasco: "🔥", vestuario: "👕", outros: "🏷️",
+  };
+  const CARNES_SUBCATEGORIES = new Set(["Açougue e carnes frescas", "Aves", "Peixaria e frutos do mar", "Frios e embutidos"]);
+  const RANDOM_CATEGORY_ORDER = [...TAXONOMY_GROUPS].sort(() => Math.random() - 0.5).map((group) => group.id);
 
   let activeDepartment = "";
   let activeStore = "Todas as lojas";
   let activeProductType = "";
-  let activeHighlightTab = "all";
   let favoriteIds = readGuestFavorites();
   let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
   const mobileViewMedia = window.matchMedia("(max-width: 760px)");
@@ -245,25 +242,6 @@ function showFeedError(): void {
       localStorage.setItem("feira-boa:favorites:v1", JSON.stringify([...favoriteIds]));
     } catch {
       setAccountStatus("Não foi possível salvar favoritos neste navegador.");
-    }
-  }
-
-  function readViewedOfferIds(): string[] {
-    try {
-      const stored = JSON.parse(localStorage.getItem("feira-boa:viewed:v1") ?? "[]");
-      return Array.isArray(stored) ? stored.filter((id): id is string => typeof id === "string") : [];
-    } catch {
-      return [];
-    }
-  }
-
-  function recordViewedOffer(offerId: string): void {
-    try {
-      const viewed = readViewedOfferIds().filter((id) => id !== offerId);
-      viewed.unshift(offerId);
-      localStorage.setItem("feira-boa:viewed:v1", JSON.stringify(viewed.slice(0, 30)));
-    } catch {
-      // ignore storage failures
     }
   }
 
@@ -359,7 +337,7 @@ function showFeedError(): void {
     if (!Number.isFinite(date.getTime())) return "Atualização das ofertas indisponível";
     const day = feedDateFormatter.format(date).replace(/\./g, "");
     const time = feedTimeFormatter.format(date);
-    return `Ofertas atualizadas em ${day}, às ${time}`;
+    return `Catálogo atualizado em ${day}, ${time}`;
   }
 
   function normalizeSearch(value: string): string {
@@ -407,6 +385,33 @@ function showFeedError(): void {
     return svg;
   }
 
+  function shareIcon(): SVGElement {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    for (const [cx, cy] of [["18", "5"], ["6", "12"], ["18", "19"]]) {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", cx);
+      circle.setAttribute("cy", cy);
+      circle.setAttribute("r", "2.8");
+      circle.setAttribute("fill", "currentColor");
+      svg.append(circle);
+    }
+    for (const [x1, y1, x2, y2] of [["8.1", "10.8", "15.6", "6.4"], ["8.1", "13.2", "15.6", "17.6"]]) {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+      line.setAttribute("stroke", "currentColor");
+      line.setAttribute("stroke-width", "1.8");
+      line.setAttribute("stroke-linecap", "round");
+      svg.append(line);
+    }
+    return svg;
+  }
+
   function favoriteButton(offer: Offer, className: string): HTMLButtonElement {
     const button = element("button", className);
     button.type = "button";
@@ -415,12 +420,12 @@ function showFeedError(): void {
     return button;
   }
 
-  function reactionButton(kind: "like" | "dislike", offer: Offer): { button: HTMLButtonElement; count: HTMLElement } {
+  function reactionButton(offer: Offer): { button: HTMLButtonElement; count: HTMLElement } {
     const button = element("button", "offer-reaction-button");
     button.type = "button";
-    button.dataset.reaction = kind;
+    button.dataset.reaction = "like";
     button.dataset.offerId = offer.id;
-    const icon = element("span", "", kind === "like" ? "👍" : "👎");
+    const icon = element("span", "", "👍");
     icon.setAttribute("aria-hidden", "true");
     const count = element("span", "", "0");
     button.append(icon, count);
@@ -441,13 +446,20 @@ function showFeedError(): void {
     visual.append(sticker, art, favoriteArt);
 
     const body = element("div", "card-body");
+    const titleRow = element("div", "card-title");
     const name = element("h3");
+    titleRow.append(name);
+    const meta = element("div", "card-meta");
+    const brand = element("span", "card-brand");
     const spec = element("span", "spec");
+    meta.append(brand, spec);
+    const info = element("div", "card-info");
     const priceRow = element("div", "price-row");
-    const priceBlock = element("div");
+    const priceBlock = element("div", "price-block");
     const price = element("span", "price");
     const oldPrice = element("span", "old-price");
-    priceBlock.append(price, oldPrice);
+    const discount = element("span", "discount-badge");
+    priceBlock.append(price, discount, oldPrice);
     const valid = element("span", "valid-until", "Válido");
     const validStrong = element("strong");
     valid.append(validStrong);
@@ -457,48 +469,29 @@ function showFeedError(): void {
     reactionGroup.setAttribute("role", "group");
     reactionGroup.setAttribute("aria-label", "Esta oferta vale a pena?");
     const favoriteReaction = favoriteButton(offer, "favorite-toggle favorite-toggle-reaction");
-    const like = reactionButton("like", offer);
-    const dislike = reactionButton("dislike", offer);
-    reactionGroup.append(favoriteReaction, like.button, dislike.button);
+    const like = reactionButton(offer);
+    reactionGroup.append(favoriteReaction, like.button);
 
     const note = element("p", "offer-note");
     const source = element("div", "card-source");
-    const storeLogo = element("span", `offer-store-logo${offer.store === "Big Bom" ? " bigbom-mark" : ""}`);
-    const initials = offer.store.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
-    const fallback = element("span", "store-logo-fallback", initials);
-    fallback.setAttribute("aria-hidden", "true");
-    storeLogo.append(fallback);
-    if (/^https:\/\//.test(offer.storeLogo)) {
-      const logo = document.createElement("img");
-      logo.alt = "";
-      logo.loading = "lazy";
-      logo.decoding = "async";
-      logo.src = offer.storeLogo;
-      logo.addEventListener("load", () => storeLogo.classList.add("has-logo"), { once: true });
-      logo.addEventListener("error", () => logo.remove(), { once: true });
-      storeLogo.append(logo);
-    }
     const branch = element("span");
     const sourceLink = element("a");
     sourceLink.target = "_blank";
     sourceLink.rel = "noopener";
-    sourceLink.dataset.sourceId = offer.id;
     sourceLink.textContent = "ver oferta";
     const share = element("button", "share-offer");
     share.type = "button";
     share.dataset.shareId = offer.id;
-    const shareIcon = element("span", "", "↗");
-    shareIcon.setAttribute("aria-hidden", "true");
-    share.append(shareIcon, document.createTextNode(" Compartilhar"));
-    source.append(storeLogo, branch, document.createTextNode(" · "), sourceLink, share);
+    share.append(shareIcon());
+    source.append(branch, document.createTextNode(" · "), sourceLink, share);
 
-    body.append(name, spec, priceRow, reactionGroup, note, source);
+    body.append(titleRow, meta, info, priceRow, reactionGroup, note, source);
     root.append(visual, body);
 
     const refs: CardRefs = {
-      root, art, name, spec, price, oldPrice, valid: validStrong, note, branch,
+      root, art, name, brand, spec, info, price, oldPrice, discount, valid: validStrong, note, branch,
       sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
-      like: like.button, dislike: dislike.button, likeCount: like.count, dislikeCount: dislike.count,
+      like: like.button, likeCount: like.count,
     };
     updateOfferCard(refs, offer);
     return refs;
@@ -508,16 +501,34 @@ function showFeedError(): void {
     refs.art.textContent = offer.icon;
     refs.art.setAttribute("aria-label", `Ilustração de ${offer.name}`);
     refs.name.textContent = offer.name;
-    refs.spec.textContent = [offer.brand, offer.detail].filter(Boolean).join(" · ");
+    const category = offerCategory(offer);
+    refs.info.textContent = [category.subcategory, offer.store].filter(Boolean).join(" · ");
+    refs.brand.textContent = offer.brand;
+    refs.brand.hidden = !offer.brand;
+    refs.spec.textContent = offer.detail;
+    refs.spec.hidden = !offer.detail;
     refs.price.textContent = money(offer.price);
+    const discountPercent = offer.previousPrice && offer.previousPrice > offer.price
+      ? Math.round((1 - offer.price / offer.previousPrice) * 100)
+      : 0;
     refs.oldPrice.textContent = offer.previousPrice ? money(offer.previousPrice) : "";
-    refs.oldPrice.hidden = !offer.previousPrice;
+    refs.oldPrice.hidden = true;
+    refs.discount.textContent = discountPercent > 0 ? `-${discountPercent}%` : "";
+    refs.discount.hidden = discountPercent <= 0;
+    if (discountPercent > 0) {
+      refs.discount.title = `De ${money(offer.previousPrice!)} por ${money(offer.price)}`;
+      refs.discount.setAttribute("aria-label", `Desconto de ${discountPercent} por cento, de ${money(offer.previousPrice!)} por ${money(offer.price)}`);
+    } else {
+      refs.discount.removeAttribute("title");
+      refs.discount.removeAttribute("aria-label");
+    }
     refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
     refs.note.textContent = offer.note;
     refs.note.hidden = !offer.note;
     refs.branch.textContent = offer.branch;
     refs.sourceLink.href = /^https:\/\//.test(offer.sourceUrl) ? offer.sourceUrl : "#";
     refs.share.setAttribute("aria-label", `Compartilhar ${offer.name}`);
+    refs.share.title = `Compartilhar ${offer.name}`;
 
     const favoriteLabel = favoriteIds.has(offer.id) ? "Remover dos favoritos" : "Adicionar aos favoritos";
     for (const button of refs.favoriteButtons) {
@@ -534,19 +545,22 @@ function showFeedError(): void {
     if (currentUserId) refs.like.removeAttribute("aria-haspopup");
     else refs.like.setAttribute("aria-haspopup", "dialog");
     refs.likeCount.textContent = String(counts.likes);
-    refs.dislike.classList.toggle("selected", currentReaction === "dislike");
-    refs.dislike.setAttribute("aria-pressed", String(currentReaction === "dislike"));
-    refs.dislike.setAttribute("aria-label", `Não gostei desta oferta, ${counts.dislikes} votos`);
-    refs.dislike.title = currentUserId ? "Não gostei" : "Entre para avaliar e salvar seu voto";
-    if (currentUserId) refs.dislike.removeAttribute("aria-haspopup");
-    else refs.dislike.setAttribute("aria-haspopup", "dialog");
-    refs.dislikeCount.textContent = String(counts.dislikes);
   }
 
   function renderStoreFilters(): void {
     const today = todayInSaoPaulo();
-    storeFilters.replaceChildren(...storeNames.map((store) => {
-      const count = offers.filter((offer) => isActive(offer, today) && (store === "Todas as lojas" || offer.store === store)).length;
+    const counts = new Map<string, number>();
+    for (const offer of offers) {
+      if (!isActive(offer, today)) continue;
+      counts.set(offer.store, (counts.get(offer.store) ?? 0) + 1);
+    }
+    const ordered = [...storeNames].sort((a, b) => {
+      if (a === "Todas as lojas") return -1;
+      if (b === "Todas as lojas") return 1;
+      return (counts.get(b) ?? 0) - (counts.get(a) ?? 0);
+    });
+    storeFilters.replaceChildren(...ordered.map((store) => {
+      const count = counts.get(store) ?? 0;
       const disabled = store !== "Todas as lojas" && count === 0;
       const button = element("button", `filter${store === activeStore ? " active" : ""}`, `${store} · ${count}`);
       button.type = "button";
@@ -558,32 +572,57 @@ function showFeedError(): void {
     }));
   }
 
-  function renderHighlightTabs(): void {
-    const today = todayInSaoPaulo();
-    const base = offers.filter((offer) => isActive(offer, today) && (activeStore === "Todas as lojas" || offer.store === activeStore));
-    highlightTabs.replaceChildren(...HIGHLIGHT_TABS.map((tab) => {
-      const count = tab.id === "all" ? base.length : applyHighlightTab(base, tab.id, { today, viewedIds: readViewedOfferIds(), likes: likesByOffer() }).length;
-      const button = element("button", `highlight-tab${tab.id === activeHighlightTab ? " active" : ""}`, `${tab.label}${count ? ` · ${count}` : ""}`);
-      button.type = "button";
-      button.dataset.highlightTab = tab.id;
-      button.setAttribute("aria-pressed", String(tab.id === activeHighlightTab));
-      button.disabled = count === 0 && tab.id !== "all";
-      if (button.disabled) button.title = "Nenhuma oferta nesta seleção";
-      return button;
-    }));
-  }
-
   function renderPopularItems(): void {
-    popularItems.replaceChildren(...commonItems.map(({ label, icon, query }) => {
-      const button = element("button", "popular-item");
+    const today = todayInSaoPaulo();
+    const counts = new Map<string, number>();
+    for (const offer of offers) {
+      if (!isActive(offer, today)) continue;
+      const category = offerCategory(offer);
+      const key = category.subcategory;
+      counts.set(category.groupId, (counts.get(category.groupId) ?? 0) + 1);
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    const quickSorts = [
+      { id: "top-rated", label: "Mais curtidos", icon: "👍" },
+      { id: "discount", label: "Maiores descontos", icon: "🏷️" },
+    ];
+    const featured: Array<{ id: string; label: string; icon: string }> = [
+      { id: "carnes", label: "Carnes", icon: "🥩" },
+      { id: "bebidas", label: "Bebidas", icon: "🥤" },
+    ];
+    const rest = RANDOM_CATEGORY_ORDER
+      .filter((groupId) => groupId !== "bebidas" && groupId !== "outros" && (counts.get(groupId) ?? 0) > 0)
+      .map((groupId) => {
+        const group = TAXONOMY_GROUPS.find((item) => item.id === groupId)!;
+        return { id: group.id, label: group.label, icon: CATEGORY_ICONS[group.id] ?? "🛒" };
+      });
+    popularItems.replaceChildren(...quickSorts.map(({ id, label, icon }) => {
+      const button = element("button", `popular-item quick-sort${sortSelect.value === id ? " active" : ""}`);
       button.type = "button";
-      button.dataset.query = query;
-      button.setAttribute("aria-label", `Buscar ${label}`);
+      button.dataset.quickSort = id;
+      button.setAttribute("aria-label", `Mostrar somente ${label.toLowerCase()}`);
+      button.setAttribute("aria-pressed", String(sortSelect.value === id));
+      const iconNode = element("span", "", icon);
+      iconNode.setAttribute("aria-hidden", "true");
+      button.append(iconNode, element("small", "", label));
+      return button;
+    }), ...[...featured, ...rest].map(({ id, label, icon }) => {
+      const button = element("button", `popular-item${activeDepartment === id ? " active" : ""}`);
+      button.type = "button";
+      button.dataset.group = id;
+      button.setAttribute("aria-label", `Ver ${label}`);
+      button.setAttribute("aria-pressed", String(activeDepartment === id));
       const iconNode = element("span", "", icon);
       iconNode.setAttribute("aria-hidden", "true");
       button.append(iconNode, element("small", "", label));
       return button;
     }));
+  }
+
+  function matchesSector(category: { groupId: string; subcategory: string }): boolean {
+    if (!activeDepartment) return true;
+    if (activeDepartment === "carnes") return CARNES_SUBCATEGORIES.has(category.subcategory);
+    return category.groupId === activeDepartment;
   }
 
   function updateProductTypeOptions(): void {
@@ -593,7 +632,7 @@ function showFeedError(): void {
       if (!isActive(offer, today)) continue;
       if (activeStore !== "Todas as lojas" && offer.store !== activeStore) continue;
       const category = offerCategory(offer);
-      if (activeDepartment && category.groupId !== activeDepartment) continue;
+      if (!matchesSector(category)) continue;
       if (!options.has(category.subcategory)) options.set(category.subcategory, offerOrder(offer));
     }
     const types = [...options.entries()].sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0], "pt-BR")).map(([type]) => type);
@@ -647,27 +686,28 @@ function showFeedError(): void {
       : null;
     const today = todayInSaoPaulo();
     const { min, max } = getPriceBounds();
-    const activeCount = Number(activeStore !== "Todas as lojas") + Number(Boolean(activeDepartment)) + Number(Boolean(activeProductType)) + Number(activeHighlightTab !== "all") + Number(min !== null || max !== null);
+    const activeCount = Number(activeStore !== "Todas as lojas") + Number(Boolean(activeDepartment)) + Number(Boolean(activeProductType)) + Number(min !== null || max !== null);
     activeFilterCount.hidden = activeCount === 0;
     activeFilterCount.textContent = String(activeCount);
     const priceRangeReversed = min !== null && max !== null && min > max;
+    const likes = likesByOffer();
     let matching = priceRangeReversed ? [] : offers.filter((offer) => {
       const category = offerCategory(offer);
+      const matchesSectorFilter = matchesSector(category);
+      const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
+      const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
       return (sharedOfferId ? offer.id === sharedOfferId : isActive(offer, today)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
-      (sharedOfferId || !activeDepartment || category.groupId === activeDepartment) &&
+      (sharedOfferId || matchesSectorFilter) &&
       (sharedOfferId || !activeProductType || category.subcategory === activeProductType) &&
       (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
+      (sharedOfferId || matchesReaction) && (sharedOfferId || matchesDiscount) &&
       (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value));
     });
-    if (!sharedOfferId && activeHighlightTab !== "all") {
-      matching = applyHighlightTab(matching, activeHighlightTab, { today, viewedIds: readViewedOfferIds(), likes: likesByOffer() });
-    }
     if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => offerOrder(a) - offerOrder(b));
     if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
     if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
-    if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));
-    if (activeHighlightTab === "top-rated" && sortSelect.value === "recommended") {
-      const likes = likesByOffer();
+    if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => discountRatio(b) - discountRatio(a));
+    if (sortSelect.value === "top-rated") {
       matching = [...matching].sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0));
     }
 
@@ -722,13 +762,6 @@ function showFeedError(): void {
     url.searchParams.set("offer", offerId);
     return url.toString();
   }
-
-  grid.addEventListener("click", (event: MouseEvent) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const link = target.closest<HTMLAnchorElement>("[data-source-id]");
-    if (link?.dataset.sourceId) recordViewedOffer(link.dataset.sourceId);
-  });
 
   grid.addEventListener("click", async (event: MouseEvent) => {
     const target = event.target;
@@ -836,18 +869,33 @@ function showFeedError(): void {
     activeStore = button.dataset.store ?? "Todas as lojas";
     updateFilterStates(storeFilters, "store", activeStore);
     updateProductTypeOptions();
-    renderHighlightTabs();
+    renderPopularItems();
     renderOffers();
   });
 
   popularItems.addEventListener("click", (event: MouseEvent) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    const button = target.closest<HTMLButtonElement>("[data-query]");
-    if (!button) return;
-    input.value = button.dataset.query ?? "";
+    const quickSort = target.closest<HTMLButtonElement>("[data-quick-sort]");
+    if (quickSort) {
+      sortSelect.value = quickSort.dataset.quickSort ?? "recommended";
+      activeDepartment = "";
+      activeProductType = "";
+      updateFilterStates(filters, "department", activeDepartment);
+      updateProductTypeOptions();
+      renderPopularItems();
+      renderOffers();
+      return;
+    }
+    const group = target.closest<HTMLButtonElement>("[data-group]");
+    if (!group) return;
+    activeDepartment = group.dataset.group ?? "";
+    activeProductType = "";
+    updateFilterStates(filters, "department", activeDepartment);
+    updateProductTypeOptions();
+    renderPopularItems();
     renderOffers();
-    input.focus();
+    resultsTitle.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   filters.addEventListener("click", (event: MouseEvent) => {
@@ -862,16 +910,6 @@ function showFeedError(): void {
     renderOffers();
   });
 
-  highlightTabs.addEventListener("click", (event: MouseEvent) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const button = target.closest<HTMLButtonElement>("[data-highlight-tab]");
-    if (!button || button.disabled) return;
-    activeHighlightTab = button.dataset.highlightTab ?? "all";
-    renderHighlightTabs();
-    renderOffers();
-  });
-
   let renderTimer: number | undefined;
   function scheduleRender(): void {
     window.clearTimeout(renderTimer);
@@ -882,14 +920,14 @@ function showFeedError(): void {
   priceMin.addEventListener("input", scheduleRender);
   priceMax.addEventListener("input", scheduleRender);
   productTypeSelect.addEventListener("change", () => { activeProductType = productTypeSelect.value; renderOffers(); });
-  sortSelect.addEventListener("change", renderOffers);
+  sortSelect.addEventListener("change", () => { renderPopularItems(); renderOffers(); });
   resetButton.addEventListener("click", () => {
-    activeStore = "Todas as lojas"; activeDepartment = ""; activeProductType = ""; activeHighlightTab = "all";
+    activeStore = "Todas as lojas"; activeDepartment = ""; activeProductType = "";
     input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
     updateFilterStates(storeFilters, "store", activeStore);
     updateFilterStates(filters, "department", activeDepartment);
     updateProductTypeOptions();
-    renderHighlightTabs();
+    renderPopularItems();
     renderOffers();
     input.focus();
   });
@@ -941,23 +979,16 @@ function showFeedError(): void {
   renderStoreFilters();
   renderPopularItems();
   renderFilters();
-  renderHighlightTabs();
   renderOffers();
-  const sourceAlerts = applySourceFreshness();
+  applySourceFreshness();
   updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
-  if (sourceAlerts.length > 0) {
-    const sourceWord = sourceAlerts.length === 1 ? "fonte" : "fontes";
-    updatedLabel.textContent += ` · ${sourceAlerts.length} ${sourceWord} aguardando conferência`;
-  }
-  updatedLabel.title = sourceAlerts.length
-    ? "Há mudanças detectadas nas fontes oficiais que ainda aguardam conferência"
-    : "Data da última atualização do catálogo de ofertas";
+  updatedLabel.title = "Data da última atualização do catálogo de ofertas";
 
   void (async () => {
     try {
       const reactions = await loadReactionsApi();
       reactionCounts = await reactions.loadOfferReactionCounts();
-      renderHighlightTabs();
+      renderPopularItems();
       renderOffers();
     } catch (error) {
       console.warn("Could not load offer reaction totals.", error);

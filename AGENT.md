@@ -26,6 +26,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `scripts/build-offer-feed.mjs` prefers snapshots, applies brand/note presentation normalization plus legacy taxonomy, and generates `offers.json` plus build metadata.
 - A full feed currently has about 1,288 offers; Pague Menos accounts for 1,015 of them, so preserve keyed card reuse and test large-feed rendering after data changes.
 - Card presentation is name-first; `marca · detalhe` is secondary, and the store logo belongs to the source row.
+- `assignIcon` in `scripts/adapters/common.mjs` picks the emoji by product name first and only then by product type; `scripts/build-offer-feed.mjs` refreshes the icon of every snapshot offer at build time, so icon rule changes apply without re-ingesting.
 - The generated feed is the shared source for the website and the scheduled monitoring jobs.
 - New prices publish immediately; `needs_review` gates alert eligibility only.
 

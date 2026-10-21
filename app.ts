@@ -4,6 +4,15 @@ import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { resolveDefaultViewMode } from "./view-mode.js";
 import { showTransientStatus } from "./status-toast.js";
 import { applySourceFreshness } from "./source-freshness";
+import {
+  ALL_SECTORS_LABEL,
+  HIGHLIGHT_TABS,
+  TAXONOMY_GROUPS,
+  applyHighlightTab,
+  categoryLabel,
+  categoryOrder,
+  resolveCategory,
+} from "./catalog-taxonomy.mjs";
 
 type AccountApi = typeof import("./account");
 type ReactionsApi = typeof import("./offer-reactions");
@@ -89,7 +98,7 @@ function showFeedError(): void {
 
   const offers = feed.offers;
   const storeNames = ["Todas as lojas", ...new Set(offers.map((offer) => offer.store))];
-  const departments = ["Todos os setores", ...new Set(offers.map((offer) => offer.department))];
+  const categories = new Map(offers.map((offer) => [offer.id, resolveCategory(offer)]));
   const grid = document.querySelector<HTMLDivElement>("#offer-grid")!;
   const filters = document.querySelector<HTMLDivElement>("#filters")!;
   const storeFilters = document.querySelector<HTMLDivElement>("#store-filters")!;
@@ -122,6 +131,7 @@ function showFeedError(): void {
   const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
   const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
   const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
+  const highlightTabs = document.querySelector<HTMLDivElement>("#highlight-tabs")!;
 
   const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
   const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
@@ -133,19 +143,12 @@ function showFeedError(): void {
   });
 
   const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
-  const meatProductTypes = ["Frango", "Carne bovina", "Carnes suínas e embutidos"];
-  const restDepartmentOrder = ["Bebidas", "Frios e laticínios", "Hortifruti", "Congelados", "Casa e limpeza", "Pet", "Vestuário e calçados"];
-  function productCategoryRank(offer: Offer): number {
-    const types = new Set(offer.productTypes);
-    const searchableName = offer.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    if (types.has("Peixes") || /peixe|tilapia|sardinha|atum|merluza|bacalhau/.test(searchableName)) return 1;
-    if (meatProductTypes.some((type) => types.has(type))) return 0;
-    if (types.has("Bebidas alcoólicas") || types.has("Cervejas")) return 2;
-    if (types.has("Ovos")) return 4;
-    if (types.has("Higiene pessoal") || offer.department === "Higiene e cuidados") return 5;
-    if (offer.department === "Mercearia") return 3;
-    const restIndex = restDepartmentOrder.indexOf(offer.department);
-    return restIndex === -1 ? 99 : 6 + restIndex;
+  function offerCategory(offer: Offer): { groupId: string; subcategory: string } {
+    return categories.get(offer.id) ?? { groupId: "outros", subcategory: "Outros" };
+  }
+  function offerOrder(offer: Offer): number {
+    const [groupIndex, subIndex] = categoryOrder(offerCategory(offer));
+    return groupIndex * 100 + subIndex;
   }
   const commonItems = [
     { label: "Café", icon: "☕", query: "café" }, { label: "Leite", icon: "🥛", query: "leite" },
@@ -155,9 +158,10 @@ function showFeedError(): void {
     { label: "Papel higiênico", icon: "🧻", query: "papel higiênico" }, { label: "Iogurte", icon: "🥣", query: "iogurte" },
   ];
 
-  let activeDepartment = "Todos os setores";
+  let activeDepartment = "";
   let activeStore = "Todas as lojas";
   let activeProductType = "";
+  let activeHighlightTab = "all";
   let favoriteIds = readGuestFavorites();
   let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
   const mobileViewMedia = window.matchMedia("(max-width: 760px)");
@@ -242,6 +246,29 @@ function showFeedError(): void {
     } catch {
       setAccountStatus("Não foi possível salvar favoritos neste navegador.");
     }
+  }
+
+  function readViewedOfferIds(): string[] {
+    try {
+      const stored = JSON.parse(localStorage.getItem("feira-boa:viewed:v1") ?? "[]");
+      return Array.isArray(stored) ? stored.filter((id): id is string => typeof id === "string") : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function recordViewedOffer(offerId: string): void {
+    try {
+      const viewed = readViewedOfferIds().filter((id) => id !== offerId);
+      viewed.unshift(offerId);
+      localStorage.setItem("feira-boa:viewed:v1", JSON.stringify(viewed.slice(0, 30)));
+    } catch {
+      // ignore storage failures
+    }
+  }
+
+  function likesByOffer(): Map<string, number> {
+    return new Map([...reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
   }
 
   async function loadAccountApi(): Promise<AccountApi> {
@@ -353,7 +380,8 @@ function showFeedError(): void {
   function matchesSearch(offer: Offer, query: string): boolean {
     const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
     if (!terms.length) return true;
-    const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, offer.store, offer.branch, offer.note].join(" "));
+    const category = offerCategory(offer);
+    const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note].join(" "));
     const words = searchable.split(" ");
     return terms.every((term) => {
       const variants = [term, ...(searchEquivalents[term] || [])];
@@ -402,7 +430,7 @@ function showFeedError(): void {
   function createOfferCard(offer: Offer): CardRefs {
     const root = element("article", "offer-card");
     root.dataset.offerId = offer.id;
-    root.dataset.categoryRank = String(productCategoryRank(offer));
+    root.dataset.categoryRank = String(offerOrder(offer));
 
     const visual = element("div", "visual");
     const sticker = element("span", "offer-sticker", "OFERTA");
@@ -454,6 +482,7 @@ function showFeedError(): void {
     const sourceLink = element("a");
     sourceLink.target = "_blank";
     sourceLink.rel = "noopener";
+    sourceLink.dataset.sourceId = offer.id;
     sourceLink.textContent = "ver oferta";
     const share = element("button", "share-offer");
     share.type = "button";
@@ -529,6 +558,21 @@ function showFeedError(): void {
     }));
   }
 
+  function renderHighlightTabs(): void {
+    const today = todayInSaoPaulo();
+    const base = offers.filter((offer) => isActive(offer, today) && (activeStore === "Todas as lojas" || offer.store === activeStore));
+    highlightTabs.replaceChildren(...HIGHLIGHT_TABS.map((tab) => {
+      const count = tab.id === "all" ? base.length : applyHighlightTab(base, tab.id, { today, viewedIds: readViewedOfferIds(), likes: likesByOffer() }).length;
+      const button = element("button", `highlight-tab${tab.id === activeHighlightTab ? " active" : ""}`, `${tab.label}${count ? ` · ${count}` : ""}`);
+      button.type = "button";
+      button.dataset.highlightTab = tab.id;
+      button.setAttribute("aria-pressed", String(tab.id === activeHighlightTab));
+      button.disabled = count === 0 && tab.id !== "all";
+      if (button.disabled) button.title = "Nenhuma oferta nesta seleção";
+      return button;
+    }));
+  }
+
   function renderPopularItems(): void {
     popularItems.replaceChildren(...commonItems.map(({ label, icon, query }) => {
       const button = element("button", "popular-item");
@@ -544,11 +588,15 @@ function showFeedError(): void {
 
   function updateProductTypeOptions(): void {
     const today = todayInSaoPaulo();
-    const types = [...new Set(offers.filter((offer) =>
-      isActive(offer, today)
-      && (activeDepartment === "Todos os setores" || offer.department === activeDepartment)
-      && (activeStore === "Todas as lojas" || offer.store === activeStore)
-    ).flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    const options = new Map<string, number>();
+    for (const offer of offers) {
+      if (!isActive(offer, today)) continue;
+      if (activeStore !== "Todas as lojas" && offer.store !== activeStore) continue;
+      const category = offerCategory(offer);
+      if (activeDepartment && category.groupId !== activeDepartment) continue;
+      if (!options.has(category.subcategory)) options.set(category.subcategory, offerOrder(offer));
+    }
+    const types = [...options.entries()].sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0], "pt-BR")).map(([type]) => type);
     if (!types.includes(activeProductType)) activeProductType = "";
     productTypeSelect.replaceChildren(
       new Option("Todos os tipos", ""),
@@ -559,14 +607,20 @@ function showFeedError(): void {
 
   function renderFilters(): void {
     const today = todayInSaoPaulo();
-    filters.replaceChildren(...departments.map((department) => {
-      const count = offers.filter((offer) => isActive(offer, today) && (department === "Todos os setores" || offer.department === department)).length;
-      const disabled = department !== "Todos os setores" && count === 0;
-      const button = element("button", `filter${department === activeDepartment ? " active" : ""}`, `${department} · ${count}`);
+    const counts = new Map<string, number>();
+    for (const offer of offers) {
+      if (!isActive(offer, today)) continue;
+      const groupId = offerCategory(offer).groupId;
+      counts.set(groupId, (counts.get(groupId) ?? 0) + 1);
+    }
+    const sectors = [{ id: "", label: ALL_SECTORS_LABEL, count: offers.filter((offer) => isActive(offer, today)).length }, ...TAXONOMY_GROUPS.map((group) => ({ id: group.id, label: group.label, count: counts.get(group.id) ?? 0 }))];
+    filters.replaceChildren(...sectors.map((sector) => {
+      const disabled = sector.id !== "" && sector.count === 0;
+      const button = element("button", `filter${sector.id === activeDepartment ? " active" : ""}`, `${sector.label} · ${sector.count}`);
       button.type = "button";
-      button.dataset.department = department;
+      button.dataset.department = sector.id;
       button.disabled = disabled;
-      button.setAttribute("aria-pressed", String(department === activeDepartment));
+      button.setAttribute("aria-pressed", String(sector.id === activeDepartment));
       if (disabled) button.title = "Sem ofertas ativas hoje";
       return button;
     }));
@@ -593,21 +647,29 @@ function showFeedError(): void {
       : null;
     const today = todayInSaoPaulo();
     const { min, max } = getPriceBounds();
-    const activeCount = Number(activeStore !== "Todas as lojas") + Number(activeDepartment !== "Todos os setores") + Number(Boolean(activeProductType)) + Number(min !== null || max !== null);
+    const activeCount = Number(activeStore !== "Todas as lojas") + Number(Boolean(activeDepartment)) + Number(Boolean(activeProductType)) + Number(activeHighlightTab !== "all") + Number(min !== null || max !== null);
     activeFilterCount.hidden = activeCount === 0;
     activeFilterCount.textContent = String(activeCount);
     const priceRangeReversed = min !== null && max !== null && min > max;
-    let matching = priceRangeReversed ? [] : offers.filter((offer) =>
-      (sharedOfferId ? offer.id === sharedOfferId : isActive(offer, today)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
-      (sharedOfferId || activeDepartment === "Todos os setores" || offer.department === activeDepartment) &&
-      (sharedOfferId || !activeProductType || offer.productTypes.includes(activeProductType)) &&
+    let matching = priceRangeReversed ? [] : offers.filter((offer) => {
+      const category = offerCategory(offer);
+      return (sharedOfferId ? offer.id === sharedOfferId : isActive(offer, today)) && (sharedOfferId || activeStore === "Todas as lojas" || offer.store === activeStore) &&
+      (sharedOfferId || !activeDepartment || category.groupId === activeDepartment) &&
+      (sharedOfferId || !activeProductType || category.subcategory === activeProductType) &&
       (sharedOfferId || !favoriteOnly || favoriteIds.has(offer.id)) &&
-      (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value))
-    );
-    if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => productCategoryRank(a) - productCategoryRank(b));
+      (sharedOfferId || min === null || offer.price >= min) && (sharedOfferId || max === null || offer.price <= max) && (sharedOfferId || matchesSearch(offer, input.value));
+    });
+    if (!sharedOfferId && activeHighlightTab !== "all") {
+      matching = applyHighlightTab(matching, activeHighlightTab, { today, viewedIds: readViewedOfferIds(), likes: likesByOffer() });
+    }
+    if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => offerOrder(a) - offerOrder(b));
     if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
     if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
     if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => ((b.previousPrice ?? b.price) - b.price) - ((a.previousPrice ?? a.price) - a.price));
+    if (activeHighlightTab === "top-rated" && sortSelect.value === "recommended") {
+      const likes = likesByOffer();
+      matching = [...matching].sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0));
+    }
 
     const matchingIds = new Set(matching.map((offer) => offer.id));
     for (const [id, card] of cards) {
@@ -638,10 +700,11 @@ function showFeedError(): void {
     resultsTitle.textContent = sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
     showAllOffersButton.hidden = !sharedOfferId;
     const storeLabel = activeStore === "Todas as lojas" ? "todas as lojas" : activeStore;
+    const sectorLabel = activeDepartment ? TAXONOMY_GROUPS.find((group) => group.id === activeDepartment)?.label ?? "" : "";
     const sharedOffer = sharedOfferId ? matching[0] : null;
     resultsSubtitle.textContent = sharedOffer
       ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer, today) ? "" : " · oferta encerrada"}`
-      : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${activeDepartment === "Todos os setores" ? "" : ` · ${activeDepartment}`}${activeProductType ? ` · ${activeProductType}` : ""}`;
+      : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${sectorLabel ? ` · ${sectorLabel}` : ""}${activeProductType ? ` · ${activeProductType}` : ""}`;
     if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
     else if (offers.some((offer) => isActive(offer, today))) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
     else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
@@ -659,6 +722,13 @@ function showFeedError(): void {
     url.searchParams.set("offer", offerId);
     return url.toString();
   }
+
+  grid.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const link = target.closest<HTMLAnchorElement>("[data-source-id]");
+    if (link?.dataset.sourceId) recordViewedOffer(link.dataset.sourceId);
+  });
 
   grid.addEventListener("click", async (event: MouseEvent) => {
     const target = event.target;
@@ -766,6 +836,7 @@ function showFeedError(): void {
     activeStore = button.dataset.store ?? "Todas as lojas";
     updateFilterStates(storeFilters, "store", activeStore);
     updateProductTypeOptions();
+    renderHighlightTabs();
     renderOffers();
   });
 
@@ -784,9 +855,20 @@ function showFeedError(): void {
     if (!(target instanceof Element)) return;
     const button = target.closest<HTMLButtonElement>("[data-department]");
     if (!button || button.disabled) return;
-    activeDepartment = button.dataset.department ?? "Todos os setores";
+    activeDepartment = button.dataset.department ?? "";
+    activeProductType = "";
     updateFilterStates(filters, "department", activeDepartment);
     updateProductTypeOptions();
+    renderOffers();
+  });
+
+  highlightTabs.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest<HTMLButtonElement>("[data-highlight-tab]");
+    if (!button || button.disabled) return;
+    activeHighlightTab = button.dataset.highlightTab ?? "all";
+    renderHighlightTabs();
     renderOffers();
   });
 
@@ -802,11 +884,12 @@ function showFeedError(): void {
   productTypeSelect.addEventListener("change", () => { activeProductType = productTypeSelect.value; renderOffers(); });
   sortSelect.addEventListener("change", renderOffers);
   resetButton.addEventListener("click", () => {
-    activeStore = "Todas as lojas"; activeDepartment = "Todos os setores"; activeProductType = "";
+    activeStore = "Todas as lojas"; activeDepartment = ""; activeProductType = ""; activeHighlightTab = "all";
     input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
     updateFilterStates(storeFilters, "store", activeStore);
     updateFilterStates(filters, "department", activeDepartment);
     updateProductTypeOptions();
+    renderHighlightTabs();
     renderOffers();
     input.focus();
   });
@@ -858,6 +941,7 @@ function showFeedError(): void {
   renderStoreFilters();
   renderPopularItems();
   renderFilters();
+  renderHighlightTabs();
   renderOffers();
   const sourceAlerts = applySourceFreshness();
   updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
@@ -873,6 +957,7 @@ function showFeedError(): void {
     try {
       const reactions = await loadReactionsApi();
       reactionCounts = await reactions.loadOfferReactionCounts();
+      renderHighlightTabs();
       renderOffers();
     } catch (error) {
       console.warn("Could not load offer reaction totals.", error);

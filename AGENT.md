@@ -29,6 +29,13 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - The generated feed is the shared source for the website and the scheduled monitoring jobs.
 - New prices publish immediately; `needs_review` gates alert eligibility only.
 
+### Catalog taxonomy
+- `catalog-taxonomy.mjs` is the display taxonomy: 13 sectors (Alimentos frescos, Mercearia, Bebidas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
+- The feed keeps the original adapter product types; `resolveCategory()` maps each offer to a sector/subcategory by type and by product-name keywords.
+- The "Setor" filter lists the sectors in that order, "Tipo de produto" lists the subcategories, and "Recomendadas" sorts by sector then subcategory.
+- The "Ofertas e destaques" group is rendered as highlight tabs (`applyHighlightTab`) above the grid: ofertas do dia, promoções, novidades, mais curtidos, combos, marcas próprias e comprar novamente.
+- Changing the taxonomy means editing `catalog-taxonomy.mjs` and its test, not the feed.
+
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.
 - Browser-only guest favorites remain in local storage.
@@ -49,6 +56,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `README.md` — project setup and operational notes
 - `BACKEND_PLAN.md` — architecture notes, pricing, and deployment constraints
 - `offers.ts` — curated fallback catalog
+- `catalog-taxonomy.mjs` — sectors, subcategories, and highlight tabs used by filters and ordering
 - `app.ts` — main UI behavior and client-side state
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings

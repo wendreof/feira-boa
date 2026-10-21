@@ -59,23 +59,23 @@ function classifyProduct(name: string, brand: string, category: string): { depar
   const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const rules: Array<[RegExp, string]> = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado/, "Leites"],
-    [/condicionador|shampoo|creme dental|absorvente|sabonete|desodorante|higiene/, "Higiene pessoal"],
-    [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo/, "Queijos e requeijão"], [/manteiga/, "Manteiga"], [/mortadela|presunto/, "Frios"],
+    [/condicionador|shampoo|creme dental|dental|bucal|enxaguante|absorvente|sabonete|desodorante|higiene/, "Higiene pessoal"],
+    [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo/, "Queijos e requeijão"], [/manteiga/, "Manteiga"], [/ketchup/, "Mercearia"],
     [/frango|asa de|coxa|sobrecoxa|filezinho|chicken/, "Frango"], [/bovino|contrafile|paleta|alcatra|fraldinha|figado/, "Carne bovina"],
-    [/linguica|salsicha|panceta|suina|suino|bacon|pernil/, "Carnes suínas e embutidos"], [/tilapia|peixe/, "Peixes"],
+    [/^bacon|linguica|salsicha|mortadela|embutido|salami|^presunto/, "Frios"], [/suina|suino|pernil|bisteca|panceta/, "Carnes suínas"], [/tilapia|peixe/, "Peixes"],
     [/cerveja/, "Cervejas"], [/refrigerante|guarana/, "Refrigerantes"], [/suco|nectar|agua mineral|energetico/, "Sucos e bebidas"], [/vinho|aperitivo|smirnoff/, "Bebidas alcoólicas"],
     [/lava-roupas|sabao|detergente|amaciante|limpeza/, "Lavanderia e limpeza"], [/papel higienico/, "Papel higiênico"],
-    [/sorvete|acai|congelad|lasanha|ravioli|capeletti|batata palito/, "Congelados"],
+    [/sorvete|acai|congelad|(?<!massa para )lasanha|ravioli|capeletti|batata palito|pizza|hot pocket|nugget/, "Congelados"],
     [/batata chips|biscoito|chocolate|pacoquinha/, "Doces e snacks"],
-    [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|maca|fruta|verdura|legume/, "Hortifruti"],
-    [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado/, "Mercearia"],
+    [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|\bmaca\b|fruta|verdura|legume/, "Hortifruti"],
+    [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado|caldo|sopa/, "Mercearia"],
     [/molho/, "Mercearia"]
   ];
   const productType = rules.find(([pattern]) => pattern.test(text))?.[1] ?? category;
   const departments: Record<string, string> = {
     "Frios e laticínios": "Frios e laticínios", "Iogurtes": "Frios e laticínios", "Queijos e requeijão": "Frios e laticínios", "Manteiga": "Frios e laticínios", "Frios": "Frios e laticínios",
     "Frango": "Açougue e peixaria", "Carne bovina": "Açougue e peixaria",
-    "Carnes suínas e embutidos": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Cervejas": "Bebidas",
+    "Carnes suínas": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Cervejas": "Bebidas",
     "Refrigerantes": "Bebidas", "Sucos e bebidas": "Bebidas", "Bebidas alcoólicas": "Bebidas",
     "Lavanderia e limpeza": "Casa e limpeza", "Papel higiênico": "Casa e limpeza", "Higiene pessoal": "Higiene e cuidados", "Doces e snacks": "Mercearia", "Hortifruti": "Hortifruti",
     "Congelados": "Congelados", "Mercearia": "Mercearia", "Café": "Mercearia", "Arroz": "Mercearia", "Feijão": "Mercearia", "Leites": "Frios e laticínios"
@@ -84,7 +84,7 @@ function classifyProduct(name: string, brand: string, category: string): { depar
     "Carnes": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Frios": "Frios e laticínios", "Laticínios": "Frios e laticínios",
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados"
   };
-  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango/.test(text);
+  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao para|carvao de churrasco|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango/.test(text);
   const primaryProductType = productType === category ? (categoryDepartments[category] ?? category) : productType;
   return {
     department: departments[productType] ?? categoryDepartments[category] ?? category,

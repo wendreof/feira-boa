@@ -398,3 +398,11 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .local-stores-missing{margin:14px 0 0;color:var(--muted);font-size:12px}
 .local-stores-missing a{color:var(--green);font-weight:750;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:760px){.local-stores-heading{padding-top:20px;margin-top:16px}.local-stores-heading h2{font-size:20px}}
+
+.highlight-tabs{display:flex;gap:8px;overflow-x:auto;margin:0 0 14px;padding:2px 0 6px;scrollbar-width:none}
+.highlight-tabs::-webkit-scrollbar{display:none}
+.highlight-tab{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:#fff;color:#526056;font:700 11px 'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:.15s}
+.highlight-tab:hover,.highlight-tab:focus-visible{border-color:#84a98c;background:#f2f7ef;outline:none}
+.highlight-tab.active{border-color:var(--green);background:var(--green);color:#fff}
+.highlight-tab:disabled{opacity:.45;cursor:not-allowed;background:#f3f4f1}
+

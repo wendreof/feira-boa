@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-20T20:43:42.447Z",
-    "last_success_at": "2026-10-20T20:43:42.447Z",
+    "checked_at": "2026-10-21T00:58:43.071Z",
+    "last_success_at": "2026-10-21T00:58:43.071Z",
     "last_error": null,
     "needs_review": false
   },
@@ -20,14 +20,14 @@
     "branch": "Loja 33 · Jardim Santo André",
     "store_id": "pague-menos",
     "store_key": "pague-menos-loja-33-jardim-santo-andre",
-    "sha256": "25dfe663efa0ec7b7bf9f664bbceb091e3a9a3e2fc4db28166745a9787736d69",
+    "sha256": "3cdb1e0864731b310bf49b3a3db684502fefc39b86aaaafebb781378cbef3222",
     "status": 200,
     "content_type": "text/html; charset=utf-8",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-20T20:43:42.632Z",
-    "last_success_at": "2026-10-20T20:43:42.632Z",
+    "checked_at": "2026-10-21T00:58:45.161Z",
+    "last_success_at": "2026-10-21T00:58:45.161Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf": {
     "url": "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf",
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf",
-    "checked_at": "2026-10-20T20:43:42.677Z",
-    "last_success_at": "2026-10-20T20:43:42.677Z",
+    "checked_at": "2026-10-21T00:58:45.476Z",
+    "last_success_at": "2026-10-21T00:58:45.476Z",
     "last_error": null,
     "needs_review": false
   },
@@ -50,12 +50,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "38ac0ce522cd03eee21d74ab0440d4c08cd62efaf1d236fa6bf381d99ff98bb5",
+    "sha256": "d9c4dd83a564bb53f68ee540d13f05ef8fe8783b7c1af39cb6878eb11827464c",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-20T20:43:43.910Z",
-    "last_success_at": "2026-10-20T20:43:43.910Z",
+    "checked_at": "2026-10-21T00:58:47.547Z",
+    "last_success_at": "2026-10-21T00:58:47.547Z",
     "last_error": null,
     "needs_review": true
   },
@@ -69,8 +69,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-20T20:43:45.965Z",
-    "last_success_at": "2026-10-20T20:43:45.965Z",
+    "checked_at": "2026-10-21T00:58:48.812Z",
+    "last_success_at": "2026-10-21T00:58:48.812Z",
     "last_error": null,
     "needs_review": false
   }

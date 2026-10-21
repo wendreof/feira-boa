@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-21T14:29:26.843Z",
+  "updatedAt": "2026-10-21T17:14:58.198Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5323,7 +5323,7 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 9.59,
+      "price": 9.89,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -5395,7 +5395,7 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 10.39,
+      "price": 9.39,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -5419,7 +5419,7 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 10.39,
+      "price": 9.99,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -5539,7 +5539,7 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 15.89,
+      "price": 14.79,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -5755,7 +5755,7 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.29,
+      "price": 14.99,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -7221,7 +7221,7 @@
         "Doces e snacks"
       ],
       "price": 3.89,
-      "previousPrice": 4.79,
+      "previousPrice": 4.89,
       "icon": "🍪",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10556,8 +10556,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 9.89,
-      "previousPrice": 14.39,
+      "price": 14.39,
+      "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10580,8 +10580,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 9.89,
-      "previousPrice": 14.39,
+      "price": 14.39,
+      "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10604,8 +10604,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 9.89,
-      "previousPrice": 14.39,
+      "price": 14.39,
+      "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11925,7 +11925,7 @@
         "Mercearia"
       ],
       "price": 6.99,
-      "previousPrice": 7.89,
+      "previousPrice": 8.49,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12357,7 +12357,7 @@
         "Mercearia"
       ],
       "price": 11.99,
-      "previousPrice": 13.59,
+      "previousPrice": 12.79,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -13868,7 +13868,7 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 11.99,
+      "price": 12.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -15452,7 +15452,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 4.29,
+      "price": 4.39,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -15500,7 +15500,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 4.79,
+      "price": 4.59,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -18680,7 +18680,7 @@
       "productTypes": [
         "Frios"
       ],
-      "price": 14.99,
+      "price": 15.59,
       "previousPrice": null,
       "icon": "🍖",
       "tone": "#edf4e9",
@@ -20313,7 +20313,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 46.99,
+      "price": 42.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -20361,8 +20361,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 39.9,
-      "previousPrice": 52.99,
+      "price": 52.99,
+      "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20385,8 +20385,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 39.9,
-      "previousPrice": 52.99,
+      "price": 52.99,
+      "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20625,8 +20625,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 16.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20649,8 +20649,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 16.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20673,7 +20673,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 26.99,
+      "price": 34.49,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -20697,8 +20697,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 29.99,
-      "previousPrice": null,
+      "price": 19.99,
+      "previousPrice": 37.49,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20721,8 +20721,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 39.98,
-      "previousPrice": null,
+      "price": 27.99,
+      "previousPrice": 49.98,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20793,8 +20793,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 11.69,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 11.69,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20817,8 +20817,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 11.69,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 11.69,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20841,8 +20841,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 11.69,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 11.69,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20865,7 +20865,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 17.99,
+      "price": 22.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -20937,7 +20937,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 18.99,
+      "price": 14.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -21009,8 +21009,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 16.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21033,8 +21033,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 16.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21105,8 +21105,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 10.99,
-      "previousPrice": null,
+      "price": 9.89,
+      "previousPrice": 10.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21201,7 +21201,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 24.89,
+      "price": 18.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -21249,7 +21249,7 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 21.99,
+      "price": 19.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -22449,7 +22449,7 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 3.49,
+      "price": 3.59,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -22953,7 +22953,7 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 4.89,
+      "price": 4.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -25473,7 +25473,7 @@
       "productTypes": [
         "Bebidas alcoólicas"
       ],
-      "price": 10.82,
+      "price": 11.66,
       "previousPrice": null,
       "icon": "🌾",
       "tone": "#edf4e9",

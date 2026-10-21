@@ -105,6 +105,28 @@ test("classifyProduct maps products to departments and product types", () => {
   assert.equal(unknown.productType, "Outros");
 });
 
+test("classifyProduct keeps embutidos out of the meat categories", () => {
+  const sausage = classifyProduct("Linguiça Calabresa Sadia Defumada Cozida", "Sadia", "Carnes");
+  assert.equal(sausage.department, "Frios e laticínios");
+  assert.equal(sausage.productType, "Frios");
+
+  const ham = classifyProduct("Presunto Sadia Cozido Fatiado", "Sadia", "Frios");
+  assert.equal(ham.department, "Frios e laticínios");
+  assert.equal(ham.productType, "Frios");
+
+  const bacon = classifyProduct("Bacon Defumado Sadia em Fatias", "Sadia", "Carnes");
+  assert.equal(bacon.department, "Frios e laticínios");
+  assert.equal(bacon.productType, "Frios");
+
+  const pork = classifyProduct("Filé Mignon Suíno Sadia em Bifes", "Sadia", "Carnes");
+  assert.equal(pork.department, "Açougue e peixaria");
+  assert.equal(pork.productType, "Carnes suínas");
+
+  const baconFlavor = classifyProduct("Ketchup Heinz Bacon com Cebola Caramelizada", "Heinz", "Mercearia");
+  assert.equal(baconFlavor.department, "Mercearia");
+  assert.equal(baconFlavor.productType, "Mercearia");
+});
+
 test("buildPagueMenosOffer maps catalog products and skips unavailable items", () => {
   const product = {
     productName: "Café Melitta Regiões Brasileiras Sul de Minas 250g",

@@ -984,11 +984,11 @@
       "name": "Linguiça Calabresa Resfriada",
       "brand": "Brasa",
       "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 24.4,
@@ -1009,11 +1009,11 @@
       "name": "Linguiça de Pernil Fina Resfriada",
       "brand": "Suíba",
       "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 25.8,
@@ -1059,11 +1059,11 @@
       "name": "Linguiça Toscana Congelada",
       "brand": "Aurora",
       "detail": "700g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 17.5,
@@ -1852,11 +1852,11 @@
       "name": "Macarrão Instantâneo",
       "brand": "Renata",
       "detail": "85g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 1.58,
       "previousPrice": null,

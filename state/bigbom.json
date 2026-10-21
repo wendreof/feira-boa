@@ -22,9 +22,9 @@
       "detail": "kg",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Carnes suínas",
         "Churrasco"
       ],
       "price": 15.9,
@@ -117,11 +117,11 @@
       "name": "Salsicha SEARA Hot Dog",
       "brand": "",
       "detail": "kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 7.99,
       "previousPrice": null,

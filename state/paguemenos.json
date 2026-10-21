@@ -6961,8 +6961,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 21.99,
       "previousPrice": null,
@@ -7010,8 +7009,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 18.99,
       "previousPrice": null,
@@ -7251,8 +7249,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 17.59,
       "previousPrice": 22.49,
@@ -7468,8 +7465,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 31.89,
       "previousPrice": null,
@@ -7541,8 +7537,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 14.99,
       "previousPrice": null,
@@ -7710,8 +7705,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 21.69,
       "previousPrice": null,
@@ -7759,8 +7753,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 22.99,
       "previousPrice": null,
@@ -7904,8 +7897,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 22.99,
       "previousPrice": null,
@@ -8025,8 +8017,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 9.89,
       "previousPrice": 14.39,
@@ -8194,8 +8185,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 14.99,
       "previousPrice": null,
@@ -8555,8 +8545,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 28.99,
       "previousPrice": null,
@@ -8916,8 +8905,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -9249,11 +9237,11 @@
       "name": "Ketchup Heinz Bacon com Cebola Caramelizada",
       "brand": "Heinz",
       "detail": "397g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Mercearia"
       ],
       "price": 12.99,
       "previousPrice": 16.99,
@@ -11149,8 +11137,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 12.69,
       "previousPrice": null,
@@ -11390,8 +11377,7 @@
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
-        "Higiene pessoal",
-        "Churrasco"
+        "Higiene pessoal"
       ],
       "price": 23.99,
       "previousPrice": null,
@@ -14777,11 +14763,11 @@
       "name": "Macarrão Perdigão Meu Menu Fettuccine Ao Molho Bolonhesa",
       "brand": "Perdigao",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -15761,11 +15747,11 @@
       "name": "Salsicha Sadia Air Fryer",
       "brand": "Sadia",
       "detail": "250g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 11.99,
       "previousPrice": null,
@@ -15810,11 +15796,11 @@
       "name": "Linguiça Sadia para Churrasco",
       "brand": "Sadia",
       "detail": "700g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 19.99,
@@ -15861,9 +15847,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Carnes suínas"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -15883,15 +15869,15 @@
       "name": "Embutido de Filé Mignon Suíno Sadia Fatiado",
       "brand": "Sadia",
       "detail": "180g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 10.99,
       "previousPrice": 11.99,
-      "icon": "🥩",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -15907,11 +15893,11 @@
       "name": "Linguiça Toscana Sadia",
       "brand": "Sadia",
       "detail": "700g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 23.99,
@@ -15956,11 +15942,11 @@
       "name": "Linguiça Calabresa Sadia Defumada Cozida",
       "brand": "Sadia",
       "detail": "400g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 13.99,
@@ -15981,11 +15967,11 @@
       "name": "Linguiça Mista Fininha Sadia Defumada",
       "brand": "Sadia",
       "detail": "215g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 8.99,
@@ -16032,9 +16018,9 @@
       "detail": "180g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 7.49,
       "previousPrice": null,
@@ -16056,13 +16042,13 @@
       "detail": "180g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 11.99,
       "previousPrice": null,
-      "icon": "🏷️",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -16078,11 +16064,11 @@
       "name": "Salsicha de Peru Sadia",
       "brand": "Sadia",
       "detail": "500g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 14.89,
       "previousPrice": null,
@@ -16102,11 +16088,11 @@
       "name": "Linguiça Portuguesa Sadia",
       "brand": "Sadia",
       "detail": "400g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 17.89,
@@ -16129,13 +16115,13 @@
       "detail": "200g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 14.99,
       "previousPrice": null,
-      "icon": "🏷️",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -16153,9 +16139,9 @@
       "detail": "200g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 9.79,
       "previousPrice": null,
@@ -16199,11 +16185,11 @@
       "name": "Salsicha Sadia Tradicional",
       "brand": "Sadia",
       "detail": "500g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 14.89,
       "previousPrice": null,
@@ -16223,11 +16209,11 @@
       "name": "Salsicha Sadia Hot Dog",
       "brand": "Sadia",
       "detail": "500g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 13.99,
       "previousPrice": null,
@@ -16271,11 +16257,11 @@
       "name": "Bacon Defumado Sadia em Fatias",
       "brand": "Sadia",
       "detail": "250g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -16295,11 +16281,11 @@
       "name": "Bacon Defumado Sadia em Cubos",
       "brand": "Sadia",
       "detail": "140g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 14.99,
       "previousPrice": null,
@@ -16343,15 +16329,15 @@
       "name": "Snack Salamitos Sweet Chilli",
       "brand": "Sadia",
       "detail": "36g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Mercearia"
+        "Frios"
       ],
       "price": 4.59,
       "previousPrice": 5.19,
-      "icon": "🏷️",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -16367,15 +16353,15 @@
       "name": "Snack Salamitos Original",
       "brand": "Sadia",
       "detail": "36g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Frios"
       ],
       "price": 4.59,
       "previousPrice": 4.99,
-      "icon": "🧺",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -16391,15 +16377,15 @@
       "name": "Snack Salamitos Lemonástico",
       "brand": "Sadia",
       "detail": "36g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Mercearia"
+        "Frios"
       ],
       "price": 4.59,
       "previousPrice": 4.89,
-      "icon": "🏷️",
+      "icon": "🌭",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -16847,11 +16833,11 @@
       "name": "Macarrão Sadia Hot Bowls Brócolis & Bacon",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Congelados"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -16871,11 +16857,11 @@
       "name": "Macarrão Sadia Mac'n Cheese Cheddar com Calabresa",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -16895,11 +16881,11 @@
       "name": "Macarrão Sadia Mac'n Cheese Cheddar com Bacon",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -16919,11 +16905,11 @@
       "name": "Macarrão Sadia Mac'n Cheese Cheddar",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -16943,11 +16929,11 @@
       "name": "Macarrão Sadia Hot Bowls com Mini Almôndegas",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -17159,11 +17145,11 @@
       "name": "Hot Pocket Sadia X-bacon",
       "brand": "Sadia",
       "detail": "145g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Congelados"
       ],
       "price": 9.99,
       "previousPrice": 10.89,
@@ -24024,11 +24010,11 @@
       "name": "Caldo Knorr Bacon",
       "brand": "Knorr",
       "detail": "57g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Mercearia"
       ],
       "price": 3.39,
       "previousPrice": 3.49,

@@ -349,19 +349,20 @@ export function classifyProduct(name, brand, category) {
   const normalizedCategory = category === "Geral" ? "Outros" : category;
   const rules = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado|leite longa vida|bebida lactea/, "Leites"],
-    [/condicionador|shampoo|creme dental|absorvente|sabonete|desodorante|higiene|toalha umedecida/, "Higiene pessoal"],
-    [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo|ricota/, "Queijos e requeijão"], [/manteiga|margarina/, "Manteiga"], [/mortadela|presunto/, "Frios"],
+    [/condicionador|shampoo|creme dental|dental|bucal|enxaguante|absorvente|sabonete|desodorante|higiene|toalha umedecida/, "Higiene pessoal"],
+    [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo|ricota/, "Queijos e requeijão"], [/manteiga|margarina/, "Manteiga"], [/ketchup/, "Mercearia"],
     [/ovos?\b/, "Ovos"], [/creme de avela|nutella/, "Doces e snacks"], [/sandalia|sapato|tenis|chinelo/, "Calçados"], [/new fort|fort lar|fervedor/, "Casa"],
     [/frango|asa de|coxa|sobrecoxa|filezinho|chicken|sassami/, "Frango"], [/bovino|contrafile|paleta|alcatra|fraldinha|figado|acem|lombo|costela|patinho/, "Carne bovina"],
-    [/linguica|salsicha|panceta|suina|suino|bacon|pernil|bisteca/, "Carnes suínas e embutidos"], [/tilapia|peixe|sardinha|atum/, "Peixes"],
+    [/^bacon|linguica|salsicha|mortadela|embutido|salami|^presunto/, "Frios"],
+    [/suina|suino|pernil|bisteca|panceta/, "Carnes suínas"], [/tilapia|peixe|sardinha|atum/, "Peixes"],
     [/cerveja/, "Cervejas"], [/refrigerante|guarana|h2oh/, "Refrigerantes"], [/suco|nectar|agua mineral|agua de coco|energetico|refresco/, "Sucos e bebidas"], [/vinho|aperitivo|smirnoff|gin/, "Bebidas alcoólicas"],
     [/lava-roupas|lava roupas|sabao|detergente|amaciante|limpeza|limpador|desinfetante|saponaceo/, "Lavanderia e limpeza"], [/papel higienico|papel higiênico/, "Papel higiênico"],
-    [/sorvete|acai|congelad|lasanha|ravioli|capeletti|batata palito|hamburguer|brocolis/, "Congelados"],
+    [/sorvete|acai|picole|congelad|(?<!massa para )lasanha|ravioli|capeletti|batata palito|hamburguer|pizza|hot pocket|nugget|brocolis/, "Congelados"],
     [/batata chips|biscoito|chocolate|pacoquinha|bombom|wafer/, "Doces e snacks"],
-    [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|maca|maçã|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde/, "Hortifruti"],
-    [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|filtro de papel/, "Mercearia"],
+    [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|\bmaca\b|maçã|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde/, "Hortifruti"],
+    [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|filtro de papel|caldo|sopa/, "Mercearia"],
     [/racao|\bdog\b|\bcat\b|\bpet\b/, "Pet"],
-    [/pilha|esponja|lixeira|pano|lampada|carvao/, "Casa"],
+    [/pilha|esponja|lixeira|pano|lampada|carvao para|carvao de churrasco/, "Casa"],
   ];
   const matched = rules.find(([pattern]) => pattern.test(text));
   const productType = matched ? matched[1] : normalizedCategory;
@@ -369,7 +370,7 @@ export function classifyProduct(name, brand, category) {
   const departments = {
     "Frios e laticínios": "Frios e laticínios", "Iogurtes": "Frios e laticínios", "Queijos e requeijão": "Frios e laticínios", "Manteiga": "Frios e laticínios", "Frios": "Frios e laticínios",
     "Frango": "Açougue e peixaria", "Carne bovina": "Açougue e peixaria",
-    "Carnes suínas e embutidos": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Cervejas": "Bebidas",
+    "Carnes suínas": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Cervejas": "Bebidas",
     "Refrigerantes": "Bebidas", "Sucos e bebidas": "Bebidas", "Bebidas alcoólicas": "Bebidas",
     "Lavanderia e limpeza": "Casa e limpeza", "Papel higiênico": "Casa e limpeza", "Higiene pessoal": "Higiene e cuidados", "Doces e snacks": "Mercearia", "Hortifruti": "Hortifruti",
     "Congelados": "Congelados", "Mercearia": "Mercearia", "Café": "Mercearia", "Arroz": "Mercearia", "Feijão": "Mercearia", "Leites": "Frios e laticínios",
@@ -380,8 +381,8 @@ export function classifyProduct(name, brand, category) {
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados",
     "Pet": "Pet", "Casa": "Casa e limpeza", "Padaria": "Mercearia", "Hortifruti": "Hortifruti", "Vestuário": "Vestuário e calçados", "Outros": "Outros",
   };
-  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango|bisteca|panceta/.test(text);
-  const primaryProductType = productType === normalizedCategory ? (categoryDepartments[normalizedCategory] ?? normalizedCategory) : productType;
+  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao para|carvao de churrasco|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango|bisteca|panceta/.test(text);
+  const primaryProductType = matched ? productType : (categoryDepartments[normalizedCategory] ?? normalizedCategory);
   return {
     department: departments[productType] ?? categoryDepartments[normalizedCategory] ?? normalizedCategory,
     productType: primaryProductType,
@@ -415,7 +416,7 @@ export function assignIcon(name, productType = "", department = "") {
     [/arroz/, "🍚"],
     [/feijao/, "🍲"],
     [/frango|coxa|sobrecoxa|sassami|asa de/, "🍗"],
-    [/linguica|salsicha|bacon|panceta|mortadela/, "🌭"],
+    [/linguica|salsicha|bacon|panceta|mortadela|embutido|presunto|salami/, "🌭"],
     [/carne|bife|costela|alcatra|acem|contrafile|picanha|patinho|fraldinha|paleta|figado|cupim|lombo|bisteca/, "🥩"],
     [/peixe|sardinha|atum|tilapia|merluza/, "🐟"],
     [/hamburguer/, "🍔"],

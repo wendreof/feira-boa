@@ -166,11 +166,11 @@
       "name": "SALSICHA HOT DOG PERDIGÃO",
       "brand": "",
       "detail": "GRANEL KG",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Frios"
       ],
       "price": 8.99,
       "previousPrice": 14.98,
@@ -214,11 +214,11 @@
       "name": "MACARRÃO SEMOLADO BASILAR",
       "brand": "",
       "detail": "400G",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 2.79,
       "previousPrice": 3.99,
@@ -238,11 +238,11 @@
       "name": "LINGUIÇA TOSCANA SEARA KG GRANEL",
       "brand": "",
       "detail": "Unidade",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Carnes suínas e embutidos",
+        "Frios",
         "Churrasco"
       ],
       "price": 15.9,
@@ -841,9 +841,9 @@
       "detail": "Unidade",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Carnes suínas"
       ],
       "price": 10.98,
       "previousPrice": 14.98,
@@ -1849,9 +1849,9 @@
       "detail": "Unidade",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carnes suínas e embutidos",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carnes suínas e embutidos"
+        "Carnes suínas"
       ],
       "price": 25.9,
       "previousPrice": 32.9,

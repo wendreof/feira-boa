@@ -34,8 +34,17 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `catalog-taxonomy.mjs` is the display taxonomy: 13 sectors (Alimentos frescos, Mercearia, Bebidas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
 - The feed keeps the original adapter product types; `resolveCategory()` maps each offer to a sector/subcategory by type and by product-name keywords.
 - The "Setor" filter lists the sectors in that order, "Tipo de produto" lists the subcategories, and "Recomendadas" sorts by sector then subcategory.
-- The "Ofertas e destaques" group is rendered as highlight tabs (`applyHighlightTab`) above the grid: ofertas do dia, promoções, novidades, mais curtidos, combos, marcas próprias e comprar novamente.
+- The header chip row ("Explorar por categoria") is: Mais curtidos, Maiores descontos, Carnes, Bebidas and then the remaining sectors in a random order. "Mais curtidos" and "Maiores descontos" also filter (only offers with likes / only offers with a discount).
 - Changing the taxonomy means editing `catalog-taxonomy.mjs` and its test, not the feed.
+
+### Offer cards
+- Card order is name, brand tag, detail, info line (`⭐ likes · category · store`), price with the discount badge next to it, reactions, note and source.
+- The discount shows as a `-25%` badge next to the price; the old price is only in the badge tooltip/aria-label, never both.
+- The ★ marks the three most liked active offers (reaction counts come from the database).
+
+### Service worker
+- The shell cache name includes the build commit, so every deploy invalidates the old cache.
+- On localhost the service worker does not cache and unregisters itself, so local previews always show the current build.
 
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.

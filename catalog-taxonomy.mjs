@@ -125,18 +125,6 @@ export const TAXONOMY_GROUPS = [
 
 export const ALL_SECTORS_LABEL = "Todos os setores";
 
-/** @type {HighlightTab[]} */
-export const HIGHLIGHT_TABS = [
-  { id: "all", label: "Todas as ofertas" },
-  { id: "deals-today", label: "Ofertas do dia" },
-  { id: "promos", label: "Promoções" },
-  { id: "new", label: "Novidades" },
-  { id: "top-rated", label: "Mais curtidos" },
-  { id: "combos", label: "Combos e kits" },
-  { id: "own-brand", label: "Marcas próprias" },
-  { id: "buy-again", label: "Comprar novamente" },
-];
-
 /** @type {Record<string, CatalogCategory>} */
 const TYPE_CATEGORY = {
   Hortifruti: { groupId: "frescos", subcategory: "Hortifruti" },
@@ -348,26 +336,6 @@ export function categoryLabel(category) {
   return GROUP_BY_ID.get(category.groupId)?.label ?? "Outros";
 }
 
-const OWN_BRAND_TOKENS = [
-  { store: "Pague Menos", tokens: ["paguemenos", "paguemenos", "tenda"] },
-  { store: "Supermercado Corso", tokens: ["corso"] },
-  { store: "Sempre Vale", tokens: ["semprevale"] },
-  { store: "Big Bom", tokens: ["bigbom"] },
-  { store: "Spasso Sabores", tokens: ["spasso"] },
-];
-
-/**
- * @param {{ brand?: string, store?: string }} offer
- * @returns {boolean}
- */
-export function isOwnBrand(offer) {
-  const brand = normalizeText(offer?.brand ?? "").replace(/\s+/g, "");
-  if (!brand) return false;
-  const entry = OWN_BRAND_TOKENS.find((item) => item.store === offer?.store);
-  if (!entry) return false;
-  return entry.tokens.some((token) => brand.includes(token));
-}
-
 /**
  * Desconto percentual da oferta (0 quando não há preço anterior).
  * @param {{ price: number, previousPrice: number | null }} offer
@@ -375,47 +343,4 @@ export function isOwnBrand(offer) {
 export function discountRatio(offer) {
   if (!offer.previousPrice || offer.previousPrice <= offer.price) return 0;
   return (offer.previousPrice - offer.price) / offer.previousPrice;
-}
-
-/**
- * @param {string} today data no formato YYYY-MM-DD
- * @param {number} days
- */
-function daysBefore(today, days) {
-  const date = new Date(`${today}T12:00:00Z`);
-  if (Number.isNaN(date.getTime())) return "";
-  date.setUTCDate(date.getUTCDate() - days);
-  return date.toISOString().slice(0, 10);
-}
-
-/**
- * Aplica uma aba de destaque sobre a lista de ofertas.
- * @template {{ id: string, name: string, brand?: string, store?: string, price: number, previousPrice: number | null, validFrom: string }} T
- * @param {T[]} offers
- * @param {string} tabId
- * @param {{ today?: string, viewedIds?: string[], likes?: Map<string, number> }} [context]
- * @returns {T[]}
- */
-export function applyHighlightTab(offers, tabId, context = {}) {
-  const today = context.today ?? "";
-  const viewed = new Set(context.viewedIds ?? []);
-  const likes = context.likes ?? new Map();
-  switch (tabId) {
-    case "deals-today":
-      return offers.filter((offer) => Boolean(today) && offer.validFrom >= today).sort((a, b) => (a.validFrom === b.validFrom ? 0 : a.validFrom < b.validFrom ? 1 : -1));
-    case "promos":
-      return offers.filter((offer) => discountRatio(offer) > 0).sort((a, b) => discountRatio(b) - discountRatio(a));
-    case "new":
-      return offers.filter((offer) => !today || offer.validFrom >= daysBefore(today, 3)).sort((a, b) => (a.validFrom === b.validFrom ? 0 : a.validFrom < b.validFrom ? 1 : -1));
-    case "top-rated":
-      return [...offers].sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0));
-    case "combos":
-      return offers.filter((offer) => /combo|kit|pack/i.test(offer.name));
-    case "own-brand":
-      return offers.filter((offer) => isOwnBrand(offer));
-    case "buy-again":
-      return offers.filter((offer) => viewed.has(offer.id));
-    default:
-      return offers;
-  }
 }

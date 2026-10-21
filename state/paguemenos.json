@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-21T18:23:23.026Z",
+  "fetchedAt": "2026-10-21T21:34:04.092Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -2235,7 +2235,7 @@
         "Mercearia"
       ],
       "price": 15.99,
-      "previousPrice": 26.99,
+      "previousPrice": 27.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2739,30 +2739,6 @@
         "Mercearia"
       ],
       "price": 4.99,
-      "previousPrice": null,
-      "icon": "🥨",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-salgadinho-doritos-sweet-chili-doritos-75g-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Salgadinho Doritos Sweet Chili",
-      "brand": "Doritos",
-      "detail": "75g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 9.59,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -14625,7 +14601,7 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 4.19,
+      "price": 4.39,
       "previousPrice": null,
       "icon": "🧂",
       "tone": "#edf4e9",
@@ -19504,7 +19480,7 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 9.89,
+      "price": 10.49,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -20128,8 +20104,8 @@
       "productTypes": [
         "Sucos e bebidas"
       ],
-      "price": 9.99,
-      "previousPrice": null,
+      "price": 8.99,
+      "previousPrice": 10.39,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

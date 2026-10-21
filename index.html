@@ -34,15 +34,14 @@
     }
   </script>
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261020-reaction-login">
-  <link rel="stylesheet" href="theme.css?v=20261018-stroke-heart">
+  <link rel="stylesheet" href="styles.css?v=20261021-mobile">
+  <link rel="stylesheet" href="theme.css?v=20261021-dark-topbar">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
-    <label class="searchbox" for="search-input"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar ofertas…" autocomplete="off" aria-label="Buscar ofertas"><kbd aria-hidden="true" title="Atalho: pressione / para focar a busca">/</kbd></label>
+    <label class="searchbox" for="search-input"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar ofertas…" autocomplete="off" aria-label="Buscar ofertas"></label>
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
-    <div class="location"><span aria-hidden="true">⌖</span> São João da Boa Vista, SP <span aria-hidden="true">⌄</span></div>
   </header>
   <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
     <div class="sidebar-brand">
@@ -66,12 +65,19 @@
       <h1>Ofertas da cidade</h1>
       <p class="subhead">Compare preços e encontre boas ofertas nos mercados locais.</p>
       <div class="account-panel" id="account-panel">
-        <div><strong>Seus favoritos, em qualquer dispositivo</strong><span id="account-description">Entre ou crie uma conta grátis para sincronizar seus favoritos.</span></div>
+        <span class="account-panel-icon" aria-hidden="true">☁️</span>
+        <div class="account-panel-text">
+          <strong>Seus favoritos, em qualquer dispositivo</strong>
+          <span id="account-description">Entre ou crie uma conta grátis para sincronizar seus favoritos.</span>
+        </div>
         <a class="account-button" id="account-access" href="login.html">Entrar ou criar conta</a>
         <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
       </div>
+    </section>
+
+    <section class="category-bar" aria-label="Explorar por categoria">
       <p class="filter-label popular-label">Explorar por categoria</p>
-      <div class="popular-items" id="popular-items" aria-label="Busca rápida por itens populares"></div>
+      <div class="popular-items" id="popular-items" aria-label="Filtros rápidos por categoria e destaque"></div>
     </section>
 
     <section class="sticky-filters" aria-label="Filtros de ofertas">
@@ -136,7 +142,7 @@
   <script src="navigation.js"></script>
   <script src="site-version.js"></script>
   <script src="source-status.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261021-mobile"></script>
   <script src="offers-jsonld.js"></script>
   <script src="pwa.js"></script>
 </body>

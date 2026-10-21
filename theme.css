@@ -8,6 +8,10 @@
   --line: #303a33;
   --white: #1b241e;
   --shadow: 0 14px 44px #0006;
+  --topbar-bg: linear-gradient(180deg, #1b241e, #151e19);
+  --brand-tile: linear-gradient(135deg, #1f7a4e, #43b06f);
+  --pill-bg: #23392b;
+  --pill-ink: #b6e5bf;
 }
 
 :root[data-theme="dark"] body,
@@ -164,13 +168,13 @@
 }
 
 :root[data-theme="dark"] .favorite-toggle[aria-pressed="true"] {
-  background: #3b2326;
-  color: #ff7380;
+  background: #23392b;
+  color: #91d39f;
 }
 
 :root[data-theme="dark"] .favorite-toggle[aria-pressed="true"] svg {
-  fill: #ff7380;
-  stroke: #ff7380;
+  fill: #91d39f;
+  stroke: #91d39f;
 }
 
 :root[data-theme="dark"] .offer-note {
@@ -253,4 +257,42 @@
   .topbar-nav { gap: 4px; margin-right: 8px; }
   .topbar-nav a { padding-inline: 8px; }
   .theme-toggle { gap: 4px; padding-inline: 7px; }
+}
+
+:root[data-theme="dark"] .popular-item.active {
+  background: #28382d;
+  border-color: #3f5c46;
+  color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .popular-item.active small {
+  color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .build-version[open] summary {
+  background: #2f8a5c;
+  color: #fff;
+}
+
+:root[data-theme="dark"] .account-panel {
+  background: linear-gradient(120deg, #155b3b, #1f8a54 58%, #43b06f);
+  color: #fff;
+  border-color: transparent;
+}
+
+:root[data-theme="dark"] .account-panel-text strong {
+  color: #fff;
+}
+
+:root[data-theme="dark"] .account-panel-text span {
+  color: #dcf5e5;
+}
+
+:root[data-theme="dark"] .account-panel .account-button {
+  background: #fff;
+  color: #155b3b;
+}
+
+:root[data-theme="dark"] .account-panel .account-status {
+  color: #cdeadb;
 }

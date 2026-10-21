@@ -1,4 +1,4 @@
-import { errorMessage, getCurrentUser, signIn, signUp } from "./account";
+import { errorMessage, getCurrentUser, signIn, signInWithGoogle, signUp } from "./account";
 import { bindThemeToggle } from "./theme";
 
 bindThemeToggle();
@@ -11,6 +11,7 @@ const description = document.querySelector<HTMLParagraphElement>("#auth-descript
 const submitButton = document.querySelector<HTMLButtonElement>("#auth-submit")!;
 const switchLabel = document.querySelector<HTMLSpanElement>("#auth-switch-label")!;
 const modeToggle = document.querySelector<HTMLButtonElement>("#auth-mode-toggle")!;
+const googleButton = document.querySelector<HTMLButtonElement>("#google-signin")!;
 const status = document.querySelector<HTMLParagraphElement>("#auth-status")!;
 
 let creatingAccount = false;
@@ -50,6 +51,21 @@ function updateMode(): void {
 modeToggle.addEventListener("click", () => {
   creatingAccount = !creatingAccount;
   updateMode();
+});
+
+googleButton.addEventListener("click", async () => {
+  googleButton.disabled = true;
+  setStatus("Abrindo o login do Google…");
+
+  try {
+    await signInWithGoogle(getReturnPath());
+  } catch (error) {
+    const message = errorMessage(error);
+    setStatus(/provider|not enabled|not configured/i.test(message)
+      ? "O login com Google ainda não está disponível. Use seu e-mail e senha."
+      : `Não foi possível entrar com o Google: ${message}`);
+    googleButton.disabled = false;
+  }
 });
 
 form.addEventListener("submit", async (event: SubmitEvent) => {

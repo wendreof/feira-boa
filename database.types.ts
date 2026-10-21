@@ -138,6 +138,20 @@ export interface Database {
         Update: never;
         Relationships: [];
       };
+      admin_users: {
+        Row: {
+          user_id: string;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          created_at?: string;
+        };
+        Update: {
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       offer_reactions: {
         Row: {
           user_id: string;
@@ -162,6 +176,23 @@ export interface Database {
       get_offer_reaction_counts: {
         Args: Record<string, never>;
         Returns: { offer_id: string; likes: number; dislikes: number }[];
+      };
+      is_admin: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
+      get_admin_alert_stats: {
+        Args: Record<string, never>;
+        Returns: {
+          window_days: number;
+          sent: number;
+          failed: number;
+          users_with_alerts: number;
+          rules_total: number;
+          rules_enabled: number;
+          subscriptions_total: number;
+          last_sent_at: string | null;
+        }[];
       };
     };
     Enums: Record<string, never>;

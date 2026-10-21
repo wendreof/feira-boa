@@ -9,6 +9,8 @@ interface SourceStatus {
   lastSuccessAt?: string;
   error?: boolean;
   needsReview?: boolean;
+  store?: string | null;
+  branch?: string | null;
 }
 
 declare global {

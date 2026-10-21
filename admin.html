@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f1">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Operação — Feira Boa</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="theme-bootstrap.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="auth-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
+  </header>
+  <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
+    <nav class="sidebar-nav" aria-label="Navegação principal">
+      <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
+      <a class="sidebar-link" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
+      <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Entrar"><span aria-hidden="true">◉</span><span data-account-label>Minha conta</span></a>
+      <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
+    </nav>
+    <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
+  </aside>
+  <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu" tabindex="-1"></button>
+
+  <main class="auth-main account-settings-main">
+    <a class="back-link" href="index.html">← Voltar para as ofertas</a>
+    <section class="auth-card account-settings-card" aria-labelledby="admin-title">
+      <p class="eyebrow"><span class="pulse"></span> Operação</p>
+      <h1 id="admin-title">Painel de operação</h1>
+      <p class="auth-description">Visão somente leitura do catálogo, das fontes oficiais e do resultado agregado dos alertas.</p>
+      <p id="admin-status" class="account-status" role="status" aria-live="polite">Verificando acesso…</p>
+
+      <section class="preferences-section" aria-labelledby="admin-catalog-title" id="admin-catalog" hidden>
+        <h2 id="admin-catalog-title">Catálogo de ofertas</h2>
+        <div class="admin-stat-grid" id="admin-catalog-stats"></div>
+        <h3>Lojas e validade</h3>
+        <div class="source-list" id="admin-stores"></div>
+      </section>
+
+      <section class="preferences-section" aria-labelledby="admin-sources-title" id="admin-sources" hidden>
+        <h2 id="admin-sources-title">Fontes oficiais</h2>
+        <p class="preferences-help">Última verificação registrada pelo monitor de fontes.</p>
+        <div class="source-list" id="admin-source-list"></div>
+      </section>
+
+      <section class="preferences-section" aria-labelledby="admin-alerts-title" id="admin-alerts" hidden>
+        <h2 id="admin-alerts-title">Alertas de preço (30 dias)</h2>
+        <p class="preferences-help">Somente contagens agregadas. Nenhum dado de usuário é exposto.</p>
+        <div class="admin-stat-grid" id="admin-alert-stats"></div>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Painel interno de operação.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <script src="navigation.js"></script>
+  <script src="site-version.js"></script>
+  <script src="source-status.js"></script>
+  <script src="admin.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>

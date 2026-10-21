@@ -59,6 +59,20 @@ export async function signIn(email: string, password: string): Promise<User> {
   return data.user;
 }
 
+/**
+ * Inicia o login com Google. O navegador é redirecionado para o provedor e
+ * volta para `login.html`, que conclui a sessão e segue para o destino salvo.
+ */
+export async function signInWithGoogle(returnTo: string): Promise<void> {
+  const redirectTo = new URL("login.html", window.location.origin);
+  redirectTo.searchParams.set("returnTo", returnTo);
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: redirectTo.toString() },
+  });
+  if (error) throw error;
+}
+
 export async function signUp(email: string, password: string): Promise<{ user: User | null; confirmationRequired: boolean }> {
   const { data, error } = await supabase.auth.signUp({ email, password });
   if (error) throw error;

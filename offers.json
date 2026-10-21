@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-21T17:14:58.198Z",
+  "updatedAt": "2026-10-21T18:23:23.026Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -18680,7 +18680,7 @@
       "productTypes": [
         "Frios"
       ],
-      "price": 15.59,
+      "price": 14.99,
       "previousPrice": null,
       "icon": "🍖",
       "tone": "#edf4e9",

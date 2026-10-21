@@ -41,6 +41,22 @@ interface CardRefs {
 const feedStatus = document.querySelector<HTMLParagraphElement>("#feed-status")!;
 const feedRetry = document.querySelector<HTMLButtonElement>("#feed-retry")!;
 const resultsAnnouncement = document.querySelector<HTMLParagraphElement>("#results-announcement")!;
+const topbar = document.querySelector<HTMLElement>(".topbar")!;
+
+// O cabeçalho encolhe ao rolar para liberar espaço na tela.
+const compactQuery = window.matchMedia("(max-width: 760px)");
+let compactPending = false;
+function updateCompactTopbar(): void {
+  if (compactPending) return;
+  compactPending = true;
+  window.requestAnimationFrame(() => {
+    compactPending = false;
+    topbar.classList.toggle("is-compact", window.scrollY > 40);
+  });
+}
+window.addEventListener("scroll", updateCompactTopbar, { passive: true });
+compactQuery.addEventListener?.("change", updateCompactTopbar);
+
 const reactionLoginDialog = document.querySelector<HTMLDialogElement>("#reaction-login-dialog")!;
 const reactionLoginCancel = document.querySelector<HTMLButtonElement>("#reaction-login-cancel")!;
 const reactionLoginContinue = document.querySelector<HTMLButtonElement>("#reaction-login-continue")!;
@@ -550,8 +566,10 @@ function showFeedError(): void {
   function renderStoreFilters(): void {
     const today = todayInSaoPaulo();
     const counts = new Map<string, number>();
+    let total = 0;
     for (const offer of offers) {
       if (!isActive(offer, today)) continue;
+      total += 1;
       counts.set(offer.store, (counts.get(offer.store) ?? 0) + 1);
     }
     const ordered = [...storeNames].sort((a, b) => {
@@ -560,7 +578,7 @@ function showFeedError(): void {
       return (counts.get(b) ?? 0) - (counts.get(a) ?? 0);
     });
     storeFilters.replaceChildren(...ordered.map((store) => {
-      const count = counts.get(store) ?? 0;
+      const count = store === "Todas as lojas" ? total : (counts.get(store) ?? 0);
       const disabled = store !== "Todas as lojas" && count === 0;
       const button = element("button", `filter${store === activeStore ? " active" : ""}`, `${store} · ${count}`);
       button.type = "button";

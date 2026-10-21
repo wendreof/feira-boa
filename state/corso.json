@@ -9,7 +9,7 @@
     "from": "2026-10-16",
     "to": "2026-10-22"
   },
-  "fetchedAt": "2026-10-20T22:51:23.530Z",
+  "fetchedAt": "2026-10-21T00:58:24.285Z",
   "sourceUrl": "https://corso.com.br/jornalfrente.php",
   "flyerHash": "1792149520",
   "offers": [
@@ -1086,9 +1086,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Açougue e peixaria",
+      "productType": "Peixes",
       "productTypes": [
-        "Açougue e peixaria"
+        "Peixes"
       ],
       "price": 33.8,
       "previousPrice": null,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T22:51:33.641Z",
+  "updatedAt": "2026-10-21T00:58:39.665Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5053,11 +5053,11 @@
       "name": "Salgadinho Doritos Pizza",
       "brand": "Soltecn",
       "detail": "78g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -8663,6 +8663,30 @@
       "price": 22.99,
       "previousPrice": null,
       "icon": "🪥",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "id": "paguemenos-escova-dental-colgate-pro-cuidado-sensitive-colgate-2-unidades-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Escova Dental Pro Cuidado Sensitive",
+      "brand": "Colgate",
+      "detail": "2 Unidades",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 18.99,
+      "previousPrice": null,
+      "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -12309,7 +12333,7 @@
         "Mercearia"
       ],
       "price": 17.99,
-      "previousPrice": 21.19,
+      "previousPrice": 19.99,
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -17300,11 +17324,11 @@
       "name": "Macarrão Meu Menu Fettuccine Ao Molho Bolonhesa",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -19394,11 +19418,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar com Calabresa",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19418,11 +19442,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar com Bacon",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19442,11 +19466,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19466,11 +19490,11 @@
       "name": "Macarrão Hot Bowls com Mini Almôndegas",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -22233,8 +22257,8 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 2.99,
-      "previousPrice": 3.89,
+      "price": 3.99,
+      "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -22569,8 +22593,8 @@
       "productTypes": [
         "Sucos e bebidas"
       ],
-      "price": 9.99,
-      "previousPrice": null,
+      "price": 8.99,
+      "previousPrice": 10.39,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -26904,30 +26928,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-escova-dental-colgate-pro-cuidado-sensitive-colgate-2-unidades-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Escova Dental Pro Cuidado Sensitive",
-      "brand": "Colgate",
-      "detail": "2 Unidades",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "price": 18.99,
-      "previousPrice": null,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "spasso-cerveja-amstel-lager-amstel-lata-350-ml-2026-10-13",
       "store": "Spasso Sabores",
       "storeLogo": "https://spassosabores.com.br/wp-content/uploads/2021/01/logo-site-spasso-sabores-supermercados.png",
@@ -29159,9 +29159,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Açougue e peixaria",
+      "productType": "Peixes",
       "productTypes": [
-        "Açougue e peixaria"
+        "Peixes"
       ],
       "price": 33.8,
       "previousPrice": null,

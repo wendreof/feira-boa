@@ -48,6 +48,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.
+- The login page supports e-mail/password and Google OAuth (`signInWithGoogle` in `account.ts`); the Google provider itself must be enabled in the Supabase console, and the Google client ID/secret never live in the frontend.
 - Browser-only guest favorites remain in local storage.
 - Signed-in data is stored in Supabase tables with RLS protection.
 - `supabase-config.ts` contains only the public publishable key.

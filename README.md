@@ -31,6 +31,19 @@ Run every migration in order for a new environment before enabling account sync,
 
 The app remains browsable without an account. Guest theme choices are saved in the current browser; signed-in theme choices sync through `profiles.preferences`. Until the migrations and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
 
+### Login with Google
+
+`login.html` offers "Continuar com Google" next to the e-mail form. The button calls `supabase.auth.signInWithOAuth` with the Google provider and returns to `login.html?returnTo=…`; the saved destination is validated as a same-origin path before the redirect, and the session is completed by the Supabase client (`detectSessionInUrl`).
+
+Enabling it is a Supabase console setup, not a code change:
+
+1. In Google Cloud Console, create an OAuth 2.0 Web client and add the Supabase callback URL `https://<project-ref>.supabase.co/auth/v1/callback` as an authorized redirect URI.
+2. In Supabase → Authentication → Sign In / Providers → Google, enable the provider and paste the Google client ID and client secret.
+3. In Supabase → Authentication → URL Configuration, set the Site URL to the deployed site and add `https://feira-boa.pages.dev/login.html` (plus `http://localhost:4173/login.html` for local work) to the redirect allow list.
+4. In Authentication → Providers, keep email/password enabled: Google sign-in creates the same account rows, and the `on_auth_user_created_profile` trigger creates the profile automatically.
+
+If the provider is not enabled, the button reports that Google sign-in is unavailable and the e-mail form keeps working.
+
 ## Operations dashboard (admin)
 
 `admin.html` is a read-only operations view for trusted maintainers: offer totals and validity per store, source verification status, and aggregate alert-delivery counters. It never shows emails, saved preferences, push endpoints, or notification payloads.

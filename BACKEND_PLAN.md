@@ -72,11 +72,11 @@ Add database migrations and RLS policies. A signed-in user may read, create, upd
 
 ### Phase 6 — Admin access and operations view
 
-**Status:** planned; begin with read-only access for trusted maintainers.
+**Status:** implemented as a read-only view; live verification of the allowlist and the aggregate RPC remains.
 
-- Add a private admin view for offer counts and validity, per-store source status and freshness, recent import/monitor runs, and aggregate alert-delivery outcomes. Keep the public offer catalog available without an account.
-- Exclude customer email addresses, saved preferences, push endpoints, encryption keys, and message payloads from the admin dashboard. Show only aggregate operational data unless a specific support workflow later requires more.
-- Treat authorization as a backend responsibility: use a protected admin role or server-validated claim, enforce it in Supabase RLS and Edge Functions, and never grant admin access through a client-side flag or editable user metadata.
+- `admin.html` / `admin-page.ts` show offer totals and validity per store, source verification status, and aggregate alert-delivery counters. Customer emails, saved preferences, push endpoints, encryption keys, and message payloads are never exposed.
+- Authorization is a server-side allowlist: `public.admin_users` (migration `202610210001_admin_access.sql`) plus the `is_admin` RPC. There is no client-side flag and no editable user metadata path to admin rights. The `get_admin_alert_stats` RPC re-checks the allowlist before returning counts.
+- The page is `noindex`, is not in the sitemap, and shows an authorization message without loading any data when the signed-in account is not allowlisted.
 - Start read-only. If offer editing or source-review actions are added later, require server-side validation and an audit record identifying the admin, action, affected record, and time. Keep service-role credentials out of the browser.
 - Before launch, test that ordinary users cannot load admin data or invoke admin actions, and that an admin can access only the intended operational view.
 

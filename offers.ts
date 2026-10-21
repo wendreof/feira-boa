@@ -1,5 +1,10 @@
 // Offer transcriptions from stores' public flyers and official offer pages.
 // Prices are in BRL. Dates are inclusive; source links point to the original offer source.
+//
+// This catalog is a DEVELOPMENT FALLBACK ONLY. Production offers come from the
+// adapters and the snapshots in `state/`; the build never mixes this outdated
+// data with fresh snapshots. Keep the dates here roughly current for local
+// work, and refresh the flyer URLs when a campaign rotates.
 import type { Offer, OfferSource } from "./types";
 
 // Update when the manually curated offer data below changes.
@@ -11,9 +16,9 @@ export const offerSources = {
     branch: "Durval Nicolau",
     logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
     source: "Folheto oficial · Durval Nicolau",
-    sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/12c6dae5-141f-4b0c-8068-67f752874a71-campanha-575-crop-baixa%283%29.pdf",
-    from: "2026-10-15",
-    to: "2026-10-18"
+    sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa%283%29.pdf",
+    from: "2026-10-19",
+    to: "2026-10-21"
   },
   bigbom: {
     name: "Big Bom",

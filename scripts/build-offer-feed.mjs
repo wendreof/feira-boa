@@ -48,9 +48,12 @@ try {
   // State directory doesn't exist yet
 }
 
-// Assemble stores and offers: prefer snapshots, fall back to offers.ts per store
+// Assemble stores and offers: prefer snapshots. The curated `offers.ts` catalog
+// is a development fallback only; publishing it next to fresh snapshots would
+// mix outdated prices and expired validity dates into the live feed.
 const storeMap = new Map();
 const allOffers = [];
+const hasSnapshots = snapshotsByStore.size > 0;
 
 // Index fallback stores
 for (const store of fallbackCatalog.stores) {
@@ -63,16 +66,29 @@ const fallbackByStore = Map.groupBy(fallbackCatalog.offers, (o) => o.store);
 // For each known store, use snapshot if available with offers, otherwise fallback
 const allStoreNames = new Set([...storeMap.keys(), ...[...snapshotsByStore.values()].map((s) => s.store.name)]);
 const snapshotOfferIds = new Set();
+const missingSnapshotStores = [];
 
 for (const storeName of allStoreNames) {
   const snapshot = [...snapshotsByStore.values()].find((s) => s.store.name === storeName || s.storeId === storeName);
-  if (snapshot && snapshot.offers.length > 0) {
+  if (snapshot) {
+    // A snapshot vale mesmo com zero ofertas: a loja continua visível e a
+    // falta de ofertas fica aparente como condição de saúde da fonte.
     storeMap.set(snapshot.store.name, snapshot.store);
-    for (const offer of snapshot.offers) snapshotOfferIds.add(offer.id);
-    allOffers.push(...snapshot.offers);
+    for (const offer of snapshot.offers) {
+      snapshotOfferIds.add(offer.id);
+      allOffers.push(offer);
+    }
   } else if (fallbackByStore.has(storeName)) {
-    allOffers.push(...fallbackByStore.get(storeName));
+    if (hasSnapshots) {
+      missingSnapshotStores.push(storeName);
+    } else {
+      allOffers.push(...fallbackByStore.get(storeName));
+    }
   }
+}
+
+if (missingSnapshotStores.length > 0) {
+  console.warn(`Skipped outdated fallback catalog for: ${missingSnapshotStores.join(", ")}.`);
 }
 
 const stores = [...storeMap.values()];

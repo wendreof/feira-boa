@@ -36,7 +36,7 @@ Finish the Feira Boa hardening work while preserving product behavior:
 - Pague Menos source status was reviewed with `needs_review:false`; Spasso changed and remains under review. Last successes are around `2026-10-20T20:43Z`.
 - No generated offer has the legacy `Geral` department; current feed IDs also satisfy the new reaction ID shape.
 - `offers.ts` fallback still contains the old Sempre Vale `12c6dae5...campanha-575` campaign and 15-18 dates. Snapshots override it, but it is stale.
-- `lojas.html` also lists Forte Mix; it is not one of the five monitored flyer sources.
+- `lojas.html` also lists Forte Mix and other local stores; they are now explicitly flagged as "Sem ofertas coletadas" because they are not monitored offer sources.
 
 ## Completed
 
@@ -153,12 +153,18 @@ Latest checks passed:
 
 ### Product Decisions
 
-- Decide whether to replace the stale `offers.ts` Sempre fallback metadata or guarantee a snapshot is always present.
-- Decide whether a large-feed strategy is needed later (incremental “load more” or virtualized cards); the current 1,240-card render is under one second in desktop Chrome.
+- ~~Decide whether to replace the stale `offers.ts` fallback metadata or guarantee a snapshot is always present.~~ **Done:** the curated catalog is now a development fallback only. The build publishes it only when no snapshot exists at all, so an outdated flyer can never mix with fresh prices. The Sempre Vale fallback metadata was refreshed to the current campaign for local work.
+- Decide whether a large-feed strategy is needed later (incremental "load more" or virtualized cards); the current 1,240-card render is under one second in desktop Chrome.
 - Confirm that Pague Menos online collection prices and the `Loja 33` branch label match the intended physical-store audience.
 - Decide whether ESLint/Prettier are worth adding; no linter was added. Current gate is TypeScript + esbuild + Node tests.
 - Optional: add `pg_cron` cleanup if Supabase enables it, instead of insert-triggered suggestion retention.
 - Optional: add real push enable/disable and authenticated-account QA once Supabase test credentials exist.
+
+### Operations dashboard
+
+- `admin.html` + `admin-page.ts` implement the read-only Phase 6 view: catalog totals and validity per store, source verification status, and aggregate alert-delivery counters.
+- Access is granted through the `public.admin_users` allowlist (migration `202610210001_admin_access.sql`) and checked server-side through the `is_admin` and `get_admin_alert_stats` RPCs. No user data is exposed.
+- Still to verify live: grant an allowlist row, confirm a non-admin account is refused, and confirm the aggregate counters match the sender's own reports.
 
 ## Known Constraints and Risks
 

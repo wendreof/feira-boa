@@ -17,7 +17,7 @@ The catalog is assembled from official store sources by the adapters in `scripts
 
 ## Run locally
 
-The app uses TypeScript for offer data and browser interactions. Run `npm ci`, `npm run build`, and `npm test` before shipping. `offers.json` prefers the latest snapshots in `state/` and falls back to the curated data in `offers.ts` for stores without a snapshot. `npm run ingest:offers` fetches official sources and updates snapshots; `npm run monitor:sources` records source health. The site footer shows the semantic version, commit, build time, and whether local changes were present. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+The app uses TypeScript for offer data and browser interactions. Run `npm ci`, `npm run build`, and `npm test` before shipping. `offers.json` is built from the latest snapshots in `state/`; the curated data in `offers.ts` is a development fallback and is only published when no snapshot exists at all, so outdated prices never mix with fresh ones. `npm run ingest:offers` fetches official sources and updates snapshots; `npm run monitor:sources` records source health. The site footer shows the semantic version, commit, build time, and whether local changes were present. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
 
 ## Supabase accounts
 
@@ -25,11 +25,30 @@ Email accounts are optional and use the dedicated `login.html` page. Guest favor
 
 Run every migration in order for a new environment before enabling account sync, suggestions, and offer votes:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `202610180002_favorite_product_types.sql`, `202610180003_theme_preference.sql`, `202610180004_suggestions.sql`, `202610180005_offer_reactions.sql`, `202610180006_offer_reaction_permissions.sql`, `202610200001_suggestion_retention.sql`, and `202610200002_account_caps.sql` in the project SQL Editor.
+1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `202610180002_favorite_product_types.sql`, `202610180003_theme_preference.sql`, `202610180004_suggestions.sql`, `202610180005_offer_reactions.sql`, `202610180006_offer_reaction_permissions.sql`, `202610200001_suggestion_retention.sql`, `202610200002_account_caps.sql`, and `202610210001_admin_access.sql` in the project SQL Editor.
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
 3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
 
 The app remains browsable without an account. Guest theme choices are saved in the current browser; signed-in theme choices sync through `profiles.preferences`. Until the migrations and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
+
+## Operations dashboard (admin)
+
+`admin.html` is a read-only operations view for trusted maintainers: offer totals and validity per store, source verification status, and aggregate alert-delivery counters. It never shows emails, saved preferences, push endpoints, or notification payloads.
+
+Access is granted by an explicit allowlist table, never by a client-side flag or editable user metadata:
+
+```sql
+-- grant access
+insert into public.admin_users (user_id)
+select id from auth.users where email = 'voce@exemplo.com';
+
+-- revoke access
+delete from public.admin_users where user_id = (
+  select id from auth.users where email = 'voce@exemplo.com'
+);
+```
+
+The page asks Supabase for the signed-in session and then calls the `is_admin` RPC; without an allowlisted account it shows an authorization message and loads no data. The aggregate counters come from the `get_admin_alert_stats` RPC, which re-checks the allowlist on the server. The page is `noindex` and is not part of the sitemap.
 
 The account page saves favorite stores/product types, theme, price alert rules, pause state, and optional browser push subscriptions. Push permission is requested only after the user chooses to enable it and confirms the alert contents. `service-worker.js` displays incoming alerts and opens the linked offer. The VAPID public key is safe to include in `supabase-config.ts`; the private key is kept only in the ignored local `supabase/functions/.env` during development. Move the private key to GitHub Actions Secrets before enabling the production sender.
 

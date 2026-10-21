@@ -8,6 +8,7 @@ const requiredFiles = [
   "account-alerts.html",
   "account-favorites.html",
   "account-stores.html",
+  "admin.html",
   "suggestions.html",
   "offline.html",
   "styles.css",
@@ -22,6 +23,7 @@ const requiredFiles = [
   "login.js",
   "account.js",
   "suggestions.js",
+  "admin.js",
   "offers.json",
   "build-info.json",
   "service-worker.js",
@@ -70,7 +72,7 @@ if (manifest) {
   if (!sizes.has("192x192") || !sizes.has("512x512")) failures.push("manifest.webmanifest: missing icon sizes");
 }
 
-for (const file of ["index.html", "lojas.html", "login.html", "account.html", "suggestions.html"]) {
+for (const file of ["index.html", "lojas.html", "login.html", "account.html", "suggestions.html", "admin.html"]) {
   try {
     const html = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
     if (!html.includes('src="theme-bootstrap.js"')) failures.push(`${file}: missing theme bootstrap`);

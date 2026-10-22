@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-21T21:34:04.092Z",
+  "fetchedAt": "2026-10-22T17:13:42.963Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -1034,7 +1034,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 19.99,
+      "price": 20.99,
       "previousPrice": 30.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -1058,7 +1058,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 19.99,
+      "price": 20.99,
       "previousPrice": 30.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -1082,7 +1082,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 19.99,
+      "price": 20.99,
       "previousPrice": 30.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -1106,7 +1106,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 19.99,
+      "price": 20.99,
       "previousPrice": 30.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -1130,8 +1130,8 @@
       "productTypes": [
         "Café"
       ],
-      "price": 36.99,
-      "previousPrice": null,
+      "price": 19.99,
+      "previousPrice": 36.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -1202,8 +1202,8 @@
       "productTypes": [
         "Café"
       ],
-      "price": 36.99,
-      "previousPrice": null,
+      "price": 19.99,
+      "previousPrice": 36.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -1514,7 +1514,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 28.99,
+      "price": 27.99,
       "previousPrice": 39.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -1538,7 +1538,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 28.99,
+      "price": 27.99,
       "previousPrice": 39.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2090,7 +2090,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2114,7 +2114,7 @@
       "productTypes": [
         "Bebidas alcoólicas"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2138,7 +2138,7 @@
       "productTypes": [
         "Doces e snacks"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2186,7 +2186,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2234,7 +2234,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 27.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2258,7 +2258,7 @@
       "productTypes": [
         "Café"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2282,7 +2282,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2306,7 +2306,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2330,7 +2330,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 27.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2354,7 +2354,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2378,7 +2378,7 @@
       "productTypes": [
         "Doces e snacks"
       ],
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 27.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2450,8 +2450,8 @@
       "productTypes": [
         "Bebidas alcoólicas"
       ],
-      "price": 14.89,
-      "previousPrice": null,
+      "price": 11.99,
+      "previousPrice": 14.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2474,8 +2474,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.89,
-      "previousPrice": null,
+      "price": 11.99,
+      "previousPrice": 14.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2498,8 +2498,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.89,
-      "previousPrice": null,
+      "price": 11.99,
+      "previousPrice": 14.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2522,7 +2522,7 @@
       "productTypes": [
         "Congelados"
       ],
-      "price": 9.89,
+      "price": 9.99,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -2714,8 +2714,8 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.89,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 15.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2786,8 +2786,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 14.99,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 14.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2882,8 +2882,8 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 14.79,
-      "previousPrice": null,
+      "price": 12.99,
+      "previousPrice": 14.79,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2906,8 +2906,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 14.79,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 14.79,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2930,8 +2930,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.99,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 14.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2954,8 +2954,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.99,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 14.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2978,8 +2978,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 14.79,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 14.79,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3026,8 +3026,8 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 14.49,
-      "previousPrice": null,
+      "price": 12.99,
+      "previousPrice": 14.49,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3146,8 +3146,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.89,
-      "previousPrice": null,
+      "price": 11.99,
+      "previousPrice": 14.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3194,8 +3194,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 14.99,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 15.89,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3218,8 +3218,8 @@
       "productTypes": [
         "Hortifruti"
       ],
-      "price": 21.49,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 21.49,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3435,8 +3435,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 21.49,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 21.49,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3747,8 +3747,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 27.99,
-      "previousPrice": null,
+      "price": 20.9,
+      "previousPrice": 27.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3771,8 +3771,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 27.99,
-      "previousPrice": null,
+      "price": 20.9,
+      "previousPrice": 27.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3795,8 +3795,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 27.99,
-      "previousPrice": null,
+      "price": 20.9,
+      "previousPrice": 27.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -4710,30 +4710,6 @@
       "price": 3.49,
       "previousPrice": 4.29,
       "icon": "🎂",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-cookie-piraque-original-gotas-de-chocolate-piraque-80g-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Cookie Piraquê Original + Gotas de Chocolate",
-      "brand": "Piraque",
-      "detail": "80g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
-      "productTypes": [
-        "Bebidas alcoólicas"
-      ],
-      "price": 3.69,
-      "previousPrice": 4.79,
-      "icon": "🍪",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",
@@ -6254,30 +6230,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-desinfetante-pinho-sol-lavanda-leve-500ml-pague-pinho-sol-450ml-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Desinfetante Pinho Sol Lavanda Leve 500ml Pague",
-      "brand": "Pinho Sol",
-      "detail": "450ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
-      "productTypes": [
-        "Lavanderia e limpeza"
-      ],
-      "price": 9.89,
-      "previousPrice": null,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-desinfetante-pinho-sol-limao-pinho-sol-1-75l-2026-10-19",
       "store": "Pague Menos",
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
@@ -6459,8 +6411,8 @@
       "productTypes": [
         "Bebidas alcoólicas"
       ],
-      "price": 15.99,
-      "previousPrice": 17.99,
+      "price": 17.99,
+      "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -6771,8 +6723,8 @@
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 12.99,
-      "previousPrice": null,
+      "price": 6.69,
+      "previousPrice": 12.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7467,8 +7419,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 31.89,
-      "previousPrice": null,
+      "price": 20.09,
+      "previousPrice": 31.89,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7491,8 +7443,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 31.89,
-      "previousPrice": null,
+      "price": 20.09,
+      "previousPrice": 31.89,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7515,8 +7467,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 31.89,
-      "previousPrice": null,
+      "price": 20.09,
+      "previousPrice": 31.89,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7659,8 +7611,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 23.99,
-      "previousPrice": null,
+      "price": 15.19,
+      "previousPrice": 23.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7683,8 +7635,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 38.99,
-      "previousPrice": null,
+      "price": 26.39,
+      "previousPrice": 38.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7731,8 +7683,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 12.59,
-      "previousPrice": null,
+      "price": 8.49,
+      "previousPrice": 12.59,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7779,8 +7731,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 17.69,
+      "previousPrice": 22.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7899,8 +7851,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 22.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -7947,8 +7899,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 22.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8091,8 +8043,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 14.69,
-      "previousPrice": null,
+      "price": 8.79,
+      "previousPrice": 14.69,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8115,8 +8067,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 14.69,
-      "previousPrice": null,
+      "price": 8.79,
+      "previousPrice": 14.69,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8403,8 +8355,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 15.99,
-      "previousPrice": null,
+      "price": 10.79,
+      "previousPrice": 15.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8427,8 +8379,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 15.99,
-      "previousPrice": null,
+      "price": 10.79,
+      "previousPrice": 15.99,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8979,8 +8931,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 6.79,
-      "previousPrice": null,
+      "price": 4.09,
+      "previousPrice": 6.79,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9364,7 +9316,7 @@
         "Mercearia"
       ],
       "price": 6.99,
-      "previousPrice": 8.49,
+      "previousPrice": 8.69,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9483,7 +9435,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 12.99,
+      "price": 10.99,
       "previousPrice": 14.99,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -10443,8 +10395,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 12.99,
-      "previousPrice": 21.59,
+      "price": 21.59,
+      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10515,8 +10467,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 20.99,
-      "previousPrice": 31.75,
+      "price": 31.75,
+      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11019,8 +10971,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 7.99,
-      "previousPrice": 11.99,
+      "price": 11.99,
+      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11043,8 +10995,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 7.99,
-      "previousPrice": 12.39,
+      "price": 12.39,
+      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11739,7 +11691,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 4.99,
+      "price": 3.99,
       "previousPrice": 5.49,
       "icon": "🌾",
       "tone": "#edf4e9",
@@ -12027,7 +11979,7 @@
       "productTypes": [
         "Doces e snacks"
       ],
-      "price": 4.99,
+      "price": 4.29,
       "previousPrice": 5.99,
       "icon": "🍪",
       "tone": "#edf4e9",
@@ -12195,7 +12147,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 17.89,
+      "price": 17.99,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -12483,8 +12435,8 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 19.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 19.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12507,8 +12459,8 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 19.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 19.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12531,8 +12483,8 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 19.99,
-      "previousPrice": null,
+      "price": 15.99,
+      "previousPrice": 19.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12555,8 +12507,8 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 21.99,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 21.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12579,8 +12531,8 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 21.99,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 21.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -13995,8 +13947,8 @@
       "productTypes": [
         "Frango"
       ],
-      "price": 17.99,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 17.99,
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14311,7 +14263,7 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 6.99,
+      "price": 3.99,
       "previousPrice": 7.99,
       "icon": "🧂",
       "tone": "#edf4e9",
@@ -14359,7 +14311,7 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 6.99,
+      "price": 9.99,
       "previousPrice": 12.99,
       "icon": "🧂",
       "tone": "#edf4e9",
@@ -14383,7 +14335,7 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 6.99,
+      "price": 9.99,
       "previousPrice": 12.99,
       "icon": "🧂",
       "tone": "#edf4e9",
@@ -15369,8 +15321,8 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 10.29,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 10.29,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -15393,8 +15345,8 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 18.99,
-      "previousPrice": null,
+      "price": 16.99,
+      "previousPrice": 18.99,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -15417,8 +15369,8 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 10.29,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 10.29,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -15441,8 +15393,8 @@
       "productTypes": [
         "Manteiga"
       ],
-      "price": 10.29,
-      "previousPrice": null,
+      "price": 9.99,
+      "previousPrice": 10.29,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -15949,7 +15901,7 @@
         "Frios",
         "Churrasco"
       ],
-      "price": 13.99,
+      "price": 15.89,
       "previousPrice": 16.99,
       "icon": "🌭",
       "tone": "#edf4e9",
@@ -16336,7 +16288,7 @@
         "Frios"
       ],
       "price": 4.59,
-      "previousPrice": 5.19,
+      "previousPrice": 4.89,
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16551,8 +16503,8 @@
       "productTypes": [
         "Congelados"
       ],
-      "price": 17.99,
-      "previousPrice": null,
+      "price": 12.99,
+      "previousPrice": 17.99,
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16599,8 +16551,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 17.99,
-      "previousPrice": null,
+      "price": 12.99,
+      "previousPrice": 17.99,
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16647,8 +16599,8 @@
       "productTypes": [
         "Queijos e requeijão"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 13.99,
+      "previousPrice": 22.99,
       "icon": "🍕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -18248,30 +18200,6 @@
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
       "branch": "Loja 33 · Jardim Santo André",
       "name": "Limpador Multiuso Veja Power Fusion Limão",
-      "brand": "Veja",
-      "detail": "500ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
-      "productTypes": [
-        "Lavanderia e limpeza"
-      ],
-      "price": 9.99,
-      "previousPrice": 11.69,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-limpador-multiuso-veja-power-fusion-laranja-veja-500ml-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Limpador Multiuso Veja Power Fusion Laranja",
       "brand": "Veja",
       "detail": "500ml",
       "category": "Casa e limpeza",
@@ -20584,7 +20512,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 16.99,
+      "price": 15.99,
       "previousPrice": 18.99,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -20608,7 +20536,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 16.99,
+      "price": 15.99,
       "previousPrice": 18.99,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -20632,7 +20560,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 16.99,
+      "price": 15.99,
       "previousPrice": 18.99,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -20656,7 +20584,7 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 16.99,
+      "price": 15.99,
       "previousPrice": 18.99,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -20968,7 +20896,7 @@
       "productTypes": [
         "Leites"
       ],
-      "price": 16.99,
+      "price": 15.95,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -21016,8 +20944,8 @@
       "productTypes": [
         "Leites"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 13.99,
+      "previousPrice": 16.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21040,8 +20968,8 @@
       "productTypes": [
         "Leites"
       ],
-      "price": 16.99,
-      "previousPrice": null,
+      "price": 13.99,
+      "previousPrice": 16.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21256,8 +21184,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 24.99,
-      "previousPrice": null,
+      "price": 17.49,
+      "previousPrice": 24.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21328,8 +21256,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21352,8 +21280,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21376,8 +21304,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21400,8 +21328,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21424,8 +21352,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21448,8 +21376,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 22.99,
-      "previousPrice": null,
+      "price": 18.49,
+      "previousPrice": 22.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21712,8 +21640,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21736,8 +21664,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21760,8 +21688,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21784,8 +21712,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21808,8 +21736,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21832,8 +21760,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21856,8 +21784,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 33.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -21904,8 +21832,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 44.99,
-      "previousPrice": null,
+      "price": 35.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -22000,8 +21928,8 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 58.9,
-      "previousPrice": null,
+      "price": 39.99,
+      "previousPrice": 58.9,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -23067,30 +22995,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-cereal-kellogg-s-musli-maca-e-passas-kellogg-s-270g-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Cereal Kellogg's Musli Maçã e Passas",
-      "brand": "Kellogg's",
-      "detail": "270g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
-      "productTypes": [
-        "Hortifruti"
-      ],
-      "price": 20.99,
-      "previousPrice": null,
-      "icon": "🌾",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-cereal-kellogg-s-sucrilhos-original-kellogg-s-510g-2026-10-19",
       "store": "Pague Menos",
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
@@ -23608,7 +23512,7 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 22.99,
+      "price": 24.99,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -23691,30 +23595,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-caldo-knorr-galinha-knorr-152g-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Caldo Knorr Galinha",
-      "brand": "Knorr",
-      "detail": "152g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 7.19,
-      "previousPrice": null,
-      "icon": "🍲",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-pack-ketchup-hellmann-s-tradicional-380g-hellmann-s-2-unidades-2026-10-19",
       "store": "Pague Menos",
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
@@ -23728,8 +23608,8 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 26.27,
-      "previousPrice": null,
+      "price": 19.39,
+      "previousPrice": 26.27,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -23800,8 +23680,8 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 15.99,
-      "previousPrice": null,
+      "price": 11.39,
+      "previousPrice": 15.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

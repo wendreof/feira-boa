@@ -181,6 +181,18 @@ export interface Database {
         Args: Record<string, never>;
         Returns: boolean;
       };
+      get_admin_account_stats: {
+        Args: Record<string, never>;
+        Returns: {
+          total_accounts: number;
+          google_accounts: number;
+          email_accounts: number;
+          accounts_with_alerts: number;
+          accounts_with_push: number;
+          new_accounts_7d: number;
+          new_accounts_30d: number;
+        }[];
+      };
       get_admin_alert_stats: {
         Args: Record<string, never>;
         Returns: {

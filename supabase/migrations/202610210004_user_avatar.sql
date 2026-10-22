@@ -30,12 +30,9 @@ insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_typ
 select 'avatars', 'avatars', true, 2097152, array['image/png','image/jpeg','image/webp']
 where not exists (select 1 from storage.buckets where id = 'avatars');
 
-alter table storage.objects enable row level security;
-
--- Signed-out visitors can only read avatars; uploads require an account.
-revoke insert, update, delete on storage.objects from anon;
-grant select on storage.objects to anon, authenticated;
-grant insert, update, delete on storage.objects to authenticated;
+-- Hosted Supabase owns storage.objects as supabase_storage_admin and enables
+-- RLS by default; ALTER TABLE / GRANT on it now fails with 42501. The Storage
+-- API manages its own grants, so only the policies below belong here.
 
 -- Everyone can read avatars.
 drop policy if exists "Anyone can read avatars" on storage.objects;

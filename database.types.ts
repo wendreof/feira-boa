@@ -133,10 +133,14 @@ export interface Database {
           message: string;
           status: "new" | "reviewed" | "closed";
           created_at: string;
+          user_id: string | null;
+          honeypot: string;
         };
         Insert: {
           category: "idea" | "bug" | "content" | "other";
           message: string;
+          user_id: string;
+          honeypot?: string;
         };
         Update: never;
         Relationships: [];

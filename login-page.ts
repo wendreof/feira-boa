@@ -6,6 +6,7 @@ bindThemeToggle();
 const form = document.querySelector<HTMLFormElement>("#auth-form")!;
 const emailInput = document.querySelector<HTMLInputElement>("#auth-email")!;
 const passwordInput = document.querySelector<HTMLInputElement>("#auth-password")!;
+const passwordToggle = document.querySelector<HTMLButtonElement>("#auth-password-toggle")!;
 const title = document.querySelector<HTMLHeadingElement>("#auth-title")!;
 const description = document.querySelector<HTMLParagraphElement>("#auth-description")!;
 const submitButton = document.querySelector<HTMLButtonElement>("#auth-submit")!;
@@ -36,6 +37,13 @@ function getReturnPath(): string {
   return "index.html";
 }
 
+function setPasswordVisibility(visible: boolean): void {
+  passwordInput.type = visible ? "text" : "password";
+  passwordToggle.setAttribute("aria-label", visible ? "Ocultar senha" : "Mostrar senha");
+  passwordToggle.setAttribute("aria-pressed", String(visible));
+  passwordToggle.textContent = visible ? "Ocultar" : "Mostrar";
+}
+
 function updateMode(): void {
   title.textContent = creatingAccount ? "Crie sua conta grátis." : "Bem-vindo de volta.";
   description.textContent = creatingAccount
@@ -45,8 +53,13 @@ function updateMode(): void {
   switchLabel.textContent = creatingAccount ? "Já tem uma conta?" : "Ainda não tem conta?";
   modeToggle.textContent = creatingAccount ? "Entrar" : "Criar conta grátis";
   passwordInput.autocomplete = creatingAccount ? "new-password" : "current-password";
+  setPasswordVisibility(false);
   setStatus("");
 }
+
+passwordToggle.addEventListener("click", () => {
+  setPasswordVisibility(passwordInput.type === "password");
+});
 
 modeToggle.addEventListener("click", () => {
   creatingAccount = !creatingAccount;

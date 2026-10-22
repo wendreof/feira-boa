@@ -4,6 +4,8 @@ import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { assignIcon, classifyProduct, normalizeOfferPresentation } from "./adapters/common.mjs";
+import { sectorViolations } from "./offer-sector-guard.mjs";
+import { resolveCategory } from "../catalog-taxonomy.mjs";
 
 const { outputFiles } = await build({
   entryPoints: [fileURLToPath(new URL("../offers.ts", import.meta.url))],
@@ -101,8 +103,9 @@ for (const offer of offers) {
     // Snapshots keep the icon captured at ingest time; refresh it so rule changes apply without re-ingesting.
     offer.icon = assignIcon(offer.name, offer.productType, offer.department);
   }
-  if (offer.department !== "Geral" && offer.productType !== "Geral") continue;
-  const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros");
+  // Re-derive the taxonomy from the store's own category so a classification
+  // fix lands on every offer without waiting for the next ingestion.
+  const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros", offer.storeCategory ?? "");
   offer.category = taxonomy.department;
   offer.department = taxonomy.department;
   offer.productType = taxonomy.productType;
@@ -118,6 +121,7 @@ for (const store of stores) {
   }
 }
 if (storeUrls.size !== stores.length) throw new Error("Duplicate store source URL in offer catalog.");
+const sectorProblems = [];
 for (const offer of offers) {
   if (!offer.id || ids.has(offer.id)) throw new Error(`Missing or duplicate offer ID: ${offer.id}`);
   if (!offer.name || !offer.store || !offer.detail || !offer.productType || !Array.isArray(offer.productTypes) || !offer.productTypes.includes(offer.productType)) {
@@ -130,7 +134,13 @@ for (const offer of offers) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(offer.validFrom) || !/^\d{4}-\d{2}-\d{2}$/.test(offer.validTo) || offer.validFrom > offer.validTo) {
     throw new Error(`Offer has invalid validity dates: ${offer.id}`);
   }
+  const sector = resolveCategory(offer);
+  const text = `${offer.name} ${offer.brand ?? ""}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  sectorProblems.push(...sectorViolations(offer.name, offer.brand ?? "", sector.groupId, text));
   ids.add(offer.id);
+}
+if (sectorProblems.length > 0) {
+  throw new Error(`Offers are in the wrong sector:\n- ${sectorProblems.slice(0, 20).join("\n- ")}`);
 }
 
 const feed = { schemaVersion: 1, updatedAt: offersUpdatedAt, stores, offers };

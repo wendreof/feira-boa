@@ -156,7 +156,7 @@ export async function extractCorso(customUrl = null) {
   const offers = [];
 
   for (const item of rawOffers) {
-    const taxonomy = classifyProduct(item.name, item.brand, item.cat);
+    const taxonomy = classifyProduct(item.name, item.brand, item.cat, item.cat);
     const icon = assignIcon(item.name, taxonomy.productType, taxonomy.department);
 
     const offer = {
@@ -171,6 +171,7 @@ export async function extractCorso(customUrl = null) {
       department: taxonomy.department,
       productType: taxonomy.productType,
       productTypes: taxonomy.productTypes,
+      storeCategory: item.cat,
       price: item.price,
       previousPrice: item.oldPrice,
       icon,

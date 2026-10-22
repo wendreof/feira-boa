@@ -16,6 +16,7 @@ export interface Database {
           timezone: string;
           notifications_paused: boolean;
           preferences: Json;
+          avatar_path: string | null;
         };
         Insert: {
           user_id: string;
@@ -23,6 +24,7 @@ export interface Database {
           timezone?: string;
           notifications_paused?: boolean;
           preferences?: Json;
+          avatar_path?: string | null;
         };
         Update: {
           user_id?: string;
@@ -30,6 +32,7 @@ export interface Database {
           timezone?: string;
           notifications_paused?: boolean;
           preferences?: Json;
+          avatar_path?: string | null;
         };
         Relationships: [];
       };

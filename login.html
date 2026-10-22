@@ -44,7 +44,10 @@
         <label for="auth-email">E-mail</label>
         <input id="auth-email" name="email" type="email" placeholder="voce@exemplo.com" autocomplete="email" required>
         <label for="auth-password">Senha</label>
-        <input id="auth-password" name="password" type="password" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
+        <div class="password-field price-input">
+          <input id="auth-password" type="password" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
+          <button class="password-toggle text-button" id="auth-password-toggle" type="button" aria-label="Mostrar senha" aria-controls="auth-password" aria-pressed="false">Mostrar</button>
+        </div>
         <button class="account-button auth-submit" id="auth-submit" type="submit">Entrar</button>
       </form>
       <p class="auth-switch"><span id="auth-switch-label">Ainda não tem conta?</span> <button type="button" class="text-button" id="auth-mode-toggle">Criar conta grátis</button></p>

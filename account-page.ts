@@ -16,6 +16,7 @@ import type { OfferFeed, ProfilePreferences } from "./types";
 import { vapidPublicKey } from "./supabase-config";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { pushFailureMessage, resolvePushUiState } from "./push-state.js";
+import { avatarUrl, loadAvatar, removeAvatar, uploadAvatar } from "./avatar";
 
 const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
@@ -36,6 +37,11 @@ const pushContext = document.querySelector<HTMLElement>("#push-context");
 const pushFeedback = document.querySelector<HTMLElement>("#push-feedback");
 const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push");
 const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push");
+const avatarImage = document.querySelector<HTMLImageElement>("#avatar-image");
+const avatarPlaceholder = document.querySelector<HTMLElement>("#avatar-placeholder");
+const avatarFile = document.querySelector<HTMLInputElement>("#avatar-file");
+const avatarSaveButton = document.querySelector<HTMLButtonElement>("#avatar-save");
+const avatarRemoveButton = document.querySelector<HTMLButtonElement>("#avatar-remove");
 
 let userId = "";
 let preferences: ProfilePreferences;
@@ -44,6 +50,7 @@ let preferencesLoaded = false;
 let pendingTheme: ThemePreference | null = null;
 let accountPushEnabled = false;
 let devicePushEnabled = false;
+let avatarPath: string | null = null;
 
 bindThemeToggle((theme) => {
   pendingTheme = theme;
@@ -90,6 +97,26 @@ function setPushFeedback(message = ""): void {
 
 function setStatus(message: string): void {
   status.textContent = message;
+}
+
+function renderAvatar(): void {
+  if (avatarImage) {
+    if (avatarPath) {
+      avatarImage.src = avatarUrl(avatarPath);
+      avatarImage.hidden = false;
+    } else {
+      avatarImage.removeAttribute("src");
+      avatarImage.hidden = true;
+    }
+  }
+  if (avatarPlaceholder) avatarPlaceholder.hidden = Boolean(avatarPath);
+  if (avatarRemoveButton) avatarRemoveButton.disabled = !avatarPath;
+}
+
+async function refreshAvatar(): Promise<void> {
+  const current = await loadAvatar(userId);
+  avatarPath = current.path;
+  renderAvatar();
 }
 
 function setActionsDisabled(disabled: boolean): void {
@@ -289,6 +316,45 @@ alertRulesList?.addEventListener("click", async (event) => {
   }
 });
 
+avatarSaveButton?.addEventListener("click", async () => {
+  const file = avatarFile?.files?.[0];
+  if (!file) {
+    setStatus("Escolha uma imagem para enviar.");
+    return;
+  }
+  avatarSaveButton.disabled = true;
+  setStatus("Enviando a foto do perfil…");
+  try {
+    avatarPath = await uploadAvatar(userId, file, avatarPath);
+    if (avatarFile) avatarFile.value = "";
+    renderAvatar();
+    setStatus("Foto do perfil atualizada.");
+  } catch (error) {
+    setStatus(`Não foi possível enviar a foto: ${errorMessage(error)}`);
+  } finally {
+    avatarSaveButton.disabled = false;
+  }
+});
+
+avatarRemoveButton?.addEventListener("click", async () => {
+  if (!avatarPath) {
+    setStatus("Você ainda não tem uma foto do perfil.");
+    return;
+  }
+  avatarRemoveButton.disabled = true;
+  setStatus("Removendo a foto do perfil…");
+  try {
+    await removeAvatar(userId, avatarPath);
+    avatarPath = null;
+    if (avatarFile) avatarFile.value = "";
+    setStatus("Foto do perfil removida.");
+  } catch (error) {
+    setStatus(`Não foi possível remover a foto: ${errorMessage(error)}`);
+  } finally {
+    renderAvatar();
+  }
+});
+
 notificationsPaused?.addEventListener("change", async () => {
   notificationsPaused.disabled = true;
   try {
@@ -378,6 +444,9 @@ void getCurrentUser()
     }
     userId = user.id;
     email.textContent = user.email ?? "E-mail não disponível";
+    await refreshAvatar().catch((error: unknown) => {
+      console.warn("Could not load the profile avatar.", error);
+    });
     const [settings, response] = await Promise.all([
       loadAccountSettings(user.id),
       fetch("offers.json").then(async (result) => {

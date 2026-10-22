@@ -183,6 +183,11 @@
 .auth-switch{margin:18px 0 5px;text-align:center;color:var(--muted);font-size:12px}
 .text-button{border:0;padding:0;background:none;color:var(--green);font:750 12px 'DM Sans',sans-serif;cursor:pointer}
 .text-button:hover{text-decoration:underline;text-underline-offset:3px}
+.password-field{position:relative;gap:0}
+.password-field input{padding-right:78px}
+.password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);padding:5px 7px;border-radius:6px;line-height:1;text-decoration:none}
+.password-toggle:hover{background:var(--mint);text-decoration:none}
+.password-toggle:focus-visible{outline:3px solid #155b3b35;outline-offset:1px}
 .auth-status{min-height:19px;margin:8px 0 0;color:var(--green);font-size:12px;text-align:center}
 .auth-divider{margin-top:16px;padding-top:15px;border-top:1px solid #edf0ec;text-align:center;color:#7b877e;font-size:11px}
 @media(max-width:760px){.topbar-nav{margin-right:7px;gap:2px}.topbar-nav a{padding:8px 9px;font-size:12px}}

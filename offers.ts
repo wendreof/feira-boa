@@ -8,7 +8,7 @@
 import type { Offer, OfferSource } from "./types";
 
 // Update when the manually curated offer data below changes.
-export const offersUpdatedAt = "2026-10-18T04:41:00.000Z";
+export const offersUpdatedAt = "2026-10-23T00:00:00.000Z";
 
 export const offerSources = {
   sempre: {
@@ -16,9 +16,9 @@ export const offerSources = {
     branch: "Durval Nicolau",
     logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
     source: "Folheto oficial · Durval Nicolau",
-    sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa%283%29.pdf",
-    from: "2026-10-19",
-    to: "2026-10-21"
+    sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa%283%29.pdf",
+    from: "2026-10-22",
+    to: "2026-10-25"
   },
   bigbom: {
     name: "Big Bom",
@@ -26,8 +26,8 @@ export const offerSources = {
     logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
     source: "Folheto oficial · São João da Boa Vista",
     sourceUrl: "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    from: "2026-10-13",
-    to: "2026-10-15"
+    from: "2026-10-19",
+    to: "2026-10-22"
   },
   paguemenos: {
     name: "Pague Menos",
@@ -35,8 +35,8 @@ export const offerSources = {
     logo: "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
     source: "Ofertas online oficiais · Loja 33",
     sourceUrl: "https://www.superpaguemenos.com.br/ofertas?productclusterids=161",
-    from: "2026-10-16",
-    to: "2026-10-18"
+    from: "2026-10-19",
+    to: "2026-10-25"
   },
   spasso: {
     name: "Spasso Sabores",
@@ -102,7 +102,7 @@ function makeOffer(storeId: StoreId, name: string, brand: string, detail: string
   const store = offerSources[storeId];
   const taxonomy = classifyProduct(name, brand, category);
   return {
-    id: `${storeId}-${slug(`${name}-${brand}-${detail}-${validity?.from || (special ? "2026-10-16" : store.from)}`)}`,
+    id: `${storeId}-${slug(`${name}-${brand}-${detail}-${validity?.from || (special ? "2026-10-22" : store.from)}`)}`,
     store: store.name,
     storeLogo: store.logo,
     branch: store.branch,
@@ -116,8 +116,8 @@ function makeOffer(storeId: StoreId, name: string, brand: string, detail: string
     icon,
     tone: "#edf4e9",
     note,
-    validFrom: validity?.from || (special ? "2026-10-16" : store.from),
-    validTo: validity?.to || (special ? "2026-10-17" : store.to),
+    validFrom: validity?.from || (special ? "2026-10-22" : store.from),
+    validTo: validity?.to || (special ? "2026-10-25" : store.to),
     source: store.source,
     sourceUrl: store.sourceUrl
   };

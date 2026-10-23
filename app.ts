@@ -176,6 +176,7 @@ function showFeedError(): void {
   const topbarAccount = document.querySelector<HTMLAnchorElement>("#topbar-account");
   const topbarAccountImage = document.querySelector<HTMLImageElement>("#topbar-account-image");
   const topbarAccountFallback = document.querySelector<HTMLElement>("#topbar-account-fallback");
+  const topbarHello = document.querySelector<HTMLElement>("#topbar-hello");
   const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
   const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
   const mobileNavOffersLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-offers")!;
@@ -286,8 +287,14 @@ function showFeedError(): void {
       topbarAccount.hidden = !signedIn;
       topbarAccount.setAttribute("href", "account.html");
       topbarAccount.setAttribute("aria-label", "Minha conta");
+      if (signedIn) {
+        // Default person icon until the photo loads (or if there is none).
+        if (!topbarAccountImage?.src) renderTopbarAvatar(null);
+      } else {
+        renderTopbarAvatar(null);
+      }
     }
-    if (!signedIn) renderTopbarAvatar(null);
+    if (topbarHello && !signedIn) topbarHello.hidden = true;
     accountDescription.textContent = signedIn
       ? "Seus favoritos já estão sincronizados com a sua conta."
       : "Entre ou crie uma conta grátis para salvar seus favoritos.";
@@ -317,6 +324,17 @@ function showFeedError(): void {
     } catch (error) {
       console.warn("Could not load the topbar avatar.", error);
       renderTopbarAvatar(null);
+    }
+    try {
+      const { loadDisplayName } = await import("./account");
+      const name = await loadDisplayName(userId);
+      if (topbarHello) {
+        topbarHello.textContent = name ? `Olá, ${name}!` : "";
+        topbarHello.hidden = !name;
+      }
+    } catch (error) {
+      console.warn("Could not load the display name.", error);
+      if (topbarHello) topbarHello.hidden = true;
     }
   }
 

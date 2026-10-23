@@ -9,10 +9,10 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-23T17:36:37.848Z",
-    "last_success_at": "2026-10-23T17:36:37.848Z",
+    "checked_at": "2026-10-23T19:16:36.539Z",
+    "last_success_at": "2026-10-23T19:16:36.539Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0": {
     "url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
@@ -20,14 +20,15 @@
     "branch": "Loja 33 · Jardim Santo André",
     "store_id": "pague-menos",
     "store_key": "pague-menos-loja-33-jardim-santo-andre",
-    "sha256": "423b3ec5fafb243b279fca46064e74a41522c860b84d6d845e8e74ab1b653671",
+    "catalog_total": 1039,
+    "week_window": "2026-10-19/2026-10-25",
     "status": 200,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-23T17:36:40.880Z",
-    "last_success_at": "2026-10-23T17:36:40.880Z",
+    "checked_at": "2026-10-23T19:16:36.763Z",
+    "last_success_at": "2026-10-23T19:16:36.763Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf": {
     "url": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
@@ -39,10 +40,10 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
-    "checked_at": "2026-10-23T17:36:41.054Z",
-    "last_success_at": "2026-10-23T14:57:04.453Z",
-    "last_error": "TypeError",
-    "needs_review": true
+    "checked_at": "2026-10-23T19:16:37.555Z",
+    "last_success_at": "2026-10-23T19:16:37.555Z",
+    "last_error": null,
+    "needs_review": false
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
     "url": "https://spassosabores.com.br/ofertas-sao-joao/",
@@ -50,12 +51,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "98b8caf3f17aad2880da940a86fcda86c70fffb68839c5e28da26121992347a7",
+    "sha256": "1e2c9a7c75c32c9cc052e253682b2925d72ff2ebf2712bc7f1e75d1a38ee7798",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-23T17:37:16.360Z",
-    "last_success_at": "2026-10-23T17:37:16.360Z",
+    "checked_at": "2026-10-23T19:16:38.527Z",
+    "last_success_at": "2026-10-23T19:16:38.527Z",
     "last_error": null,
     "needs_review": true
   },
@@ -69,9 +70,9 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-23T17:37:17.714Z",
-    "last_success_at": "2026-10-23T17:37:17.714Z",
+    "checked_at": "2026-10-23T19:16:38.674Z",
+    "last_success_at": "2026-10-23T19:16:38.674Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   }
 }

@@ -18,35 +18,50 @@ export async function extractBigBom(customUrl = null) {
 
   // Extract dates
   const dateMatch = fullText.match(/OFERTAS V[AÁ]LIDAS DE\s*([^\n\r]+)/i);
-  const validity = parseDateRange(dateMatch ? dateMatch[1] : "", 2026) || { from: "2026-10-19", to: "2026-10-22" };
+  const validity = parseDateRange(dateMatch ? dateMatch[1] : "", 2026);
+  if (!validity) throw new Error("Could not read the Big Bom flyer validity dates.");
 
-  // Page 1 contains the product grid
-  const page1 = fullText.split(/--\s*1 of \d+\s*--/i)[0];
-  const cleaned = page1.replace(/^[\s\S]*?(?:ESTOQUES\.|OFERTAS V[AÁ]LIDAS[^\n]+)/i, "").trim();
-
-  // Find all prices
   const priceRegex = /R\$\s*(\d+)\s*[,.]\s*(\d{2})/g;
-  let matches = [];
-  let m;
-  while ((m = priceRegex.exec(cleaned)) !== null) {
-    matches.push({
-      str: m[0],
-      price: parseFloat(`${m[1]}.${m[2]}`),
-      index: m.index,
-      length: m[0].length,
-    });
+
+  function segmentPrices(text) {
+    const matches = [];
+    let match;
+    priceRegex.lastIndex = 0;
+    while ((match = priceRegex.exec(text)) !== null) {
+      matches.push({
+        price: parseFloat(`${match[1]}.${match[2]}`),
+        index: match.index,
+        length: match[0].length,
+      });
+    }
+    const segments = [];
+    let lastIndex = 0;
+    for (const priced of matches) {
+      segments.push({
+        text: text.slice(lastIndex, priced.index).trim(),
+        price: priced.price,
+      });
+      lastIndex = priced.index + priced.length;
+    }
+    return segments;
   }
 
-  let rawSegments = [];
-  let lastIndex = 0;
-  for (let i = 0; i < matches.length; i++) {
-    const textSegment = cleaned.substring(lastIndex, matches[i].index).trim();
-    rawSegments.push({
-      text: textSegment,
-      price: matches[i].price,
-    });
-    lastIndex = matches[i].index + matches[i].length;
+  // Older flyers keep a banner ("... ESTOQUES." / "OFERTAS VÁLIDAS ...") above a
+  // single first-page grid. Newer ones spread the grid over several pages, label
+  // each section (DESTAQUES / COMBOS / OFERTAS) and end pages with the validity
+  // line, so the legacy strip would wipe the whole page. Process every page and
+  // keep whichever form still contains prices; text after the last price of a
+  // page (footers, addresses, legal) is dropped by construction.
+  function pageSegments(pageText) {
+    const legacyStripped = pageText.replace(/^[\s\S]*?(?:ESTOQUES\.|OFERTAS V[AÁ]LIDAS[^\n]+)/i, "").trim();
+    const legacy = legacyStripped === pageText.trim() ? [] : segmentPrices(legacyStripped);
+    if (legacy.length > 0) return legacy;
+    return segmentPrices(pageText.replace(/^\s*(?:DESTAQUES|COMBOS|OFERTAS)\b/i, "").trim());
   }
+
+  const rawSegments = fullText
+    .split(/--\s*\d+ of \d+\s*--/i)
+    .flatMap((page) => pageSegments(page));
 
   const offers = [];
 
@@ -66,7 +81,7 @@ export async function extractBigBom(customUrl = null) {
     }
 
     // Promotional condition clauses
-    const isConditionOnly = /^(?:NESTA OFERTA|A UNID\.?\s*SAI\s*POR|POR)\b/i.test(text);
+    const isConditionOnly = /^(?:NESTA (?:OFERTA|EMBALAGEM)|A UNID\.?\s*SAI\s*POR|POR)\b/i.test(text);
 
     if (isConditionOnly) {
       if (offers.length > 0) {
@@ -77,10 +92,14 @@ export async function extractBigBom(customUrl = null) {
       continue;
     }
 
+    // Size-price tables (e.g. "72 70 60 ... P M G XG") leak into the segment of
+    // the next product on some grids; drop that leading run before the name.
+    text = text.replace(/^(?:(?:\d{1,3}|XXXG|XXG|XG|[PMG])\s+)+/i, "").trim();
+
     const parts = text.split(/\s*\|\s*|\s*\n\s*/).filter(Boolean);
     const fullName = parts.join(" ");
 
-    const unitMatch = fullName.match(/(?:(?:Lata\s+)?\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l|unids?\.?)|kg|unid\.?)$/i);
+    const unitMatch = fullName.match(/(?:(?:Lata\s+)?\d+(?:[.,]\d+)?(?:\s*\/\s*\d+(?:[.,]\d+)?)?\s*(?:kg|g|ml|l|unids?\.?)|kg|unid\.?)$/i);
     const detail = unitMatch ? unitMatch[0].trim() : "Unidade";
     const nameOnly = fullName.replace(new RegExp(`\\s*${detail.replace(".", "\\.")}\\s*$`, "i"), "").trim();
 

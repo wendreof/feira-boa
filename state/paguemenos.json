@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-23T17:36:34.240Z",
+  "fetchedAt": "2026-10-23T19:16:22.880Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -2252,7 +2252,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 15.99,
+      "price": 24.99,
       "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -2303,7 +2303,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 24.99,
-      "previousPrice": 27.99,
+      "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20288,7 +20288,7 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 9.59,
+      "price": 8.79,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -20313,7 +20313,7 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 9.89,
+      "price": 9.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -20363,7 +20363,7 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 9.89,
+      "price": 9.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -20463,8 +20463,8 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 3.99,
-      "previousPrice": null,
+      "price": 2.99,
+      "previousPrice": 3.89,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20739,7 +20739,7 @@
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Suco",
       "price": 8.99,
-      "previousPrice": 9.99,
+      "previousPrice": 10.39,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -20939,7 +20939,7 @@
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Suco",
       "price": 8.99,
-      "previousPrice": 9.99,
+      "previousPrice": 10.39,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

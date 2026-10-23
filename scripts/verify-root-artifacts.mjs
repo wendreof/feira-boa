@@ -11,6 +11,8 @@ const requiredFiles = [
   "admin.html",
   "suggestions.html",
   "termos.html",
+  "onesignal/OneSignalSDK.page.es6.js",
+  "onesignal/OneSignalSDKWorker.js",
   "offline.html",
   "styles.css",
   "theme.css",
@@ -88,7 +90,7 @@ for (const file of ["index.html", "lojas.html", "login.html", "account.html", "s
 try {
   const worker = await readFile(new URL("../service-worker.js", import.meta.url), "utf8");
   if (!worker.includes('addEventListener("fetch"')) failures.push("service-worker.js: missing fetch handler");
-  if (!worker.includes('addEventListener("push"') && !worker.includes("OneSignalSDK.worker.js")) {
+  if (!worker.includes('addEventListener("push"') && !worker.includes("OneSignalSDK")) {
     failures.push("service-worker.js: missing push handler or OneSignal worker");
   }
 } catch {

@@ -65,8 +65,9 @@ test("site health check validates public HTML and data files", async () => {
     if (url.pathname.endsWith("offers.json")) return Response.json(feed);
     if (url.pathname.endsWith("build-info.json")) return Response.json(buildInfo);
     if (url.pathname.endsWith("manifest.webmanifest")) return Response.json(manifest);
-    if (url.pathname.endsWith("service-worker.js")) return new Response('self.addEventListener("fetch", () => {}); self.addEventListener("push", () => {});');
+    if (url.pathname.endsWith("service-worker.js")) return new Response('self.addEventListener("fetch", () => {}); importScripts("/onesignal/OneSignalSDKWorker.js");');
     if (url.pathname.endsWith("source-status.js")) return new Response("window.FEIRA_SOURCE_STATUS = {};");
+    if (url.pathname.includes("/onesignal/")) return new Response("/* OneSignal SDK */", { status: 200, headers: { "content-type": "text/javascript" } });
     return new Response("<!doctype html><title>Feira Boa</title>", {
       status: 200,
       headers: {
@@ -81,7 +82,7 @@ test("site health check validates public HTML and data files", async () => {
   };
   assert.deepEqual(await checkSiteHealth("https://feira.example/", fetchStub, { now, requireSecurityHeaders: true }), {
     host: "feira.example",
-    filesChecked: 6,
+    filesChecked: 8,
     offers: 1,
     commit: "abc1234",
     feedUpdatedAt: "2026-10-18T14:00:00Z",

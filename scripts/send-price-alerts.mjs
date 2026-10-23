@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
-import webpush from "web-push";
 import {
   MAX_SOURCE_AGE_MS,
   formatOfferPrice,
@@ -17,9 +16,8 @@ const dryRun = process.argv.includes("--dry-run");
 const requiredEnvironment = [
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
-  "VAPID_PUBLIC_KEY",
-  "VAPID_PRIVATE_KEY",
-  "VAPID_SUBJECT",
+  "ONESIGNAL_APP_ID",
+  "ONESIGNAL_REST_API_KEY",
   "SITE_URL",
 ];
 const missingEnvironment = requiredEnvironment.filter((name) => !process.env[name]);
@@ -30,10 +28,51 @@ if (missingEnvironment.length > 0) {
 const siteUrl = new URL(process.env.SITE_URL);
 if (siteUrl.protocol !== "https:") throw new Error("SITE_URL must use HTTPS.");
 
-webpush.setVapidDetails(process.env.VAPID_SUBJECT, process.env.VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY);
+const onesignalAppId = process.env.ONESIGNAL_APP_ID;
+const onesignalRestApiKey = process.env.ONESIGNAL_REST_API_KEY;
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
+
+/**
+ * Envia uma notificação via OneSignal para o usuário (alias external_id = user id).
+ * Returns recipients count; throws on HTTP/API errors. recipients === 0 means
+ * the user has no subscribed device (callers should skip, not fail).
+ */
+async function sendOneSignalNotification({ userId, title, body, url, collapseId }) {
+  const response = await fetch("https://api.onesignal.com/api/v1/notifications", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${onesignalRestApiKey}`,
+    },
+    body: JSON.stringify({
+      app_id: onesignalAppId,
+      include_aliases: { external_id: [userId] },
+      channel_for_external_user_ids: "push",
+      headings: { en: title, pt: title },
+      contents: { en: body, pt: body },
+      url,
+      data: { url },
+      collapse_id: collapseId,
+      ttl: 60 * 60 * 24,
+    }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const detail = Array.isArray(data?.errors) ? data.errors.join("; ") : JSON.stringify(data);
+    const error = new Error(`OneSignal HTTP ${response.status}: ${detail}`);
+    error.onesignalStatus = response.status;
+    throw error;
+  }
+  if (Array.isArray(data?.errors) && data.errors.length > 0) {
+    const text = data.errors.join("; ");
+    const noRecipients = /not subscribed|no players|no recipients/i.test(text);
+    if (noRecipients) return 0;
+    throw new Error(`OneSignal API error: ${text}`);
+  }
+  return Number(data?.recipients ?? 0);
+}
 
 function chunk(values, size) {
   const chunks = [];
@@ -93,8 +132,6 @@ const userIds = [...new Set(rules.map((rule) => rule.user_id))];
 const profiles = await readRowsIn(() => supabase.from("profiles")
   .select("user_id, notifications_paused"), "user_id", userIds, ["user_id"]);
 const activeUserIds = new Set(profiles.filter((profile) => !profile.notifications_paused).map((profile) => profile.user_id));
-const subscriptions = await readRowsIn(() => supabase.from("push_subscriptions")
-  .select("id, user_id, endpoint, p256dh, auth_key"), "user_id", userIds, ["id"]);
 const matchedByUser = new Map();
 for (const rule of rules) {
   if (!activeUserIds.has(rule.user_id)) continue;
@@ -129,15 +166,12 @@ for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
     .in("offer_id", matchedOfferIds), ["user_id", "offer_id"]));
 }
 const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
-const subscriptionGroups = Map.groupBy(subscriptions, (subscription) => subscription.user_id);
-const expiredSubscriptionIds = new Set();
 let notificationsSent = 0;
 let notificationsWouldSend = 0;
 let notificationsFailed = 0;
+let skippedNoDevice = 0;
 
 for (const [userId, userOffers] of matchedByUser) {
-  const userSubscriptions = subscriptionGroups.get(userId) ?? [];
-  if (userSubscriptions.length === 0) continue;
   for (const offer of userOffers.values()) {
     if (alreadySent.has(`${userId}:${offer.id}`)) continue;
     if (dryRun) {
@@ -145,26 +179,27 @@ for (const [userId, userOffers] of matchedByUser) {
       continue;
     }
     const offerUrl = new URL(`index.html?offer=${encodeURIComponent(offer.id)}`, siteUrl);
-    const payload = JSON.stringify({
-      title: `${offer.store}: oferta para você`,
-      body: `${offer.name} por ${formatOfferPrice(offer.price)} · válida até ${offer.validTo}.`,
-      url: offerUrl.href,
-      tag: `feira-${offer.id}`,
-    });
+    const title = `${offer.store}: oferta para você`;
+    const body = `${offer.name} por ${formatOfferPrice(offer.price)} · válida até ${offer.validTo}.`;
     let delivered = false;
     let safeErrorCode = null;
-    for (const subscription of userSubscriptions) {
-      try {
-        await webpush.sendNotification({
-          endpoint: subscription.endpoint,
-          keys: { p256dh: subscription.p256dh, auth: subscription.auth_key },
-        }, payload, { TTL: 60 * 60 * 24 });
-        delivered = true;
-      } catch (error) {
-        const statusCode = Number(error?.statusCode);
-        safeErrorCode = statusCode ? `push_${statusCode}` : "push_delivery_error";
-        if (statusCode === 404 || statusCode === 410) expiredSubscriptionIds.add(subscription.id);
+    try {
+      const recipients = await sendOneSignalNotification({
+        userId,
+        title,
+        body,
+        url: offerUrl.href,
+        collapseId: `feira-${offer.id}`,
+      });
+      if (recipients === 0) {
+        skippedNoDevice += 1;
+        continue;
       }
+      delivered = true;
+    } catch (error) {
+      const status = Number(error?.onesignalStatus);
+      safeErrorCode = status ? `onesignal_http_${status}` : "onesignal_api_error";
+      console.error(`OneSignal send failed for user ${userId} offer ${offer.id}: ${error.message}`);
     }
     const { error } = await supabase.from("notification_log").upsert({
       user_id: userId,
@@ -179,10 +214,6 @@ for (const [userId, userOffers] of matchedByUser) {
   }
 }
 
-for (const group of chunk([...expiredSubscriptionIds], IN_CHUNK_SIZE)) {
-  const { error } = await supabase.from("push_subscriptions").delete().in("id", group);
-  if (error) throw error;
-}
 console.log(JSON.stringify({
   date: today,
   feedUpdatedAt: feed.updatedAt,
@@ -193,6 +224,6 @@ console.log(JSON.stringify({
   notificationsSent,
   notificationsWouldSend,
   notificationsFailed,
-  expiredSubscriptionsRemoved: expiredSubscriptionIds.size,
+  skippedNoDevice,
   dryRun,
 }));

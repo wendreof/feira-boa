@@ -167,7 +167,7 @@ Latest checks passed:
    - Confirm `build-info.json` commit matches deployment.
    - Set the `SITE_URL` Actions variable.
    - Run production `check-site-health.mjs` with security headers.
-3. Configure required alert secrets only when ready: `SUPABASE_SERVICE_ROLE_KEY`, `VAPID_PRIVATE_KEY`.
+3. Configure required alert secrets only when ready: `SUPABASE_SERVICE_ROLE_KEY`, `ONESIGNAL_REST_API_KEY` (OneSignal replaces VAPID; App ID lives in `pwa.js`).
 
 ### Product Decisions
 

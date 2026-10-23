@@ -411,6 +411,15 @@ function showFeedError(): void {
         console.warn("Could not load saved offer reactions.", reactionError);
       }
       void refreshTopbarAvatar(userId);
+      void (async () => {
+        try {
+          const deferred = (window as { __feiraOneSignalReady?: Promise<{ login(id: string): Promise<void> } | null> }).__feiraOneSignalReady;
+          const oneSignal = await (deferred ?? Promise.resolve(null));
+          await oneSignal?.login(userId);
+        } catch (error) {
+          console.warn("Could not associate OneSignal with the account.", error);
+        }
+      })();
       renderOffers();
       setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
     } catch (error) {

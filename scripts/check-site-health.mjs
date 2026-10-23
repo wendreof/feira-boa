@@ -66,7 +66,9 @@ export async function checkSiteHealth(siteUrlValue, fetchImpl = fetch, {
   ])));
   if (!content["index.html"].toLowerCase().includes("feira boa")) throw new Error("index.html does not contain the Feira Boa site.");
   if (!content["service-worker.js"].includes('addEventListener("fetch"')) throw new Error("service-worker.js has no fetch handler.");
-  if (!content["service-worker.js"].includes('addEventListener("push"')) throw new Error("service-worker.js has no push handler.");
+  const swText = content["service-worker.js"];
+  const hasPushHandler = swText.includes('addEventListener("push"') || swText.includes("OneSignalSDK.worker.js");
+  if (!hasPushHandler) throw new Error("service-worker.js has no push handler or OneSignal worker.");
   if (!content["source-status.js"].includes("FEIRA_SOURCE_STATUS")) throw new Error("source-status.js is missing status data.");
   validateOfferFeed(content["offers.json"], { now, maxAgeMs: maxFeedAgeMs });
   validateBuildInfo(content["build-info.json"], { expectedCommit, requireClean });

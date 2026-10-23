@@ -59,9 +59,10 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `service-worker.js` handles push notifications.
 - Account push state is per device, while the backend flag is account-wide; copy must distinguish “Ativado neste dispositivo” from “Ativado em outro dispositivo.”
 - `push-state.js` owns notification control state and actionable error copy.
-- `scripts/send-price-alerts.mjs` sends alerts using VAPID credentials.
+- Push delivery uses OneSignal: the SDK init lives in `pwa.js` (App ID constant, Deferred queue, `window.__feiraOneSignalReady`), `service-worker.js` imports the OneSignal v16 worker and must not register its own `push` listener, and the account page associates the device with `OneSignal.login(userId)`.
+- `scripts/send-price-alerts.mjs` sends alerts through the OneSignal REST API, targeting users by `external_id` alias (= Supabase user id).
 - GitHub Actions monitors offer-source changes and can alert when a source changes.
-- Keep VAPID private keys and `SUPABASE_SERVICE_ROLE_KEY` in GitHub Actions secrets or local ignored env files, not in the repo.
+- Keep `ONESIGNAL_REST_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in GitHub Actions secrets or local ignored env files, not in the repo. The OneSignal App ID is public and lives in `pwa.js`.
 
 ## Important files
 
@@ -92,8 +93,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - Keep user-facing output brief, direct, and practical.
 
 ### Never do this
-- Do not commit Supabase service-role keys or database secrets to frontend files.
-- Do not hardcode private VAPID keys into the app or repo.
+- Do not commit Supabase service-role keys or OneSignal REST API keys to frontend files.
+- Do not add custom `push` listeners in `service-worker.js` (OneSignal owns push).
 - Do not edit generated JavaScript files as the primary fix path.
 - Do not add unrelated investigation or broad refactors when a targeted fix is enough.
 

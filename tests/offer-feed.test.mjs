@@ -27,6 +27,12 @@ test("every offer has a stable unique ID and valid price and dates", () => {
 
 test("barbecue offers also keep their primary product type", () => {
   const barbecueOffers = feed.offers.filter((offer) => offer.productTypes.includes("Churrasco"));
+  const meatTypes = new Set(["Carne bovina", "Carnes suínas", "Frango", "Frios", "Açougue e peixaria"]);
   assert.ok(barbecueOffers.length > 0);
-  assert.ok(barbecueOffers.some((offer) => offer.productType === "Carne bovina"));
+  for (const offer of barbecueOffers) {
+    assert.ok(offer.productTypes.includes(offer.productType), `${offer.id} lost its primary product type`);
+  }
+  // Data-rotating snapshots may drop a specific cut on any given day, so assert
+  // the span (meat primaries stay represented) instead of one exact product type.
+  assert.ok(barbecueOffers.some((offer) => meatTypes.has(offer.productType)));
 });

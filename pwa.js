@@ -12,8 +12,8 @@
       console.warn("Service worker registration failed.", error);
     });
 
-    // Official OneSignal v16 init via the Deferred queue. Pages await
-    // window.__feiraOneSignalReady (resolves to OneSignal or null).
+    // OneSignal v16 SDK is self-hosted (onesignal/) so ad blockers that hide
+    // cdn.onesignal.com cannot break push. Official Deferred init pattern.
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     let settleReady;
     const ready = new Promise((resolve) => { settleReady = resolve; });
@@ -31,9 +31,9 @@
     });
     window.__feiraOneSignalReady = ready;
 
-    if (!document.querySelector('script[src*="OneSignalSDK.page.js"]')) {
+    if (!document.querySelector('script[src*="OneSignalSDK"]')) {
       const script = document.createElement("script");
-      script.src = "https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";
+      script.src = "/onesignal/OneSignalSDK.page.es6.js";
       script.defer = true;
       script.onerror = () => {
         clearTimeout(timeout);

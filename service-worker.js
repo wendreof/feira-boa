@@ -2,10 +2,11 @@ const CACHE_NAME = "feira-boa-shell-v7";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 
 // OneSignal owns push display, click handling and subscription renewal.
+// The worker is self-hosted so ad blockers cannot break push via cdn.onesignal.com.
 try {
-  importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.worker.js");
+  importScripts("/onesignal/OneSignalSDKWorker.js");
 } catch (error) {
-  // Offline or blocked CDN: caching still works; push needs the next load.
+  // Offline or missing file: caching still works; push needs the next load.
   console.warn("OneSignal worker script unavailable.", error);
 }
 
@@ -25,6 +26,8 @@ const SHELL = [
   "/icons/icon-512.png",
   "/offers.json",
   "/source-status.js",
+  "/onesignal/OneSignalSDK.page.es6.js",
+  "/onesignal/OneSignalSDKWorker.js",
 ];
 const NETWORK_FIRST = ["/offers.json", "/source-status.js", "/build-info.json"];
 

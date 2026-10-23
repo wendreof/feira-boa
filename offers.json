@@ -59,9 +59,9 @@
       "detail": "Unidade",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carne bovina",
+        "Carnes suínas",
         "Churrasco"
       ],
       "price": 14.98,
@@ -1670,9 +1670,9 @@
       "detail": "140G",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.98,
@@ -4623,9 +4623,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Café",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Café"
+        "Doces e snacks"
       ],
       "price": 15.99,
       "previousPrice": 26.99,
@@ -11798,11 +11798,11 @@
       "name": "Ketchup Bacon com Cebola Caramelizada",
       "brand": "Heinz",
       "detail": "397g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Frios"
+        "Mercearia"
       ],
       "price": 12.99,
       "previousPrice": 16.99,
@@ -18382,9 +18382,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carne bovina"
+        "Carnes suínas"
       ],
       "price": 21.99,
       "previousPrice": null,
@@ -18406,9 +18406,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carne bovina"
+        "Carnes suínas"
       ],
       "price": 25.99,
       "previousPrice": null,

@@ -60,7 +60,10 @@ compactQuery.addEventListener?.("change", updateCompactTopbar);
 const reactionLoginDialog = document.querySelector<HTMLDialogElement>("#reaction-login-dialog")!;
 const reactionLoginCancel = document.querySelector<HTMLButtonElement>("#reaction-login-cancel")!;
 const reactionLoginContinue = document.querySelector<HTMLButtonElement>("#reaction-login-continue")!;
-let reactionLoginTrigger: HTMLButtonElement | null = null;
+const reactionLoginTitle = document.querySelector<HTMLElement>("#reaction-login-title")!;
+const reactionLoginDescription = document.querySelector<HTMLElement>("#reaction-login-description")!;
+let reactionLoginTrigger: HTMLElement | null = null;
+let pendingLoginCancel: (() => void) | null = null;
 
 feedRetry.addEventListener("click", () => window.location.reload());
 
@@ -71,14 +74,39 @@ function loginUrlForCurrentPage(): URL {
   return loginUrl;
 }
 
-function askForReactionLogin(trigger: HTMLButtonElement): void {
+type LoginIntent = "reaction" | "favorite";
+
+const LOGIN_INTENT_COPY: Record<LoginIntent, { title: string; description: string; confirm: string }> = {
+  reaction: {
+    title: "Entre para avaliar",
+    description: "Para curtir uma oferta, entre na sua conta. Seu voto fica salvo e ajuda outros compradores.",
+    confirm: "Entre ou crie uma conta para curtir esta oferta.",
+  },
+  favorite: {
+    title: "Entre para salvar favoritos",
+    description: "Para salvar ofertas nos favoritos, entre na sua conta. Tudo fica sincronizado entre os seus dispositivos.",
+    confirm: "Entre ou crie uma conta para salvar esta oferta nos favoritos.",
+  },
+};
+
+function askForLogin(trigger: HTMLElement, intent: LoginIntent, onCancel?: () => void): void {
+  const copy = LOGIN_INTENT_COPY[intent];
+  reactionLoginTitle.textContent = copy.title;
+  reactionLoginDescription.textContent = copy.description;
+  pendingLoginCancel = onCancel ?? null;
   if (typeof reactionLoginDialog.showModal !== "function") {
-    if (window.confirm("Entre ou crie uma conta para curtir esta oferta.")) {
+    pendingLoginCancel = null;
+    if (window.confirm(copy.confirm)) {
       window.location.assign(loginUrlForCurrentPage());
+    } else {
+      onCancel?.();
     }
     return;
   }
-  if (reactionLoginDialog.open) return;
+  if (reactionLoginDialog.open) {
+    pendingLoginCancel = null;
+    return;
+  }
   reactionLoginTrigger = trigger;
   reactionLoginDialog.showModal();
 }
@@ -86,6 +114,7 @@ function askForReactionLogin(trigger: HTMLButtonElement): void {
 reactionLoginCancel.addEventListener("click", () => reactionLoginDialog.close());
 reactionLoginContinue.addEventListener("click", () => {
   const loginUrl = loginUrlForCurrentPage();
+  pendingLoginCancel = null;
   reactionLoginDialog.close();
   window.location.assign(loginUrl);
 });
@@ -93,8 +122,11 @@ reactionLoginDialog.addEventListener("click", (event: MouseEvent) => {
   if (event.target === reactionLoginDialog) reactionLoginDialog.close();
 });
 reactionLoginDialog.addEventListener("close", () => {
+  const cancel = pendingLoginCancel;
+  pendingLoginCancel = null;
   if (reactionLoginTrigger?.isConnected) reactionLoginTrigger.focus();
   reactionLoginTrigger = null;
+  cancel?.();
 });
 
 function showFeedError(): void {
@@ -133,8 +165,8 @@ function showFeedError(): void {
   const emptyHelp = document.querySelector<HTMLSpanElement>("#empty-help")!;
   const resetButton = document.querySelector<HTMLButtonElement>("#reset-filters")!;
   const viewToggle = document.querySelector<HTMLDivElement>("#view-toggle")!;
-  const accountAccess = document.querySelector<HTMLAnchorElement>("#account-access")!;
-  const accountPanel = document.querySelector<HTMLDivElement>("#account-panel")!;
+  const accountAccess = document.querySelector<HTMLElement>("#account-access")!;
+  const accountPanel = document.querySelector<HTMLElement>("#account-panel")!;
   const navAccountLink = document.querySelector<HTMLAnchorElement>("#nav-account")!;
   const navAccountLabel = navAccountLink.querySelector<HTMLElement>("[data-account-label]")!;
   const mobileNavAccountLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-account")!;
@@ -175,7 +207,7 @@ function showFeedError(): void {
   let activeDepartment = "";
   let activeStore = "Todas as lojas";
   let activeProductType = "";
-  let favoriteIds = readGuestFavorites();
+  let favoriteIds = new Set<string>();
   let favoriteOnly = new URLSearchParams(window.location.search).get("view") === "favorites";
   const mobileViewMedia = window.matchMedia("(max-width: 760px)");
   let viewMode: ViewMode = readViewMode();
@@ -249,16 +281,8 @@ function showFeedError(): void {
     mobileNavAccountLink.setAttribute("href", href);
     accountDescription.textContent = signedIn
       ? "Seus favoritos já estão sincronizados com a sua conta."
-      : "Entre ou crie uma conta grátis para sincronizar seus favoritos.";
+      : "Entre ou crie uma conta grátis para salvar seus favoritos.";
     if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
-  }
-
-  function persistGuestFavorites(): void {
-    try {
-      localStorage.setItem("feira-boa:favorites:v1", JSON.stringify([...favoriteIds]));
-    } catch {
-      setAccountStatus("Não foi possível salvar favoritos neste navegador.");
-    }
   }
 
   function likesByOffer(): Map<string, number> {
@@ -280,7 +304,6 @@ function showFeedError(): void {
   };
 
   async function saveFavoriteChanges(): Promise<void> {
-    persistGuestFavorites();
     if (!currentUserId) return;
     try {
       const api = await loadAccountApi();
@@ -288,7 +311,7 @@ function showFeedError(): void {
       await api.savePreferences(currentUserId, preferences);
       setAccountStatus("Favoritos sincronizados.");
     } catch (error) {
-      setAccountStatus(`Favoritos salvos neste dispositivo. Sincronização falhou: ${errorMessage(error)}`);
+      setAccountStatus(`Favoritos salvos. Sincronização falhou: ${errorMessage(error)}`);
     }
   }
 
@@ -310,9 +333,10 @@ function showFeedError(): void {
     try {
       const api = await loadAccountApi();
       const remotePreferences = await api.loadPreferences(userId);
+      const guestFavorites = readGuestFavorites();
       preferences = {
         ...remotePreferences,
-        favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...favoriteIds])],
+        favoriteOfferIds: [...new Set([...remotePreferences.favoriteOfferIds, ...guestFavorites])],
         theme: pendingTheme ?? remotePreferences.theme,
       };
       applyTheme(preferences.theme);
@@ -320,7 +344,13 @@ function showFeedError(): void {
       await api.savePreferences(userId, preferences);
       pendingTheme = null;
       preferencesLoaded = true;
-      persistGuestFavorites();
+      if (guestFavorites.size > 0) {
+        try {
+          localStorage.removeItem("feira-boa:favorites:v1");
+        } catch {
+          // The merged account copy is already saved; a leftover local key is harmless.
+        }
+      }
       try {
         const reactions = await loadReactionsApi();
         userReactions = await reactions.loadUserOfferReactions(userId);
@@ -822,7 +852,7 @@ function showFeedError(): void {
     if (!offers.some((offer) => offer.id === offerId)) return;
 
     if (!currentUserId) {
-      askForReactionLogin(button);
+      askForLogin(button, "reaction");
       return;
     }
 
@@ -864,6 +894,10 @@ function showFeedError(): void {
     const button = target.closest<HTMLButtonElement>("[data-favorite-id]");
     const offerId = button?.dataset.favoriteId;
     if (!offerId) return;
+    if (!currentUserId) {
+      askForLogin(button, "favorite");
+      return;
+    }
     if (favoriteIds.has(offerId)) favoriteIds.delete(offerId);
     else favoriteIds.add(offerId);
     preferences.favoriteOfferIds = [...favoriteIds];
@@ -970,9 +1004,17 @@ function showFeedError(): void {
     persistViewMode(viewMode);
     updateViewMode();
   });
-  favoritesToggle.addEventListener("click", () => {
-    favoriteOnly = !favoriteOnly;
-    if (favoriteOnly) {
+  for (const favoritesLink of [navFavoritesLink, mobileNavFavoritesLink]) {
+    favoritesLink.addEventListener("click", (event: MouseEvent) => {
+      if (currentUserId) return;
+      event.preventDefault();
+      askForLogin(favoritesLink, "favorite");
+    });
+  }
+
+  function setFavoritesView(active: boolean): void {
+    favoriteOnly = active;
+    if (active) {
       navFavoritesLink.setAttribute("aria-current", "page");
       mobileNavFavoritesLink.setAttribute("aria-current", "page");
       mobileNavOffersLink.removeAttribute("aria-current");
@@ -982,6 +1024,14 @@ function showFeedError(): void {
       mobileNavOffersLink.setAttribute("aria-current", "page");
     }
     renderOffers();
+  }
+
+  favoritesToggle.addEventListener("click", () => {
+    if (!currentUserId) {
+      askForLogin(favoritesToggle, "favorite");
+      return;
+    }
+    setFavoritesView(!favoriteOnly);
   });
   document.addEventListener("keydown", (event: KeyboardEvent) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
@@ -1018,9 +1068,22 @@ function showFeedError(): void {
       const api = await loadAccountApi();
       const user = await api.getCurrentUser();
       if (user) await connectAccount(user.id);
-      else setAccountStatus("Favoritos salvos neste dispositivo. Entre para sincronizar entre dispositivos.");
+      else {
+        setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
+        if (favoriteOnly) {
+          askForLogin(favoritesToggle, "favorite", () => {
+            if (currentUserId) return;
+            setFavoritesView(false);
+            const url = new URL(window.location.href);
+            if (url.searchParams.get("view") === "favorites") {
+              url.searchParams.delete("view");
+              window.history.replaceState({}, "", url);
+            }
+          });
+        }
+      }
     } catch (error) {
-      setAccountStatus(`Favoritos locais disponíveis. Conta temporariamente indisponível: ${errorMessage(error)}`);
+      setAccountStatus(`Conta temporariamente indisponível: ${errorMessage(error)}`);
     }
   })();
 })().catch((error: unknown) => {

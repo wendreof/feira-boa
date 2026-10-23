@@ -24,10 +24,11 @@ export function pushFailureMessage(error) {
     : typeof error === "object" && error !== null && "message" in error && typeof error.message === "string"
       ? error.message
       : String(error ?? "");
-  const normalized = message.toLowerCase();
+  const name = error instanceof Error ? error.name : "";
+  const normalized = `${name} ${message}`.toLowerCase();
 
-  if (normalized.includes("push service error")) {
-    return "O navegador não conseguiu conectar ao serviço de push. Verifique a internet, desative VPN ou bloqueadores e tente novamente.";
+  if (normalized.includes("pushserviceerror") || normalized.includes("push service error")) {
+    return "O navegador não conseguiu criar a inscrição de push. Recarregue a página e tente de novo; se persistir, o navegador ou a rede pode estar bloqueando o serviço de notificações.";
   }
   if (normalized.includes("notallowed") || normalized.includes("denied") || normalized.includes("permissão bloqueada")) {
     return "As notificações estão bloqueadas neste navegador. Libere a permissão nas configurações do site e recarregue a página.";

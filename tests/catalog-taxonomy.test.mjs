@@ -12,8 +12,8 @@ test("taxonomy keeps the requested sector order", () => {
   const labels = TAXONOMY_GROUPS.map((group) => group.label);
   assert.equal(labels[0], "Alimentos frescos");
   assert.equal(labels[1], "Mercearia");
-  assert.equal(labels[2], "Bebidas");
-  assert.equal(labels[3], "Bebidas alcoólicas");
+  assert.equal(labels[2], "Bebidas alcoólicas");
+  assert.equal(labels[3], "Bebidas");
   assert.equal(labels[4], "Congelados e refeições");
   assert.equal(labels[5], "Saudáveis e dietéticos");
   assert.equal(labels[6], "Limpeza");

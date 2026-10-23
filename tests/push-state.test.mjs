@@ -30,7 +30,7 @@ test("push UI distinguishes devices and accounts", () => {
 });
 
 test("push errors produce actionable messages", () => {
-  assert.match(pushFailureMessage(new Error("push service error")), /serviço de push/);
+  assert.match(pushFailureMessage(new Error("push service error")), /serviço de notificações|push/);
   assert.match(pushFailureMessage(new Error("NotAllowedError: Permission denied")), /permissão/);
   assert.match(pushFailureMessage(new Error("Não foi possível salvar este dispositivo para notificações.")), /salvar este dispositivo/);
   assert.match(pushFailureMessage(new Error("falha inesperada")), /Tente novamente/);

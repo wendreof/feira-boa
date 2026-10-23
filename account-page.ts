@@ -42,6 +42,12 @@ const avatarPlaceholder = document.querySelector<HTMLElement>("#avatar-placehold
 const avatarFile = document.querySelector<HTMLInputElement>("#avatar-file");
 const avatarSaveButton = document.querySelector<HTMLButtonElement>("#avatar-save");
 const avatarRemoveButton = document.querySelector<HTMLButtonElement>("#avatar-remove");
+const avatarStatus = document.querySelector<HTMLParagraphElement>("#avatar-status");
+
+function setAvatarStatus(message: string): void {
+  if (avatarStatus) avatarStatus.textContent = message;
+  setStatus(message);
+}
 
 let userId = "";
 let preferences: ProfilePreferences;
@@ -319,18 +325,18 @@ alertRulesList?.addEventListener("click", async (event) => {
 avatarSaveButton?.addEventListener("click", async () => {
   const file = avatarFile?.files?.[0];
   if (!file) {
-    setStatus("Escolha uma imagem para enviar.");
+    setAvatarStatus("Escolha uma imagem para enviar.");
     return;
   }
   avatarSaveButton.disabled = true;
-  setStatus("Enviando a foto do perfil…");
+  setAvatarStatus("Enviando a foto do perfil…");
   try {
     avatarPath = await uploadAvatar(userId, file, avatarPath);
     if (avatarFile) avatarFile.value = "";
     renderAvatar();
-    setStatus("Foto do perfil atualizada.");
+    setAvatarStatus("Foto do perfil atualizada.");
   } catch (error) {
-    setStatus(`Não foi possível enviar a foto: ${errorMessage(error)}`);
+    setAvatarStatus(`Não foi possível enviar a foto: ${errorMessage(error)}`);
   } finally {
     avatarSaveButton.disabled = false;
   }
@@ -338,20 +344,21 @@ avatarSaveButton?.addEventListener("click", async () => {
 
 avatarRemoveButton?.addEventListener("click", async () => {
   if (!avatarPath) {
-    setStatus("Você ainda não tem uma foto do perfil.");
+    setAvatarStatus("Você ainda não tem uma foto do perfil.");
     return;
   }
   avatarRemoveButton.disabled = true;
-  setStatus("Removendo a foto do perfil…");
+  setAvatarStatus("Removendo a foto do perfil…");
   try {
     await removeAvatar(userId, avatarPath);
     avatarPath = null;
     if (avatarFile) avatarFile.value = "";
-    setStatus("Foto do perfil removida.");
+    setAvatarStatus("Foto do perfil removida.");
   } catch (error) {
-    setStatus(`Não foi possível remover a foto: ${errorMessage(error)}`);
+    setAvatarStatus(`Não foi possível remover a foto: ${errorMessage(error)}`);
   } finally {
     renderAvatar();
+    avatarRemoveButton.disabled = false;
   }
 });
 
@@ -385,8 +392,31 @@ enablePushButton?.addEventListener("click", async () => {
       throw new Error(permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
     }
     const registration = await navigator.serviceWorker.register("service-worker.js");
+    // Wait until the worker is active before subscribing; a mid-install
+    // registration makes Chrome fail with "Push Service Error".
+    await navigator.serviceWorker.ready;
+    if (!registration.active) {
+      await new Promise<void>((resolve) => {
+        const state = registration.installing ?? registration.waiting;
+        if (!state) {
+          resolve();
+          return;
+        }
+        const onChange = () => {
+          if (state.state === "activated" || state.state === "redundant") {
+            state.removeEventListener("statechange", onChange);
+            resolve();
+          }
+        };
+        state.addEventListener("statechange", onChange);
+        onChange();
+      });
+    }
     const readyRegistration = await navigator.serviceWorker.ready;
-    const subscription = await readyRegistration.pushManager.getSubscription() ?? await registration.pushManager.subscribe({
+    if (!readyRegistration.active) {
+      throw new Error("O serviço de notificações do site ainda não ficou pronto. Recarregue a página e tente novamente.");
+    }
+    const subscription = await readyRegistration.pushManager.getSubscription() ?? await readyRegistration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: decodeApplicationServerKey(vapidPublicKey),
     });

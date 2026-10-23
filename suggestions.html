@@ -9,7 +9,7 @@
   <title>Enviar sugestão — Feira Boa</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261020-reaction-login">
+  <link rel="stylesheet" href="styles.css?v=20261022-shell">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body class="auth-page">
@@ -18,11 +18,15 @@
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
   </header>
   <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-brand">
+      <span class="sidebar-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span>
+      <span class="sidebar-brand-text"><strong>feira boa</strong><small>São João da Boa Vista, SP</small></span>
+    </div>
     <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
     <nav class="sidebar-nav" aria-label="Navegação principal">
       <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
       <a class="sidebar-link" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
-      <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar"><span aria-hidden="true">◉</span><span data-account-label>Entrar</span></a>
+      <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-account-label>Entrar</span></a>
       <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions" aria-current="page"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
     </nav>
     <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>

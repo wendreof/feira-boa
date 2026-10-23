@@ -12,15 +12,24 @@ export interface AvatarState {
 const extensionByMimeType: Record<string, string> = {
   "image/png": "png",
   "image/jpeg": "jpg",
+  "image/jpg": "jpg",
   "image/webp": "webp",
+};
+
+const extensionByFileExtension: Record<string, string> = {
+  png: "png",
+  jpg: "jpg",
+  jpeg: "jpg",
+  webp: "webp",
 };
 
 function avatarBucket() {
   return supabase.storage.from(AVATAR_BUCKET);
 }
 
-export function avatarFileName(mimeType: string): string | null {
-  const extension = extensionByMimeType[mimeType.toLowerCase()];
+export function avatarFileName(mimeType: string, fileName?: string): string | null {
+  const extension = extensionByMimeType[mimeType?.toLowerCase?.() ?? ""]
+    ?? extensionByFileExtension[(fileName ?? "").split(".").pop()?.toLowerCase() ?? ""];
   return extension ? `avatar.${extension}` : null;
 }
 
@@ -41,18 +50,18 @@ export async function loadAvatar(userId: string): Promise<AvatarState> {
 
 export async function uploadAvatar(userId: string, file: File, currentPath: string | null): Promise<string> {
   const mimeType = file.type.toLowerCase();
-  const fileName = avatarFileName(mimeType);
+  const fileName = avatarFileName(mimeType, file.name);
   if (!fileName) throw new Error("Escolha uma imagem PNG, JPG ou WebP.");
   if (file.size > AVATAR_MAX_BYTES) throw new Error("A imagem deve ter no máximo 2 MB.");
 
   const path = `${userId}/${fileName}`;
-  const { error: uploadError } = await avatarBucket().upload(path, file, { contentType: mimeType, upsert: true });
+  const { error: uploadError } = await avatarBucket().upload(path, file, { contentType: mimeType || `image/${extensionByFileExtension[fileName.split(".").pop() ?? ""] ?? "jpeg"}`, upsert: true });
   if (uploadError) throw uploadError;
 
+  // Upsert so accounts without a profiles row still persist the avatar path.
   const { error: updateError } = await supabase
     .from("profiles")
-    .update({ avatar_path: path })
-    .eq("user_id", userId);
+    .upsert({ user_id: userId, avatar_path: path }, { onConflict: "user_id" });
   if (updateError) {
     await avatarBucket().remove([path]).catch((cleanupError: unknown) => {
       console.warn("Could not remove the avatar file after a failed profile update.", cleanupError);

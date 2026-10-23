@@ -17,6 +17,7 @@ export interface Database {
           notifications_paused: boolean;
           preferences: Json;
           avatar_path: string | null;
+          display_name: string | null;
         };
         Insert: {
           user_id: string;
@@ -25,6 +26,7 @@ export interface Database {
           notifications_paused?: boolean;
           preferences?: Json;
           avatar_path?: string | null;
+          display_name?: string | null;
         };
         Update: {
           user_id?: string;
@@ -33,6 +35,7 @@ export interface Database {
           notifications_paused?: boolean;
           preferences?: Json;
           avatar_path?: string | null;
+          display_name?: string | null;
         };
         Relationships: [];
       };

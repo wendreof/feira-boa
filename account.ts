@@ -23,6 +23,7 @@ export interface NewAlertRule {
 
 export interface AccountSettings {
   preferences: ProfilePreferences;
+  displayName: string | null;
   notificationsPaused: boolean;
   pushEnabled: boolean;
   alertRules: AlertRule[];
@@ -73,10 +74,59 @@ export async function signInWithGoogle(returnTo: string): Promise<void> {
   if (error) throw error;
 }
 
-export async function signUp(email: string, password: string): Promise<{ user: User | null; confirmationRequired: boolean }> {
-  const { data, error } = await supabase.auth.signUp({ email, password });
+export async function signUp(email: string, password: string, displayName: string): Promise<{ user: User | null; confirmationRequired: boolean }> {
+  const name = displayName.trim().replace(/\s+/g, " ");
+  if (name.length < 2) throw new Error("Informe como gostaria de ser chamado (mínimo de 2 letras).");
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { display_name: name } },
+  });
   if (error) throw error;
+  if (data.user) {
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .upsert({ user_id: data.user.id, display_name: name }, { onConflict: "user_id" });
+    // Confirmação de e-mail pode bloquear a tabela até a sessão existir;
+    // o nome já fica no metadata do auth para importar no primeiro login.
+    if (profileError) console.warn("Could not save display name during signup.", profileError);
+  }
   return { user: data.user, confirmationRequired: data.session === null };
+}
+
+export async function loadDisplayName(userId: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("display_name")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw error;
+  const name = data?.display_name;
+  return typeof name === "string" && name.trim() ? name.trim() : null;
+}
+
+export async function saveDisplayName(userId: string, displayName: string): Promise<string> {
+  const name = displayName.trim().replace(/\s+/g, " ");
+  if (name.length < 2) throw new Error("Informe como gostaria de ser chamado (mínimo de 2 letras).");
+  if (name.length > 30) throw new Error("O nome pode ter no máximo 30 caracteres.");
+  const { error } = await supabase
+    .from("profiles")
+    .upsert({ user_id: userId, display_name: name }, { onConflict: "user_id" });
+  if (error) throw error;
+  return name;
+}
+
+/** Preenche o nome a partir do Google quando a conta ainda não tem um. */
+export async function importDisplayNameFromProvider(userId: string): Promise<string | null> {
+  const existing = await loadDisplayName(userId);
+  if (existing) return existing;
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user) return null;
+  const metadata = data.user.user_metadata;
+  const candidate = [metadata?.full_name, metadata?.name, metadata?.given_name]
+    .find((value): value is string => typeof value === "string" && value.trim().length >= 2);
+  if (!candidate) return null;
+  return saveDisplayName(userId, candidate);
 }
 
 /**
@@ -140,15 +190,19 @@ export async function savePreferences(userId: string, preferences: ProfilePrefer
 
 export async function loadAccountSettings(userId: string): Promise<AccountSettings> {
   const [{ data: profile, error: profileError }, { data: rules, error: rulesError }, { count, error: pushError }] = await Promise.all([
-    supabase.from("profiles").select("preferences, notifications_paused").eq("user_id", userId).maybeSingle(),
+    supabase.from("profiles").select("preferences, notifications_paused, display_name").eq("user_id", userId).maybeSingle(),
     supabase.from("alert_rules").select("id, store, product, product_type, target_price, enabled").eq("user_id", userId).order("created_at"),
     supabase.from("push_subscriptions").select("id", { count: "exact", head: true }).eq("user_id", userId),
   ]);
   if (profileError) throw profileError;
   if (rulesError) throw rulesError;
   if (pushError) throw pushError;
+  const displayName = typeof profile?.display_name === "string" && profile.display_name.trim()
+    ? profile.display_name.trim()
+    : null;
   return {
     preferences: parsePreferences(profile?.preferences),
+    displayName,
     notificationsPaused: profile?.notifications_paused ?? false,
     pushEnabled: (count ?? 0) > 0,
     alertRules: rules ?? [],

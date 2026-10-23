@@ -4,6 +4,8 @@ import { bindThemeToggle } from "./theme";
 bindThemeToggle();
 
 const form = document.querySelector<HTMLFormElement>("#auth-form")!;
+const nameInput = document.querySelector<HTMLInputElement>("#auth-name")!;
+const nameLabel = document.querySelector<HTMLLabelElement>("#auth-name-label")!;
 const emailInput = document.querySelector<HTMLInputElement>("#auth-email")!;
 const passwordInput = document.querySelector<HTMLInputElement>("#auth-password")!;
 const passwordToggle = document.querySelector<HTMLButtonElement>("#auth-password-toggle")!;
@@ -59,6 +61,9 @@ function updateMode(): void {
   switchLabel.textContent = creatingAccount ? "Já tem uma conta?" : "Ainda não tem conta?";
   modeToggle.textContent = creatingAccount ? "Entrar" : "Criar conta grátis";
   passwordInput.autocomplete = creatingAccount ? "new-password" : "current-password";
+  nameInput.hidden = !creatingAccount;
+  nameLabel.hidden = !creatingAccount;
+  nameInput.required = creatingAccount;
   forgotRow.hidden = creatingAccount;
   setPasswordVisibility(false);
   setStatus("");
@@ -118,7 +123,13 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
   try {
     const email = emailInput.value.trim();
     if (creatingAccount) {
-      const result = await signUp(email, passwordInput.value);
+      const displayName = nameInput.value.trim();
+      if (displayName.length < 2) {
+        setStatus("Informe como gostaria de ser chamado (mínimo de 2 letras).");
+        nameInput.focus();
+        return;
+      }
+      const result = await signUp(email, passwordInput.value, displayName);
       passwordInput.value = "";
       if (result.confirmationRequired) {
         setStatus("Conta criada. Confira seu e-mail para confirmar o cadastro.");

@@ -190,6 +190,13 @@ const BRAND_ALIASES = [
   ["Bebê Feliz", ["BEBÊ FELIZ"]],
   ["Concha y Toro", ["CONCHA Y TORO"]],
   ["Rayovac", ["RAYOVAC"]],
+  ["Duracell", ["DURACELL"]],
+  ["Ourolux", ["OUROLUX"]],
+  ["Jacaré", ["JACARÉ", "JACARE"]],
+  ["Bauducco", ["BADUCCO"]],
+  ["Pedigree", ["PEDIGREE"]],
+  ["Whiskas", ["WHISKAS"]],
+  ["Snow Flakes", ["SNOW FLAKES"]],
   ["Pururuca", ["PURURUCA"]],
   ["Guaraná Antarctica", ["GUARANÁ ANTARCTICA"]],
 ];
@@ -278,6 +285,7 @@ function findBrandMatches(name, aliases) {
 function cleanProductName(name) {
   return name.replace(/\s+/g, " ")
     .replace(/^\d{1,2}\s+a\s+\d{1,2}\s+de\s+[a-zç]{3,}\.?\s+/i, "")
+    .replace(/^(?:a\s*partir\s*de\s*)?(?:\d+\s*)?unidades?\s*,?\s*pague\s*:?\s*/i, "")
     .replace(/^(?:ou|e)\s+/i, "")
     .replace(/\s+(?:ou|e)$/i, "")
     .replace(/^[\s·,/;-]+|[\s·,/;-]+$/g, "")

@@ -9,7 +9,7 @@
   <title>Minha conta — Feira Boa</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261020-reaction-login">
+  <link rel="stylesheet" href="styles.css?v=20261022-shell">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body class="auth-page">
@@ -18,11 +18,15 @@
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span>Menu</span></button>
   </header>
   <aside class="app-sidebar" id="app-sidebar" aria-label="Menu principal">
+    <div class="sidebar-brand">
+      <span class="sidebar-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span>
+      <span class="sidebar-brand-text"><strong>feira boa</strong><small>São João da Boa Vista, SP</small></span>
+    </div>
     <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button class="sidebar-close" id="sidebar-close" type="button" aria-label="Fechar menu">×</button></div>
     <nav class="sidebar-nav" aria-label="Navegação principal">
       <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
-      <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
-      <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta" aria-current="page"><span aria-hidden="true">◉</span><span data-account-label>Minha conta</span></a>
+      <a class="sidebar-link" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
+      <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta" aria-current="page"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-account-label>Minha conta</span></a>
       <div class="sidebar-subnav" aria-label="Seções da minha conta">
         <a href="account-stores.html">Lojas favoritas</a>
         <a href="account-favorites.html">Produtos favoritos</a>
@@ -44,6 +48,14 @@
         <span class="account-identity-label">Conectado como</span>
         <strong id="account-email">Verificando sessão…</strong>
       </div>
+      <section class="avatar-block" aria-labelledby="display-name-title">
+        <h2 id="display-name-title" class="avatar-title">Como gostaria de ser chamado?</h2>
+        <p class="avatar-help">Usamos esse nome para falar com você em alertas e mensagens.</p>
+        <div class="display-name-row">
+          <input id="display-name-input" class="display-name-input" type="text" minlength="2" maxlength="30" placeholder="Seu nome" autocomplete="nickname" aria-label="Como gostaria de ser chamado?">
+          <button type="button" class="account-button" id="display-name-save">Salvar</button>
+        </div>
+      </section>
       <section class="avatar-block" aria-labelledby="avatar-title">
         <h2 id="avatar-title" class="avatar-title">Foto do perfil</h2>
         <div class="avatar-preview">
@@ -52,10 +64,11 @@
         </div>
         <p class="avatar-help">PNG, JPG ou WebP, até 2 MB. A imagem fica pública para quem entra no site.</p>
         <div class="avatar-actions">
-          <input id="avatar-file" class="avatar-file" type="file" accept="image/*" aria-label="Escolher foto do perfil">
+          <input id="avatar-file" class="avatar-file" type="file" accept="image/png,image/jpeg,image/webp" aria-label="Escolher foto do perfil">
           <button type="button" class="account-button" id="avatar-save">Salvar</button>
           <button type="button" class="account-button secondary" id="avatar-remove">Remover</button>
         </div>
+        <p id="avatar-status" class="avatar-status" role="status" aria-live="polite"></p>
       </section>
       <nav class="account-section-links" aria-label="Configurações da conta">
         <a class="account-section-link" href="account-stores.html">

@@ -9,7 +9,7 @@
     "from": "2026-10-22",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-22T17:12:43.103Z",
+  "fetchedAt": "2026-10-23T01:26:34.607Z",
   "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
   "offers": [
     {
@@ -20,11 +20,11 @@
       "name": "BEBIDAS MERCEARIAS AÇOUGUE MOLHO DE TOMATE FUGINI SACHÊ",
       "brand": "",
       "detail": "300G",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 2.29,
       "previousPrice": null,
@@ -68,15 +68,15 @@
       "name": "QJO MUSSARELA KG PEÇA",
       "brand": "",
       "detail": "Unidade",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
       "productTypes": [
-        "Outros"
+        "Queijos e requeijão"
       ],
       "price": 34.9,
       "previousPrice": 54.9,
-      "icon": "🏷️",
+      "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Limite por cliente5 KG",
       "validFrom": "2026-10-22",
@@ -167,10 +167,9 @@
       "detail": "Unidade",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Carne bovina"
       ],
       "price": 47.9,
       "previousPrice": 57.9,
@@ -504,9 +503,9 @@
       "detail": "5KG",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Arroz",
+      "productType": "Mercearia",
       "productTypes": [
-        "Arroz"
+        "Mercearia"
       ],
       "price": 18.98,
       "previousPrice": 23.9,
@@ -910,11 +909,11 @@
       "name": "AÇAÍ BÚFALO",
       "brand": "",
       "detail": "1L",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
       "productTypes": [
-        "Congelados"
+        "Outros"
       ],
       "price": 14.98,
       "previousPrice": 23.9,
@@ -1006,11 +1005,11 @@
       "name": "QUEIJO COALHO QUATÁ",
       "brand": "",
       "detail": "300G",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
       "productTypes": [
-        "Queijos e requeijão",
+        "Outros",
         "Churrasco"
       ],
       "price": 19.9,
@@ -1079,11 +1078,11 @@
       "name": "INSETICIDA RAID AEROSOL 420ML L+P-",
       "brand": "",
       "detail": "Unidade",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Outros"
+        "Lavanderia e limpeza"
       ],
       "price": 19.9,
       "previousPrice": 25.9,
@@ -1103,11 +1102,11 @@
       "name": "CREME DE QUEIJO QUATÁ",
       "brand": "",
       "detail": "180G",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
       "productTypes": [
-        "Queijos e requeijão"
+        "Outros"
       ],
       "price": 6.99,
       "previousPrice": 8.99,
@@ -1153,9 +1152,9 @@
       "detail": "LV4 PG3",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Casa",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Casa"
+        "Lavanderia e limpeza"
       ],
       "price": 6.99,
       "previousPrice": 8.99,
@@ -1343,11 +1342,11 @@
       "name": "APARTIR DE UNIDADES PAGUE: CARVÃO JACARÉ",
       "brand": "",
       "detail": "2,5KG",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Casa",
       "productTypes": [
-        "Outros"
+        "Casa"
       ],
       "price": 23.99,
       "previousPrice": 26.9,
@@ -1367,11 +1366,11 @@
       "name": "MILHO VERDE FUGINI",
       "brand": "",
       "detail": "170G",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 2.99,
       "previousPrice": 3.98,
@@ -1415,11 +1414,11 @@
       "name": "LIMPADOR PERFUMADO CASA E PERFUME",
       "brand": "",
       "detail": "1L",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 9.99,
       "previousPrice": 13.98,
@@ -1559,11 +1558,11 @@
       "name": "ACHOCOLATADO EM PÓ TODDY",
       "brand": "",
       "detail": "370G",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
       "productTypes": [
-        "Mercearia"
+        "Outros"
       ],
       "price": 9.49,
       "previousPrice": 11.98,
@@ -1679,11 +1678,11 @@
       "name": "LIMPADOR CREMOSO CIF MULTIUSO ORIGINAL 450ML 20% GTS",
       "brand": "",
       "detail": "Unidade",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 16.9,
       "previousPrice": 20.9,

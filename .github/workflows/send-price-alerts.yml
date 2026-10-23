@@ -21,14 +21,25 @@ jobs:
     timeout-minutes: 10
     env:
       SUPABASE_URL: https://muiuvmhzzbqflxznpnez.supabase.co
-      VAPID_PUBLIC_KEY: BJyHBlXtSK3oR8jzUQPJ0RlItHhuEGQIIh3tHtwa5uSdfWcjmkmuBcS8aO1LxKw8w0k9VHyHTkdWVahu4UTkM1Y
-      VAPID_SUBJECT: ${{ vars.SITE_URL }}
+      # Single source of truth: ONESIGNAL_APP_ID constant in pwa.js.
+      ONESIGNAL_APP_ID: ${{ vars.ONESIGNAL_APP_ID }}
       SITE_URL: ${{ vars.SITE_URL }}
     steps:
       - name: Check out main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+
+      - name: Resolve OneSignal App ID from pwa.js
+        if: env.ONESIGNAL_APP_ID == ''
+        shell: bash
+        run: |
+          app_id="$(sed -n 's/.*ONESIGNAL_APP_ID = "\([^"]*\)".*/\1/p' pwa.js | head -1)"
+          if [ -z "$app_id" ] || [[ "$app_id" == REPLACE* ]]; then
+            echo "ONESIGNAL_APP_ID not found in pwa.js" >&2
+            exit 1
+          fi
+          echo "ONESIGNAL_APP_ID=$app_id" >> "$GITHUB_ENV"
 
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
@@ -42,7 +53,7 @@ jobs:
       - name: Match offers and send opted-in alerts
         env:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
         run: node scripts/send-price-alerts.mjs
 
       - name: Open or update failure issue

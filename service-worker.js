@@ -1,6 +1,14 @@
 const CACHE_NAME = "feira-boa-shell-v7";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
-const VAPID_PUBLIC_KEY = "BJyHBlXtSK3oR8jzUQPJ0RlItHhuEGQIIh3tHtwa5uSdfWcjmkmuBcS8aO1LxKw8w0k9VHyHTkdWVahu4UTkM1Y";
+
+// OneSignal owns push display, click handling and subscription renewal.
+try {
+  importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.worker.js");
+} catch (error) {
+  // Offline or blocked CDN: caching still works; push needs the next load.
+  console.warn("OneSignal worker script unavailable.", error);
+}
+
 const SHELL = [
   "/",
   "/index.html",
@@ -100,72 +108,5 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(staleWhileRevalidate(request));
 });
 
-self.addEventListener("push", (event) => {
-  let payload = {};
-  try {
-    payload = event.data?.json() ?? {};
-  } catch {
-    payload = { body: event.data?.text() ?? "Uma oferta combina com seu alerta." };
-  }
-
-  const destination = new URL(payload.url ?? "./index.html", self.location.origin);
-  const safeUrl = destination.origin === self.location.origin
-    ? `${destination.pathname}${destination.search}${destination.hash}`
-    : "/index.html";
-
-  event.waitUntil(self.registration.showNotification(payload.title ?? "Feira Boa · alerta de preço", {
-    body: payload.body ?? "Uma oferta combina com seu alerta.",
-    icon: "/icons/notification-96.png",
-    badge: "/icons/badge-72.png",
-    tag: payload.tag ?? "feira-boa-offer",
-    data: { url: safeUrl },
-  }));
-});
-
-self.addEventListener("notificationclick", (event) => {
-  event.notification.close();
-  const destination = new URL(event.notification.data?.url ?? "/index.html", self.location.origin);
-  const safeUrl = destination.origin === self.location.origin ? destination.href : `${self.location.origin}/index.html`;
-  event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (windows) => {
-    const existing = windows.find((client) => new URL(client.url).origin === self.location.origin);
-    if (existing) {
-      await existing.navigate(safeUrl);
-      return existing.focus();
-    }
-    return self.clients.openWindow(safeUrl);
-  }));
-});
-
-self.addEventListener("pushsubscriptionchange", (event) => {
-  event.waitUntil((async () => {
-    const oldEndpoint = event.oldSubscription?.endpoint;
-    try {
-      const normalized = VAPID_PUBLIC_KEY.replace(/-/g, "+").replace(/_/g, "/");
-      const binary = atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "="));
-      const keyBytes = new Uint8Array(binary.length);
-      for (let index = 0; index < binary.length; index += 1) keyBytes[index] = binary.charCodeAt(index);
-      const subscription = await self.registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: keyBytes,
-      });
-      const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-      for (const client of windows) {
-        client.postMessage({
-          type: "push-subscription-changed",
-          oldEndpoint,
-          subscription: subscription.toJSON(),
-        });
-      }
-      if (windows.length === 0) {
-        await self.registration.showNotification("Feira Boa · notificações renovadas", {
-          body: "Abra sua conta para confirmar o novo dispositivo de alertas.",
-          icon: "/icons/notification-96.png",
-          badge: "/icons/badge-72.png",
-          data: { url: "/account-alerts.html" },
-        });
-      }
-    } catch (error) {
-      console.warn("Could not renew push subscription.", error);
-    }
-  })());
-});
+// Push display, notification clicks and subscription renewal are handled by
+// the OneSignal worker imported above; do not add custom push listeners here.

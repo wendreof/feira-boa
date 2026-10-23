@@ -7,16 +7,13 @@ import {
   loadAccountSettings,
   loadDisplayName,
   removeAlertRule,
-  removePushSubscription,
   saveDisplayName,
   savePreferences,
-  savePushSubscription,
   setNotificationsPaused,
   signOut,
   type AlertRule,
 } from "./account";
 import type { OfferFeed, ProfilePreferences } from "./types";
-import { vapidPublicKey } from "./supabase-config";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { pushFailureMessage, resolvePushUiState } from "./push-state.js";
 import { avatarUrl, loadAvatar, removeAvatar, uploadAvatar } from "./avatar";
@@ -79,43 +76,30 @@ async function saveThemePreference(theme: ThemePreference): Promise<void> {
   }
 }
 
-function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
-  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
-  const binary = window.atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "="));
-  const bytes = new Uint8Array(new ArrayBuffer(binary.length));
-  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-  return bytes;
+interface OneSignalNamespace {
+  login(externalId: string): Promise<void>;
+  logout(): Promise<void>;
+  Notifications: { requestPermission(): Promise<boolean> };
+  User: { PushSubscription: { optedIn: boolean | null; optIn(): Promise<void>; optOut(): Promise<void> } };
 }
 
-function keysEqual(a: BufferSource | null | undefined, b: Uint8Array): boolean {
-  if (!a) return false;
-  const left = a instanceof Uint8Array ? a : new Uint8Array(ArrayBuffer.isView(a) ? (a as Uint8Array).buffer.slice((a as Uint8Array).byteOffset, (a as Uint8Array).byteOffset + (a as Uint8Array).byteLength) : a as ArrayBuffer);
-  if (left.byteLength !== b.byteLength) return false;
-  return left.every((byte, index) => byte === b[index]);
+/** Aguarda o init do OneSignal feito pelo pwa.js nesta página. */
+async function getOneSignal(): Promise<OneSignalNamespace> {
+  const deferred = (window as { __feiraOneSignalReady?: Promise<OneSignalNamespace | null> }).__feiraOneSignalReady;
+  const oneSignal = await (deferred ?? Promise.resolve(null));
+  if (!oneSignal) throw new Error("O serviço de notificações não carregou. Verifique a conexão e recarregue a página.");
+  return oneSignal;
 }
 
-/**
- * Reuses a subscription only when it was created with our current VAPID key.
- * Stale/broken subscriptions make Chrome fail with "Push Service Error".
- * On a subscribe failure, drops the old one and retries once.
- */
-async function ensurePushSubscription(
-  registration: ServiceWorkerRegistration,
-  serverKey: Uint8Array<ArrayBuffer>,
-): Promise<PushSubscription> {
-  const existing = await registration.pushManager.getSubscription();
-  if (existing) {
-    if (keysEqual(existing.options.applicationServerKey, serverKey)) return existing;
-    await existing.unsubscribe().catch(() => false);
-  }
+async function refreshPushDeviceState(): Promise<void> {
   try {
-    return await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey });
-  } catch (error) {
-    console.warn("Push subscribe failed, retrying with a clean subscription.", error);
-    const stale = await registration.pushManager.getSubscription();
-    if (stale) await stale.unsubscribe().catch(() => false);
-    return await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey });
+    const oneSignal = await getOneSignal();
+    devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true;
+  } catch {
+    devicePushEnabled = false;
   }
+  accountPushEnabled = false;
+  updatePushControls();
 }
 
 function updatePushControls(): void {
@@ -164,30 +148,6 @@ async function refreshAvatar(): Promise<void> {
 function setActionsDisabled(disabled: boolean): void {
   signOutButton.disabled = disabled;
   deleteAccountButton.disabled = disabled;
-}
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener("message", (event: MessageEvent) => {
-    const data = event.data as { type?: string; oldEndpoint?: string } | null;
-    if (data?.type !== "push-subscription-changed" || !userId) return;
-    void (async () => {
-      try {
-        const registration = await navigator.serviceWorker.getRegistration();
-        const subscription = await registration?.pushManager.getSubscription();
-        if (!subscription) return;
-        await savePushSubscription(userId, subscription);
-        if (data.oldEndpoint && data.oldEndpoint !== subscription.endpoint) {
-          await removePushSubscription(userId, data.oldEndpoint);
-        }
-        accountPushEnabled = true;
-        devicePushEnabled = true;
-        setPushFeedback();
-        updatePushControls();
-      } catch (error) {
-        console.warn("Could not renew push subscription for the account.", error);
-      }
-    })();
-  });
 }
 
 function makeOption(label: string, value: string): HTMLOptionElement {
@@ -251,33 +211,23 @@ async function refreshRules(): Promise<void> {
 }
 
 async function refreshPushAccountState(): Promise<void> {
-  try {
-    const settings = await loadAccountSettings(userId);
-    accountPushEnabled = settings.pushEnabled;
-  } catch (error) {
-    console.warn("Could not refresh the account push state.", error);
-  }
-  updatePushControls();
+  await refreshPushDeviceState();
 }
 
-async function removeCurrentPushSubscription(): Promise<void> {
-  if (!("serviceWorker" in navigator)) return;
-  const registration = await navigator.serviceWorker.getRegistration();
-  const subscription = await registration?.pushManager.getSubscription();
-  if (!subscription) return;
-  if (userId) await removePushSubscription(userId, subscription.endpoint).catch((error: unknown) => {
-    console.warn("Could not remove push subscription during sign-out.", error);
-  });
-  await subscription.unsubscribe().catch((error: unknown) => {
-    console.warn("Could not unsubscribe this browser from push.", error);
-  });
+async function detachOneSignalFromAccount(): Promise<void> {
+  try {
+    const oneSignal = await getOneSignal();
+    await oneSignal.logout();
+  } catch (error) {
+    console.warn("Could not detach OneSignal from the account.", error);
+  }
 }
 
 signOutButton.addEventListener("click", async () => {
   setActionsDisabled(true);
   setStatus("Saindo…");
   try {
-    await removeCurrentPushSubscription();
+    await detachOneSignalFromAccount();
     await signOut();
     window.location.replace("index.html");
   } catch (error) {
@@ -291,7 +241,7 @@ deleteAccountButton.addEventListener("click", async () => {
   setActionsDisabled(true);
   setStatus("Excluindo conta…");
   try {
-    await removeCurrentPushSubscription();
+    await detachOneSignalFromAccount();
     await deleteAccount();
     window.location.replace("index.html");
   } catch (error) {
@@ -412,7 +362,7 @@ notificationsPaused?.addEventListener("change", async () => {
 });
 
 enablePushButton?.addEventListener("click", async () => {
-  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) {
     setPushFeedback("Este navegador não oferece suporte a notificações push.");
     return;
   }
@@ -423,54 +373,25 @@ enablePushButton?.addEventListener("click", async () => {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Solicitando permissão…";
   try {
-    const permission = Notification.permission === "default" ? await Notification.requestPermission() : Notification.permission;
-    if (permission !== "granted") {
-      throw new Error(permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
+    const oneSignal = await getOneSignal();
+    const permission = Notification.permission === "default"
+      ? await oneSignal.Notifications.requestPermission()
+      : Notification.permission === "granted";
+    if (!permission) {
+      throw new Error(Notification.permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
     }
-    const registration = await navigator.serviceWorker.register("service-worker.js");
-    // Wait until the worker is active before subscribing; a mid-install
-    // registration makes Chrome fail with "Push Service Error".
-    await navigator.serviceWorker.ready;
-    if (!registration.active) {
-      await new Promise<void>((resolve) => {
-        const state = registration.installing ?? registration.waiting;
-        if (!state) {
-          resolve();
-          return;
-        }
-        const onChange = () => {
-          if (state.state === "activated" || state.state === "redundant") {
-            state.removeEventListener("statechange", onChange);
-            resolve();
-          }
-        };
-        state.addEventListener("statechange", onChange);
-        onChange();
-      });
+    if (userId) await oneSignal.login(userId);
+    if (oneSignal.User.PushSubscription.optedIn !== true) {
+      await oneSignal.User.PushSubscription.optIn();
     }
-    const readyRegistration = await navigator.serviceWorker.ready;
-    if (!readyRegistration.active) {
-      throw new Error("O serviço de notificações do site ainda não ficou pronto. Recarregue a página e tente novamente.");
-    }
-    const serverKey = decodeApplicationServerKey(vapidPublicKey);
-    const subscription = await ensurePushSubscription(readyRegistration, serverKey);
-    try {
-      await savePushSubscription(userId, subscription);
-    } catch (error) {
-      console.error("Could not save the push subscription.", error);
-      await subscription.unsubscribe().catch((cleanupError: unknown) => {
-        console.warn("Could not remove an unsaved push subscription.", cleanupError);
-      });
-      throw new Error("Não foi possível salvar este dispositivo para notificações.");
-    }
-    accountPushEnabled = true;
-    devicePushEnabled = true;
+    devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true;
+    if (!devicePushEnabled) throw new Error("O navegador não ativou as notificações. Tente novamente.");
     setPushFeedback();
     updatePushControls();
   } catch (error) {
     console.error("Could not activate push notifications.", error);
     setPushFeedback(pushFailureMessage(error));
-    updatePushControls();
+    await refreshPushDeviceState();
   } finally {
     enablePushButton.disabled = Notification.permission === "denied";
   }
@@ -481,20 +402,17 @@ disablePushButton?.addEventListener("click", async () => {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Desativando neste dispositivo…";
   try {
-    const registration = await navigator.serviceWorker.getRegistration();
-    const subscription = await registration?.pushManager.getSubscription();
-    if (subscription) {
-      await removePushSubscription(userId, subscription.endpoint);
-      const removed = await subscription.unsubscribe();
-      if (!removed) throw new Error("O navegador não confirmou o cancelamento.");
+    const oneSignal = await getOneSignal();
+    if (oneSignal.User.PushSubscription.optedIn === true) {
+      await oneSignal.User.PushSubscription.optOut();
     }
     devicePushEnabled = false;
     setPushFeedback("Notificações desativadas neste dispositivo.");
-    await refreshPushAccountState();
+    updatePushControls();
   } catch (error) {
     console.error("Could not deactivate push notifications.", error);
     setPushFeedback(`Não foi possível desativar notificações: ${errorMessage(error)}`);
-    updatePushControls();
+    await refreshPushDeviceState();
   } finally {
     disablePushButton.disabled = false;
   }
@@ -549,11 +467,15 @@ void getCurrentUser()
     preferencesLoaded = true;
     rules = settings.alertRules;
     if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
-    const existingRegistration = await navigator.serviceWorker?.getRegistration();
-    const currentSubscription = await existingRegistration?.pushManager.getSubscription();
-    accountPushEnabled = settings.pushEnabled;
-    devicePushEnabled = Boolean(currentSubscription);
-    updatePushControls();
+    void (async () => {
+      try {
+        const oneSignal = await getOneSignal();
+        await oneSignal.login(userId);
+      } catch (error) {
+        console.warn("Could not associate OneSignal with the account.", error);
+      }
+      await refreshPushDeviceState();
+    })();
 
     const stores = [...new Set(response.offers.map((offer) => offer.store))].sort((a, b) => a.localeCompare(b, "pt-BR"));
     const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));

@@ -1,6 +1,6 @@
 # Feira Boa Continuation Plan
 
-Last updated: 2026-10-20 (post Pague Menos catalog ingestion)
+Last updated: 2026-10-22 (login-required favorites + taxonomy fixes)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
 
 ## Objective
@@ -94,6 +94,23 @@ Finish the Feira Boa hardening work while preserving product behavior:
   - `202610200002_account_caps.sql`: 20 alerts/user, 10 push subscriptions/user, reaction ID constraint, reaction lookup index.
 - Push cap migration permits re-upserting an existing endpoint at the cap.
 
+### Favorites now require an account (2026-10-22)
+
+- Signed-out users can no longer toggle favorites, open the Favoritos nav links, or use `?view=favorites`; each path opens the accessible login prompt (`Entre para salvar favoritos`).
+- The prompt dialog was generalized (`askForLogin`) with per-intent copy and an optional cancel callback; cancel restores focus and, for a direct `?view=favorites` visit, exits favorites mode and strips the URL param.
+- Guest localStorage favorites are a one-time migration only: they are merged into the account on `connectAccount` and the local key is removed. They no longer hydrate the signed-out UI.
+- The hero account panel is a single link to `login.html` (CTA is visual only); copy across `index.html`, `login.html`, and status messages now says favorites are saved on the account.
+- `saveFavoriteChanges` no longer writes localStorage; the sync-failure message no longer claims device-local saving.
+
+### Taxonomy and classifier fixes (2026-10-22)
+
+- Added `Bebidas alcoólicas` as its own sector in `catalog-taxonomy.mjs` (14 sectors total); `AGENT.md` updated.
+- Restored the Nutella/hazelnut-cream → `Doces e snacks` mapping lost in the `PRODUCT_TYPE_RULES` refactor.
+- `Carnes suínas` is matched before `Carne bovina` so `Filé Mignon Suíno` classifies as pork.
+- Condiment names (`ketchup`, `mostarda`, `maionese`) win over meat keywords, so `Ketchup … Bacon` stays `Mercearia`.
+- Pague Menos store path `mercearia/cafe e achocolatados` maps to `Café`.
+- Taxonomy tests updated for the new sector order and `bebidas_alcoolicas`/`Cervejas` mapping.
+
 ### CI and Dependencies
 
 - Actions pinned to verified commit SHAs:
@@ -111,9 +128,10 @@ Finish the Feira Boa hardening work while preserving product behavior:
 Latest checks passed:
 
 - `npm run typecheck`: passed.
-- `npm run build`: passed; 34 root artifacts; 1,288 offers; 30 structured-data offers; no `Geral`.
-- `npm test`: 28/28 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, and push-state/error coverage.
-- Local site health (`check-site-health.mjs` with full headers): `status:ok`, 1,288 offers.
+- `npm run build`: passed; 36 root artifacts; 1,240 offers; 30 structured-data offers.
+- `npm test`: 45/45 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, taxonomy sector order, classifier regressions, and push-state/error coverage.
+- Local site health (`check-site-health.mjs` with full headers): `status:ok` (last full run).
+- Signed-out favorites/reactions: like and favorite controls plus Favoritos nav open the login prompt; `?view=favorites` prompts and exits favorites mode on cancel.
 - Pague Menos ingestion: 1,042 catalog products, 1,018 available/priced, 1,015 after normalized deduplication; 277 have a previous price.
 - Chrome desktop app:
   - 1,240 active cards rendered in about one second; no duplicate IDs or console errors.

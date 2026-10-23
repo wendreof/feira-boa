@@ -34,7 +34,7 @@
     <section class="auth-card suggestions-card" aria-labelledby="suggestion-title">
       <p class="eyebrow"><span class="pulse"></span> Feira Boa em evolução</p>
       <h1 id="suggestion-title">Mande sua sugestão.</h1>
-      <p class="auth-description">Conte o que podemos melhorar ou avise sobre um problema. Você não precisa criar uma conta.</p>
+      <p class="auth-description" id="suggestion-description">Conte o que podemos melhorar ou avise sobre um problema. É preciso estar logado para enviar uma sugestão.</p>
       <form id="suggestion-form" class="auth-form">
         <label for="suggestion-category">Assunto</label>
         <select id="suggestion-category" required>
@@ -47,7 +47,7 @@
         <label for="suggestion-message">Sua mensagem</label>
         <textarea id="suggestion-message" name="message" minlength="10" maxlength="2000" placeholder="Escreva sua sugestão (10 a 2.000 caracteres)" required></textarea>
         <label class="suggestion-honeypot" for="suggestion-website">Não preencha este campo</label>
-        <input class="suggestion-honeypot" id="suggestion-website" type="text" tabindex="-1" autocomplete="off">
+        <input class="suggestion-honeypot" id="suggestion-website" name="website" type="text" tabindex="-1" autocomplete="off">
         <button class="account-button suggestion-submit" id="suggestion-submit" type="submit">Enviar sugestão</button>
       </form>
       <p class="suggestion-status" id="suggestion-status" role="status" aria-live="polite"></p>

@@ -31,7 +31,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - New prices publish immediately; `needs_review` gates alert eligibility only.
 
 ### Catalog taxonomy
-- `catalog-taxonomy.mjs` is the display taxonomy: 13 sectors (Alimentos frescos, Mercearia, Bebidas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
+- `catalog-taxonomy.mjs` is the display taxonomy: 14 sectors (Alimentos frescos, Mercearia, Bebidas, Bebidas alcoólicas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
 - The feed keeps the original adapter product types; `resolveCategory()` maps each offer to a sector/subcategory by type and by product-name keywords.
 - The "Setor" filter lists the sectors in that order, "Tipo de produto" lists the subcategories, and "Recomendadas" sorts by sector then subcategory.
 - The header chip row ("Explorar por categoria") is: Mais curtidos, Maiores descontos, Carnes, Bebidas and then the remaining sectors in a random order. "Mais curtidos" and "Maiores descontos" also filter (only offers with likes / only offers with a discount).
@@ -49,7 +49,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.
 - The login page supports e-mail/password and Google OAuth (`signInWithGoogle` in `account.ts`); the Google provider itself must be enabled in the Supabase console, and the Google client ID/secret never live in the frontend.
-- Browser-only guest favorites remain in local storage.
+- Favorites and reactions require a signed-in account; the login prompt opens from favorite/reaction controls and the Favoritos nav.
+- Guest localStorage favorites are a one-time migration source merged into the account on first sign-in, not a signed-out UI feature.
 - Signed-in data is stored in Supabase tables with RLS protection.
 - `supabase-config.ts` contains only the public publishable key.
 - Never place service-role or database secrets in browser code.

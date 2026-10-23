@@ -65,6 +65,11 @@ function categoryFromPath(path) {
   return CATEGORY_MAP.get(normalizeCategory(topLevel)) ?? topLevel;
 }
 
+/** Caminho completo de categoria do catálogo, usado como sinal principal. */
+function storeCategoryPath(path) {
+  return String(path ?? "").split("/").filter(Boolean).slice(0, 3).join("/");
+}
+
 function getSellerOffer(item) {
   const seller = item?.sellers?.find((entry) => entry.sellerDefault) ?? item?.sellers?.[0];
   return seller?.commertialOffer ?? null;
@@ -88,7 +93,8 @@ export function buildPagueMenosOffer(product, { pageUrl = PAGUE_MENOS_URL, valid
   const brand = String(product?.brand ?? "").replace(/\s+/g, " ").trim();
   const category = categoryFromPath(product?.categories?.[0]);
   const { nameOnly, detail } = splitProductName(fullName);
-  const taxonomy = classifyProduct(nameOnly, brand, category);
+  const storeCategory = storeCategoryPath(product?.categories?.[0]);
+  const taxonomy = classifyProduct(nameOnly, brand, category, storeCategory);
 
   const offer = {
     id: `paguemenos-${slug(`${nameOnly}-${brand}-${detail}-${validity.from}`)}`,
@@ -102,6 +108,7 @@ export function buildPagueMenosOffer(product, { pageUrl = PAGUE_MENOS_URL, valid
     department: taxonomy.department,
     productType: taxonomy.productType,
     productTypes: taxonomy.productTypes,
+    storeCategory,
     price: roundPrice(price),
     previousPrice,
     icon: assignIcon(nameOnly, taxonomy.productType, taxonomy.department),

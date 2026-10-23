@@ -43,7 +43,6 @@ export const TAXONOMY_GROUPS = [
     id: "bebidas",
     label: "Bebidas",
     subcategories: [
-      "Bebidas alcoólicas",
       "Bebidas sem álcool",
       "Sucos",
       "Refrigerantes",
@@ -51,6 +50,11 @@ export const TAXONOMY_GROUPS = [
       "Chás e cafés",
       "Águas",
     ],
+  },
+  {
+    id: "bebidas_alcoolicas",
+    label: "Bebidas alcoólicas",
+    subcategories: ["Cervejas", "Vinhos e destilados", "Aperitivos e coquetéis"],
   },
   {
     id: "congelados",
@@ -147,9 +151,10 @@ const TYPE_CATEGORY = {
   Café: { groupId: "bebidas", subcategory: "Chás e cafés" },
   Refrigerantes: { groupId: "bebidas", subcategory: "Refrigerantes" },
   "Sucos e bebidas": { groupId: "bebidas", subcategory: "Sucos" },
-  Cervejas: { groupId: "bebidas", subcategory: "Bebidas alcoólicas" },
-  "Bebidas alcoólicas": { groupId: "bebidas", subcategory: "Bebidas alcoólicas" },
   Bebidas: { groupId: "bebidas", subcategory: "Bebidas sem álcool" },
+  Cervejas: { groupId: "bebidas_alcoolicas", subcategory: "Cervejas" },
+  "Bebidas alcoólicas": { groupId: "bebidas_alcoolicas", subcategory: "Vinhos e destilados" },
+
   Congelados: { groupId: "congelados", subcategory: "Congelados" },
   "Lavanderia e limpeza": { groupId: "limpeza", subcategory: "Lavanderia" },
   "Casa e limpeza": { groupId: "limpeza", subcategory: "Limpeza doméstica" },
@@ -161,30 +166,34 @@ const TYPE_CATEGORY = {
   Outros: { groupId: "outros", subcategory: "Outros" },
 };
 
-/** Tipos genéricos: quando o tipo não diz nada, as palavras do produto definem a categoria. */
+/**
+ * Tipos genéricos: o tipo sozinho não decide o setor, então as palavras do
+ * produto podem refinar. Os tipos fora daqui são decididos pelo tipo, que vem
+ * da categoria da própria loja.
+ */
 const GENERIC_TYPES = new Set([
   "Mercearia", "Arroz", "Feijão", "Café", "Congelados", "Doces e snacks", "Bebidas", "Bebidas alcoólicas",
   "Sucos e bebidas", "Refrigerantes", "Cervejas", "Casa", "Casa e limpeza", "Lavanderia e limpeza",
   "Higiene pessoal", "Papel higiênico", "Pet", "Frios e laticínios", "Outros",
 ]);
 
-/** Regras de grupo por palavra do produto. */
-const GROUP_KEYWORD_RULES = [
-  { re: /fralda/, groupId: "infantil" },
-  { re: /lenco umedecido|papel umedecido|lenho umedecido|toalha umedecida/, groupId: "infantil" },
-  { re: /formula infantil|leite infantil/, groupId: "infantil" },
-  { re: /papinha|alimentacao infantil|food infantil/, groupId: "infantil" },
-  { re: /racao|petisco|areia sanit|antipulgas|higiene animal|coleira|comedouro/, groupId: "pet" },
-  { re: /organico|orgânico|sem gluten|sem glúten|gluten free|sem lactose|vegano|vegetariano|diet\b|light\b|hipocalorico|suplemento|vitamina|whey|creatina/, groupId: "saudaveis", genericOnly: true },
-  { re: /integral/, groupId: "saudaveis", genericOnly: true },
-  { re: /agua mineral|agua de coco|agua gaseificada|h2o/, groupId: "bebidas" },
-  { re: /energetico|energético|isotonico|isotônico/, groupId: "bebidas" },
-  { re: /cha mate|cha verde|cha preto/, groupId: "bebidas" },
-  { re: /pizza|salgado|pao de queijo|coxinha/, groupId: "congelados", excludeTypes: ["Doces e snacks"] },
-  { re: /sorvete|picole|picolé|gelato/, groupId: "congelados" },
-  { re: /pao |pao de|pães|padaria|bread|bolo|croissant|rosquinha|torra/, groupId: "frescos", genericOnly: true },
-  { re: /inseticida|repelente|insecticida|mosquito/, groupId: "limpeza" },
-  { re: /esponja|lixeira|escorecedor|pano de|agua sanitaria|desinfetante|sabao|detergente|amaciante|limpador/, groupId: "limpeza" },
+/**
+ * Regras que podem trocar o setor do produto.
+ *
+ * São poucas e fortes: só quando o nome carrega um sinal que nenhum outro
+ * setor poderia ter. Regras fracas (por exemplo "água de coco" num creme
+ * capilar) não entram aqui, senão mandariam o produto para o setor errado.
+ */
+const GROUP_OVERRIDE_RULES = [
+  { re: /\bfralda\b/, groupId: "infantil" },
+  { re: /\blenco umedecido\b|\bpapel umedecido\b|\blenho umedecido\b|\btoalha umedecida\b/, groupId: "infantil" },
+  { re: /\bformula infantil\b|\bleite infantil\b/, groupId: "infantil" },
+  { re: /\bpapinha\b|\balimentacao infantil\b|\bfood infantil\b/, groupId: "infantil" },
+  { re: /\brac(ao|oes)\b|\bpetiscos?\b|\bcoleira\b|\bcomedouro\b|\bareia sanit/, groupId: "pet" },
+  { re: /\bantipulgas\b|\bhigiene animal\b/, groupId: "pet" },
+  { re: /\borganico\b|\bsem gluten\b|\bgluten free\b|\bsem lactose\b|\bvegano\b|\bvegetariano\b|\bdiet\b|\blight\b|\bhipocalorico\b|\bsuplemento\b|\bvitamina\b|\bwhey\b|\bcreatina\b|\bintegral\b/, groupId: "saudaveis", excludeText: /\b(suco|refrigerante|cerveja|energetico|isotonico|agua|cha mate)\b/ },
+  { re: /\bpadaria\b|\bpaes\b|\bbread\b|\bbolo\b|\bcroissant\b|\brosquinha\b|\btorrada\b|\btorra\b/, groupId: "frescos", excludeTypes: ["Congelados", "Doces e snacks"] },
+  { re: /\bpao\b|\bpao de\b/, groupId: "frescos", excludeTypes: ["Congelados", "Doces e snacks"] },
 ];
 
 /** Palavras que indicam que o produto é mesmo de churrasco. */
@@ -206,10 +215,15 @@ const SUBCATEGORY_RULES = {
   ],
   bebidas: [
     [/agua mineral|agua de coco|agua gaseificada|h2o/, "Águas"],
-    [/energetico|energético|isotonico|isotônico/, "Energéticos e isotônicos"],
-    [/cerveja|vinho|aperitivo|espumante/, "Bebidas alcoólicas"],
+    [/energetico|isotonico/, "Energéticos e isotônicos"],
     [/cha mate|cha verde|cafe/, "Chás e cafés"],
   ],
+  bebidas_alcoolicas: [
+    [/cerveja|chopp|lager|pilsen|ipa|ale/, "Cervejas"],
+    [/vinho|espumante|champanhe|whisky|vodka/, "Vinhos e destilados"],
+    [/aperitivo|coquetel/, "Aperitivos e coquetéis"],
+  ],
+
   congelados: [
     [/sorvete|picole|picolé|gelato/, "Sobremesas geladas"],
     [/pizza|salgado|pao de queijo|coxinha/, "Salgados e pizzas"],
@@ -246,7 +260,7 @@ const SUBCATEGORY_RULES = {
   ],
   pet: [
     [/gato/, "Ração para gatos"],
-    [/racao/, "Ração para cães"],
+    [/\brac(ao|oes)\b/, "Ração para cães"],
     [/petisco/, "Petiscos"],
     [/areia sanit/, "Areia sanitária"],
     [/higiene animal|antipulgas/, "Higiene animal"],
@@ -291,6 +305,12 @@ function pickSubcategory(groupId, text) {
 
 /**
  * Resolve grupo e subcategoria de uma oferta.
+ *
+ * O tipo de produto (classificado na ingestão, a partir da categoria da
+ * própria loja) tem prioridade sobre as palavras do nome: o nome é um palpite,
+ * a categoria da loja é a fonte da verdade. As regras por palavra só entram
+ * quando o tipo é genérico demais para decidir o grupo.
+ *
  * @param {{ name?: string, brand?: string, productType?: string, productTypes?: string[] }} offer
  * @returns {CatalogCategory}
  */
@@ -304,10 +324,10 @@ export function resolveCategory(offer) {
     return { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };
   }
 
-  for (const rule of GROUP_KEYWORD_RULES) {
-    if (rule.genericOnly && !generic) continue;
+  for (const rule of GROUP_OVERRIDE_RULES) {
     if (rule.excludeTypes?.includes(baseType)) continue;
     if (!rule.re.test(text)) continue;
+    if (rule.excludeText?.test(text)) continue;
     const subcategory = pickSubcategory(rule.groupId, text);
     if (subcategory) return { groupId: rule.groupId, subcategory };
   }

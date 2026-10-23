@@ -6,6 +6,8 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+const avatarBucket = "avatars";
+
 Deno.serve(async (request: Request): Promise<Response> => {
   if (request.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -39,9 +41,31 @@ Deno.serve(async (request: Request): Promise<Response> => {
     return Response.json({ error: "Invalid session" }, { status: 401, headers: corsHeaders });
   }
 
+  // Collect the avatar before the account disappears: the profile row is
+  // removed by the cascade, so the file path has to be read first.
+  const { data: profile } = await adminClient
+    .from("profiles")
+    .select("avatar_path")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  const avatarPaths = new Set<string>();
+  if (profile?.avatar_path) avatarPaths.add(profile.avatar_path);
+  const { data: storedFiles } = await adminClient.storage.from(avatarBucket).list(user.id);
+  for (const file of storedFiles ?? []) {
+    if (file?.name) avatarPaths.add(`${user.id}/${file.name}`);
+  }
+
   const { error: deleteError } = await adminClient.auth.admin.deleteUser(user.id);
   if (deleteError) {
     return Response.json({ error: "Account deletion failed" }, { status: 500, headers: corsHeaders });
+  }
+
+  // The account is gone; the avatar files are now orphans, so remove them.
+  if (avatarPaths.size > 0) {
+    const { error: storageError } = await adminClient.storage.from(avatarBucket).remove([...avatarPaths]);
+    if (storageError) {
+      console.error("Could not remove the avatar files of the deleted account.", storageError);
+    }
   }
 
   return Response.json({ success: true }, { headers: corsHeaders });

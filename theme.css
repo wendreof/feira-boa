@@ -46,6 +46,7 @@
 :root[data-theme="dark"] .price-input input,
 :root[data-theme="dark"] .preference-check,
 :root[data-theme="dark"] .account-identity,
+:root[data-theme="dark"] .avatar-block,
 :root[data-theme="dark"] .alert-rule-item,
 :root[data-theme="dark"] .empty-state {
   background-color: #1b241e;

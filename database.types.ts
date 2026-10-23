@@ -16,6 +16,7 @@ export interface Database {
           timezone: string;
           notifications_paused: boolean;
           preferences: Json;
+          avatar_path: string | null;
         };
         Insert: {
           user_id: string;
@@ -23,6 +24,7 @@ export interface Database {
           timezone?: string;
           notifications_paused?: boolean;
           preferences?: Json;
+          avatar_path?: string | null;
         };
         Update: {
           user_id?: string;
@@ -30,6 +32,7 @@ export interface Database {
           timezone?: string;
           notifications_paused?: boolean;
           preferences?: Json;
+          avatar_path?: string | null;
         };
         Relationships: [];
       };
@@ -130,10 +133,14 @@ export interface Database {
           message: string;
           status: "new" | "reviewed" | "closed";
           created_at: string;
+          user_id: string | null;
+          honeypot: string;
         };
         Insert: {
           category: "idea" | "bug" | "content" | "other";
           message: string;
+          user_id: string;
+          honeypot?: string;
         };
         Update: never;
         Relationships: [];
@@ -180,6 +187,18 @@ export interface Database {
       is_admin: {
         Args: Record<string, never>;
         Returns: boolean;
+      };
+      get_admin_account_stats: {
+        Args: Record<string, never>;
+        Returns: {
+          total_accounts: number;
+          google_accounts: number;
+          email_accounts: number;
+          accounts_with_alerts: number;
+          accounts_with_push: number;
+          new_accounts_7d: number;
+          new_accounts_30d: number;
+        }[];
       };
       get_admin_alert_stats: {
         Args: Record<string, never>;

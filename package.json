@@ -8,6 +8,7 @@
     "test": "node --test",
     "typecheck": "tsc --noEmit",
     "verify:artifacts": "node scripts/verify-root-artifacts.mjs",
+    "build:social-card": "node scripts/build-social-card.mjs",
     "ingest:offers": "node scripts/ingest-offers.mjs",
     "check:site": "node scripts/check-site-health.mjs",
     "send:price-alerts": "node scripts/send-price-alerts.mjs",

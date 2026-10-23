@@ -344,28 +344,166 @@ export function normalizeOfferPresentation(offer) {
   };
 }
 
-export function classifyProduct(name, brand, category) {
-  const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+/**
+ * Palavras do tipo de produto, com limites de palavra.
+ *
+ * A lista precisa respeitar a fronteira da palavra: sem ela, "Reparação"
+ * casava com /racao/, "Coração" com /racao/ e "Original" com /gin/, o que
+ * mandava cremes capilares e snacks para o setor errado.
+ */
+const PRODUCT_TYPE_RULES = [
+  [/\b(sabao em po|detergente|amaciante|agua sanitaria|saponaceo|desinfetante|multiuso)\b/, "Lavanderia e limpeza"],
+  [/\b(condicionador|shampoo|leave in|leave-in|creme leave in|creme de pentear|mascara capilar|oleo capilar|reparador de pontas|tratamento capilar|serum capilar|creme dental|pasta de dente|escova dental|fio dental|enxaguante|antisseptico|higiene bucal|absorvente|sabonete|desodorante|antiperspirante|protetor solar|perfume|maquiagem|barbear|depiladora|toalha umedecida)\b/, "Higiene pessoal"],
+  [/\b(biscoito|bolacha|wafer|cookie|salgadinho|batata palha|chocolate|bombom|pacoquinha|doce de leite|pirulito|caramelo|goiabada|bala|chiclete|creme de avela|creme avela|nutella|avela)\b/, "Doces e snacks"],
+  [/\b(nugget|nuggets|empanado|empanad[oa]s?|lasanha|ravioli|capeletti|hot pocket|hot bowls|hamburguer|pizza|sanduiche|sandwich|nhoque|quibe|kibe|macarrao pronto|macarrao congelado|batata palito|congelado de bandeja|feijoada)\b/, "Congelados"],
+  [/\b(cerveja|chopp|pilsen|lager|ipa|ale|original weiss|weiss)\b/, "Cervejas"],
+  [/\b(vinho|aperitivo|espumante|champanhe|whisky|vodka|gin)\b/, "Bebidas alcoólicas"],
+  [/\b(refrigerante|guarana|cola|coca|pepsi)\b/, "Refrigerantes"],
+  [/\b(suco|néctar|agua mineral|agua de coco|agua tonica|isotonico|energetico|refresco)\b/, "Sucos e bebidas"],
+  [/\b(cafe|espresso|cappuccino|capuccino|cafeteira|cafeteria)\b/, "Café"],
+  [/\b(leite em po|leite uht|leite integral|leite fermentado|leite longa vida|bebida lactea|leite de aveia)\b/, "Leites"],
+  [/\b(iogurte|danoninho|yogurte)\b/, "Iogurtes"],
+  [/\b(requeijao|ricota|queijo minas|queijo prato|mussarela|mucarela)\b/, "Queijos e requeijão"],
+  [/\b(manteiga|margarina)\b/, "Manteiga"],
+  [/\b(ketchup|mostarda|maionese)\b/, "Mercearia"],
+  [/\b(presunto|mortadela|salsicha|linguica|bacon|embutido|salami|salame|pepperoni|quibe)\b/, "Frios"],
+  [/\b(suina|suino|pernil|bisteca|panceta)\b/, "Carnes suínas"],
+  [/\b(bovino|bovina|contrafile|paleta|alcatra|fraldinha|maminha|figado|acem|lombo|costela|patinho|picanha|entrecote|ancho|file mignon|filé mignon|carne moida)\b/, "Carne bovina"],
+  [/\b(frango|asa de|coxa|sobrecoxa|filezinho|chicken|sassami|moela|tulipa)\b/, "Frango"],
+  [/\b(tilapia|peixe|sardinha|atum|merluza)\b/, "Peixes"],
+  [/\b(ovos|ovo)\b/, "Ovos"],
+  [/\b(sorvete|picole|picolé|gelato|torta)\b/, "Congelados"],
+  [/\b(lava-roupas|lava roupas|sabao|detergente|amaciante|limpa|limpador|desinfetante|saponaceo|agua sanitaria|hipoclorito|cloro|inseticida|repelente)\b/, "Lavanderia e limpeza"],
+  [/\b(papel higienico|papel toalha|guardanapo|toalha de papel)\b/, "Papel higiênico"],
+  [/\b(pilha|bateria|lampada|esponja|lixeira|pano de|carvao|vaso|organizador|arara|cesto|cabide)\b/, "Casa"],
+  [/\b(sandalia|sapato|tenis|tennis|chinelo)\b/, "Calçados"],
+  [/\b(new fort|fort lar|fervedor)\b/, "Casa"],
+  [/\b(arroz|feijao|acucar|macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|granola|aveia|filtro de papel|caldo|sopa|sal|vinagre|tempero|shoyu)\b/, "Mercearia"],
+  [/\b(tomate|batata|cebola|cenoura|alface|banana|maca|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde|brocolis|couve|beterraba|brocolis|palmito|aipim|abacate|melancia)\b/, "Hortifruti"],
+  [/\b(racao|racoes|petisco|petiscos|coleira|comedouro|areia sanit|areia sanitaria|antipulgas|higiene animal|shampoo pet|alimento para|para caes|para gatos)\b/, "Pet"],
+];
+
+/**
+ * Categorias do próprio catálogo da loja (o caminho vem no JSON do Pague
+ * Menos). A loja é a fonte da verdade: o caminho é mais confiável do que
+ * qualquer palavra do nome, então ele tem prioridade sobre as regras.
+ *
+ * As chaves são os dois primeiros níveis do caminho; o valor é o tipo de
+ * produto. Um prefixo vazio casa com qualquer nível.
+ */
+const STORE_CATEGORY_TYPES = new Map([
+  ["congelados", "Congelados"],
+  ["cafe da manha/cafe", "Café"],
+  ["cafe da manha/leite", "Leites"],
+  ["cafe da manha/bebidas matinais", "Café"],
+  ["cafe da manha/cereal e granola", "Mercearia"],
+  ["cafe da manha/aveias e mingaus", "Mercearia"],
+  ["cafe da manha/padaria", "Mercearia"],
+  ["bebidas/cervejas", "Cervejas"],
+  ["bebidas/sucos e refrigerantes", "Refrigerantes"],
+  ["bebidas/agua, energetico e cha", "Sucos e bebidas"],
+  ["bebidas", "Sucos e bebidas"],
+  ["limpeza", "Lavanderia e limpeza"],
+  ["perfumaria", "Higiene pessoal"],
+  ["mercearia/biscoitos e salgadinhos", "Doces e snacks"],
+  ["mercearia/bombonerie", "Doces e snacks"],
+  ["mercearia/doces", "Doces e snacks"],
+  ["mercearia/cafe e achocolatados", "Café"],
+  ["mercearia/molhos frios", "Mercearia"],
+  ["mercearia/temperos e condimentos", "Mercearia"],
+  ["mercearia/alimentos funcionais", "Mercearia"],
+  ["mercearia/sementes e nozes", "Mercearia"],
+  ["mercearia", "Mercearia"],
+  ["frios e laticinios/embutidos", "Frios"],
+  ["frios e laticinios/frios", "Frios"],
+  ["frios e laticinios/queijo", "Queijos e requeijão"],
+  ["frios e laticinios/patês e pastas", "Mercearia"],
+  ["frios e laticinios/lácteos/iogurte", "Iogurtes"],
+  ["frios e laticinios/lácteos/leite fermentado", "Leites"],
+  ["frios e laticinios/lácteos/manteiga", "Manteiga"],
+  ["frios e laticinios/lácteos/requeijão", "Queijos e requeijão"],
+  ["frios e laticinios/lácteos/sobremesa láctea", "Congelados"],
+  ["frios e laticinios/lácteos", "Leites"],
+  ["acougue/aves", "Frango"],
+  ["acougue/suína", "Carnes suínas"],
+  ["mamae e bebe", "Higiene pessoal"],
+  ["hortifruti", "Hortifruti"],
+]);
+
+function normalizeForCategory(value) {
+  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+/**
+ * Tipo de produto a partir do caminho de categoria da loja, quando ela
+ * informa um caminho completo. Retorna null quando o caminho é inútil.
+ */
+export function classifyByStoreCategory(path) {
+  const segments = normalizeForCategory(path).split("/").filter(Boolean);
+  if (segments.length < 2) return null;
+  for (let size = Math.min(3, segments.length); size >= 1; size -= 1) {
+    const type = STORE_CATEGORY_TYPES.get(segments.slice(0, size).join("/"));
+    if (type) return type;
+  }
+  return null;
+}
+
+/**
+ * Tipo de produto para a categoria grossa da loja, usada quando o nome não
+ * diz nada. A chave é a categoria como a loja escreve; o valor é sempre um
+ * tipo de produto, nunca um departamento.
+ *
+ * Também cobre os departamentos que as ofertas já gravadas carregam, para
+ * que um snapshot antigo seja reclassificado sem novo scraping.
+ */
+const CATEGORY_PRODUCT_TYPES = new Map([
+  ["acougue", "Carne bovina"],
+  ["acougue e peixaria", "Carne bovina"],
+  ["aves", "Frango"],
+  ["bebidas", "Bebidas"],
+  ["bebidas alcoolicas", "Bebidas alcoólicas"],
+  ["cafe", "Café"],
+  ["cafe da manha", "Café"],
+  ["calçados", "Calçados"],
+  ["calcados", "Calçados"],
+  ["carnes", "Carne bovina"],
+  ["casa", "Casa"],
+  ["casa e limpeza", "Lavanderia e limpeza"],
+  ["congelados", "Congelados"],
+  ["frios", "Frios"],
+  ["frios e laticinios", "Frios e laticínios"],
+  ["hortifruti", "Hortifruti"],
+  ["higiene", "Higiene pessoal"],
+  ["higiene e cuidados", "Higiene pessoal"],
+  ["laticinios", "Leites"],
+  ["limpeza", "Lavanderia e limpeza"],
+  ["mamae e bebe", "Higiene pessoal"],
+  ["mercearia", "Mercearia"],
+  ["padaria", "Mercearia"],
+  ["peixes", "Peixes"],
+  ["perfumaria", "Higiene pessoal"],
+  ["pet", "Pet"],
+  ["vestuario", "Calçados"],
+  ["vestuario e calcados", "Calçados"],
+]);
+
+/**
+ * Classifica uma oferta em tipo de produto e departamento.
+ *
+ * `category` é a categoria da loja (fallback) e `storeCategory` é o caminho
+ * completo do catálogo, quando disponível. O caminho da loja tem prioridade:
+ * ele é definido pela própria loja e não depende de palpite por palavra.
+ */
+export function classifyProduct(name, brand, category, storeCategory = "") {
+  const text = normalizeForCategory(`${name} ${brand}`);
   const normalizedCategory = category === "Geral" ? "Outros" : category;
-  const rules = [
-    [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado|leite longa vida|bebida lactea/, "Leites"],
-    [/condicionador|shampoo|creme dental|dental|bucal|enxaguante|absorvente|sabonete|desodorante|higiene|toalha umedecida/, "Higiene pessoal"],
-    [/iogurte|danoninho/, "Iogurtes"], [/requeijao|queijo|ricota/, "Queijos e requeijão"], [/manteiga|margarina/, "Manteiga"], [/ketchup/, "Mercearia"],
-    [/ovos?\b/, "Ovos"], [/creme de avela|nutella/, "Doces e snacks"], [/sandalia|sapato|tenis|chinelo/, "Calçados"], [/new fort|fort lar|fervedor/, "Casa"],
-    [/frango|asa de|coxa|sobrecoxa|filezinho|chicken|sassami/, "Frango"], [/bovino|contrafile|paleta|alcatra|fraldinha|figado|acem|lombo|costela|patinho/, "Carne bovina"],
-    [/^bacon|linguica|salsicha|mortadela|embutido|salami|^presunto/, "Frios"],
-    [/suina|suino|pernil|bisteca|panceta/, "Carnes suínas"], [/tilapia|peixe|sardinha|atum/, "Peixes"],
-    [/cerveja/, "Cervejas"], [/refrigerante|guarana|h2oh/, "Refrigerantes"], [/suco|nectar|agua mineral|agua de coco|energetico|refresco/, "Sucos e bebidas"], [/vinho|aperitivo|smirnoff|gin/, "Bebidas alcoólicas"],
-    [/lava-roupas|lava roupas|sabao|detergente|amaciante|limpeza|limpador|desinfetante|saponaceo/, "Lavanderia e limpeza"], [/papel higienico|papel higiênico/, "Papel higiênico"],
-    [/sorvete|acai|picole|congelad|(?<!massa para )lasanha|ravioli|capeletti|batata palito|hamburguer|pizza|hot pocket|nugget|brocolis/, "Congelados"],
-    [/batata chips|biscoito|chocolate|pacoquinha|bombom|wafer/, "Doces e snacks"],
-    [/(?!.*pelado)tomate|batata|cebola|cenoura|alface|banana|\bmaca\b|maçã|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde/, "Hortifruti"],
-    [/macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|acucar|achocolatado|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|filtro de papel|caldo|sopa/, "Mercearia"],
-    [/racao|\bdog\b|\bcat\b|\bpet\b/, "Pet"],
-    [/pilha|esponja|lixeira|pano|lampada|carvao para|carvao de churrasco/, "Casa"],
-  ];
-  const matched = rules.find(([pattern]) => pattern.test(text));
-  const productType = matched ? matched[1] : normalizedCategory;
+  const storeType = classifyByStoreCategory(storeCategory);
+  const matched = storeType
+    ? [null, storeType]
+    : PRODUCT_TYPE_RULES.find(([pattern]) => pattern.test(text));
+  const productType = matched
+    ? matched[1]
+    : CATEGORY_PRODUCT_TYPES.get(normalizeForCategory(normalizedCategory)) ?? normalizedCategory;
 
   const departments = {
     "Frios e laticínios": "Frios e laticínios", "Iogurtes": "Frios e laticínios", "Queijos e requeijão": "Frios e laticínios", "Manteiga": "Frios e laticínios", "Frios": "Frios e laticínios",
@@ -381,14 +519,16 @@ export function classifyProduct(name, brand, category) {
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados",
     "Pet": "Pet", "Casa": "Casa e limpeza", "Padaria": "Mercearia", "Hortifruti": "Hortifruti", "Vestuário": "Vestuário e calçados", "Outros": "Outros",
   };
-  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao para|carvao de churrasco|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango|bisteca|panceta/.test(text);
-  const primaryProductType = matched ? productType : (categoryDepartments[normalizedCategory] ?? normalizedCategory);
+  const isBarbecueProduct = /\bpicanha\b|\bfraldinha\b|\bmaminha\b|\bcostela\b|\bcontrafile\b|\bentrecote\b|\bancho\b|\blinguica\b|\bpao de alho\b|\bqueijo coalho\b|\bcarvao (para|de churrasco)\b|\bespeto\b|\bgrelha\b|\bacendedor\b|\bcoxa\b|\bsobrecoxa\b|\basa de frango\b|\bbisteca\b|\bpanceta\b/.test(text);
+  // Produto pronto e congelado ("Hot Pocket X-picanha") não é corte para churrasco.
+  const isChurrasco = isBarbecueProduct && productType !== "Congelados";
   return {
     department: departments[productType] ?? categoryDepartments[normalizedCategory] ?? normalizedCategory,
-    productType: primaryProductType,
-    productTypes: isBarbecueProduct ? [primaryProductType, "Churrasco"] : [primaryProductType],
+    productType,
+    productTypes: isChurrasco ? [productType, "Churrasco"] : [productType],
   };
 }
+
 
 export function assignIcon(name, productType = "", department = "") {
   const normalize = (value) => String(value ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");

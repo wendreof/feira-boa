@@ -1,6 +1,16 @@
 import { supabase } from "./supabase-client";
 import type { OfferFeed } from "./types";
 
+interface AdminAccountStats {
+  total_accounts: number;
+  google_accounts: number;
+  email_accounts: number;
+  accounts_with_alerts: number;
+  accounts_with_push: number;
+  new_accounts_7d: number;
+  new_accounts_30d: number;
+}
+
 interface AdminAlertStats {
   window_days: number;
   sent: number;
@@ -20,6 +30,8 @@ const sourcesSection = document.querySelector<HTMLElement>("#admin-sources")!;
 const sourceList = document.querySelector<HTMLElement>("#admin-source-list")!;
 const alertsSection = document.querySelector<HTMLElement>("#admin-alerts")!;
 const alertStats = document.querySelector<HTMLElement>("#admin-alert-stats")!;
+const accountsSection = document.querySelector<HTMLElement>("#admin-accounts")!;
+const accountStats = document.querySelector<HTMLElement>("#admin-account-stats")!;
 
 function todayInSaoPaulo(): string {
   const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
@@ -151,6 +163,25 @@ async function loadAlerts(): Promise<void> {
   alertsSection.hidden = false;
 }
 
+async function loadAccounts(): Promise<void> {
+  const { data, error } = await supabase.rpc("get_admin_account_stats");
+  if (error) throw error;
+  const stats = (Array.isArray(data) ? data[0] : data) as AdminAccountStats | null;
+  if (!stats) {
+    accountStats.replaceChildren(statCard("Contas", "—", "Sem dados"));
+    accountsSection.hidden = false;
+    return;
+  }
+  accountStats.replaceChildren(
+    statCard("Contas criadas", String(stats.total_accounts ?? 0), `${stats.new_accounts_7d ?? 0} nos últimos 7 dias · ${stats.new_accounts_30d ?? 0} em 30 dias`),
+    statCard("Contas com Google", String(stats.google_accounts ?? 0), "Login por Google"),
+    statCard("Contas por e-mail", String(stats.email_accounts ?? 0), "Login por e-mail e senha"),
+    statCard("Contas com alertas", String(stats.accounts_with_alerts ?? 0), "Com ao menos uma regra"),
+    statCard("Contas com push", String(stats.accounts_with_push ?? 0), "Com ao menos um dispositivo"),
+  );
+  accountsSection.hidden = false;
+}
+
 async function start(): Promise<void> {
   const { data: sessionData } = await supabase.auth.getSession();
   const user = sessionData.session?.user;
@@ -170,7 +201,7 @@ async function start(): Promise<void> {
   }
 
   status.textContent = `Acesso confirmado para ${user.email ?? "conta administrativa"}.`;
-  const results = await Promise.allSettled([loadCatalog(), loadSources(), loadAlerts()]);
+  const results = await Promise.allSettled([loadCatalog(), loadSources(), loadAlerts(), loadAccounts()]);
   for (const result of results) {
     if (result.status === "rejected") {
       status.textContent = `Acesso confirmado, mas parte dos dados não carregou: ${(result.reason as Error)?.message ?? "erro"}`;

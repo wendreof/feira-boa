@@ -20,6 +20,7 @@ export interface Offer {
   department: string;
   productType: string;
   productTypes: string[];
+  storeCategory?: string;
   price: number;
   previousPrice: number | null;
   icon: string;

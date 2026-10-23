@@ -56,14 +56,25 @@
   storesLink.setAttribute("data-sidebar-link", "stores");
   storesLink.innerHTML = '<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10h18M5 10v10h14V10M4 10l1.5-6h13L20 10M9 20v-6h6v6"/></svg></span><span>Lojas</span>';
   offersLink?.after(storesLink);
+
+  const suggestionsLink = sidebar.querySelector('[data-sidebar-link="suggestions"]');
+  const termsLink = document.createElement("a");
+  termsLink.className = "sidebar-link";
+  termsLink.href = "termos.html";
+  termsLink.setAttribute("aria-label", "Termos de uso");
+  termsLink.setAttribute("data-sidebar-link", "terms");
+  termsLink.innerHTML = '<span aria-hidden="true">§</span><span>Termos</span>';
+  suggestionsLink?.after(termsLink);
+
   const isOffersPage = currentUrl.pathname === "/" || currentUrl.pathname.endsWith("/index.html");
   if (isOffersPage && currentUrl.searchParams.get("view") !== "favorites") {
     offersLink?.setAttribute("aria-current", "page");
   }
   if (currentUrl.pathname.endsWith("/lojas.html")) storesLink.setAttribute("aria-current", "page");
   if (currentUrl.pathname.endsWith("/suggestions.html")) {
-    sidebar.querySelector('[data-sidebar-link="suggestions"]')?.setAttribute("aria-current", "page");
+    suggestionsLink?.setAttribute("aria-current", "page");
   }
+  if (currentUrl.pathname.endsWith("/termos.html")) termsLink.setAttribute("aria-current", "page");
 
   function setMobileMenuOpen(open) {
     const shouldOpen = mobileQuery.matches && open;

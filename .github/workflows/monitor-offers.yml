@@ -3,6 +3,10 @@ name: Ingest and monitor official offer sources
 on:
   push:
     branches: [main]
+    # Doc-only pushes do not need a 25-minute ingestion run.
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
   schedule:
     # 10:07 and 21:07 UTC = 07:07 and 18:07 in São Paulo (UTC-3);
     # nudge off the top of the hour to avoid Actions congestion.

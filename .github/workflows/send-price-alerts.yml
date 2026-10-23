@@ -2,8 +2,9 @@ name: Send price alerts
 
 on:
   schedule:
-    # Daily at 09:31 São Paulo time; scheduled runs may start late.
-    - cron: "31 12 * * *"
+    # 10:23 and 21:23 UTC = 07:23 and 18:23 São Paulo (UTC-3),
+    # ~15 min after each ingestion run so alerts see fresh prices.
+    - cron: "23 10,21 * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +21,7 @@ jobs:
     timeout-minutes: 10
     env:
       SUPABASE_URL: https://muiuvmhzzbqflxznpnez.supabase.co
-      VAPID_PUBLIC_KEY: BLFV8pgkW21YRHFS_q-8tm5X6YZBghDNTrxUyvOEhJYSc9QmVXjbEStxd_R-7ndf5B4NrUcIdpcvTtS-OAfreyg
+      VAPID_PUBLIC_KEY: BJyHBlXtSK3oR8jzUQPJ0RlItHhuEGQIIh3tHtwa5uSdfWcjmkmuBcS8aO1LxKw8w0k9VHyHTkdWVahu4UTkM1Y
       VAPID_SUBJECT: ${{ vars.SITE_URL }}
       SITE_URL: ${{ vars.SITE_URL }}
     steps:

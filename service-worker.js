@@ -1,6 +1,6 @@
 const CACHE_NAME = "feira-boa-shell-v7";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
-const VAPID_PUBLIC_KEY = "BLFV8pgkW21YRHFS_q-8tm5X6YZBghDNTrxUyvOEhJYSc9QmVXjbEStxd_R-7ndf5B4NrUcIdpcvTtS-OAfreyg";
+const VAPID_PUBLIC_KEY = "BJyHBlXtSK3oR8jzUQPJ0RlItHhuEGQIIh3tHtwa5uSdfWcjmkmuBcS8aO1LxKw8w0k9VHyHTkdWVahu4UTkM1Y";
 const SHELL = [
   "/",
   "/index.html",

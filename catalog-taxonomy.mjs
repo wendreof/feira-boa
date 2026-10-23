@@ -191,7 +191,7 @@ const GROUP_OVERRIDE_RULES = [
   { re: /\bpapinha\b|\balimentacao infantil\b|\bfood infantil\b/, groupId: "infantil" },
   { re: /\brac(ao|oes)\b|\bpetiscos?\b|\bcoleira\b|\bcomedouro\b|\bareia sanit/, groupId: "pet" },
   { re: /\bantipulgas\b|\bhigiene animal\b/, groupId: "pet" },
-  { re: /\borganico\b|\bsem gluten\b|\bgluten free\b|\bsem lactose\b|\bvegano\b|\bvegetariano\b|\bdiet\b|\blight\b|\bhipocalorico\b|\bsuplemento\b|\bvitamina\b|\bwhey\b|\bcreatina\b|\bintegral\b/, groupId: "saudaveis" },
+  { re: /\borganico\b|\bsem gluten\b|\bgluten free\b|\bsem lactose\b|\bvegano\b|\bvegetariano\b|\bdiet\b|\blight\b|\bhipocalorico\b|\bsuplemento\b|\bvitamina\b|\bwhey\b|\bcreatina\b|\bintegral\b/, groupId: "saudaveis", excludeText: /\b(suco|refrigerante|cerveja|energetico|isotonico|agua|cha mate)\b/ },
   { re: /\bpadaria\b|\bpaes\b|\bbread\b|\bbolo\b|\bcroissant\b|\brosquinha\b|\btorrada\b|\btorra\b/, groupId: "frescos", excludeTypes: ["Congelados", "Doces e snacks"] },
   { re: /\bpao\b|\bpao de\b/, groupId: "frescos", excludeTypes: ["Congelados", "Doces e snacks"] },
 ];
@@ -327,6 +327,7 @@ export function resolveCategory(offer) {
   for (const rule of GROUP_OVERRIDE_RULES) {
     if (rule.excludeTypes?.includes(baseType)) continue;
     if (!rule.re.test(text)) continue;
+    if (rule.excludeText?.test(text)) continue;
     const subcategory = pickSubcategory(rule.groupId, text);
     if (subcategory) return { groupId: rule.groupId, subcategory };
   }

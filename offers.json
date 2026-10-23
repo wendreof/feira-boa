@@ -32,7 +32,7 @@
     {
       "name": "Spasso Sabores",
       "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-      "logo": "https://spassosabores.com.br/wp-content/uploads/2021/01/logo-site-spasso-sabores-supermercados.png",
+      "logo": "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-faction-icon-website-spasso-sabores-270x270.png",
       "source": "Folheto oficial · Loja São João",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
       "from": "2026-10-13",
@@ -57,11 +57,11 @@
       "name": "BEBIDAS MERCEARIAS AÇOUGUE MOLHO DE TOMATE FUGINI SACHÊ",
       "brand": "",
       "detail": "300G",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 2.29,
       "previousPrice": null,
@@ -105,15 +105,15 @@
       "name": "QJO MUSSARELA KG PEÇA",
       "brand": "",
       "detail": "Unidade",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
       "productTypes": [
-        "Outros"
+        "Queijos e requeijão"
       ],
       "price": 34.9,
       "previousPrice": 54.9,
-      "icon": "🏷️",
+      "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Limite de 5 kg por cliente",
       "validFrom": "2026-10-22",
@@ -204,10 +204,9 @@
       "detail": "Unidade",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Carne bovina"
       ],
       "price": 47.9,
       "previousPrice": 57.9,
@@ -541,9 +540,9 @@
       "detail": "5KG",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Arroz",
+      "productType": "Mercearia",
       "productTypes": [
-        "Arroz"
+        "Mercearia"
       ],
       "price": 18.98,
       "previousPrice": 23.9,
@@ -1045,9 +1044,9 @@
       "detail": "300G",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Queijos e requeijão",
+        "Frios e laticínios",
         "Churrasco"
       ],
       "price": 19.9,
@@ -1116,11 +1115,11 @@
       "name": "INSETICIDA RAID AEROSOL 420ML L+P-",
       "brand": "",
       "detail": "Unidade",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Outros"
+        "Lavanderia e limpeza"
       ],
       "price": 19.9,
       "previousPrice": 25.9,
@@ -1142,9 +1141,9 @@
       "detail": "180G",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Queijos e requeijão"
+        "Frios e laticínios"
       ],
       "price": 6.99,
       "previousPrice": 8.99,
@@ -1190,9 +1189,9 @@
       "detail": "LV4 PG3",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Casa",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Casa"
+        "Lavanderia e limpeza"
       ],
       "price": 6.99,
       "previousPrice": 8.99,
@@ -1380,11 +1379,11 @@
       "name": "APARTIR DE UNIDADES PAGUE: CARVÃO JACARÉ",
       "brand": "",
       "detail": "2,5KG",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Casa",
       "productTypes": [
-        "Outros"
+        "Casa"
       ],
       "price": 23.99,
       "previousPrice": 26.9,
@@ -1404,11 +1403,11 @@
       "name": "MILHO VERDE FUGINI",
       "brand": "",
       "detail": "170G",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 2.99,
       "previousPrice": 3.98,
@@ -1452,11 +1451,11 @@
       "name": "LIMPADOR PERFUMADO CASA E PERFUME",
       "brand": "",
       "detail": "1L",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 9.99,
       "previousPrice": 13.98,
@@ -1716,11 +1715,11 @@
       "name": "LIMPADOR CREMOSO CIF MULTIUSO ORIGINAL 450ML 20% GTS",
       "brand": "",
       "detail": "Unidade",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 16.9,
       "previousPrice": 20.9,
@@ -1885,11 +1884,11 @@
       "name": "SASSAMI DE FRANGO Empanado",
       "brand": "",
       "detail": "kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -1981,11 +1980,11 @@
       "name": "Brócolis",
       "brand": "Demarchi",
       "detail": "1,02kg",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Congelados"
+        "Hortifruti"
       ],
       "price": 11.9,
       "previousPrice": null,
@@ -2055,9 +2054,9 @@
       "detail": "1kg",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Feijão",
+      "productType": "Mercearia",
       "productTypes": [
-        "Feijão"
+        "Mercearia"
       ],
       "price": 5.99,
       "previousPrice": null,
@@ -2079,9 +2078,9 @@
       "detail": "5kg",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Arroz",
+      "productType": "Mercearia",
       "productTypes": [
-        "Arroz"
+        "Mercearia"
       ],
       "price": 16.9,
       "previousPrice": null,
@@ -2101,11 +2100,11 @@
       "name": "Molho de Tomate Tradicional",
       "brand": "Val",
       "detail": "300g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 1.39,
       "previousPrice": null,
@@ -2125,11 +2124,11 @@
       "name": "Bebida Láctea Chocolate",
       "brand": "Shefa",
       "detail": "1L",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Leites"
+        "Doces e snacks"
       ],
       "price": 4.99,
       "previousPrice": null,
@@ -2367,9 +2366,9 @@
       "detail": "Unid.",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Casa",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Casa"
+        "Lavanderia e limpeza"
       ],
       "price": 9.9,
       "previousPrice": null,
@@ -2413,11 +2412,11 @@
       "name": "Framboesa Coberta com Chocolate Branco e Biscoito",
       "brand": "Fruit Titus",
       "detail": "125g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Congelados"
+        "Doces e snacks"
       ],
       "price": 29.99,
       "previousPrice": null,
@@ -2437,11 +2436,11 @@
       "name": "Morango Coberto com Chocolate Ao Leite",
       "brand": "Fruit Titus",
       "detail": "125g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Congelados"
+        "Doces e snacks"
       ],
       "price": 29.99,
       "previousPrice": null,
@@ -2461,11 +2460,11 @@
       "name": "Uva Coberto com Chocolate Ao Leite",
       "brand": "Fruit Titus",
       "detail": "125g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Congelados"
+        "Doces e snacks"
       ],
       "price": 29.99,
       "previousPrice": null,
@@ -2677,11 +2676,11 @@
       "name": "Água Tonica Zero Açúcar",
       "brand": "Fys",
       "detail": "350ml",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Mercearia"
+        "Sucos e bebidas"
       ],
       "price": 3.39,
       "previousPrice": null,
@@ -2703,9 +2702,9 @@
       "detail": "350ml",
       "category": "Bebidas",
       "department": "Bebidas",
-      "productType": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Bebidas"
+        "Sucos e bebidas"
       ],
       "price": 3.39,
       "previousPrice": null,
@@ -3181,11 +3180,11 @@
       "name": "Spray Repelente Toque Leve",
       "brand": "Off",
       "detail": "100ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Higiene pessoal"
+        "Lavanderia e limpeza"
       ],
       "price": 34.99,
       "previousPrice": null,
@@ -3301,11 +3300,11 @@
       "name": "Desinfetante Aero Original",
       "brand": "Lysoform",
       "detail": "360ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 38.99,
       "previousPrice": null,
@@ -4095,9 +4094,9 @@
       "detail": "19,6g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 2.99,
       "previousPrice": 3.89,
@@ -4143,9 +4142,9 @@
       "detail": "20,3g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 2.99,
       "previousPrice": 3.89,
@@ -4359,9 +4358,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 13.99,
       "previousPrice": 21.99,
@@ -4383,9 +4382,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 13.99,
       "previousPrice": 21.99,
@@ -4407,9 +4406,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 13.99,
       "previousPrice": 21.99,
@@ -4431,9 +4430,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 13.99,
       "previousPrice": 21.99,
@@ -4455,9 +4454,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 13.99,
       "previousPrice": 21.99,
@@ -4479,9 +4478,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 24.99,
       "previousPrice": 26.99,
@@ -4501,11 +4500,11 @@
       "name": "Cápsula Espresso Origins Collection Brazil",
       "brand": "L'Or",
       "detail": "10 Unidades",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 26.99,
@@ -4551,9 +4550,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 15.99,
       "previousPrice": 26.99,
@@ -4575,9 +4574,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 26.99,
@@ -4623,9 +4622,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 27.99,
@@ -4671,9 +4670,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 26.99,
@@ -4719,9 +4718,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 27.99,
@@ -4743,9 +4742,9 @@
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 24.99,
       "previousPrice": 26.99,
@@ -4791,9 +4790,9 @@
       "detail": "20 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 26.99,
       "previousPrice": 39.99,
@@ -4815,9 +4814,9 @@
       "detail": "20 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 32.99,
       "previousPrice": 49.99,
@@ -4837,11 +4836,11 @@
       "name": "Salgadinho de Batata Original",
       "brand": "Ruffles",
       "detail": "115g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.89,
@@ -4861,11 +4860,11 @@
       "name": "Salgadinho de Batata Churrasco",
       "brand": "Ruffles",
       "detail": "115g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.89,
@@ -4885,11 +4884,11 @@
       "name": "Salgadinho de Batata Cebola e Salsa",
       "brand": "Ruffles",
       "detail": "115g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.89,
@@ -4909,11 +4908,11 @@
       "name": "Salgadinho Doritos Pizza",
       "brand": "Soltecn",
       "detail": "78g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Congelados"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -4935,9 +4934,9 @@
       "detail": "68g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 10.49,
       "previousPrice": null,
@@ -4959,9 +4958,9 @@
       "detail": "68g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -4983,9 +4982,9 @@
       "detail": "57g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 8.19,
       "previousPrice": null,
@@ -5007,9 +5006,9 @@
       "detail": "57g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 8.19,
       "previousPrice": null,
@@ -5031,9 +5030,9 @@
       "detail": "57g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 8.19,
       "previousPrice": null,
@@ -5055,9 +5054,9 @@
       "detail": "78g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 7.59,
       "previousPrice": null,
@@ -5079,9 +5078,9 @@
       "detail": "78g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 6.89,
       "previousPrice": null,
@@ -5103,9 +5102,9 @@
       "detail": "143g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 15.89,
@@ -5127,9 +5126,9 @@
       "detail": "60g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 4.99,
       "previousPrice": null,
@@ -5149,11 +5148,11 @@
       "name": "Salgadinho Queijo Nacho",
       "brand": "Doritos",
       "detail": "75g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Queijos e requeijão"
+        "Doces e snacks"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -5173,11 +5172,11 @@
       "name": "Salgadinho Onda Requeijão",
       "brand": "Cheetos",
       "detail": "160g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Queijos e requeijão"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 14.99,
@@ -5197,11 +5196,11 @@
       "name": "Salgadinho de Batata Original",
       "brand": "Ruffles",
       "detail": "68g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 9.39,
       "previousPrice": null,
@@ -5221,11 +5220,11 @@
       "name": "Salgadinho de Batata Churrasco",
       "brand": "Ruffles",
       "detail": "68g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.39,
       "previousPrice": null,
@@ -5245,11 +5244,11 @@
       "name": "Salgadinho de Batata Cebola e Salsa",
       "brand": "Ruffles",
       "detail": "68g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5271,9 +5270,9 @@
       "detail": "120g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 12.99,
       "previousPrice": 14.79,
@@ -5293,11 +5292,11 @@
       "name": "Salgadinho Queijo Nacho",
       "brand": "Doritos",
       "detail": "120g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Queijos e requeijão"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 14.79,
@@ -5317,11 +5316,11 @@
       "name": "Salgadinho de Batata Clássica",
       "brand": "Lay's",
       "detail": "115g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 14.99,
@@ -5341,11 +5340,11 @@
       "name": "Salgadinho de Batata Creme de Cebola",
       "brand": "Lay's",
       "detail": "115g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 14.99,
@@ -5365,11 +5364,11 @@
       "name": "Salgadinho Bola Queijo Suíço",
       "brand": "Cheetos",
       "detail": "125g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Queijos e requeijão"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 14.79,
@@ -5391,9 +5390,9 @@
       "detail": "60g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 4.99,
       "previousPrice": null,
@@ -5415,9 +5414,9 @@
       "detail": "110g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 12.99,
       "previousPrice": 14.49,
@@ -5439,9 +5438,9 @@
       "detail": "110g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5463,9 +5462,9 @@
       "detail": "110g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5487,9 +5486,9 @@
       "detail": "47g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 4.69,
       "previousPrice": null,
@@ -5509,11 +5508,11 @@
       "name": "Salgadinho de Batata Ruffles Pimenta Mexicana",
       "brand": "Elma Chips",
       "detail": "65g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5533,11 +5532,11 @@
       "name": "Salgadinho de Batata Ruffles Pimenta Mexicana",
       "brand": "Elma Chips",
       "detail": "110g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": 14.89,
@@ -5559,9 +5558,9 @@
       "detail": "120g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 11.49,
       "previousPrice": null,
@@ -5581,11 +5580,11 @@
       "name": "Salgadinho de Batata Rústica Sal Marinho",
       "brand": "Lay's",
       "detail": "108g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": 15.89,
@@ -5605,11 +5604,11 @@
       "name": "Salgadinho de Batata Clássica",
       "brand": "Lay's",
       "detail": "183g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 16.99,
       "previousPrice": 21.49,
@@ -5629,11 +5628,11 @@
       "name": "Salgadinho de Batata Fifa Picanha Brasileira",
       "brand": "Lay's",
       "detail": "62g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti",
+        "Doces e snacks",
         "Churrasco"
       ],
       "price": 10.69,
@@ -5654,11 +5653,11 @@
       "name": "Salgadinho de Batata Fifa Taco Mexicano",
       "brand": "Lay's",
       "detail": "62g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 10.69,
       "previousPrice": null,
@@ -5678,11 +5677,11 @@
       "name": "Salgadinho de Batata Clássica",
       "brand": "Lay's",
       "detail": "62g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5702,11 +5701,11 @@
       "name": "Salgadinho de Batata Sour Cream",
       "brand": "Lay's",
       "detail": "62g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 10.69,
       "previousPrice": null,
@@ -5726,11 +5725,11 @@
       "name": "Salgadinho de Batata Salt & Vinegar",
       "brand": "Lay's",
       "detail": "62g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 10.69,
       "previousPrice": null,
@@ -5752,9 +5751,9 @@
       "detail": "110g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5776,9 +5775,9 @@
       "detail": "110g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -5800,9 +5799,9 @@
       "detail": "45g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 5.49,
       "previousPrice": null,
@@ -5822,11 +5821,11 @@
       "name": "Salgadinho Queijo Nacho",
       "brand": "Doritos",
       "detail": "183g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Queijos e requeijão"
+        "Doces e snacks"
       ],
       "price": 16.99,
       "previousPrice": 21.49,
@@ -6398,11 +6397,11 @@
       "name": "Limpador Multiuso Cremoso Limpeza Original 20% Grátis",
       "brand": "Cif",
       "detail": "450ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 19.89,
       "previousPrice": null,
@@ -6542,11 +6541,11 @@
       "name": "Cloro Gel Original",
       "brand": "Vim",
       "detail": "700ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 18.69,
       "previousPrice": null,
@@ -6566,11 +6565,11 @@
       "name": "Desinfetante Espuma Poderosa Original Refil",
       "brand": "Vim",
       "detail": "450ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 13.99,
       "previousPrice": null,
@@ -6686,11 +6685,11 @@
       "name": "Saponáceo Cremoso Original Leve 250ml Pague",
       "brand": "Cif",
       "detail": "200ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 10.39,
       "previousPrice": null,
@@ -6710,11 +6709,11 @@
       "name": "Saponáceo Cremoso Multiuso Original",
       "brand": "Cif",
       "detail": "250ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 12.99,
       "previousPrice": null,
@@ -6926,11 +6925,11 @@
       "name": "Tortinha Recheada Torta de Limão",
       "brand": "Adria",
       "detail": "140g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 2.99,
       "previousPrice": 3.99,
@@ -7070,11 +7069,11 @@
       "name": "Cookie Goiabinha Original",
       "brand": "Piraquê",
       "detail": "80g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 3.69,
       "previousPrice": 4.79,
@@ -7264,9 +7263,9 @@
       "detail": "80g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 3.69,
       "previousPrice": 4.79,
@@ -7310,11 +7309,11 @@
       "name": "Biscoito Leite Maltado Original",
       "brand": "Piraquê",
       "detail": "132g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 4.59,
       "previousPrice": 4.99,
@@ -7502,11 +7501,11 @@
       "name": "Biscoito Salgado Original",
       "brand": "Piraquê",
       "detail": "138g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 4.99,
       "previousPrice": 5.99,
@@ -7646,11 +7645,11 @@
       "name": "Biscoito Cracker Premium Original",
       "brand": "Piraquê",
       "detail": "150g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 4.99,
       "previousPrice": 6.29,
@@ -7886,11 +7885,11 @@
       "name": "Biscoito Delicitá Original",
       "brand": "Vitarella",
       "detail": "350g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 8.49,
       "previousPrice": null,
@@ -7960,9 +7959,9 @@
       "detail": "68g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Queijos e requeijão"
+        "Frios e laticínios"
       ],
       "price": 6.99,
       "previousPrice": 9.99,
@@ -8030,11 +8029,11 @@
       "name": "Biscoito Salgado Original",
       "brand": "Piraquê",
       "detail": "276g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 9.39,
       "previousPrice": 10.99,
@@ -8726,11 +8725,11 @@
       "name": "Desinfetante Original",
       "brand": "Pinho Sol",
       "detail": "1,75l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 21.29,
       "previousPrice": 28.99,
@@ -8750,11 +8749,11 @@
       "name": "Desinfetante Original",
       "brand": "Pinho Sol",
       "detail": "1l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 19.99,
       "previousPrice": null,
@@ -8774,11 +8773,11 @@
       "name": "Desinfetante Original",
       "brand": "Pinho Sol",
       "detail": "500ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 10.99,
       "previousPrice": null,
@@ -8798,11 +8797,11 @@
       "name": "Desinfetante Original Leve 1l Pague",
       "brand": "Pinho Sol",
       "detail": "900ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 17.99,
       "previousPrice": null,
@@ -8822,11 +8821,11 @@
       "name": "Desinfetante Original Leve 500ml Pague",
       "brand": "Pinho Sol",
       "detail": "450ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -8918,11 +8917,11 @@
       "name": "Limpador Limpeza Pesada Fresh Original",
       "brand": "Ajax",
       "detail": "1,75l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 30.99,
       "previousPrice": null,
@@ -8942,11 +8941,11 @@
       "name": "Limpador Limpeza Pesada Fresh Original",
       "brand": "Ajax",
       "detail": "1l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 20.99,
       "previousPrice": null,
@@ -8966,11 +8965,11 @@
       "name": "Limpador Limpeza Pesada Fresh Original",
       "brand": "Ajax",
       "detail": "500ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 11.49,
       "previousPrice": null,
@@ -9230,11 +9229,11 @@
       "name": "Sabão Líquido Original para Roupas Delicadas",
       "brand": "Olá",
       "detail": "1,75l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 42.99,
       "previousPrice": null,
@@ -9254,11 +9253,11 @@
       "name": "Sabão Líquido Original para Roupas Delicadas",
       "brand": "Olá",
       "detail": "1l",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 28.99,
       "previousPrice": null,
@@ -11966,11 +11965,11 @@
       "name": "Tempero para Batata Frita",
       "brand": "Heinz",
       "detail": "70g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 18.99,
       "previousPrice": null,
@@ -12230,11 +12229,11 @@
       "name": "Molho de Tomate Azeitona",
       "brand": "Heinz",
       "detail": "240g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 5.29,
       "previousPrice": null,
@@ -12254,11 +12253,11 @@
       "name": "Molho de Tomate Bolonhesa",
       "brand": "Heinz",
       "detail": "240g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 5.29,
       "previousPrice": null,
@@ -12278,11 +12277,11 @@
       "name": "Molho de Tomate Manjericão",
       "brand": "Heinz",
       "detail": "240g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 5.29,
       "previousPrice": null,
@@ -12470,11 +12469,11 @@
       "name": "Sal Parrilla para Churrasco Original",
       "brand": "BR Spices",
       "detail": "500g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 17.99,
       "previousPrice": null,
@@ -12734,11 +12733,11 @@
       "name": "Sal Parrilla para Churrasco Original",
       "brand": "BR Spices",
       "detail": "1,1kg",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 23.99,
       "previousPrice": null,
@@ -14150,11 +14149,11 @@
       "name": "Biscoito Amanteigado Leite",
       "brand": "Renata",
       "detail": "330g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Manteiga",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Manteiga"
+        "Doces e snacks"
       ],
       "price": 6.99,
       "previousPrice": 8.79,
@@ -14318,11 +14317,11 @@
       "name": "Biscoito Amanteigado Chocolate",
       "brand": "Renata",
       "detail": "330g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Manteiga",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Manteiga"
+        "Doces e snacks"
       ],
       "price": 6.99,
       "previousPrice": 8.79,
@@ -14342,11 +14341,11 @@
       "name": "Biscoito Amanteigado Coco",
       "brand": "Renata",
       "detail": "330g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Manteiga",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Manteiga"
+        "Doces e snacks"
       ],
       "price": 6.99,
       "previousPrice": 8.79,
@@ -14390,11 +14389,11 @@
       "name": "Biscoito Saltix Cracker Original",
       "brand": "Renata",
       "detail": "110g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Doces e snacks"
       ],
       "price": 1.99,
       "previousPrice": 2.79,
@@ -15374,11 +15373,11 @@
       "name": "Sobremesa Láctea Cremosão Doce de Leite",
       "brand": "Danette",
       "detail": "90g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Frios e laticínios"
+        "Doces e snacks"
       ],
       "price": 4.09,
       "previousPrice": null,
@@ -15614,11 +15613,11 @@
       "name": "Bebida Láctea 15g Protein Doce de Leite Havanna",
       "brand": "YoPRO",
       "detail": "250ml",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Leites"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -15686,11 +15685,11 @@
       "name": "Bebida Láctea Energy Boost 15g Protein Cappuccino",
       "brand": "YoPRO",
       "detail": "250ml",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Leites"
+        "Café"
       ],
       "price": 11.49,
       "previousPrice": null,
@@ -15734,11 +15733,11 @@
       "name": "Bebida Láctea 15g Protein Chocolate",
       "brand": "YoPRO",
       "detail": "250ml",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Leites"
+        "Doces e snacks"
       ],
       "price": 9.99,
       "previousPrice": null,
@@ -15950,11 +15949,11 @@
       "name": "Iogurte Líquido 15g Protein Doce de Leite Havanna",
       "brand": "YoPRO",
       "detail": "250g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Iogurtes",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Iogurtes"
+        "Doces e snacks"
       ],
       "price": 11.49,
       "previousPrice": null,
@@ -15998,11 +15997,11 @@
       "name": "Bebida Láctea 23g Protein Chocolate",
       "brand": "YoPRO",
       "detail": "250ml",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Leites"
+        "Doces e snacks"
       ],
       "price": 11.99,
       "previousPrice": null,
@@ -16240,9 +16239,9 @@
       "detail": "134,5g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Doces e snacks",
+      "productType": "Mercearia",
       "productTypes": [
-        "Doces e snacks"
+        "Mercearia"
       ],
       "price": 15.99,
       "previousPrice": null,
@@ -16554,11 +16553,11 @@
       "name": "Hambúrguer Bovino Defumado",
       "brand": "Perdigão",
       "detail": "672g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina"
+        "Congelados"
       ],
       "price": 21.99,
       "previousPrice": null,
@@ -16602,11 +16601,11 @@
       "name": "Hambúrguer Bovino na Brasa",
       "brand": "Perdigão",
       "detail": "540g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina"
+        "Congelados"
       ],
       "price": 32.99,
       "previousPrice": null,
@@ -16890,12 +16889,11 @@
       "name": "Hambúrguer Bovino na Brasa Costela",
       "brand": "Perdigão",
       "detail": "150g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -16915,12 +16913,11 @@
       "name": "Hambúrguer Bovino na Brasa Picanha",
       "brand": "Perdigão",
       "detail": "150g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -17108,11 +17105,11 @@
       "name": "Macarrão Meu Menu Fettuccine Ao Molho Bolonhesa",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -17132,11 +17129,11 @@
       "name": "Macarrão Meu Menu Fettuccine com Peru e Brócolis",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 9.89,
       "previousPrice": null,
@@ -17180,11 +17177,11 @@
       "name": "Mini Chicken Frango com Queijo",
       "brand": "Perdigão",
       "detail": "275g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
       "productTypes": [
-        "Queijos e requeijão"
+        "Frango"
       ],
       "price": 11.99,
       "previousPrice": null,
@@ -17252,11 +17249,11 @@
       "name": "Frango Cremoso Meu Menu com Arroz e Brócolis",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Arroz",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
       "productTypes": [
-        "Arroz"
+        "Frango"
       ],
       "price": 12.99,
       "previousPrice": null,
@@ -17276,11 +17273,11 @@
       "name": "Strogonoff de Frango Meu Menu com Arroz Branco",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Arroz",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
       "productTypes": [
-        "Arroz"
+        "Frango"
       ],
       "price": 12.99,
       "previousPrice": null,
@@ -17300,11 +17297,11 @@
       "name": "Feijoada Meu Menu com Arroz e Couve",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Arroz",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Arroz"
+        "Congelados"
       ],
       "price": 14.99,
       "previousPrice": null,
@@ -17348,11 +17345,11 @@
       "name": "Lasanha Frango com Bacon",
       "brand": "Perdigão",
       "detail": "600g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 18.99,
       "previousPrice": null,
@@ -17444,11 +17441,11 @@
       "name": "Pizza Frango com Bacon e Creme de Requeijão",
       "brand": "Perdigão",
       "detail": "460g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 21.49,
       "previousPrice": null,
@@ -17588,11 +17585,11 @@
       "name": "Almôndega Bovina Montana",
       "brand": "Perdigão",
       "detail": "500g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Congelados"
+        "Carne bovina"
       ],
       "price": 23.49,
       "previousPrice": null,
@@ -17660,11 +17657,11 @@
       "name": "Fricassê de Frango Meu Menu com Arroz e Legumes",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Arroz",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
       "productTypes": [
-        "Arroz"
+        "Frango"
       ],
       "price": 15.99,
       "previousPrice": null,
@@ -17684,11 +17681,11 @@
       "name": "Carne Moída Meu Menu com Arroz, Brócolis e Purê",
       "brand": "Perdigão",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Arroz",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Arroz"
+        "Carne bovina"
       ],
       "price": 15.99,
       "previousPrice": null,
@@ -17828,11 +17825,11 @@
       "name": "Filezinho de Frango Sassami Empanado",
       "brand": "Sadia",
       "detail": "400g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 17.99,
       "previousPrice": 18.49,
@@ -17852,11 +17849,11 @@
       "name": "Torta Mousse Chocolate",
       "brand": "Miss Daisy",
       "detail": "470g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Congelados"
+        "Doces e snacks"
       ],
       "price": 42.99,
       "previousPrice": null,
@@ -17900,11 +17897,11 @@
       "name": "Peito de Frango em Tiras Empanado",
       "brand": "Sadia",
       "detail": "400g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 23.99,
       "previousPrice": null,
@@ -17924,11 +17921,11 @@
       "name": "Peito de Frango Empanado em Tiras Temperado",
       "brand": "Sadia",
       "detail": "400g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 23.99,
       "previousPrice": null,
@@ -17996,11 +17993,11 @@
       "name": "Nuggets Original",
       "brand": "Sadia",
       "detail": "700g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Congelados"
       ],
       "price": 22.99,
       "previousPrice": 23.79,
@@ -18020,11 +18017,11 @@
       "name": "Hambúrguer Bovino Bassi Angus",
       "brand": "Sadia",
       "detail": "360g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina"
+        "Congelados"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -18044,11 +18041,11 @@
       "name": "Hambúrguer Bovino Churrasco",
       "brand": "Sadia",
       "detail": "672g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina"
+        "Congelados"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -18068,11 +18065,11 @@
       "name": "Hambúrguer Bovino",
       "brand": "Sadia",
       "detail": "672g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina"
+        "Congelados"
       ],
       "price": 25.99,
       "previousPrice": null,
@@ -18116,11 +18113,11 @@
       "name": "Linguiça de Frango Toque de Cebola e Salsa",
       "brand": "Sadia",
       "detail": "700g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frango",
+        "Frios",
         "Churrasco"
       ],
       "price": 17.99,
@@ -18168,9 +18165,9 @@
       "detail": "800g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "productType": "Carnes suínas",
       "productTypes": [
-        "Carne bovina"
+        "Carnes suínas"
       ],
       "price": 21.99,
       "previousPrice": null,
@@ -18265,9 +18262,9 @@
       "detail": "100g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 14.99,
       "previousPrice": 16.99,
@@ -18508,9 +18505,9 @@
       "detail": "100g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frios e laticínios"
+        "Frios"
       ],
       "price": 14.99,
       "previousPrice": 15.99,
@@ -18578,11 +18575,11 @@
       "name": "Salsicha de Frango",
       "brand": "Sadia",
       "detail": "500g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frango"
+        "Frios"
       ],
       "price": 14.89,
       "previousPrice": null,
@@ -18650,11 +18647,11 @@
       "name": "Hambúrguer Misto Frango e Carne",
       "brand": "Sadia",
       "detail": "56g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 1.69,
       "previousPrice": null,
@@ -18676,9 +18673,9 @@
       "detail": "36g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Frios"
+        "Frios e laticínios"
       ],
       "price": 4.59,
       "previousPrice": 4.89,
@@ -18700,9 +18697,9 @@
       "detail": "36g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Frios"
+        "Frios e laticínios"
       ],
       "price": 4.59,
       "previousPrice": 4.99,
@@ -18724,9 +18721,9 @@
       "detail": "36g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Frios",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Frios"
+        "Frios e laticínios"
       ],
       "price": 4.59,
       "previousPrice": 4.89,
@@ -18746,11 +18743,11 @@
       "name": "Empanado de Frango Presunto e Queijo",
       "brand": "Sadia",
       "detail": "110g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 5.49,
       "previousPrice": null,
@@ -18818,11 +18815,11 @@
       "name": "Lasanha Frango",
       "brand": "Sadia",
       "detail": "600g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 17.99,
       "previousPrice": null,
@@ -18842,11 +18839,11 @@
       "name": "Lasanha Presunto e Queijo",
       "brand": "Sadia",
       "detail": "600g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 17.99,
       "previousPrice": null,
@@ -18938,11 +18935,11 @@
       "name": "Lasanha 4 Queijos",
       "brand": "Sadia",
       "detail": "600g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 12.99,
       "previousPrice": 17.99,
@@ -18986,11 +18983,11 @@
       "name": "Pizza Frango com Requeijão e Mussarela",
       "brand": "Sadia",
       "detail": "460g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 13.99,
       "previousPrice": 22.99,
@@ -19010,11 +19007,11 @@
       "name": "Pizza Lombo com Requeijão e Mussarela",
       "brand": "Sadia",
       "detail": "460g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 22.99,
       "previousPrice": null,
@@ -19034,11 +19031,11 @@
       "name": "Pizza 4 Queijos",
       "brand": "Sadia",
       "detail": "460g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 22.99,
       "previousPrice": null,
@@ -19130,11 +19127,11 @@
       "name": "Empanado de Frango Pop Nuggets",
       "brand": "Sadia",
       "detail": "275g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 11.99,
       "previousPrice": 12.49,
@@ -19154,11 +19151,11 @@
       "name": "Empanado de Frango Queijo Nacho Xtreme",
       "brand": "Sadia",
       "detail": "275g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 13.99,
       "previousPrice": null,
@@ -19202,11 +19199,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar com Calabresa",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19226,11 +19223,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar com Bacon",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Congelados"
+        "Frios"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19250,11 +19247,11 @@
       "name": "Macarrão Mac'n Cheese Cheddar",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Congelados"
+        "Mercearia"
       ],
       "price": 11.89,
       "previousPrice": 12.59,
@@ -19518,8 +19515,7 @@
       "department": "Congelados",
       "productType": "Congelados",
       "productTypes": [
-        "Congelados",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 9.99,
       "previousPrice": 10.89,
@@ -19539,11 +19535,11 @@
       "name": "Hot Pocket X-frango",
       "brand": "Sadia",
       "detail": "145g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frango"
+        "Congelados"
       ],
       "price": 9.99,
       "previousPrice": 10.89,
@@ -19587,11 +19583,11 @@
       "name": "Nuggets Original",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Congelados"
       ],
       "price": 10.99,
       "previousPrice": 11.49,
@@ -19611,11 +19607,11 @@
       "name": "Nuggets com Queijo",
       "brand": "Sadia",
       "detail": "300g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Queijos e requeijão"
+        "Congelados"
       ],
       "price": 10.99,
       "previousPrice": 11.49,
@@ -19851,11 +19847,11 @@
       "name": "Limpador Perfumado Concentrado Gotas de Perfume Água Marinha",
       "brand": "Veja",
       "detail": "100ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 16.99,
       "previousPrice": null,
@@ -19875,11 +19871,11 @@
       "name": "Limpador Perfumado Concentrado Gotas de Perfume Ametista",
       "brand": "Veja",
       "detail": "100ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 16.99,
       "previousPrice": null,
@@ -19899,11 +19895,11 @@
       "name": "Limpador Perfumado Concentrado Gotas de Perfume Citrino",
       "brand": "Veja",
       "detail": "100ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 9.9,
       "previousPrice": 16.99,
@@ -19923,11 +19919,11 @@
       "name": "Limpador Perfumado Concentrado Gotas de Perfume Quartzo Rosa",
       "brand": "Veja",
       "detail": "100ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 16.99,
       "previousPrice": null,
@@ -19947,11 +19943,11 @@
       "name": "Limpador Perfumado Concentrado Gotas de Perfume Rubelita",
       "brand": "Veja",
       "detail": "100ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Higiene pessoal"
       ],
       "price": 16.99,
       "previousPrice": null,
@@ -20379,11 +20375,11 @@
       "name": "Limpador Multiuso Original",
       "brand": "Veja",
       "detail": "750ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -20523,11 +20519,11 @@
       "name": "Limpador Multiuso Gold Original",
       "brand": "Veja",
       "detail": "500ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Lavanderia e limpeza"
       ],
       "price": 8.39,
       "previousPrice": null,
@@ -21389,9 +21385,9 @@
       "detail": "1l",
       "category": "Bebidas",
       "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "productType": "Bebidas",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Bebidas"
       ],
       "price": 19.49,
       "previousPrice": 24.99,
@@ -21653,9 +21649,9 @@
       "detail": "250g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Café",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Café"
+        "Doces e snacks"
       ],
       "price": 29.99,
       "previousPrice": 47.99,
@@ -21677,9 +21673,9 @@
       "detail": "150g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 28.99,
       "previousPrice": null,
@@ -21701,9 +21697,9 @@
       "detail": "100g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Café",
       "productTypes": [
-        "Mercearia"
+        "Café"
       ],
       "price": 7.99,
       "previousPrice": 14.99,
@@ -21723,11 +21719,11 @@
       "name": "Isotônico em Pó Melancia e Limão",
       "brand": "Jungle",
       "detail": "5g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 6.89,
       "previousPrice": 8.99,
@@ -21749,9 +21745,9 @@
       "detail": "5g",
       "category": "Bebidas",
       "department": "Bebidas",
-      "productType": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Bebidas"
+        "Sucos e bebidas"
       ],
       "price": 6.89,
       "previousPrice": 8.99,
@@ -21773,9 +21769,9 @@
       "detail": "5g",
       "category": "Bebidas",
       "department": "Bebidas",
-      "productType": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Bebidas"
+        "Sucos e bebidas"
       ],
       "price": 6.89,
       "previousPrice": 8.99,
@@ -22155,11 +22151,11 @@
       "name": "Água Tônica sem Açúcar",
       "brand": "Schweppes",
       "detail": "350ml",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Mercearia"
+        "Sucos e bebidas"
       ],
       "price": 2.99,
       "previousPrice": 3.49,
@@ -22587,11 +22583,11 @@
       "name": "Isotônico Frutas Tropicais",
       "brand": "Powerade",
       "detail": "500ml",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 4.89,
       "previousPrice": null,
@@ -22611,11 +22607,11 @@
       "name": "Isotônico Laranja",
       "brand": "Powerade",
       "detail": "500ml",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 4.89,
       "previousPrice": null,
@@ -22635,11 +22631,11 @@
       "name": "Isotônico Mix de Frutas",
       "brand": "Powerade",
       "detail": "500ml",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 4.99,
       "previousPrice": 5.69,
@@ -22659,11 +22655,11 @@
       "name": "Isotônico Mix de Frutas Zero Calorias",
       "brand": "Powerade",
       "detail": "500ml",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 4.99,
       "previousPrice": 5.69,
@@ -22685,9 +22681,9 @@
       "detail": "500ml",
       "category": "Bebidas",
       "department": "Bebidas",
-      "productType": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Bebidas"
+        "Sucos e bebidas"
       ],
       "price": 4.89,
       "previousPrice": null,
@@ -22707,11 +22703,11 @@
       "name": "Isotônico Uva",
       "brand": "Powerade",
       "detail": "500ml",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Hortifruti"
+        "Sucos e bebidas"
       ],
       "price": 4.99,
       "previousPrice": null,
@@ -22877,9 +22873,9 @@
       "detail": "350g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 15.99,
       "previousPrice": null,
@@ -23619,11 +23615,11 @@
       "name": "Máscara de Hidratação Água de Coco",
       "brand": "Niely Gold",
       "detail": "430g",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Higiene pessoal"
+        "Sucos e bebidas"
       ],
       "price": 23.99,
       "previousPrice": null,
@@ -25227,11 +25223,11 @@
       "name": "Cereal Sucrilhos Original Leve 240g Pague",
       "brand": "Kellogg's",
       "detail": "200g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 11.66,
       "previousPrice": null,
@@ -25275,11 +25271,11 @@
       "name": "Cereal Sucrilhos Original",
       "brand": "Kellogg's",
       "detail": "240g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 12.99,
       "previousPrice": null,
@@ -25395,11 +25391,11 @@
       "name": "Cereal Sucrilhos Original",
       "brand": "Kellogg's",
       "detail": "510g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 20.99,
       "previousPrice": null,
@@ -25443,11 +25439,11 @@
       "name": "Cereal Sucrilhos Original",
       "brand": "Kellogg's",
       "detail": "690g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 27.89,
       "previousPrice": null,
@@ -25539,11 +25535,11 @@
       "name": "Cereal Sucrilhos Original",
       "brand": "Kellogg's",
       "detail": "110g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 8.29,
       "previousPrice": null,
@@ -25707,11 +25703,11 @@
       "name": "Loção Repelente Family Care Promocional",
       "brand": "Repelex",
       "detail": "200ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Higiene pessoal"
+        "Lavanderia e limpeza"
       ],
       "price": 21.99,
       "previousPrice": 27.74,
@@ -26187,11 +26183,11 @@
       "name": "Granola Banana e Cacau",
       "brand": "Mãe Terra",
       "detail": "250g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 13.99,
       "previousPrice": 17.49,
@@ -26211,11 +26207,11 @@
       "name": "Granola Frutas e Mel Vegano",
       "brand": "Mãe Terra",
       "detail": "250g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 13.99,
       "previousPrice": 17.49,
@@ -26283,11 +26279,11 @@
       "name": "Caldo Bacon",
       "brand": "Knorr",
       "detail": "57g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Mercearia"
+        "Frios"
       ],
       "price": 3.39,
       "previousPrice": 3.49,
@@ -26356,11 +26352,11 @@
       "name": "Caldo Legumes",
       "brand": "Knorr",
       "detail": "57g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 3.39,
       "previousPrice": 3.69,
@@ -26380,11 +26376,11 @@
       "name": "Caldo Legumes Zero Sal",
       "brand": "Knorr",
       "detail": "48g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 4.09,
       "previousPrice": null,
@@ -26524,12 +26520,11 @@
       "name": "Hambúrguer Bovino Fraldinha",
       "brand": "Maturatta",
       "detail": "180g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -26549,12 +26544,11 @@
       "name": "Hambúrguer Bovino Costela",
       "brand": "Maturatta",
       "detail": "180g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -26574,12 +26568,11 @@
       "name": "Hambúrguer Bovino Picanha",
       "brand": "Maturatta",
       "detail": "180g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Congelados"
       ],
       "price": 7.99,
       "previousPrice": null,
@@ -26671,11 +26664,11 @@
       "name": "Brócolis Japonês",
       "brand": "",
       "detail": "Unidade",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Congelados"
+        "Hortifruti"
       ],
       "price": 6.48,
       "previousPrice": 7.88,
@@ -26719,11 +26712,11 @@
       "name": "Milho Verde Bandeja",
       "brand": "",
       "detail": "Bandeja",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 4.88,
       "previousPrice": 5.88,
@@ -27247,11 +27240,11 @@
       "name": "Carne Moída Congelada",
       "brand": "Brasa",
       "detail": "500g",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Congelados"
+        "Carne bovina"
       ],
       "price": 17.98,
       "previousPrice": null,
@@ -27319,11 +27312,11 @@
       "name": "Língua Bovina Congelada",
       "brand": "",
       "detail": "Kg",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Congelados"
+        "Carne bovina"
       ],
       "price": 17.9,
       "previousPrice": null,
@@ -27394,9 +27387,9 @@
       "detail": "500g",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "productType": "Carne bovina",
       "productTypes": [
-        "Frango"
+        "Carne bovina"
       ],
       "price": 7.98,
       "previousPrice": null,
@@ -27660,11 +27653,11 @@
       "name": "Linguiça de Frango Congelada",
       "brand": "Gonzalez",
       "detail": "1Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
       "productTypes": [
-        "Frango",
+        "Frios",
         "Churrasco"
       ],
       "price": 13.3,
@@ -27880,9 +27873,9 @@
       "detail": "400g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
+      "productType": "Frios e laticínios",
       "productTypes": [
-        "Queijos e requeijão"
+        "Frios e laticínios"
       ],
       "price": 7.78,
       "previousPrice": null,
@@ -28048,9 +28041,9 @@
       "detail": "5kg",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Arroz",
+      "productType": "Mercearia",
       "productTypes": [
-        "Arroz"
+        "Mercearia"
       ],
       "price": 27.98,
       "previousPrice": null,
@@ -28072,9 +28065,9 @@
       "detail": "5kg",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Arroz",
+      "productType": "Mercearia",
       "productTypes": [
-        "Arroz"
+        "Mercearia"
       ],
       "price": 18.98,
       "previousPrice": null,
@@ -28096,9 +28089,9 @@
       "detail": "1kg",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Feijão",
+      "productType": "Mercearia",
       "productTypes": [
-        "Feijão"
+        "Mercearia"
       ],
       "price": 6.78,
       "previousPrice": null,
@@ -28190,11 +28183,11 @@
       "name": "Molho de Tomate Tradicional Sachê",
       "brand": "Predilecta",
       "detail": "300g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 1.28,
       "previousPrice": null,
@@ -28406,11 +28399,11 @@
       "name": "Palmito Inteiro",
       "brand": "Riviera",
       "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Mercearia"
+        "Hortifruti"
       ],
       "price": 19.9,
       "previousPrice": null,
@@ -28430,11 +28423,11 @@
       "name": "Milho Verde Sachet",
       "brand": "Fugini",
       "detail": "170g",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Bebidas alcoólicas"
+        "Mercearia"
       ],
       "price": 3.28,
       "previousPrice": null,
@@ -28454,11 +28447,11 @@
       "name": "Seleta de Legumes Lata",
       "brand": "Predilecta",
       "detail": "170g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Hortifruti"
+        "Mercearia"
       ],
       "price": 3.98,
       "previousPrice": null,
@@ -28502,11 +28495,11 @@
       "name": "Batata Palha",
       "brand": "São José",
       "detail": "110g",
-      "category": "Hortifruti",
-      "department": "Hortifruti",
-      "productType": "Hortifruti",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Hortifruti"
+        "Doces e snacks"
       ],
       "price": 5.78,
       "previousPrice": null,
@@ -28528,9 +28521,9 @@
       "detail": "100g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 3.38,
       "previousPrice": null,
@@ -28600,9 +28593,9 @@
       "detail": "500g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Mercearia"
+        "Doces e snacks"
       ],
       "price": 7.78,
       "previousPrice": null,
@@ -28646,11 +28639,11 @@
       "name": "Bebida Láctea Chocolate",
       "brand": "Mocoquinha",
       "detail": "200ml",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
       "productTypes": [
-        "Leites"
+        "Doces e snacks"
       ],
       "price": 1.24,
       "previousPrice": null,
@@ -29128,9 +29121,9 @@
       "detail": "Leve 12 Pague 11",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "productType": "Papel higiênico",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Papel higiênico"
       ],
       "price": 18.9,
       "previousPrice": null,
@@ -29152,9 +29145,9 @@
       "detail": "8 rolos",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "productType": "Papel higiênico",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Papel higiênico"
       ],
       "price": 7.96,
       "previousPrice": null,
@@ -29176,9 +29169,9 @@
       "detail": "2 unidades",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "productType": "Papel higiênico",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Papel higiênico"
       ],
       "price": 5.28,
       "previousPrice": null,
@@ -29200,9 +29193,9 @@
       "detail": "50 unidades",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "productType": "Papel higiênico",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Papel higiênico"
       ],
       "price": 1.98,
       "previousPrice": null,
@@ -29464,9 +29457,9 @@
       "detail": "28cm x 15m",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Casa e limpeza"
+        "Lavanderia e limpeza"
       ],
       "price": 6.58,
       "previousPrice": null,
@@ -29488,9 +29481,9 @@
       "detail": "190ml",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
-      "productType": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
       "productTypes": [
-        "Casa e limpeza"
+        "Lavanderia e limpeza"
       ],
       "price": 1.38,
       "previousPrice": null,

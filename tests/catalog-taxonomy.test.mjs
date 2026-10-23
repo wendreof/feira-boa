@@ -38,6 +38,7 @@ test("resolveCategory maps product types to the new groups", () => {
   assert.deepEqual(resolveCategory({ name: "Salsicha Sadia", productTypes: ["Frios"] }), { groupId: "frescos", subcategory: "Frios e embutidos" });
   assert.deepEqual(resolveCategory({ name: "Papel Higiênico Folha Dupla", productTypes: ["Papel higiênico"] }), { groupId: "casa", subcategory: "Papel higiênico e papel-toalha" });
   assert.deepEqual(resolveCategory({ name: "Sandália Ipanema", productTypes: ["Calçados"] }), { groupId: "vestuario", subcategory: "Calçados" });
+  assert.deepEqual(resolveCategory({ name: "SUCO INTEGRAL AURORA TP 1,5L UVA", productTypes: ["Sucos e bebidas"] }), { groupId: "bebidas", subcategory: "Sucos" });
 });
 
 test("resolveCategory keeps embutidos out of the meat categories", () => {

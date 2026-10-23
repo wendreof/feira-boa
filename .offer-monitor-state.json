@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-23T02:22:52.796Z",
-    "last_success_at": "2026-10-23T02:22:52.796Z",
+    "checked_at": "2026-10-23T02:56:43.703Z",
+    "last_success_at": "2026-10-23T02:56:43.703Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=utf-8",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-23T02:22:55.315Z",
-    "last_success_at": "2026-10-23T02:22:55.315Z",
+    "checked_at": "2026-10-23T02:56:46.198Z",
+    "last_success_at": "2026-10-23T02:56:46.198Z",
     "last_error": null,
     "needs_review": true
   },
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
-    "checked_at": "2026-10-23T02:22:55.600Z",
-    "last_success_at": "2026-10-23T02:22:55.600Z",
+    "checked_at": "2026-10-23T02:56:46.224Z",
+    "last_success_at": "2026-10-23T02:56:46.224Z",
     "last_error": null,
     "needs_review": true
   },
@@ -54,8 +54,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-23T02:22:58.132Z",
-    "last_success_at": "2026-10-23T02:22:58.132Z",
+    "checked_at": "2026-10-23T02:56:48.942Z",
+    "last_success_at": "2026-10-23T02:56:48.942Z",
     "last_error": null,
     "needs_review": true
   },
@@ -69,8 +69,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-23T02:22:59.222Z",
-    "last_success_at": "2026-10-23T02:22:59.222Z",
+    "checked_at": "2026-10-23T02:56:50.031Z",
+    "last_success_at": "2026-10-23T02:56:50.031Z",
     "last_error": null,
     "needs_review": false
   }

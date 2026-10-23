@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-23T14:56:58.205Z",
+  "fetchedAt": "2026-10-23T17:36:34.240Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -2828,7 +2828,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 9.99,
-      "previousPrice": 15.99,
+      "previousPrice": 14.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -17263,7 +17263,7 @@
         "Congelados"
       ],
       "storeCategory": "Congelados/Pratos Prontos/Lasanha Congelada",
-      "price": 12.99,
+      "price": 14.99,
       "previousPrice": 17.99,
       "icon": "🍝",
       "tone": "#edf4e9",
@@ -21864,7 +21864,7 @@
       ],
       "storeCategory": "Café da Manhã/Leite/Leite em Pó",
       "price": 14.99,
-      "previousPrice": 16.99,
+      "previousPrice": 17.99,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

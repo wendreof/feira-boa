@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
   schedule:
-    # 12:17 UTC = 09:17 in São Paulo; avoid the top of the hour.
-    - cron: "17 12 * * *"
+    # 10:07 and 21:07 UTC = 07:07 and 18:07 in São Paulo (UTC-3);
+    # nudge off the top of the hour to avoid Actions congestion.
+    - cron: "7 10,21 * * *"
   workflow_dispatch:
 
 permissions:

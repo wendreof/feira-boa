@@ -31,7 +31,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - New prices publish immediately; `needs_review` gates alert eligibility only.
 
 ### Catalog taxonomy
-- `catalog-taxonomy.mjs` is the display taxonomy: 14 sectors (Alimentos frescos, Mercearia, Bebidas, Bebidas alcoólicas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
+- `catalog-taxonomy.mjs` is the display taxonomy: 14 sectors (Alimentos frescos, Mercearia, Bebidas alcoólicas, Bebidas, Congelados e refeições, Saudáveis e dietéticos, Limpeza, Higiene e beleza, Bebês e infantil, Pet shop, Casa e utilidades, Churrasco e festas, Vestuário e calçados, Outros) with their subcategories.
 - The feed keeps the original adapter product types; `resolveCategory()` maps each offer to a sector/subcategory by type and by product-name keywords.
 - The "Setor" filter lists the sectors in that order, "Tipo de produto" lists the subcategories, and "Recomendadas" sorts by sector then subcategory.
 - The header chip row ("Explorar por categoria") is: Mais curtidos, Maiores descontos, Carnes, Bebidas and then the remaining sectors in a random order. "Mais curtidos" and "Maiores descontos" also filter (only offers with likes / only offers with a discount).

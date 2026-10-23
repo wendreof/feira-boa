@@ -173,6 +173,9 @@ function showFeedError(): void {
   const mobileNavAccountLabel = mobileNavAccountLink.querySelector<HTMLElement>("[data-mobile-account-label]")!;
   const accountDescription = document.querySelector<HTMLSpanElement>("#account-description")!;
   const accountStatus = document.querySelector<HTMLParagraphElement>("#account-status")!;
+  const topbarAccount = document.querySelector<HTMLAnchorElement>("#topbar-account");
+  const topbarAccountImage = document.querySelector<HTMLImageElement>("#topbar-account-image");
+  const topbarAccountFallback = document.querySelector<HTMLElement>("#topbar-account-fallback");
   const favoritesToggle = document.querySelector<HTMLButtonElement>("#favorites-toggle")!;
   const navFavoritesLink = document.querySelector<HTMLAnchorElement>("#nav-favorites")!;
   const mobileNavOffersLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-offers")!;
@@ -198,7 +201,7 @@ function showFeedError(): void {
     return groupIndex * 100 + subIndex;
   }
   const CATEGORY_ICONS: Record<string, string> = {
-    frescos: "🥬", mercearia: "🥫", bebidas: "🥤", congelados: "🧊", saudaveis: "🥗", limpeza: "🧺",
+    frescos: "🥬", mercearia: "🥫", bebidas: "🥤", bebidas_alcoolicas: "🍺", congelados: "🧊", saudaveis: "🥗", limpeza: "🧺",
     higiene: "🧴", infantil: "🍼", pet: "🐾", casa: "🏠", churrasco: "🔥", vestuario: "👕", outros: "🏷️",
   };
   const CARNES_SUBCATEGORIES = new Set(["Açougue e carnes frescas", "Aves", "Peixaria e frutos do mar", "Frios e embutidos"]);
@@ -279,10 +282,42 @@ function showFeedError(): void {
     mobileNavAccountLabel.textContent = label;
     mobileNavAccountLink.setAttribute("aria-label", label);
     mobileNavAccountLink.setAttribute("href", href);
+    if (topbarAccount) {
+      topbarAccount.hidden = !signedIn;
+      topbarAccount.setAttribute("href", "account.html");
+      topbarAccount.setAttribute("aria-label", "Minha conta");
+    }
+    if (!signedIn) renderTopbarAvatar(null);
     accountDescription.textContent = signedIn
       ? "Seus favoritos já estão sincronizados com a sua conta."
       : "Entre ou crie uma conta grátis para salvar seus favoritos.";
     if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
+  }
+
+  function renderTopbarAvatar(url: string | null): void {
+    if (!topbarAccount) return;
+    if (url && topbarAccountImage) {
+      topbarAccountImage.src = url;
+      topbarAccountImage.hidden = false;
+      if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+      return;
+    }
+    if (topbarAccountImage) {
+      topbarAccountImage.removeAttribute("src");
+      topbarAccountImage.hidden = true;
+    }
+    if (topbarAccountFallback) topbarAccountFallback.hidden = false;
+  }
+
+  async function refreshTopbarAvatar(userId: string): Promise<void> {
+    try {
+      const { loadAvatar, avatarUrl } = await import("./avatar");
+      const state = await loadAvatar(userId);
+      renderTopbarAvatar(state.url ?? (state.path ? avatarUrl(state.path) : null));
+    } catch (error) {
+      console.warn("Could not load the topbar avatar.", error);
+      renderTopbarAvatar(null);
+    }
   }
 
   function likesByOffer(): Map<string, number> {
@@ -357,6 +392,7 @@ function showFeedError(): void {
       } catch (reactionError) {
         console.warn("Could not load saved offer reactions.", reactionError);
       }
+      void refreshTopbarAvatar(userId);
       renderOffers();
       setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
     } catch (error) {
@@ -943,6 +979,7 @@ function showFeedError(): void {
     if (!group) return;
     activeDepartment = group.dataset.group ?? "";
     activeProductType = "";
+    sortSelect.value = "recommended";
     updateFilterStates(filters, "department", activeDepartment);
     updateProductTypeOptions();
     renderPopularItems();

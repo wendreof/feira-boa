@@ -23,9 +23,9 @@ const NETWORK_FIRST = ["/offers.json", "/source-status.js", "/build-info.json"];
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     if (IS_LOCAL) {
-      // Em desenvolvimento não guardamos nada: o preview precisa refletir o build atual na hora.
-      await self.registration.unregister();
-      for (const key of await caches.keys()) await caches.delete(key);
+      // Em desenvolvimento não guardamos nada: o preview precisa refletir o build atual.
+      // O worker fica registrado para permitir testar notificações push em localhost.
+      await self.skipWaiting();
       return;
     }
     const cache = await caches.open(await shellCacheName());
@@ -38,7 +38,7 @@ self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     if (IS_LOCAL) {
       for (const key of await caches.keys()) await caches.delete(key);
-      await self.registration.unregister();
+      await self.clients.claim();
       return;
     }
     const current = await shellCacheName();
@@ -140,9 +140,13 @@ self.addEventListener("pushsubscriptionchange", (event) => {
   event.waitUntil((async () => {
     const oldEndpoint = event.oldSubscription?.endpoint;
     try {
+      const normalized = VAPID_PUBLIC_KEY.replace(/-/g, "+").replace(/_/g, "/");
+      const binary = atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "="));
+      const keyBytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) keyBytes[index] = binary.charCodeAt(index);
       const subscription = await self.registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: VAPID_PUBLIC_KEY,
+        applicationServerKey: keyBytes,
       });
       const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
       for (const client of windows) {

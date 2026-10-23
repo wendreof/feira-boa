@@ -40,6 +40,11 @@ export const TAXONOMY_GROUPS = [
     ],
   },
   {
+    id: "bebidas_alcoolicas",
+    label: "Bebidas alcoólicas",
+    subcategories: ["Cervejas", "Vinhos e destilados", "Aperitivos e coquetéis"],
+  },
+  {
     id: "bebidas",
     label: "Bebidas",
     subcategories: [
@@ -50,11 +55,6 @@ export const TAXONOMY_GROUPS = [
       "Chás e cafés",
       "Águas",
     ],
-  },
-  {
-    id: "bebidas_alcoolicas",
-    label: "Bebidas alcoólicas",
-    subcategories: ["Cervejas", "Vinhos e destilados", "Aperitivos e coquetéis"],
   },
   {
     id: "congelados",

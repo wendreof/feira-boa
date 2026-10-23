@@ -314,6 +314,45 @@ export function normalizeOfferNote(value) {
   }).join(" · ");
 }
 
+const CASE_MINOR_WORDS = new Set([
+  "de", "da", "do", "das", "dos", "e", "ou", "com", "em", "por", "para", "sem",
+  "no", "na", "nos", "nas", "ao", "aos", "pelo", "pela", "c", "s", "sob", "sobre",
+]);
+const CASE_UNIT_WORDS = new Set([
+  "kg", "g", "mg", "ml", "l", "lt", "un", "unid", "unidade", "unidades",
+  "pc", "pcs", "pct", "cx", "fl", "kt",
+]);
+
+function isScreamingCase(text) {
+  return /\p{Ll}/u.test(text) === false && (text.match(/\p{L}/gu)?.length ?? 0) >= 3;
+}
+
+function normalizeCaseWord(word, isFirst) {
+  const bare = word.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+  if (!isFirst && (CASE_MINOR_WORDS.has(bare) || CASE_UNIT_WORDS.has(bare))) {
+    return word.toLowerCase();
+  }
+  const numberUnit = word.match(/^(\d+(?:[.,]\d+)?)([A-Za-z]+\.?)$/);
+  if (numberUnit) return `${numberUnit[1]}${numberUnit[2].toLowerCase()}`;
+  return word.charAt(0).toLocaleUpperCase("pt-BR") + word.slice(1).toLocaleLowerCase("pt-BR");
+}
+
+/**
+ * Converte nomes em CAIXA ALTA de folheto para leitura normal.
+ * Nomes já mistos (ex.: "BISTECA Suína") passam intactos.
+ */
+export function normalizeProductNameCase(name) {
+  const value = String(name ?? "").replace(/\s+/g, " ").trim();
+  if (!value || !isScreamingCase(value)) return value;
+  let first = true;
+  return value.split(/(\s+)/).map((part) => {
+    if (!part || /^\s+$/.test(part)) return part;
+    const result = normalizeCaseWord(part, first);
+    first = false;
+    return result;
+  }).join("");
+}
+
 export function normalizeOfferPresentation(offer) {
   const originalName = String(offer?.name ?? "").replace(/\s+/g, " ").trim();
   const originalBrand = String(offer?.brand ?? "").replace(/\s+/g, " ").trim();
@@ -338,7 +377,7 @@ export function normalizeOfferPresentation(offer) {
 
   return {
     ...offer,
-    name: name || originalName,
+    name: normalizeProductNameCase(name || originalName),
     brand,
     note: normalizeOfferNote(offer?.note),
   };

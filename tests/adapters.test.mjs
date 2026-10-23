@@ -256,7 +256,7 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "PCT KG",
     note: "",
   });
-  assert.equal(chicken.name, "COXA C/ SOBRECOXA DE FRANGO");
+  assert.equal(chicken.name, "Coxa c/ Sobrecoxa de Frango");
   assert.equal(chicken.brand, "Avelícia");
 
   const rice = normalizeOfferPresentation({
@@ -310,8 +310,42 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "900ML",
     note: "",
   });
-  assert.equal(dated.name, "ÓLEO SOJA");
+  assert.equal(dated.name, "Óleo Soja");
   assert.equal(dated.brand, "Vitaliv");
+});
+
+test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units lowercase", () => {
+  const condensed = normalizeOfferPresentation({
+    name: "LEITE CONDENSADO MOÇA 340G SEMI DESN.",
+    brand: "",
+    detail: "340g",
+    note: "",
+  });
+  assert.equal(condensed.name, "Leite Condensado Moça 340g Semi Desn.");
+
+  const cleaner = normalizeOfferPresentation({
+    name: "LAVA ROUPAS EM PÓ",
+    brand: "",
+    detail: "800g",
+    note: "",
+  });
+  assert.equal(cleaner.name, "Lava Roupas em Pó");
+
+  const beer = normalizeOfferPresentation({
+    name: "CERVEJA LAGER HEINEKEN",
+    brand: "",
+    detail: "350ml",
+    note: "",
+  });
+  assert.equal(beer.name, "Cerveja Lager Heineken");
+
+  const mixed = normalizeOfferPresentation({
+    name: "BISTECA Suína",
+    brand: "",
+    detail: "kg",
+    note: "",
+  });
+  assert.equal(mixed.name, "BISTECA Suína");
 });
 
 test("normalizeOfferPresentation does not mistake produce varieties for brands", () => {
@@ -321,7 +355,7 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
     detail: "UN.",
     note: "",
   });
-  assert.equal(pineapple.name, "ABACAXI PÉROLA GRAÚDO");
+  assert.equal(pineapple.name, "Abacaxi Pérola Graúdo");
   assert.equal(pineapple.brand, "");
 
   const hazelnut = normalizeOfferPresentation({
@@ -330,7 +364,7 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
     detail: "140G",
     note: "",
   });
-  assert.equal(hazelnut.name, "CREME AVELÃ");
+  assert.equal(hazelnut.name, "Creme Avelã");
   assert.equal(hazelnut.brand, "Nutella");
 });
 

@@ -148,6 +148,29 @@ function totalProducts(response) {
   return match ? Number(match[1]) : null;
 }
 
+/**
+ * Structural probe for the source monitor. The storefront page for this source
+ * is a client-rendered shell whose bytes change on every store redeploy, so the
+ * monitor watches the catalog API instead: it only needs to know the API still
+ * answers with a non-empty product page and how many products it lists.
+ */
+export async function probePagueMenosCatalog(fetchImpl = fetch) {
+  const apiUrl = new URL(PAGUE_MENOS_API_URL);
+  apiUrl.searchParams.set("fq", `productClusterIds:${PAGUE_MENOS_COLLECTION_ID}`);
+  apiUrl.searchParams.set("_from", "0");
+  apiUrl.searchParams.set("_to", String(PAGE_SIZE - 1));
+
+  const response = await fetchWithRetry(apiUrl, {
+    headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+  }, { fetchImpl });
+  if (!response.ok) throw new Error(`Pague Menos catalog probe failed (${response.status}).`);
+  const batch = await response.json();
+  if (!Array.isArray(batch) || batch.length === 0) throw new Error("Pague Menos catalog probe returned no products.");
+  const total = totalProducts(response) ?? batch.length;
+  if (!Number.isFinite(total) || total <= 0) throw new Error("Pague Menos catalog probe reported no products.");
+  return { catalog_total: total };
+}
+
 async function fetchCollection(pageUrl) {
   const collectionId = collectionIdFromUrl(pageUrl);
   const products = [];

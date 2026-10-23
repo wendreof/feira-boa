@@ -1,6 +1,6 @@
 # Feira Boa Continuation Plan
 
-Last updated: 2026-10-23 (OneSignal console follow-ups resolved)
+Last updated: 2026-10-23 (OneSignal follow-ups + price-alert ops issue #22 resolved)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
 
 ## OneSignal follow-ups (resolved 2026-10-23)
@@ -24,6 +24,18 @@ Reproduced in browser console after the OneSignal migration (self-hosted SDK in 
 
 Also verified: on localhost OneSignal init fails with `Can only be used on: https://feira-boa.pages.dev` (expected — OneSignal refuses localhost). End-to-end push verification still needs the production domain.
 
+## Price-alert ops issue #22 (resolved 2026-10-23)
+
+`[ops] Price alert job failed` (run 39976177475): the alert job threw `No verified active offers` because every currently-active offer came from a `needs_review` source — the gate working as designed. Investigation found three causes and two adapter bugs:
+
+1. **Pague Menos was monitored through the wrong bytes (root cause).** The monitor hashed the storefront HTML page, but that page is a Next.js client-render shell with zero product data; its hash only changes when the store redeploys (`buildId`). It had been stuck at `needs_review:true` for 9 consecutive monitor runs while the real data (VTEX catalog API) was never watched. Fix (`scripts/monitor-sources.mjs` + `probePagueMenosCatalog` in the adapter): sources whose monitored URL is a dynamic shell get a **structural probe** instead — the monitor now fetches the catalog API, records `catalog_total` and `week_window`, and drives review from the weekly Monday-Sunday campaign rotation, probe failures, and URL changes. Ordinary daily price/availability/membership churn no longer pauses alerts. `fetchWithRetry` gained an injectable `fetchImpl` for this; `tests/monitor-sources.test.mjs` covers the new behavior.
+2. **Big Bom rotated campaigns and the parser broke on the new layout.** The new PDF spreads the grid over 4 pages and ends the highlights page with the validity line, so the old page-1-only extraction wiped all products and retained the expired snapshot. Fix (`scripts/adapters/bigbom.mjs`): process every page, prefer the legacy banner-strip only when it still leaves a priced grid, strip section headers (`DESTAQUES`/`COMBOS`/`OFERTAS`), treat `Nesta embalagem ... sai por` as a condition note, support `NN/NNg` weight ranges, and throw on unparseable dates instead of silently using a stale default. New campaign (23-25 Oct) now yields 79 offers.
+3. **Corso rotated to a new image flyer.** The adapter is a manual transcription keyed to the page's `jornal-frente.jpg?hash=` timestamp; the hash advanced (new campaign published). Re-transcribed both flyer images (read via the image tool) into `scripts/adapters/corso.mjs`, now organized as three campaign sections with their own validity (front 23-24, "Promoção Imbatível" 23-29, main grid 23-26) — 121 offers, all active.
+4. **Sempre Vale** legitimately rotated to campanha-576 (22-25); 74 offers parsed cleanly.
+5. **Spasso** still serves image flyers pending transcription (0 offers); its flag stays set as a source-health signal and does not affect the alert gate.
+
+Operational resolution: re-ingested all sources, re-ran the monitor, and reviewed Pague Menos, Sempre Vale, Big Bom, and Corso with `review-source.mjs`. The alert matcher now sees **1,284 active offers, all verified** — the gate no longer throws. The next scheduled alert run on `main` should succeed once these changes are pushed.
+
 ## Objective
 
 Finish the Feira Boa hardening work while preserving product behavior:
@@ -45,18 +57,17 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 ## Current Data State
 
-- `offers.json`: 1,230 offers from 5 stores (Sempre Vale 74, Big Bom 24, Pague Menos 1,011, Corso 121); 1,085 fall within their validity dates today (Corso 16-22 and Big Bom 19-22 campaigns have ended; their snapshots are still fresh). 431 offers have a previous price.
-- Last feed timestamp: `2026-10-23T02:22:49.127Z` (monitor workflow refresh).
-- Snapshot state (fetched `2026-10-23T02:22Z`):
+- `offers.json`: 1,284 offers from 5 stores (Sempre Vale 74, Big Bom 79, Pague Menos 1,010, Corso 121, Spasso 0); all 1,284 fall within their validity dates today and are source-verified for alerts.
+- Snapshot state (fetched `2026-10-23T18-19Z`, local re-ingest):
   - `state/sempre.json`: 74 offers; 22-25; campaign `...campanha-576`
-  - `state/bigbom.json`: 24 offers; 19-22
-  - `state/paguemenos.json`: 1,011 offers; 19-25; catalog collection `161`
+  - `state/bigbom.json`: 79 offers; 23-25; multi-page PDF layout
+  - `state/paguemenos.json`: 1,010 offers; 19-25; catalog collection `161` (1,039 API products)
+  - `state/corso.json`: 121 offers; three windows 23-24 / 23-26 / 23-29; image flyer hash `1792720156`
   - `state/spasso.json`: 0 offers; `status: image_flyer_pending_transcription`
-  - `state/corso.json`: 121 offers; 16-22
-- Source review status: Big Bom and Corso `needsReview:false`; **Pague Menos, Sempre Vale, and Spasso are `needsReview:true`** (Sempre Vale's campaign URL rotated to campanha-576; Spasso now serves an image flyer pending transcription). Alert eligibility is gated on these until reviewed with `review-source.mjs`.
-- Pague Menos fetches the VTEX catalog API in 50-product pages, deduplicates normalized products, and maps prices, brands, categories, and package details.
+- Source review status: Big Bom, Pague Menos, Sempre Vale, and Corso `needs_review:false` (reviewed 2026-10-23); **Spasso remains `needs_review:true`** pending image transcription — it has 0 offers and does not gate alerts.
+- Pague Menos is monitored structurally (`week_window` + `catalog_total` on the state entry); its storefront-shell hash no longer drives review.
 - No generated offer has the legacy `Geral` department; current feed IDs also satisfy the new reaction ID shape.
-- `offers.ts` fallback contains the refreshed Sempre Vale campaign metadata; it publishes only when no snapshot exists at all.
+- `offers.ts` fallback contains refreshed campaign metadata; it publishes only when no snapshot exists at all.
 - `lojas.html` also lists Forte Mix and other local stores; they are flagged as "Sem ofertas coletadas" because they are not monitored offer sources.
 
 ## Completed
@@ -153,14 +164,14 @@ Finish the Feira Boa hardening work while preserving product behavior:
 Latest checks passed (2026-10-23):
 
 - `npm run typecheck`: passed.
-- `npm run build`: passed; 39 root artifacts; 1,230 offers; 30 structured-data offers.
-- `npm test`: 46/46 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, taxonomy sector order, classifier regressions, and push-state/error coverage.
+- `npm run build`: passed; 39 root artifacts; 1,284 offers; 30 structured-data offers.
+- `npm test`: 52/52 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, taxonomy sector order, classifier regressions, push-state/error coverage, and the new monitor structural-probe suite.
 - Local site health (`check-site-health.mjs` with `REQUIRE_SECURITY_HEADERS=1` against a local server that applies `_headers`): `status:ok`.
 - CSP fix verified in headless Chrome (CDP): `https://api.onesignal.com/sync/...` JSONP loads, zero CSP violations. OneSignal init on localhost correctly refuses (`Can only be used on: https://feira-boa.pages.dev`).
 - SW message-handler warning verified as vendor-inherent: isolated CDP worker test produced the warning for both try/catch and bare `importScripts` variants.
-- Snapshot refresh (monitor workflow, `2026-10-23T02:22Z`): 5 sources fetched with 0 failures; Big Bom and Corso reviewed; Pague Menos, Sempre Vale, and Spasso currently `needsReview:true`.
+- Issue #22 resolution verified: alert matcher sees 1,284 active offers, all source-verified; the `No verified active offers` gate no longer throws. Four sources reviewed; Spasso remains flagged (0 offers, transcription pending).
 - Signed-out favorites/reactions: like and favorite controls plus Favoritos nav open the login prompt; `?view=favorites` prompts and exits favorites mode on cancel.
-- Pague Menos ingestion: 1,011 catalog products after normalized deduplication.
+- Pague Menos ingestion: 1,039 catalog products, 1,010 after availability filtering and normalized deduplication; watched structurally by the monitor.
 - Chrome desktop app:
   - 1,240 active cards rendered in about one second; no duplicate IDs or console errors.
   - Pague Menos filter shows 1,015 cards and links to the official collection.
@@ -196,12 +207,12 @@ Latest checks passed (2026-10-23):
    - Set the `SITE_URL` Actions variable.
    - Run production `check-site-health.mjs` with security headers.
 3. Configure required alert secrets only when ready: `SUPABASE_SERVICE_ROLE_KEY`, `ONESIGNAL_REST_API_KEY` (OneSignal replaces VAPID; App ID lives in `pwa.js`). Local CSP/init verification is done; OneSignal end-to-end must be confirmed on `https://feira-boa.pages.dev` (it refuses localhost).
-4. Review the three sources currently `needsReview:true` (Pague Menos, Sempre Vale, Spasso) with `node scripts/review-source.mjs` so alert eligibility resumes. Spasso's source is now an image flyer pending transcription (`status: image_flyer_pending_transcription`).
+4. ~~Review the sources stuck in `needsReview:true` so alert eligibility resumes.~~ **Done (2026-10-23):** Pague Menos, Sempre Vale, Big Bom, and Corso reviewed after their data was verified/re-ingested; only Spasso stays flagged pending image transcription (0 offers; does not gate alerts). See the issue #22 section above.
 
 ### Product Decisions
 
 - ~~Decide whether to replace the stale `offers.ts` fallback metadata or guarantee a snapshot is always present.~~ **Done:** the curated catalog is now a development fallback only. The build publishes it only when no snapshot exists at all, so an outdated flyer can never mix with fresh prices. The Sempre Vale fallback metadata was refreshed to the current campaign for local work.
-- Decide whether a large-feed strategy is needed later (incremental "load more" or virtualized cards); the current 1,230-card render is under one second in desktop Chrome.
+- Decide whether a large-feed strategy is needed later (incremental "load more" or virtualized cards); the current 1,284-card render is under one second in desktop Chrome.
 - Confirm that Pague Menos online collection prices and the `Loja 33` branch label match the intended physical-store audience.
 - Decide whether ESLint/Prettier are worth adding; no linter was added. Current gate is TypeScript + esbuild + Node tests.
 - Optional: add `pg_cron` cleanup if Supabase enables it, instead of insert-triggered suggestion retention.
@@ -219,10 +230,12 @@ Latest checks passed (2026-10-23):
 - No local `python`.
 - Supabase migrations are not applied; no CLI/credentials are configured locally.
 - No production domain is configured in the repository, so production health/deployment verification is pending.
-- Spasso serves an image flyer pending transcription (0 offers) and remains under source review; Pague Menos and Sempre Vale also flipped to `needsReview:true` after their sources changed, so alert eligibility is currently gated on all three until reviewed.
+- Spasso serves image flyers pending manual transcription (0 offers) and is the only source still under review; its flag is a source-health signal and does not gate alerts.
+- Big Bom and Corso rely on manual/parsed flyer transcription: when their campaign artifacts change (PDF layout, image hash), the adapter or transcription must be updated in the same change window or the ingest retains the previous snapshot.
+- Pague Menos is monitored structurally against the catalog API (weekly-window review); its storefront-shell bytes are intentionally not hashed.
 - OneSignal SDK v16 emits a cosmetic `message`-listener warning from inside its own bundle (registered via `setTimeout(0)`); this is vendor-inherent and cannot be fixed without patching minified vendor code.
 - Pague Menos offers come from the online catalog; store labels state that online prices may differ from the physical store.
-- The feed is dominated by Pague Menos (1,011 of 1,230 offers), so future source-count and UI-performance changes should account for the larger catalog.
+- The feed is dominated by Pague Menos (1,010 of 1,284 offers), so future source-count and UI-performance changes should account for the larger catalog.
 - Offline first load can log expected external logo/build-info failures; core feed rendering succeeds.
 - Do not gate price publishing to solve alert review concerns.
 
@@ -295,9 +308,10 @@ Playwright/Puppeteer are not installed; QA used temporary CDP scripts outside th
 
 - [x] Fix CSP `script-src` for `https://api.onesignal.com/sync/...` JSONP load — done 2026-10-23; verified in headless Chrome with zero CSP violations.
 - [x] Investigate OneSignal worker `message` listener initial-evaluation warning — vendor-inherent (SDK registers the listener inside `setTimeout(0)`); isolated CDP test confirmed both try/catch and bare `importScripts` warn; keeping the resilient try/catch.
-- [x] Re-run typecheck/build/tests — 46/46 passed; 39 root artifacts; local health check with security headers `status:ok`.
+- [x] Re-run typecheck/build/tests — 52/52 passed; 39 root artifacts; 1,284 offers; local health check with security headers `status:ok`.
 - [ ] Confirm no newer user instruction conflicts with this plan.
-- [ ] Review the three sources currently `needsReview:true` (Pague Menos, Sempre Vale, Spasso) with `review-source.mjs` so alert eligibility resumes.
+- [x] Review the sources stuck in `needsReview:true` so alert eligibility resumes — Pague Menos, Sempre Vale, Big Bom, and Corso reviewed 2026-10-23; only Spasso remains flagged (0 offers; does not gate alerts).
+- [ ] Commit and push the issue #22 fixes to `main` (monitor structural probe, Big Bom parser, Corso transcription, reviewed state) so the scheduled alert run picks them up; then close issue #22 with a summary comment.
 - [ ] Apply and validate the two Supabase migrations.
 - [ ] Deploy to Cloudflare Pages with root output.
 - [ ] Set `SITE_URL` and run production health check with security headers.

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
+import { getWeekValidity, probePagueMenosCatalog } from "./adapters/paguemenos.mjs";
 
 const ROOT = new URL("../", import.meta.url);
 export const FEED = new URL("offers.json", ROOT);
@@ -118,7 +119,58 @@ async function fetchSource(url, fetchImpl = fetch) {
   throw lastError ?? new Error("Source fetch failed.");
 }
 
+/**
+ * Sources whose monitored URL is a client-rendered storefront shell cannot be
+ * watched by hashing the page: the shell's bytes change on every store redeploy
+ * while the offer data lives in a separate catalog API. Hashing such pages
+ * flags the source for review forever, for reasons unrelated to the offers.
+ * Those sources get a structural probe instead: review is driven by the weekly
+ * campaign window, probe failures and URL changes — never by daily price,
+ * availability or membership churn, which is exactly what price alerts exist
+ * to report on.
+ */
+async function probePagueMenos(fetchImpl) {
+  const { catalog_total } = await probePagueMenosCatalog(fetchImpl);
+  const { from, to } = getWeekValidity();
+  return { catalog_total, week_window: `${from}/${to}` };
+}
+
+const STRUCTURAL_PROBES = new Map([
+  ["pague menos", probePagueMenos],
+]);
+
+async function monitorStructuralSource(source, previous, probe, fetchImpl) {
+  const checkedAt = new Date().toISOString();
+  let probeResult;
+  try {
+    probeResult = await probe(fetchImpl);
+  } catch (error) {
+    return [{
+      ...(previous && typeof previous === "object" ? previous : {}),
+      ...source,
+      checked_at: checkedAt,
+      last_error: error?.name || "FetchError",
+      needs_review: previous && typeof previous === "object" ? Boolean(previous.needs_review) : true,
+    }, false];
+  }
+  const weekRotated = Boolean(previous?.week_window) && previous.week_window !== probeResult.week_window;
+  const needsReview = previous == null ? true : Boolean(previous.needs_review) || weekRotated;
+  return [{
+    ...source,
+    ...probeResult,
+    status: 200,
+    content_type: "application/json",
+    final_url: source.url,
+    checked_at: checkedAt,
+    last_success_at: checkedAt,
+    last_error: null,
+    needs_review: needsReview,
+  }, previous == null || weekRotated];
+}
+
 export async function monitorSource(source, previous, fetchImpl = fetch) {
+  const probe = STRUCTURAL_PROBES.get(String(source.store ?? "").trim().toLowerCase());
+  if (probe) return monitorStructuralSource(source, previous, probe, fetchImpl);
   const checkedAt = new Date().toISOString();
   try {
     const response = await fetchSource(source.url, fetchImpl);

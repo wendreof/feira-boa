@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-23T19:16:22.880Z",
+  "fetchedAt": "2026-10-23T21:18:04.325Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -5803,7 +5803,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Biscoitos",
-      "price": 8.99,
+      "price": 8.89,
       "previousPrice": null,
       "icon": "🍪",
       "tone": "#edf4e9",
@@ -24763,7 +24763,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Grãos e Farináceos/Amido de Milho",
-      "price": 7.09,
+      "price": 6.99,
       "previousPrice": null,
       "icon": "🌾",
       "tone": "#edf4e9",

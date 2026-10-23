@@ -1,7 +1,28 @@
 # Feira Boa Continuation Plan
 
-Last updated: 2026-10-22 (login-required favorites + taxonomy fixes)
+Last updated: 2026-10-23 (OneSignal console follow-ups resolved)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
+
+## OneSignal follow-ups (resolved 2026-10-23)
+
+Reproduced in browser console after the OneSignal migration (self-hosted SDK in `onesignal/`, init in `pwa.js`, worker via `importScripts` in `service-worker.js`):
+
+1. **CSP blocked OneSignal sync script — FIXED**
+   ```
+   Loading the script 'https://api.onesignal.com/sync/510d37b8-17a0-41dd-a0b2-a8d5ca29f2fc/web?callback=__jp0'
+   violates Content Security Policy: "script-src 'self'". Blocked.
+   ```
+   Fixed by adding `https://api.onesignal.com` to `script-src` in `_headers` (it is a JSONP-style script load; `connect-src` already covered it via `https://*.onesignal.com`). Verified end-to-end in headless Chrome against a local server that applies `_headers`: the sync request now loads and zero CSP violations appear. `check-site-health.mjs` with `REQUIRE_SECURITY_HEADERS=1` still passes.
+
+2. **SW message-handler lint warning — investigated; inherent to vendor SDK**
+   ```
+   OneSignalSDKWorker.js:1 Event handler of 'message' event must be added on the
+   initial evaluation of worker script.
+   ```
+   Isolated CDP test (headless Chrome, real worker registration) with the vendored SDK run both through `try { importScripts(...) } catch` and through a bare top-level `importScripts(...)` produced the warning in both cases. The cause is inside the vendor bundle: OneSignal registers its WorkerMessenger `message` listener inside `setTimeout(() => { workerMessenger._listen(); ... }, 0)` (deliberate, for test-mock setup — see OneSignal-Website-SDK `src/sw/serviceWorker/ServiceWorker.ts`). No restructuring of our import can remove it without patching minified vendor code.
+   Functional impact is negligible: the SDK's top-level `message` handler (session upsert/deactivate), `push`, and `pushsubscriptionchange` listeners *are* registered during initial evaluation, so Chrome will still wake the worker for those events; the deferred WorkerMessenger handlers (`notification.display`, subscribe commands) only receive traffic that originates after the worker is already active, well after the `setTimeout(0)` has run. Decision: keep the resilient `try/catch` around `importScripts` (removing it would make a missing/offline SDK file break the entire worker and its caching) and treat the warning as a known cosmetic OneSignal v16 behavior.
+
+Also verified: on localhost OneSignal init fails with `Can only be used on: https://feira-boa.pages.dev` (expected — OneSignal refuses localhost). End-to-end push verification still needs the production domain.
 
 ## Objective
 
@@ -24,19 +45,19 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 ## Current Data State
 
-- `offers.json`: 1,288 offers, 1,240 active, 5 sources.
-- Last feed timestamp: `2026-10-20T20:48:59.255Z`; feed size is about 1.29 MB.
-- Snapshot validity:
-  - `state/sempre.json`: 19-21; campaign `af2914...campanha-583`
-  - `state/bigbom.json`: 19-22
-  - `state/paguemenos.json`: 19-25; 1,015 offers from catalog collection `161`
-  - `state/spasso.json`: 19-24; 0 offers
-  - `state/corso.json`: 16-22
-- Pague Menos fetches the VTEX catalog API in 50-product pages, deduplicates normalized products, and exposes 277 offers with a previous price.
-- Pague Menos source status was reviewed with `needs_review:false`; Spasso changed and remains under review. Last successes are around `2026-10-20T20:43Z`.
+- `offers.json`: 1,230 offers from 5 stores (Sempre Vale 74, Big Bom 24, Pague Menos 1,011, Corso 121); 1,085 fall within their validity dates today (Corso 16-22 and Big Bom 19-22 campaigns have ended; their snapshots are still fresh). 431 offers have a previous price.
+- Last feed timestamp: `2026-10-23T02:22:49.127Z` (monitor workflow refresh).
+- Snapshot state (fetched `2026-10-23T02:22Z`):
+  - `state/sempre.json`: 74 offers; 22-25; campaign `...campanha-576`
+  - `state/bigbom.json`: 24 offers; 19-22
+  - `state/paguemenos.json`: 1,011 offers; 19-25; catalog collection `161`
+  - `state/spasso.json`: 0 offers; `status: image_flyer_pending_transcription`
+  - `state/corso.json`: 121 offers; 16-22
+- Source review status: Big Bom and Corso `needsReview:false`; **Pague Menos, Sempre Vale, and Spasso are `needsReview:true`** (Sempre Vale's campaign URL rotated to campanha-576; Spasso now serves an image flyer pending transcription). Alert eligibility is gated on these until reviewed with `review-source.mjs`.
+- Pague Menos fetches the VTEX catalog API in 50-product pages, deduplicates normalized products, and maps prices, brands, categories, and package details.
 - No generated offer has the legacy `Geral` department; current feed IDs also satisfy the new reaction ID shape.
-- `offers.ts` fallback still contains the old Sempre Vale `12c6dae5...campanha-575` campaign and 15-18 dates. Snapshots override it, but it is stale.
-- `lojas.html` also lists Forte Mix and other local stores; they are now explicitly flagged as "Sem ofertas coletadas" because they are not monitored offer sources.
+- `offers.ts` fallback contains the refreshed Sempre Vale campaign metadata; it publishes only when no snapshot exists at all.
+- `lojas.html` also lists Forte Mix and other local stores; they are flagged as "Sem ofertas coletadas" because they are not monitored offer sources.
 
 ## Completed
 
@@ -63,11 +84,14 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 - Strict CSP with no inline styles/handlers. JSON-LD remains compatible.
 - `_headers` includes CSP, nosniff, frame denial, referrer policy, permissions policy, COOP, and CORP.
+- CSP `script-src` allows `self` plus `https://api.onesignal.com` for the OneSignal SDK's JSONP sync script (2026-10-23).
+- OneSignal v16 SDK is self-hosted in `onesignal/` (page SDK + worker) so ad blockers cannot break push; init is in `pwa.js`, worker loaded via `importScripts` in `service-worker.js` (kept inside try/catch for offline resilience).
+- The OneSignal worker's cosmetic `message`-listener warning is vendor-inherent (SDK defers its WorkerMessenger listener via `setTimeout(0)`); confirmed with an isolated CDP test — both try/catch and bare `importScripts` warn identically.
 - Service worker cache is `feira-boa-shell-v7`; `/app.js` is precached.
 - Removed the `?v=` query from `index.html`'s app script so precache matching works.
 - Offline fallback verified for unknown routes.
 - Social metadata, canonical URLs, sitemap, PWA icons, manifest, and social card are in place.
-- Root build emits 34 required artifacts and rejects inline event handlers.
+- Root build verifies 39 required artifacts and rejects inline event handlers.
 
 ### Data Pipeline
 
@@ -76,6 +100,7 @@ Finish the Feira Boa hardening work while preserving product behavior:
 - Pague Menos maps product names, prices, list prices, brands, categories, and package details; unavailable/zero-price products are skipped, and variants with identical normalized name/brand/detail keep the lowest price.
 - Pague Menos validity uses a stable Monday-Sunday window, and API brand variants are canonicalized (`Pilão`, `Itambé`, `Café Pelé`, `Mãe Terra`, `YoPRO`, and others).
 - Source snapshots live in `state/`; `offers.json` is generated from them.
+- The `offers.ts` curated catalog is a development-only fallback (published only when no snapshot exists at all); its source URLs and validity windows were refreshed to the 2026-10-23 campaigns (2026-10-23).
 - Unknown `Geral` offers are normalized through `classifyProduct()` / `assignIcon()` during build.
 - Added mappings for eggs, Nutella/hazelnut cream, sandals, and "New Fort/Fervedor".
 - Fixed overbroad Pet regex `/cat/` that matched "categoria".
@@ -125,14 +150,17 @@ Finish the Feira Boa hardening work while preserving product behavior:
 
 ## Verification Status
 
-Latest checks passed:
+Latest checks passed (2026-10-23):
 
 - `npm run typecheck`: passed.
-- `npm run build`: passed; 36 root artifacts; 1,240 offers; 30 structured-data offers.
-- `npm test`: 45/45 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, taxonomy sector order, classifier regressions, and push-state/error coverage.
-- Local site health (`check-site-health.mjs` with full headers): `status:ok` (last full run).
+- `npm run build`: passed; 39 root artifacts; 1,230 offers; 30 structured-data offers.
+- `npm test`: 46/46 passed, including Pague Menos catalog mapping, stable weekly validity, package details, presentation normalization, taxonomy sector order, classifier regressions, and push-state/error coverage.
+- Local site health (`check-site-health.mjs` with `REQUIRE_SECURITY_HEADERS=1` against a local server that applies `_headers`): `status:ok`.
+- CSP fix verified in headless Chrome (CDP): `https://api.onesignal.com/sync/...` JSONP loads, zero CSP violations. OneSignal init on localhost correctly refuses (`Can only be used on: https://feira-boa.pages.dev`).
+- SW message-handler warning verified as vendor-inherent: isolated CDP worker test produced the warning for both try/catch and bare `importScripts` variants.
+- Snapshot refresh (monitor workflow, `2026-10-23T02:22Z`): 5 sources fetched with 0 failures; Big Bom and Corso reviewed; Pague Menos, Sempre Vale, and Spasso currently `needsReview:true`.
 - Signed-out favorites/reactions: like and favorite controls plus Favoritos nav open the login prompt; `?view=favorites` prompts and exits favorites mode on cancel.
-- Pague Menos ingestion: 1,042 catalog products, 1,018 available/priced, 1,015 after normalized deduplication; 277 have a previous price.
+- Pague Menos ingestion: 1,011 catalog products after normalized deduplication.
 - Chrome desktop app:
   - 1,240 active cards rendered in about one second; no duplicate IDs or console errors.
   - Pague Menos filter shows 1,015 cards and links to the official collection.
@@ -167,12 +195,13 @@ Latest checks passed:
    - Confirm `build-info.json` commit matches deployment.
    - Set the `SITE_URL` Actions variable.
    - Run production `check-site-health.mjs` with security headers.
-3. Configure required alert secrets only when ready: `SUPABASE_SERVICE_ROLE_KEY`, `ONESIGNAL_REST_API_KEY` (OneSignal replaces VAPID; App ID lives in `pwa.js`).
+3. Configure required alert secrets only when ready: `SUPABASE_SERVICE_ROLE_KEY`, `ONESIGNAL_REST_API_KEY` (OneSignal replaces VAPID; App ID lives in `pwa.js`). Local CSP/init verification is done; OneSignal end-to-end must be confirmed on `https://feira-boa.pages.dev` (it refuses localhost).
+4. Review the three sources currently `needsReview:true` (Pague Menos, Sempre Vale, Spasso) with `node scripts/review-source.mjs` so alert eligibility resumes. Spasso's source is now an image flyer pending transcription (`status: image_flyer_pending_transcription`).
 
 ### Product Decisions
 
 - ~~Decide whether to replace the stale `offers.ts` fallback metadata or guarantee a snapshot is always present.~~ **Done:** the curated catalog is now a development fallback only. The build publishes it only when no snapshot exists at all, so an outdated flyer can never mix with fresh prices. The Sempre Vale fallback metadata was refreshed to the current campaign for local work.
-- Decide whether a large-feed strategy is needed later (incremental "load more" or virtualized cards); the current 1,240-card render is under one second in desktop Chrome.
+- Decide whether a large-feed strategy is needed later (incremental "load more" or virtualized cards); the current 1,230-card render is under one second in desktop Chrome.
 - Confirm that Pague Menos online collection prices and the `Loja 33` branch label match the intended physical-store audience.
 - Decide whether ESLint/Prettier are worth adding; no linter was added. Current gate is TypeScript + esbuild + Node tests.
 - Optional: add `pg_cron` cleanup if Supabase enables it, instead of insert-triggered suggestion retention.
@@ -190,9 +219,10 @@ Latest checks passed:
 - No local `python`.
 - Supabase migrations are not applied; no CLI/credentials are configured locally.
 - No production domain is configured in the repository, so production health/deployment verification is pending.
-- Spasso currently has 0 offers by source behavior and its changed source is awaiting review; this should remain visible as a source-health condition.
+- Spasso serves an image flyer pending transcription (0 offers) and remains under source review; Pague Menos and Sempre Vale also flipped to `needsReview:true` after their sources changed, so alert eligibility is currently gated on all three until reviewed.
+- OneSignal SDK v16 emits a cosmetic `message`-listener warning from inside its own bundle (registered via `setTimeout(0)`); this is vendor-inherent and cannot be fixed without patching minified vendor code.
 - Pague Menos offers come from the online catalog; store labels state that online prices may differ from the physical store.
-- The feed is now dominated by Pague Menos (1,015 of 1,288 offers), so future source-count and UI-performance changes should account for the larger catalog.
+- The feed is dominated by Pague Menos (1,011 of 1,230 offers), so future source-count and UI-performance changes should account for the larger catalog.
 - Offline first load can log expected external logo/build-info failures; core feed rendering succeeds.
 - Do not gate price publishing to solve alert review concerns.
 
@@ -263,11 +293,13 @@ Playwright/Puppeteer are not installed; QA used temporary CDP scripts outside th
 
 ## Resume Checklist
 
+- [x] Fix CSP `script-src` for `https://api.onesignal.com/sync/...` JSONP load — done 2026-10-23; verified in headless Chrome with zero CSP violations.
+- [x] Investigate OneSignal worker `message` listener initial-evaluation warning — vendor-inherent (SDK registers the listener inside `setTimeout(0)`); isolated CDP test confirmed both try/catch and bare `importScripts` warn; keeping the resilient try/catch.
+- [x] Re-run typecheck/build/tests — 46/46 passed; 39 root artifacts; local health check with security headers `status:ok`.
 - [ ] Confirm no newer user instruction conflicts with this plan.
-- [ ] Re-run typecheck/build/tests.
-- [ ] Spot-check card title/brand/detail/source rendering and account push inline feedback.
+- [ ] Review the three sources currently `needsReview:true` (Pague Menos, Sempre Vale, Spasso) with `review-source.mjs` so alert eligibility resumes.
 - [ ] Apply and validate the two Supabase migrations.
 - [ ] Deploy to Cloudflare Pages with root output.
 - [ ] Set `SITE_URL` and run production health check with security headers.
-- [ ] Decide on stale fallback metadata and lint/format policy.
+- [ ] Verify OneSignal end-to-end on production (`https://feira-boa.pages.dev`): init succeeds, Ativar notificações works, `ONESIGNAL_REST_API_KEY` secret confirmed, dry-run alert send passes.
 - [ ] Optional authenticated push/account end-to-end QA.

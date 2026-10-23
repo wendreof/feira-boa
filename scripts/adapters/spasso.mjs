@@ -44,7 +44,7 @@ export async function extractSpasso(customUrl = null) {
     store: {
       name: "Spasso Sabores",
       branch: "Av. Dr. Durval Nicolau, 1572 · São João",
-      logo: "https://spassosabores.com.br/wp-content/uploads/2021/01/logo-site-spasso-sabores-supermercados.png",
+      logo: "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-faction-icon-website-spasso-sabores-270x270.png",
       source: "Folheto oficial · Loja São João",
       sourceUrl: pageUrl,
       from: validity.from,

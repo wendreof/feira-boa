@@ -79,6 +79,19 @@ export async function signUp(email: string, password: string): Promise<{ user: U
   return { user: data.user, confirmationRequired: data.session === null };
 }
 
+/**
+ * Envia um link de redefinição de senha para o e-mail informado. O link volta
+ * para `login.html`, que conclui a sessão de recuperação pelo hash da URL.
+ */
+export async function resetPasswordForEmail(email: string, returnTo: string): Promise<void> {
+  const redirectTo = new URL("login.html", window.location.origin);
+  redirectTo.searchParams.set("returnTo", returnTo);
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectTo.toString(),
+  });
+  if (error) throw error;
+}
+
 export async function signOut(): Promise<void> {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;

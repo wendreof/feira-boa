@@ -1,4 +1,4 @@
-import { errorMessage, getCurrentUser, signIn, signInWithGoogle, signUp } from "./account";
+import { errorMessage, getCurrentUser, resetPasswordForEmail, signIn, signInWithGoogle, signUp } from "./account";
 import { bindThemeToggle } from "./theme";
 
 bindThemeToggle();
@@ -13,6 +13,8 @@ const submitButton = document.querySelector<HTMLButtonElement>("#auth-submit")!;
 const switchLabel = document.querySelector<HTMLSpanElement>("#auth-switch-label")!;
 const modeToggle = document.querySelector<HTMLButtonElement>("#auth-mode-toggle")!;
 const googleButton = document.querySelector<HTMLButtonElement>("#google-signin")!;
+const forgotRow = document.querySelector<HTMLParagraphElement>("#auth-forgot-row")!;
+const forgotButton = document.querySelector<HTMLButtonElement>("#auth-forgot-password")!;
 const status = document.querySelector<HTMLParagraphElement>("#auth-status")!;
 
 let creatingAccount = false;
@@ -44,6 +46,10 @@ function setPasswordVisibility(visible: boolean): void {
   passwordToggle.textContent = visible ? "Ocultar" : "Mostrar";
 }
 
+function looksLikeExistingAccount(message: string): boolean {
+  return /already (been )?registered|already exists|user already|email not confirmed|ineligible/i.test(message);
+}
+
 function updateMode(): void {
   title.textContent = creatingAccount ? "Crie sua conta grátis." : "Bem-vindo de volta.";
   description.textContent = creatingAccount
@@ -53,6 +59,7 @@ function updateMode(): void {
   switchLabel.textContent = creatingAccount ? "Já tem uma conta?" : "Ainda não tem conta?";
   modeToggle.textContent = creatingAccount ? "Entrar" : "Criar conta grátis";
   passwordInput.autocomplete = creatingAccount ? "new-password" : "current-password";
+  forgotRow.hidden = creatingAccount;
   setPasswordVisibility(false);
   setStatus("");
 }
@@ -64,6 +71,28 @@ passwordToggle.addEventListener("click", () => {
 modeToggle.addEventListener("click", () => {
   creatingAccount = !creatingAccount;
   updateMode();
+});
+
+forgotButton.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  if (!email) {
+    setStatus("Informe seu e-mail para receber o link de redefinição.");
+    emailInput.focus();
+    return;
+  }
+
+  forgotButton.disabled = true;
+  setStatus("Enviando o link de redefinição…");
+  try {
+    await resetPasswordForEmail(email, getReturnPath());
+    setStatus("Se este e-mail tiver uma conta, o link de redefinição já foi enviado. Confira sua caixa de entrada.");
+    passwordInput.value = "";
+    setPasswordVisibility(false);
+  } catch (error) {
+    setStatus(`Não foi possível enviar o link de redefinição: ${errorMessage(error)}`);
+  } finally {
+    forgotButton.disabled = false;
+  }
 });
 
 googleButton.addEventListener("click", async () => {
@@ -102,9 +131,14 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
       window.location.replace(getReturnPath());
     }
   } catch (error) {
+    const message = errorMessage(error);
+    if (creatingAccount && looksLikeExistingAccount(message)) {
+      setStatus("Este e-mail já tem uma conta. Entre ou use “Esqueci a senha” para definir uma nova.");
+      return;
+    }
     setStatus(creatingAccount
-      ? `Não foi possível criar a conta: ${errorMessage(error)}`
-      : `Não foi possível entrar: ${errorMessage(error)}`);
+      ? `Não foi possível criar a conta: ${message}`
+      : `Não foi possível entrar: ${message}`);
   } finally {
     submitButton.disabled = false;
   }

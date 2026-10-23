@@ -3,9 +3,12 @@ import {
   deleteAccount,
   errorMessage,
   getCurrentUser,
+  importDisplayNameFromProvider,
   loadAccountSettings,
+  loadDisplayName,
   removeAlertRule,
   removePushSubscription,
+  saveDisplayName,
   savePreferences,
   savePushSubscription,
   setNotificationsPaused,
@@ -22,6 +25,8 @@ const email = document.querySelector<HTMLElement>("#account-email")!;
 const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
 const signOutButton = document.querySelector<HTMLButtonElement>("#sign-out")!;
 const deleteAccountButton = document.querySelector<HTMLButtonElement>("#delete-account")!;
+const displayNameInput = document.querySelector<HTMLInputElement>("#display-name-input");
+const displayNameSaveButton = document.querySelector<HTMLButtonElement>("#display-name-save");
 const favoritesForm = document.querySelector<HTMLFormElement>("#favorite-preferences");
 const alertForm = document.querySelector<HTMLFormElement>("#alert-rule-form");
 const favoriteStores = document.querySelector<HTMLFieldSetElement>("#favorite-stores");
@@ -80,6 +85,37 @@ function decodeApplicationServerKey(value: string): Uint8Array<ArrayBuffer> {
   const bytes = new Uint8Array(new ArrayBuffer(binary.length));
   for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
   return bytes;
+}
+
+function keysEqual(a: BufferSource | null | undefined, b: Uint8Array): boolean {
+  if (!a) return false;
+  const left = a instanceof Uint8Array ? a : new Uint8Array(ArrayBuffer.isView(a) ? (a as Uint8Array).buffer.slice((a as Uint8Array).byteOffset, (a as Uint8Array).byteOffset + (a as Uint8Array).byteLength) : a as ArrayBuffer);
+  if (left.byteLength !== b.byteLength) return false;
+  return left.every((byte, index) => byte === b[index]);
+}
+
+/**
+ * Reuses a subscription only when it was created with our current VAPID key.
+ * Stale/broken subscriptions make Chrome fail with "Push Service Error".
+ * On a subscribe failure, drops the old one and retries once.
+ */
+async function ensurePushSubscription(
+  registration: ServiceWorkerRegistration,
+  serverKey: Uint8Array<ArrayBuffer>,
+): Promise<PushSubscription> {
+  const existing = await registration.pushManager.getSubscription();
+  if (existing) {
+    if (keysEqual(existing.options.applicationServerKey, serverKey)) return existing;
+    await existing.unsubscribe().catch(() => false);
+  }
+  try {
+    return await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey });
+  } catch (error) {
+    console.warn("Push subscribe failed, retrying with a clean subscription.", error);
+    const stale = await registration.pushManager.getSubscription();
+    if (stale) await stale.unsubscribe().catch(() => false);
+    return await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: serverKey });
+  }
 }
 
 function updatePushControls(): void {
@@ -416,10 +452,8 @@ enablePushButton?.addEventListener("click", async () => {
     if (!readyRegistration.active) {
       throw new Error("O serviço de notificações do site ainda não ficou pronto. Recarregue a página e tente novamente.");
     }
-    const subscription = await readyRegistration.pushManager.getSubscription() ?? await readyRegistration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: decodeApplicationServerKey(vapidPublicKey),
-    });
+    const serverKey = decodeApplicationServerKey(vapidPublicKey);
+    const subscription = await ensurePushSubscription(readyRegistration, serverKey);
     try {
       await savePushSubscription(userId, subscription);
     } catch (error) {
@@ -466,6 +500,25 @@ disablePushButton?.addEventListener("click", async () => {
   }
 });
 
+displayNameSaveButton?.addEventListener("click", async () => {
+  const value = displayNameInput?.value.trim() ?? "";
+  if (value.length < 2) {
+    setStatus("Informe como gostaria de ser chamado (mínimo de 2 letras).");
+    displayNameInput?.focus();
+    return;
+  }
+  displayNameSaveButton.disabled = true;
+  try {
+    const saved = await saveDisplayName(userId, value);
+    if (displayNameInput) displayNameInput.value = saved;
+    setStatus("Nome salvo. Ele aparece no topo do site e nos alertas.");
+  } catch (error) {
+    setStatus(`Não foi possível salvar o nome: ${errorMessage(error)}`);
+  } finally {
+    displayNameSaveButton.disabled = false;
+  }
+});
+
 void getCurrentUser()
   .then(async (user) => {
     if (!user) {
@@ -477,13 +530,19 @@ void getCurrentUser()
     await refreshAvatar().catch((error: unknown) => {
       console.warn("Could not load the profile avatar.", error);
     });
-    const [settings, response] = await Promise.all([
+    const [settings, response, savedName] = await Promise.all([
       loadAccountSettings(user.id),
       fetch("offers.json").then(async (result) => {
         if (!result.ok) throw new Error("Não foi possível carregar as opções de ofertas.");
         return await result.json() as OfferFeed;
       }),
+      loadDisplayName(user.id).catch(() => null),
     ]);
+    let displayName = settings.displayName ?? savedName;
+    if (!displayName) {
+      displayName = await importDisplayNameFromProvider(user.id).catch(() => null);
+    }
+    if (displayNameInput && displayName) displayNameInput.value = displayName;
     preferences = settings.preferences;
     if (pendingTheme) preferences.theme = pendingTheme;
     applyTheme(preferences.theme);

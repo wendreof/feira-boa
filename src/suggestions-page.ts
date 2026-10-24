@@ -7,7 +7,7 @@ import {
   submitSuggestion,
   SUGGESTION_GUARD_MESSAGES,
   type SuggestionCategory,
-} from "./suggestions";
+} from "../suggestions";
 
 bindThemeToggle();
 

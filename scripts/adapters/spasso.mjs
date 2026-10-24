@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { fetchWithRetry, parseDateRange } from "./common.mjs";
+import { fetchWithRetry } from "./http.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";

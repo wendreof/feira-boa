@@ -6,7 +6,7 @@ import { extractSempreVale } from "./adapters/semprevale.mjs";
 import { extractPagueMenos } from "./adapters/paguemenos.mjs";
 import { extractSpasso } from "./adapters/spasso.mjs";
 import { extractCorso } from "./adapters/corso.mjs";
-import { validateSnapshot } from "./adapters/common.mjs";
+import { validateSnapshot } from "./domain/validation.mjs";
 
 const STATE_DIR = new URL("../state/", import.meta.url);
 await mkdir(STATE_DIR, { recursive: true });

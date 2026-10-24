@@ -1,4 +1,9 @@
-import { assignIcon, classifyProduct, fetchWithRetry, normalizeOfferPresentation, slug, validateOffer } from "./common.mjs";
+import { foldText } from "../../src/shared/text.mjs";
+import { classifyProduct } from "../domain/taxonomy.mjs";
+import { fetchWithRetry } from "./http.mjs";
+import { normalizeOfferPresentation } from "../domain/presentation.mjs";
+import { validateOffer } from "../domain/validation.mjs";
+import { createOffer } from "./offer-factory.mjs";
 
 const PAGUE_MENOS_URL = "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0";
 const PAGUE_MENOS_API_URL = "https://www.superpaguemenos.com.br/api/catalog_system/pub/products/search";
@@ -26,7 +31,7 @@ const CATEGORY_MAP = new Map([
 ]);
 
 function normalizeCategory(value) {
-  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  return foldText(value).trim();
 }
 
 export function getWeekValidity(now = new Date()) {
@@ -96,29 +101,23 @@ export function buildPagueMenosOffer(product, { pageUrl = PAGUE_MENOS_URL, valid
   const storeCategory = storeCategoryPath(product?.categories?.[0]);
   const taxonomy = classifyProduct(nameOnly, brand, category, storeCategory);
 
-  const offer = {
-    id: `paguemenos-${slug(`${nameOnly}-${brand}-${detail}-${validity.from}`)}`,
-    store: "Pague Menos",
-    storeLogo: STORE_LOGO,
-    branch: STORE_BRANCH,
-    name: nameOnly,
-    brand,
-    detail,
-    category: taxonomy.department,
-    department: taxonomy.department,
-    productType: taxonomy.productType,
-    productTypes: taxonomy.productTypes,
-    storeCategory,
-    price: roundPrice(price),
-    previousPrice,
-    icon: assignIcon(nameOnly, taxonomy.productType, taxonomy.department),
-    tone: "#edf4e9",
-    note: "Preço online oficial; pode variar na loja física",
-    validFrom: validity.from,
-    validTo: validity.to,
-    source: STORE_SOURCE,
+  const offer = createOffer({
+    storeId: "paguemenos",
+    idKey: `${nameOnly}-${brand}-${detail}-${validity.from}`,
+    store: { name: "Pague Menos", logo: STORE_LOGO, branch: STORE_BRANCH, source: STORE_SOURCE },
     sourceUrl: pageUrl,
-  };
+    product: {
+      name: nameOnly,
+      brand,
+      detail,
+      storeCategory,
+      price: roundPrice(price),
+      previousPrice,
+      note: "Preço online oficial; pode variar na loja física",
+    },
+    validity,
+    taxonomy,
+  });
 
   return validateOffer(offer) ? offer : null;
 }

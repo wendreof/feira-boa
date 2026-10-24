@@ -1,6 +1,16 @@
-import { assignIcon, classifyProduct, fetchWithRetry, slug, validateOffer } from "./common.mjs";
+import { readFileSync } from "node:fs";
+import { classifyProduct } from "../domain/taxonomy.mjs";
+import { createOffer } from "./offer-factory.mjs";
+import { fetchWithRetry } from "./http.mjs";
+import { validateOffer } from "../domain/validation.mjs";
 
 const CORSO_URL = "https://corso.com.br/jornalfrente.php";
+const CORSO_STORE = {
+  name: "Supermercado Corso",
+  logo: "https://corso.com.br/img/logo.png",
+  branch: "Rua Eduardo Lopes Castilho, 495 · São João",
+  source: "Folheto oficial · São João da Boa Vista",
+};
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 // Manual transcription of the official flyer images (img/jornal-frente.jpg and
@@ -8,150 +18,7 @@ const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 // it rotates, re-read both images and update the campaigns below. Sections keep
 // their own validity because the flyer mixes windows (weekend, week, and
 // long-running promo blocks).
-const CAMPAIGNS = [
-  {
-    // "Fim de Semana Verde" — front page.
-    from: "2026-10-23",
-    to: "2026-10-24",
-    offers: [
-      { name: "Alface", brand: "", detail: "Unidade", cat: "Hortifruti", price: 4.18, oldPrice: 5.18 },
-      { name: "Brócolis Japonês", brand: "", detail: "Unidade", cat: "Hortifruti", price: 5.28, oldPrice: 6.38 },
-      { name: "Repolho Verde", brand: "", detail: "Kg", cat: "Hortifruti", price: 1.48, oldPrice: 1.98 },
-      { name: "Alho Graúdo a Granel", brand: "", detail: "100g", cat: "Hortifruti", price: 2.39, oldPrice: 2.59 },
-      { name: "Batata Escovada", brand: "", detail: "Kg", cat: "Hortifruti", price: 3.78, oldPrice: 4.68 },
-      { name: "Batata Lavada", brand: "", detail: "Kg", cat: "Hortifruti", price: 3.98, oldPrice: 4.88 },
-      { name: "Beterraba", brand: "", detail: "Kg", cat: "Hortifruti", price: 2.38, oldPrice: 2.88 },
-      { name: "Cebola", brand: "", detail: "Kg", cat: "Hortifruti", price: 5.48, oldPrice: 6.58 },
-      { name: "Cenoura", brand: "", detail: "Kg", cat: "Hortifruti", price: 3.58, oldPrice: 4.28 },
-      { name: "Chuchu", brand: "", detail: "Kg", cat: "Hortifruti", price: 2.98, oldPrice: 3.58 },
-      { name: "Tomate", brand: "", detail: "Kg", cat: "Hortifruti", price: 9.98, oldPrice: 11.98 },
-      { name: "Tomate Grape", brand: "", detail: "300g", cat: "Hortifruti", price: 3.78, oldPrice: 4.78 },
-      { name: "Abacate", brand: "", detail: "Kg", cat: "Hortifruti", price: 4.88, oldPrice: 5.68 },
-      { name: "Abacaxi", brand: "", detail: "Unidade", cat: "Hortifruti", price: 7.98, oldPrice: 9.98 },
-      { name: "Banana Nanica", brand: "", detail: "Kg", cat: "Hortifruti", price: 3.48, oldPrice: 4.58 },
-      { name: "Banana Prata", brand: "", detail: "Kg", cat: "Hortifruti", price: 6.38, oldPrice: 8.58 },
-      { name: "Laranja a Granel", brand: "", detail: "Kg", cat: "Hortifruti", price: 2.38, oldPrice: 2.88 },
-      { name: "Limão Taiti", brand: "", detail: "Kg", cat: "Hortifruti", price: 10.78, oldPrice: 12.98 },
-      { name: "Maçã Gala", brand: "", detail: "Kg", cat: "Hortifruti", price: 7.88, oldPrice: 9.88 },
-      { name: "Mamão Formosa", brand: "", detail: "Kg", cat: "Hortifruti", price: 4.18, oldPrice: 5.18 },
-      { name: "Mamão Papaya", brand: "", detail: "Unidade", cat: "Hortifruti", price: 4.78, oldPrice: 5.78 },
-      { name: "Manga", brand: "", detail: "Kg", cat: "Hortifruti", price: 4.98, oldPrice: 6.38 },
-      { name: "Melancia", brand: "", detail: "Kg", cat: "Hortifruti", price: 2.98, oldPrice: 3.68 },
-      { name: "Morango Bandeja", brand: "", detail: "250g", cat: "Hortifruti", price: 7.98, oldPrice: 9.98 },
-      { name: "Uva Bandeja", brand: "", detail: "500g", cat: "Hortifruti", price: 8.78, oldPrice: 10.58 },
-      { name: "Bebida Láctea com Polpa", brand: "Argenzio", detail: "1L", cat: "Laticínios", price: 5.58, oldPrice: null },
-      { name: "Cobertura Cremosa Sabor Requeijão", brand: "Sul Minas", detail: "200g", cat: "Laticínios", price: 5.18, oldPrice: null },
-      { name: "Suan Suíno", brand: "Frinni", detail: "Kg", cat: "Carnes", price: 9.98, oldPrice: null },
-      { name: "Rabada Bovina Congelada", brand: "", detail: "Kg", cat: "Carnes", price: 42.90, oldPrice: null },
-      { name: "Carne Moída Congelada", brand: "Brasa", detail: "500g", cat: "Carnes", price: 17.98, oldPrice: null },
-      { name: "Lagarto Bovino Fatiado Congelado", brand: "", detail: "Kg", cat: "Carnes", price: 40.90, oldPrice: null },
-      { name: "Cupim Bovino Peça/Pedaço", brand: "", detail: "Kg", cat: "Carnes", price: 42.90, oldPrice: null },
-      { name: "Língua Bovina Congelada", brand: "", detail: "Kg", cat: "Carnes", price: 17.90, oldPrice: null },
-      { name: "Coxa e Sobrecoxa de Frango Congelada", brand: "Nutribem", detail: "Kg", cat: "Carnes", price: 9.28, oldPrice: null },
-      { name: "Frango Congelado", brand: "Nutribem", detail: "Kg", cat: "Carnes", price: 9.18, oldPrice: null },
-      { name: "Frango a Passarinho Temperado Congelado", brand: "Nutribem", detail: "1Kg", cat: "Carnes", price: 10.38, oldPrice: null },
-      { name: "Peito de Frango com Osso Congelado", brand: "Nutribem", detail: "Kg", cat: "Carnes", price: 12.48, oldPrice: null },
-      { name: "Peito de Frango sem Osso Congelado", brand: "Gonzalez", detail: "Kg", cat: "Carnes", price: 18.48, oldPrice: null },
-      { name: "Filézinho Sassami IQF Congelado", brand: "Aurora", detail: "1Kg", cat: "Congelados", price: 19.98, oldPrice: null },
-      { name: "Sobrecoxa de Frango IQF Congelada", brand: "Seara", detail: "1Kg", cat: "Congelados", price: 15.28, oldPrice: null },
-      { name: "Coxinha da Asa de Frango IQF Congelada", brand: "Seara", detail: "1Kg", cat: "Congelados", price: 15.68, oldPrice: null },
-      { name: "Steak de Frango Congelado", brand: "Seara", detail: "100g", cat: "Congelados", price: 2.28, oldPrice: null },
-      { name: "Hambúrguer Misto Congelado", brand: "Brasa", detail: "56g", cat: "Congelados", price: 1.38, oldPrice: null },
-      { name: "Linguiça Calabresa Resfriada", brand: "Brasa", detail: "Kg", cat: "Carnes", price: 24.40, oldPrice: null },
-      { name: "Linguiça de Pernil Fina Resfriada", brand: "Suíba", detail: "Kg", cat: "Carnes", price: 25.80, oldPrice: null },
-      { name: "Linguiça de Frango Congelada", brand: "Gonzalez", detail: "1Kg", cat: "Carnes", price: 13.30, oldPrice: null },
-      { name: "Linguiça Toscana Congelada", brand: "Aurora", detail: "700g", cat: "Carnes", price: 17.50, oldPrice: null },
-      { name: "Ervilha Congelada", brand: "Seara", detail: "300g", cat: "Congelados", price: 6.28, oldPrice: null },
-      { name: "Lasanha Congelada", brand: "Flip", detail: "600g", cat: "Congelados", price: 9.38, oldPrice: null },
-      { name: "Massa para Pastel Disco", brand: "S&A", detail: "500g", cat: "Congelados", price: 8.58, oldPrice: null },
-    ],
-  },
-  {
-    // "Promoção Imbatível" — back page, long-running block.
-    from: "2026-10-23",
-    to: "2026-10-29",
-    offers: [
-      { name: "Arroz Tipo 1", brand: "Albarus", detail: "5kg", cat: "Mercearia", price: 26.88, oldPrice: null },
-      { name: "Arroz Tipo 1", brand: "Du Dé", detail: "5kg", cat: "Mercearia", price: 18.98, oldPrice: null },
-      { name: "Sabão em Pó Lavagem Perf.", brand: "OMO", detail: "800g", cat: "Limpeza", price: 10.98, oldPrice: null },
-      { name: "Sabão em Pó Triplação", brand: "Assim", detail: "800g", cat: "Limpeza", price: 6.78, oldPrice: null },
-      { name: "Café Almofada", brand: "Pacaembu", detail: "500g", cat: "Mercearia", price: 17.98, oldPrice: null },
-      { name: "Leite Longa Vida Integral", brand: "Tirol", detail: "1L", cat: "Laticínios", price: 4.88, oldPrice: null },
-      { name: "Leite Condensado TP", brand: "Cemil", detail: "395g", cat: "Laticínios", price: 5.98, oldPrice: null },
-      { name: "Creme de Leite TP", brand: "Quatá", detail: "200g", cat: "Laticínios", price: 2.68, oldPrice: null },
-      { name: "Molho de Tomate Tradicional Sachê", brand: "Predilecta", detail: "300g", cat: "Mercearia", price: 1.28, oldPrice: null },
-      { name: "Óleo de Soja Pet", brand: "Vitaliv", detail: "900ml", cat: "Mercearia", price: 6.98, oldPrice: null },
-      { name: "Feijão Carioca", brand: "Du Dé", detail: "1Kg", cat: "Mercearia", price: 6.78, oldPrice: null },
-      { name: "Açúcar Cristal", brand: "Purinha", detail: "2Kg", cat: "Mercearia", price: 5.58, oldPrice: null },
-      { name: "Biscoito Maizena", brand: "Triunfo", detail: "345g", cat: "Mercearia", price: 3.98, oldPrice: null },
-      { name: "Detergente Clear", brand: "Ypê", detail: "500ml", cat: "Limpeza", price: 2.18, oldPrice: null },
-      { name: "Refrigerante Coca-Cola Tradicional Pet", brand: "Coca-Cola", detail: "2,5L", cat: "Bebidas", price: 8.68, oldPrice: null },
-    ],
-  },
-  {
-    // Main back-page grid.
-    from: "2026-10-23",
-    to: "2026-10-26",
-    offers: [
-      { name: "Óleo Composto Pet", brand: "Olinda", detail: "500ml", cat: "Mercearia", price: 11.78, oldPrice: null },
-      { name: "Massa para Tapioca", brand: "Amafil", detail: "500g", cat: "Mercearia", price: 4.78, oldPrice: null },
-      { name: "Farofa Mandioca Tradicional", brand: "Yoki", detail: "400g", cat: "Mercearia", price: 5.98, oldPrice: null },
-      { name: "Farinha de Milho", brand: "Jimbelê", detail: "400g", cat: "Mercearia", price: 3.38, oldPrice: null },
-      { name: "Pipoca Gold", brand: "Kinino", detail: "400g", cat: "Mercearia", price: 4.18, oldPrice: null },
-      { name: "Atum Ralado", brand: "Gomes da Costa", detail: "170g", cat: "Mercearia", price: 8.78, oldPrice: null },
-      { name: "Sardinha em Óleo", brand: "Gomes da Costa", detail: "125g", cat: "Mercearia", price: 6.24, oldPrice: null },
-      { name: "Azeitona Verde Fatiada Sachet", brand: "Diza", detail: "100g", cat: "Mercearia", price: 5.58, oldPrice: null },
-      { name: "Ervilha Sachet", brand: "Fugini", detail: "170g", cat: "Mercearia", price: 3.10, oldPrice: null },
-      { name: "Milho Verde Sachet", brand: "Fugini", detail: "170g", cat: "Mercearia", price: 3.28, oldPrice: null },
-      { name: "Macarrão Instantâneo", brand: "Renata", detail: "85g", cat: "Mercearia", price: 1.58, oldPrice: null },
-      { name: "Lasanha Direto ao Forno", brand: "Petybon", detail: "200g", cat: "Congelados", price: 3.68, oldPrice: null },
-      { name: "Salgadinho Doritos/Cheetos", brand: "", detail: "120g/160g", cat: "Mercearia", price: 10.68, oldPrice: null },
-      { name: "Biscoito Recheado", brand: "Bauducco", detail: "140g", cat: "Mercearia", price: 2.78, oldPrice: null },
-      { name: "Biscoito Tuc's Sabores", brand: "Tuc's", detail: "100g", cat: "Mercearia", price: 1.88, oldPrice: null },
-      { name: "Gelatina Sabores", brand: "Kinino", detail: "20g", cat: "Mercearia", price: 0.99, oldPrice: null },
-      { name: "Leite de Coco", brand: "Menina", detail: "200ml", cat: "Mercearia", price: 3.78, oldPrice: null },
-      { name: "Achocolatado Sachet", brand: "Apti", detail: "300g", cat: "Mercearia", price: 5.15, oldPrice: null },
-      { name: "Bebida Láctea Chocolate", brand: "Mocoquinha", detail: "200ml", cat: "Laticínios", price: 1.24, oldPrice: null },
-      { name: "Pão Francês", brand: "", detail: "Kg", cat: "Padaria", price: 14.98, oldPrice: null },
-      { name: "Pão de Forma Tradicional", brand: "Visconti", detail: "400g", cat: "Padaria", price: 5.18, oldPrice: null },
-      { name: "Torrada Tradicional", brand: "Adria", detail: "142g", cat: "Padaria", price: 4.18, oldPrice: null },
-      { name: "Manteiga Extra", brand: "Argenzio", detail: "200g", cat: "Laticínios", price: 9.28, oldPrice: null },
-      { name: "Pão de Queijo Tradicional Congelado", brand: "Tati Minas", detail: "400g", cat: "Congelados", price: 7.78, oldPrice: null },
-      { name: "Água Mineral com Gás", brand: "Crystal", detail: "500ml", cat: "Bebidas", price: 1.88, oldPrice: null },
-      { name: "Suco de Frutas Sabores", brand: "Dafruta", detail: "1L", cat: "Bebidas", price: 4.98, oldPrice: null },
-      { name: "Suco Caju", brand: "Maguary", detail: "500ml", cat: "Bebidas", price: 4.38, oldPrice: null },
-      { name: "Refrigerante Guaraná Pet", brand: "Cruzeiro", detail: "2L", cat: "Bebidas", price: 5.18, oldPrice: null },
-      { name: "Absorvente Total Protect Cobertura Suave c/ Abas", brand: "Sym", detail: "8 unidades", cat: "Higiene", price: 3.98, oldPrice: null },
-      { name: "Toalha Umedecida", brand: "Tropolino", detail: "Leve 120un e Pague 100un", cat: "Higiene", price: 9.98, oldPrice: null },
-      { name: "Hastes Flexíveis", brand: "Cottonbaby", detail: "75un", cat: "Higiene", price: 2.48, oldPrice: null },
-      { name: "Escova Classic Clean Macia", brand: "Colgate", detail: "Leve 3un Pague 2un", cat: "Higiene", price: 11.90, oldPrice: null },
-      { name: "Sabonete", brand: "Farnese", detail: "180g", cat: "Higiene", price: 4.10, oldPrice: null },
-      { name: "Sabonete em Barra", brand: "Albany", detail: "85g", cat: "Higiene", price: 1.78, oldPrice: null },
-      { name: "Shampoo", brand: "Pantene", detail: "175ml / 200ml", cat: "Higiene", price: 14.98, oldPrice: null },
-      { name: "Shampoo", brand: "Elseve", detail: "200ml · Exceto Zero-Caspa", cat: "Higiene", price: 16.98, oldPrice: null },
-      { name: "Shampoo Botanhico", brand: "Tok", detail: "400ml", cat: "Higiene", price: 6.18, oldPrice: null },
-      { name: "Desodorante Aero", brand: "Bozzano / Monange", detail: "150ml", cat: "Higiene", price: 8.90, oldPrice: null },
-      { name: "Papel Higiênico Branco", brand: "Paloma", detail: "c/ 8un", cat: "Limpeza", price: 7.96, oldPrice: null },
-      { name: "Papel Higiênico Folha Dupla Absolute 30m", brand: "Fofinho", detail: "Leve 12un Pague 11un", cat: "Limpeza", price: 18.90, oldPrice: null },
-      { name: "Tira Manchas Gel Refil", brand: "Vanish", detail: "500ml", cat: "Limpeza", price: 9.98, oldPrice: null },
-      { name: "Amaciante de Roupas", brand: "Triex", detail: "2L", cat: "Limpeza", price: 6.28, oldPrice: null },
-      { name: "Água Sanitária", brand: "Triex", detail: "2L", cat: "Limpeza", price: 5.58, oldPrice: null },
-      { name: "Alvejante Multi-Uso", brand: "Triex", detail: "2L", cat: "Limpeza", price: 11.68, oldPrice: null },
-      { name: "Limpador Multi-Uso", brand: "Triex", detail: "500ml", cat: "Limpeza", price: 3.08, oldPrice: null },
-      { name: "Desinfetante", brand: "Candura", detail: "2L", cat: "Limpeza", price: 5.48, oldPrice: null },
-      { name: "Inseticida Multi Aero", brand: "SBP", detail: "450ml", cat: "Limpeza", price: 20.68, oldPrice: null },
-      { name: "Lã de Aço", brand: "Bombril", detail: "45g", cat: "Limpeza", price: 2.68, oldPrice: null },
-      { name: "Saco p/ Lixo", brand: "Fortão", detail: "10x50L / 5x100L", cat: "Limpeza", price: 6.58, oldPrice: null },
-      { name: "Toalha de Papel Branca", brand: "Maxim", detail: "2 unidades", cat: "Limpeza", price: 5.28, oldPrice: null },
-      { name: "Guardanapo Branco 23x22cm", brand: "Maxim", detail: "c/ 50un", cat: "Limpeza", price: 1.98, oldPrice: null },
-      { name: "Filtro de Papel 103", brand: "Pacaembu", detail: "c/ 30un", cat: "Casa", price: 4.18, oldPrice: null },
-      { name: "Filme de PVC", brand: "Wyda", detail: "28cm x 15m", cat: "Casa", price: 6.58, oldPrice: null },
-      { name: "Copo Americano", brand: "", detail: "190ml", cat: "Casa", price: 1.38, oldPrice: null },
-      { name: "Ração para Cães Original Adultos", brand: "Yuppie", detail: "2Kg", cat: "Pet", price: 18.90, oldPrice: null },
-      { name: "Ração para Gatos Peixe Adultos", brand: "Yuppie", detail: "1Kg", cat: "Pet", price: 12.90, oldPrice: null },
-    ],
-  },
-];
+const CAMPAIGNS = JSON.parse(readFileSync(new URL("./data/corso-campaigns.json", import.meta.url), "utf8"));
 
 export async function extractCorso(customUrl = null) {
   const pageUrl = customUrl || CORSO_URL;
@@ -173,31 +40,22 @@ export async function extractCorso(customUrl = null) {
 
     for (const item of campaign.offers) {
       const taxonomy = classifyProduct(item.name, item.brand, item.cat, item.cat);
-      const icon = assignIcon(item.name, taxonomy.productType, taxonomy.department);
-
-      const offer = {
-        id: `corso-${slug(`${item.name}-${item.brand}-${item.detail}-${campaign.from}`)}`,
-        store: "Supermercado Corso",
-        storeLogo: "https://corso.com.br/img/logo.png",
-        branch: "Rua Eduardo Lopes Castilho, 495 · São João",
-        name: item.name,
-        brand: item.brand,
-        detail: item.detail,
-        category: taxonomy.department,
-        department: taxonomy.department,
-        productType: taxonomy.productType,
-        productTypes: taxonomy.productTypes,
-        storeCategory: item.cat,
-        price: item.price,
-        previousPrice: item.oldPrice,
-        icon,
-        tone: "#edf4e9",
-        note: "",
-        validFrom: campaign.from,
-        validTo: campaign.to,
-        source: "Folheto oficial · São João da Boa Vista",
+      const offer = createOffer({
+        storeId: "corso",
+        idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from}`,
+        store: CORSO_STORE,
         sourceUrl: pageUrl,
-      };
+        product: {
+          name: item.name,
+          brand: item.brand,
+          detail: item.detail,
+          storeCategory: item.cat,
+          price: item.price,
+          previousPrice: item.oldPrice,
+        },
+        validity: { from: campaign.from, to: campaign.to },
+        taxonomy,
+      });
 
       if (validateOffer(offer)) {
         offers.push(offer);
@@ -208,10 +66,10 @@ export async function extractCorso(customUrl = null) {
   return {
     storeId: "corso",
     store: {
-      name: "Supermercado Corso",
-      branch: "Rua Eduardo Lopes Castilho, 495 · São João",
-      logo: "https://corso.com.br/img/logo.png",
-      source: "Folheto oficial · São João da Boa Vista",
+      name: CORSO_STORE.name,
+      branch: CORSO_STORE.branch,
+      logo: CORSO_STORE.logo,
+      source: CORSO_STORE.source,
       sourceUrl: pageUrl,
       from: validFrom,
       to: validTo,

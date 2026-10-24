@@ -4,6 +4,7 @@ import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { assignIcon, classifyProduct, normalizeOfferPresentation } from "./adapters/common.mjs";
+import { presentationViolations } from "./offer-name-guard.mjs";
 import { sectorViolations } from "./offer-sector-guard.mjs";
 import { resolveCategory } from "../catalog-taxonomy.mjs";
 
@@ -94,11 +95,18 @@ if (missingSnapshotStores.length > 0) {
 }
 
 const stores = [...storeMap.values()];
-const offers = allOffers;
+const offers = [];
 const offersUpdatedAt = latestSnapshotDate;
+const droppedOffers = [];
 
-for (const offer of offers) {
+for (const offer of allOffers) {
   Object.assign(offer, normalizeOfferPresentation(offer));
+  if (!offer.name) {
+    // Fragmento de preço sem produto (ex.: "NESTA EMBALAGEM A UNIDADE SAI POR:"):
+    // a limpeza de apresentação esvaziou o nome, então a oferta não existe.
+    droppedOffers.push(offer.id);
+    continue;
+  }
   if (snapshotOfferIds.has(offer.id)) {
     // Snapshots keep the icon captured at ingest time; refresh it so rule changes apply without re-ingesting.
     offer.icon = assignIcon(offer.name, offer.productType, offer.department);
@@ -111,6 +119,10 @@ for (const offer of offers) {
   offer.productType = taxonomy.productType;
   offer.productTypes = taxonomy.productTypes;
   offer.icon = assignIcon(offer.name, taxonomy.productType, taxonomy.department);
+  offers.push(offer);
+}
+if (droppedOffers.length > 0) {
+  console.warn(`Dropped ${droppedOffers.length} offer(s) with no product name left after cleaning: ${droppedOffers.join(", ")}`);
 }
 
 const ids = new Set();
@@ -122,6 +134,7 @@ for (const store of stores) {
 }
 if (storeUrls.size !== stores.length) throw new Error("Duplicate store source URL in offer catalog.");
 const sectorProblems = [];
+const presentationProblems = [];
 for (const offer of offers) {
   if (!offer.id || ids.has(offer.id)) throw new Error(`Missing or duplicate offer ID: ${offer.id}`);
   if (!offer.name || !offer.store || !offer.detail || !offer.productType || !Array.isArray(offer.productTypes) || !offer.productTypes.includes(offer.productType)) {
@@ -137,10 +150,14 @@ for (const offer of offers) {
   const sector = resolveCategory(offer);
   const text = `${offer.name} ${offer.brand ?? ""}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   sectorProblems.push(...sectorViolations(offer.name, offer.brand ?? "", sector.groupId, text));
+  presentationProblems.push(...presentationViolations(offer));
   ids.add(offer.id);
 }
 if (sectorProblems.length > 0) {
   throw new Error(`Offers are in the wrong sector:\n- ${sectorProblems.slice(0, 20).join("\n- ")}`);
+}
+if (presentationProblems.length > 0) {
+  throw new Error(`Offers carry flyer text in the published fields — extend scripts/adapters/common.mjs cleaning:\n- ${presentationProblems.slice(0, 20).join("\n- ")}`);
 }
 
 const feed = { schemaVersion: 1, updatedAt: offersUpdatedAt, stores, offers };

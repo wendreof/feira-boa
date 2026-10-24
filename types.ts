@@ -26,6 +26,7 @@ export interface Offer {
   icon: string;
   tone: string;
   note: string;
+  notice?: string;
   validFrom: string;
   validTo: string;
   source: string;

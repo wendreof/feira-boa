@@ -193,12 +193,84 @@ const BRAND_ALIASES = [
   ["Duracell", ["DURACELL"]],
   ["Ourolux", ["OUROLUX"]],
   ["Jacaré", ["JACARÉ", "JACARE"]],
-  ["Bauducco", ["BADUCCO"]],
+  ["Bauducco", ["BADUCCO", "BAUDUCCO"]],
   ["Pedigree", ["PEDIGREE"]],
   ["Whiskas", ["WHISKAS"]],
+  ["Pedigree / Whiskas", ["PEDIGREE/ WHISKAS", "PEDIGREE / WHISKAS"]],
   ["Snow Flakes", ["SNOW FLAKES"]],
   ["Pururuca", ["PURURUCA"]],
   ["Guaraná Antarctica", ["GUARANÁ ANTARCTICA"]],
+  ["Dove", ["DOVE"]],
+  ["Nivea", ["NIVEA"]],
+  ["Monster Energy", ["MONSTER ENERGY", "MONSTER"]],
+  ["Bioleve", ["BIOLEVE"]],
+  ["Wickbold", ["WICKBOLD"]],
+  ["Piracanjuba", ["PIRACANJUBA"]],
+  ["Hellmann's", ["HELLMANN'S", "HELLMANNS"]],
+  ["Serrazul", ["SERRAZUL"]],
+  ["Havaianas", ["HAVAIANAS"]],
+  ["Heineken", ["HEINEKEN"]],
+  ["Cif", ["CIF"]],
+  ["Pringles", ["PRINGLES"]],
+  // Marcas nacionais de supermercado — cobertura ampla para o próximo folheto.
+  ["Sadia", ["SADIA"]],
+  ["BRF", ["BRF"]],
+  ["Swift", ["SWIFT"]],
+  ["Minerva", ["MINERVA"]],
+  ["Danone", ["DANONE"]],
+  ["Batavo", ["BATAVO"]],
+  ["Parmalate", ["PARMALATE"]],
+  ["Moça", ["MOÇA", "MOCA"]],
+  ["Ninho", ["NINHO"]],
+  ["Tang", ["TANG"]],
+  ["Nissin", ["NISSIN"]],
+  ["Toddy", ["TODDY"]],
+  ["Lacta", ["LACTA"]],
+  ["Fugini", ["FUGINI"]],
+  ["Quero", ["QUERO"]],
+  ["Knorr", ["KNORR"]],
+  ["Barilla", ["BARILLA"]],
+  ["Tio João", ["TIO JOAO", "TIO JOÃO"]],
+  ["Camil", ["CAMIL"]],
+  ["Marilan", ["MARILAN"]],
+  ["Soya", ["SOYA"]],
+  ["Liza", ["LIZA"]],
+  ["Elma Chips", ["ELMA CHIPS"]],
+  ["Doritos", ["DORITOS"]],
+  ["Cheetos", ["CHEETOS"]],
+  ["Kit Kat", ["KIT KAT", "KITKAT"]],
+  ["Raid", ["RAID"]],
+  ["Bombril", ["BOMBRIL"]],
+  ["Comfort", ["COMFORT"]],
+  ["Oral-B", ["ORAL B", "ORAL-B"]],
+  ["Phebo", ["PHEBO"]],
+  ["Granado", ["GRANADO"]],
+  ["Natura", ["NATURA"]],
+  ["O Boticário", ["O BOTICARIO", "BOTICARIO"]],
+  ["Huggies", ["HUGGIES"]],
+  ["Pampers", ["PAMPERS"]],
+  ["Golden", ["GOLDEN"]],
+  ["Premier", ["PREMIER"]],
+  ["Neko", ["NEKO"]],
+  ["Skol", ["SKOL"]],
+  ["Brahma", ["BRAHMA"]],
+  ["Stella Artois", ["STELLA ARTOIS"]],
+  ["Amstel", ["AMSTEL"]],
+  ["Bohemia", ["BOHEMIA"]],
+  ["Antarctica", ["ANTARCTICA"]],
+  ["Pepsi", ["PEPSI"]],
+  ["Fanta", ["FANTA"]],
+  ["Sprite", ["SPRITE"]],
+  ["Kuat", ["KUAT"]],
+  ["Red Bull", ["RED BULL"]],
+  ["Gatorade", ["GATORADE"]],
+  ["Powerade", ["POWERADE"]],
+  ["Crystal", ["CRYSTAL"]],
+  ["Minalba", ["MINALBA"]],
+  ["Bonafont", ["BONAFONT"]],
+  ["Indaiá", ["INDAIA", "INDAÍA"]],
+  ["Chilano", ["CHILANO"]],
+  ["Cup Noodles", ["CUP NOODLES"]],
 ];
 
 const ACCENT_CLASSES = {
@@ -282,29 +354,53 @@ function findBrandMatches(name, aliases) {
   return selected;
 }
 
+/**
+ * Títulos de seção do folheto (ex.: "LIMPEZA E PERFUMARIA BAZAR") que o PDF
+ * gruda na frente do primeiro produto da seção. Só saem como prefixo e só
+ * quando sobra produto depois do título.
+ */
+const SECTION_HEADER_PATTERN = /^(?:bebidas|mercearias|mercearia|a[cç]ougue(?:\s+e\s+peixaria)?|limpeza e perfumaria|bazar|hortifruti|padaria|higiene pessoal|congelados|frios e latic[ií]nios|latic[ií]nios e ovos)\s+/i;
+
+function stripSectionHeaders(name) {
+  let value = name;
+  for (;;) {
+    const match = value.match(SECTION_HEADER_PATTERN);
+    if (!match) return value;
+    const rest = value.slice(match[0].length).trim();
+    if (!rest) return value;
+    value = rest;
+  }
+}
+
 function cleanProductName(name) {
-  return name.replace(/\s+/g, " ")
-    .replace(/^\d{1,2}\s+a\s+\d{1,2}\s+de\s+[a-zç]{3,}\.?\s+/i, "")
-    .replace(/^(?:a\s*partir\s*de\s*)?(?:\d+\s*)?unidades?\s*,?\s*pague\s*:?\s*/i, "")
-    .replace(/^(?:ou|e)\s+/i, "")
-    .replace(/\s+(?:ou|e)$/i, "")
-    .replace(/^[\s·,/;-]+|[\s·,/;-]+$/g, "")
-    .trim();
+  return stripSectionHeaders(
+    name.replace(/\s+/g, " ")
+      .replace(/^\d{1,2}\s+a\s+\d{1,2}\s+de\s+[a-zç]{3,}\.?\s+/i, "")
+      .replace(/^a\s+mais\s+/i, "")
+      .replace(/^(?:a\s*partir\s*de\s*)?(?:\d+\s*)?unidades?\s*,?\s*pague\s*:?\s*(?:r\$\s*)?(?:\d+(?:[.,]\d+)?\s*)?/i, "")
+      .replace(/^nesta (?:embalagem|oferta) a unid(?:e|ade)\.?\s+sai por\s*:?\s*/i, "")
+      .replace(/^(?:ou|e)\s+/i, "")
+      .replace(/\s+(?:ou|e)$/i, ""),
+  ).replace(/^[\s\p{P}\p{S}\p{C}]+|[\s·,/;\-\u2013\u2014\p{S}\p{C}]+$/gu, "").trim();
+}
+
+function formatLimitNote(note) {
+  const limit = note.match(/^limite (?:por cliente\s*(?:de\s+)?|de\s+)(\d+(?:[.,]\d+)?)\s*(kg|g|un\.?|unid\.?|unidade?s?)(?:\s+por cliente)?$/i);
+  if (!limit) return null;
+  const quantity = limit[1].replace(".", ",");
+  const unit = limit[2].toLowerCase().replace(".", "");
+  const unitLabel = unit === "kg" || unit === "g"
+    ? unit
+    : Number(quantity.replace(",", ".")) === 1 ? "unidade" : "unidades";
+  return `Limite de ${quantity} ${unitLabel} por cliente`;
 }
 
 export function normalizeOfferNote(value) {
   const note = String(value ?? "").replace(/\s+/g, " ").trim();
   if (!note) return "";
 
-  const limit = note.match(/^limite (?:por cliente\s*|de\s+)(\d+(?:[.,]\d+)?)\s*(kg|g|un\.?|unid\.?|unidade?s?)(?:\s+por cliente)?$/i);
-  if (limit) {
-    const quantity = limit[1].replace(".", ",");
-    const unit = limit[2].toLowerCase().replace(".", "");
-    const unitLabel = unit === "kg" || unit === "g"
-      ? unit
-      : Number(quantity.replace(",", ".")) === 1 ? "unidade" : "unidades";
-    return `Limite de ${quantity} ${unitLabel} por cliente`;
-  }
+  const limit = formatLimitNote(note);
+  if (limit) return limit;
 
   const promotion = note.match(/^nesta oferta a unid\. sai por (.+)$/i);
   if (promotion) {
@@ -318,8 +414,13 @@ export function normalizeOfferNote(value) {
   return note.split(" · ").map((part) => {
     if (/^preço club plus$/i.test(part)) return "Preço Club Plus";
     if (/^oferta do açougue/i.test(part)) return `Oferta do açougue${part.slice("Oferta do açougue".length)}`;
+    const partLimit = formatLimitNote(part);
+    if (partLimit) return partLimit;
+    // Extrato corrompido pelo PDF (ex.: "Limite por cliente— —UN"): sem
+    // quantidade não há aviso útil, então some em vez de publicar lixo.
+    if (/^limite\b/i.test(part)) return "";
     return part;
-  }).join(" · ");
+  }).filter(Boolean).join(" · ");
 }
 
 const CASE_MINOR_WORDS = new Set([
@@ -361,34 +462,101 @@ export function normalizeProductNameCase(name) {
   }).join("");
 }
 
+/**
+ * Frase de validade que o folheto imprime ACIMA do produto e o PDF cola no
+ * nome (ex.: "Ofertas válidas de quinta a domingo ... durarem nossos estoques.")
+ * O texto vira `notice` (aviso acima do nome), nunca nome.
+ */
+function takeValidityBanner(name) {
+  const match = name.match(/^(ofertas\s+(?:especiais|v[áa]lidas?)\b.*?estoques?\.)\s*/i);
+  if (!match) return { banner: "", name };
+  return { banner: match[1].replace(/\s+/g, " ").trim(), name: name.slice(match[0].length).trim() };
+}
+
+/**
+ * Códigos de combo do folheto ("LV12 PG11", "L4P3", "Leve 12un Pague 11un")
+ * viram aviso legível ("Leve 12 e pague 11") em vez de nome ou unidade.
+ * `payHint` é o detalhe cortado do fim do nome pelo adapter: quando o nome
+ * termina em "Leve 250ml Pague", o valor pago é o próprio detalhe.
+ */
+function formatBundleAmount(qty, unit) {
+  const normalized = String(unit ?? "").toLowerCase().replace(/\.$/, "");
+  const isCount = !normalized || normalized === "un" || normalized === "unid" || normalized === "unidade" || normalized === "unidades";
+  return isCount ? String(qty) : `${qty}${normalized}`;
+}
+
+const BUNDLE_AMOUNT = /^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|l|unid(?:ades?)?\.?|un)?/i;
+const BUNDLE_UNIT = "(kg|g|ml|l|unid(?:ades?)?\\.?|un)?";
+
+function extractBundleCodes(text, payHint = "") {
+  const notes = [];
+  const pushNote = (take, pay) => {
+    if (take && pay) notes.push(`Leve ${take} e pague ${pay}`);
+    return " ";
+  };
+  const cleaned = text
+    .replace(/\blv\s*(\d+)\s*pg\s*(\d+)?\b/gi, (full, take, pay) => pushNote(take, pay))
+    .replace(/\bl(\d+)p(\d+)\b/gi, (full, take, pay) => pushNote(take, pay))
+    .replace(new RegExp(`\\bleve\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}\\s*,?\\s*(?:e\\s+|de\\s+)?pague\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}`, "gi"),
+      (full, takeQty, takeUnit, payQty, payUnit) => pushNote(formatBundleAmount(takeQty, takeUnit), formatBundleAmount(payQty, payUnit)))
+    .replace(new RegExp(`\\s*\\bleve\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}\\s*,?\\s*pague(?!\\s*\\d)`, "gi"),
+      (full, takeQty, takeUnit) => {
+        const pay = String(payHint).match(BUNDLE_AMOUNT);
+        if (pay) pushNote(formatBundleAmount(takeQty, takeUnit), formatBundleAmount(pay[1], pay[2]));
+        return " ";
+      })
+    .replace(/\s*\b(compre\s*\d+\s*unids?\b\.?\s*e\s*ganhe\b.*?\b\d+(?:[.,]\d+)?\s*l\b)\s*\d*/gi, (full, promo) => {
+      notes.push(promo.replace(/\s+/g, " ").trim());
+      return " ";
+    })
+    .replace(/\s+/g, " ").trim();
+  return { text: cleaned, notes };
+}
+
 export function normalizeOfferPresentation(offer) {
   const originalName = String(offer?.name ?? "").replace(/\s+/g, " ").trim();
   const originalBrand = String(offer?.brand ?? "").replace(/\s+/g, " ").trim();
+
+  const banner = takeValidityBanner(originalName);
+  const detailBundle = extractBundleCodes(String(offer?.detail ?? ""));
+  const nameBundle = extractBundleCodes(banner.name, detailBundle.text);
+  const baseName = cleanProductName(nameBundle.text);
+
   const matches = originalBrand
-    ? findBrandMatches(originalName, aliasesForBrand(originalBrand))
-    : findBrandMatches(originalName, ALL_BRAND_ALIASES);
+    ? findBrandMatches(baseName, aliasesForBrand(originalBrand))
+    : findBrandMatches(baseName, ALL_BRAND_ALIASES);
   let brand = originalBrand;
-  let name = originalName;
+  let name = baseName;
 
   if (matches.length > 0) {
-    name = cleanProductName(originalName
+    name = cleanProductName(baseName
       .slice(0, matches[0].start)
-      + matches.slice(1).reduce((result, match, index) => result + originalName.slice(matches[index].end, match.start), "")
-      + originalName.slice(matches[matches.length - 1].end));
+      + matches.slice(1).reduce((result, match, index) => result + baseName.slice(matches[index].end, match.start), "")
+      + baseName.slice(matches[matches.length - 1].end));
     if (!originalBrand) brand = [...new Set(matches.map((match) => match.brand))].join(" / ");
     if (name.length < 2) {
-      name = originalName;
+      name = baseName;
       brand = originalBrand;
     }
   }
   brand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(brand)) ?? brand;
 
-  return {
+  const note = [
+    normalizeOfferNote(offer?.note),
+    ...nameBundle.notes,
+    ...detailBundle.notes,
+  ].filter(Boolean).join(" · ");
+
+  const result = {
     ...offer,
-    name: normalizeProductNameCase(name || originalName),
+    name: normalizeProductNameCase(name || baseName),
     brand,
-    note: normalizeOfferNote(offer?.note),
+    detail: detailBundle.text || "Unidade",
+    note,
   };
+  const notice = [banner.banner, offer?.notice].filter(Boolean).join(" · ");
+  if (notice) result.notice = notice;
+  return result;
 }
 
 /**
@@ -401,7 +569,7 @@ export function normalizeOfferPresentation(offer) {
 const PRODUCT_TYPE_RULES = [
   [/\b(sabao em po|detergente|amaciante|agua sanitaria|saponaceo|desinfetante|multiuso)\b/, "Lavanderia e limpeza"],
   [/\b(condicionador|shampoo|leave in|leave-in|creme leave in|creme de pentear|mascara capilar|oleo capilar|reparador de pontas|tratamento capilar|serum capilar|creme dental|pasta de dente|escova dental|fio dental|enxaguante|antisseptico|higiene bucal|absorvente|sabonete|desodorante|antiperspirante|protetor solar|perfume|maquiagem|barbear|depiladora|toalha umedecida)\b/, "Higiene pessoal"],
-  [/\b(biscoito|bolacha|wafer|cookie|salgadinho|batata palha|chocolate|bombom|pacoquinha|doce de leite|pirulito|caramelo|goiabada|bala|chiclete|creme de avela|creme avela|nutella|avela)\b/, "Doces e snacks"],
+  [/\b(biscoito|bolacha|wafer|cookie|salgadinho|pringles|chips?|batata palha|chocolate|bombom|pacoquinha|doce de leite|pirulito|caramelo|goiabada|bala|chiclete|creme de avela|creme avela|nutella|avela)\b/, "Doces e snacks"],
   [/\b(nugget|nuggets|empanado|empanad[oa]s?|lasanha|ravioli|capeletti|hot pocket|hot bowls|hamburguer|pizza|sanduiche|sandwich|nhoque|quibe|kibe|macarrao pronto|macarrao congelado|batata palito|congelado de bandeja|feijoada)\b/, "Congelados"],
   [/\b(cerveja|chopp|pilsen|lager|ipa|ale|original weiss|weiss)\b/, "Cervejas"],
   [/\b(vinho|aperitivo|espumante|champanhe|whisky|vodka|gin)\b/, "Bebidas alcoólicas"],
@@ -418,6 +586,7 @@ const PRODUCT_TYPE_RULES = [
   [/\b(bovino|bovina|contrafile|paleta|alcatra|fraldinha|maminha|figado|acem|lombo|costela|patinho|picanha|entrecote|ancho|file mignon|filé mignon|carne moida)\b/, "Carne bovina"],
   [/\b(frango|asa de|coxa|sobrecoxa|filezinho|chicken|sassami|moela|tulipa)\b/, "Frango"],
   [/\b(tilapia|peixe|sardinha|atum|merluza)\b/, "Peixes"],
+  [/\b(macarrao|massa seca|espaguete|talharim|parafuso|aveludinhos?|festone|canudone)\b/, "Mercearia"],
   [/\b(ovos|ovo)\b/, "Ovos"],
   [/\b(sorvete|picole|picolé|gelato|torta)\b/, "Congelados"],
   [/\b(lava-roupas|lava roupas|sabao|detergente|amaciante|limpa|limpador|desinfetante|saponaceo|agua sanitaria|hipoclorito|cloro|inseticida|repelente)\b/, "Lavanderia e limpeza"],
@@ -596,7 +765,7 @@ export function assignIcon(name, productType = "", department = "") {
     [/suplemento|whey|creatina|aminoacido/, "💊"],
 
     // Mercearia e snacks: regras específicas antes das palavras genéricas.
-    [/salgadinho/, "🥨"],
+    [/salgadinho|pringles/, "🥨"],
     [/pipoca/, "🍿"],
     [/bolinho/, "🧁"],
     [/filme de pvc|\bcopo\b/, "🥤"],

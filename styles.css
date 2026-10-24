@@ -439,6 +439,9 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .card-body,.price-row,.card-source,.offer-store{min-width:0}
 .card-body h3{overflow-wrap:anywhere}
 .offer-note{overflow-wrap:anywhere}
+.offer-notice{margin:0 0 8px;padding:7px 9px;border-radius:8px;background:#eef6e4;color:#41563f;font-size:11px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+.offer-notice[hidden]{display:none}
+.list-view .offer-notice{margin:0 0 6px;padding:5px 7px;font-size:10px}
 .card-source{flex-wrap:wrap;row-gap:3px}
 .card-source .share-offer{margin-left:auto}
 .price{white-space:nowrap}

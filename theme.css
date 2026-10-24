@@ -183,6 +183,11 @@
   color: #f0d89a;
 }
 
+:root[data-theme="dark"] .offer-notice {
+  background: #22301f;
+  color: #a9d4a4;
+}
+
 :root[data-theme="dark"] .account-form input::placeholder,
 :root[data-theme="dark"] input::placeholder {
   color: #89958d;

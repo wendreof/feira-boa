@@ -2,6 +2,9 @@ import { errorMessage } from "./errors";
 import type { Offer, OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { resolveDefaultViewMode } from "./view-mode.js";
+import { shouldShowBrand } from "./offer-display.mjs";
+import { dateLabel, formatFeedUpdate, isActive, money, normalizeSearch, todayInSaoPaulo } from "./view/format";
+import { linkPushDeviceToUser } from "./push";
 import { showTransientStatus } from "./status-toast.js";
 import { applySourceFreshness } from "./source-freshness";
 import {
@@ -184,15 +187,6 @@ function showFeedError(): void {
   const mobileNavFavoritesLink = document.querySelector<HTMLAnchorElement>("#mobile-nav-favorites")!;
   const activeFilterCount = document.querySelector<HTMLSpanElement>("#active-filter-count")!;
   const updatedLabel = document.querySelector<HTMLSpanElement>("#updated-label")!;
-
-  const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-  const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
-  const feedDateFormatter = new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit", month: "short", year: "numeric", timeZone: "America/Sao_Paulo",
-  });
-  const feedTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
-    hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo",
-  });
 
   const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
   function offerCategory(offer: Offer): { groupId: string; subcategory: string } {
@@ -412,15 +406,7 @@ function showFeedError(): void {
         console.warn("Could not load saved offer reactions.", reactionError);
       }
       void refreshTopbarAvatar(userId);
-      void (async () => {
-        try {
-          const deferred = (window as { __feiraOneSignalReady?: Promise<{ login(id: string): Promise<void> } | null> }).__feiraOneSignalReady;
-          const oneSignal = await (deferred ?? Promise.resolve(null));
-          await oneSignal?.login(userId);
-        } catch (error) {
-          console.warn("Could not associate OneSignal with the account.", error);
-        }
-      })();
+      void linkPushDeviceToUser(userId);
       renderOffers();
       setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
     } catch (error) {
@@ -433,37 +419,6 @@ function showFeedError(): void {
     pendingTheme = theme;
     if (currentUserId && preferencesLoaded) void saveThemePreference();
   });
-
-  function money(value: number): string {
-    return moneyFormatter.format(value);
-  }
-
-  function dateLabel(value: string): string {
-    return dateFormatter.format(new Date(`${value}T12:00:00`)).replace(" de ", " ").replace(".", "");
-  }
-
-  function formatFeedUpdate(value: string): string {
-    const date = new Date(value);
-    if (!Number.isFinite(date.getTime())) return "Atualização das ofertas indisponível";
-    const day = feedDateFormatter.format(date).replace(/\./g, "");
-    const time = feedTimeFormatter.format(date);
-    return `Catálogo atualizado em ${day}, ${time}`;
-  }
-
-  function normalizeSearch(value: string): string {
-    return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .toLocaleLowerCase("pt-BR").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
-  }
-
-  function todayInSaoPaulo(): string {
-    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
-    const part = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
-    return `${part.year}-${part.month}-${part.day}`;
-  }
-
-  function isActive(offer: Offer, today = todayInSaoPaulo()): boolean {
-    return today >= offer.validFrom && today <= offer.validTo;
-  }
 
   function matchesSearch(offer: Offer, query: string): boolean {
     const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
@@ -615,7 +570,7 @@ function showFeedError(): void {
     const category = offerCategory(offer);
     refs.info.textContent = [category.subcategory, offer.store].filter(Boolean).join(" · ");
     refs.brand.textContent = offer.brand;
-    refs.brand.hidden = !offer.brand;
+    refs.brand.hidden = !shouldShowBrand(offer.name, offer.brand);
     refs.spec.textContent = offer.detail;
     refs.spec.hidden = !offer.detail;
     refs.price.textContent = money(offer.price);

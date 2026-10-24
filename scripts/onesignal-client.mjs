@@ -43,7 +43,7 @@ export async function sendNotification(options, fetchImpl = fetch) {
 
   if (!response.ok) {
     const detail = Array.isArray(data?.errors) ? data.errors.join("; ") : JSON.stringify(data);
-    const error = new Error(`OneSignal HTTP ${response.status}: ${detail}`);
+    const error = /** @type {Error & { onesignalStatus?: number }} */ (new Error(`OneSignal HTTP ${response.status}: ${detail}`));
     error.onesignalStatus = response.status;
     throw error;
   }

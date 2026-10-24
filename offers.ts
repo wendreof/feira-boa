@@ -1,3 +1,5 @@
+import { foldText, slugText } from "./shared/text.mjs";
+
 // Offer transcriptions from stores' public flyers and official offer pages.
 // Prices are in BRL. Dates are inclusive; source links point to the original offer source.
 //
@@ -61,7 +63,7 @@ export const offerSources = {
 type StoreId = keyof typeof offerSources;
 
 function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string; productTypes: string[] } {
-  const text = `${name} ${brand} ${category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const text = foldText(`${name} ${brand} ${category}`);
   const rules: Array<[RegExp, string]> = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado/, "Leites"],
     [/condicionador|shampoo|creme dental|dental|bucal|enxaguante|absorvente|sabonete|desodorante|higiene/, "Higiene pessoal"],
@@ -124,8 +126,7 @@ function makeOffer(storeId: StoreId, name: string, brand: string, detail: string
 }
 
 function slug(value: string): string {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return slugText(value);
 }
 
 export const offers: Offer[] = [

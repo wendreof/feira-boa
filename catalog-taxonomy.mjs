@@ -1,3 +1,4 @@
+import { foldText } from "./shared/text.mjs";
 /**
  * Taxonomia de catálogo do Feira Boa.
  *
@@ -275,7 +276,7 @@ const GROUP_BY_ID = new Map(TAXONOMY_GROUPS.map((group) => [group.id, group]));
 
 /** @param {string} text */
 function normalizeText(text) {
-  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return foldText(text);
 }
 
 /**

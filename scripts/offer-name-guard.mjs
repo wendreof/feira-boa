@@ -8,6 +8,7 @@
 
 const SECTION_HEADER_PREFIX = /^(?:bebidas|mercearias|mercearia|a[cç]ougue(?:\s+e\s+peixaria)?|limpeza e perfumaria|bazar|hortifruti|padaria|higiene pessoal|congelados|frios e latic[ií]nios|latic[ií]nios e ovos)\s+/i;
 
+/** @type {Array<[string, RegExp]>} */
 const TEXT_JUNK = [
   ["validity banner", /^ofertas\s+(?:especiais|v[áa]lidas?)\b/i],
   ["stock copy", /\benquanto durarem\b/i],

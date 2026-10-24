@@ -13,6 +13,7 @@ import {
   signOut,
   type AlertRule,
 } from "./account";
+import { requireOneSignal } from "./push";
 import type { OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
 import { pushFailureMessage, resolvePushUiState } from "./push-state.js";
@@ -76,24 +77,10 @@ async function saveThemePreference(): Promise<void> {
   }
 }
 
-interface OneSignalNamespace {
-  login(externalId: string): Promise<void>;
-  logout(): Promise<void>;
-  Notifications: { requestPermission(): Promise<boolean> };
-  User: { PushSubscription: { optedIn: boolean | null; optIn(): Promise<void>; optOut(): Promise<void> } };
-}
-
-/** Aguarda o init do OneSignal feito pelo pwa.js nesta página. */
-async function getOneSignal(): Promise<OneSignalNamespace> {
-  const deferred = (window as { __feiraOneSignalReady?: Promise<OneSignalNamespace | null> }).__feiraOneSignalReady;
-  const oneSignal = await (deferred ?? Promise.resolve(null));
-  if (!oneSignal) throw new Error("O serviço de notificações não carregou. Verifique a conexão e recarregue a página.");
-  return oneSignal;
-}
 
 async function refreshPushDeviceState(): Promise<void> {
   try {
-    const oneSignal = await getOneSignal();
+    const oneSignal = await requireOneSignal();
     devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true;
   } catch {
     devicePushEnabled = false;
@@ -212,7 +199,7 @@ async function refreshRules(): Promise<void> {
 
 async function detachOneSignalFromAccount(): Promise<void> {
   try {
-    const oneSignal = await getOneSignal();
+    const oneSignal = await requireOneSignal();
     await oneSignal.logout();
   } catch (error) {
     console.warn("Could not detach OneSignal from the account.", error);
@@ -369,7 +356,7 @@ enablePushButton?.addEventListener("click", async () => {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Solicitando permissão…";
   try {
-    const oneSignal = await getOneSignal();
+    const oneSignal = await requireOneSignal();
     const permission = Notification.permission === "default"
       ? await oneSignal.Notifications.requestPermission()
       : Notification.permission === "granted";
@@ -398,7 +385,7 @@ disablePushButton?.addEventListener("click", async () => {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Desativando neste dispositivo…";
   try {
-    const oneSignal = await getOneSignal();
+    const oneSignal = await requireOneSignal();
     if (oneSignal.User.PushSubscription.optedIn === true) {
       await oneSignal.User.PushSubscription.optOut();
     }
@@ -465,7 +452,7 @@ void getCurrentUser()
     if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
     void (async () => {
       try {
-        const oneSignal = await getOneSignal();
+        const oneSignal = await requireOneSignal();
         await oneSignal.login(userId);
       } catch (error) {
         console.warn("Could not associate OneSignal with the account.", error);

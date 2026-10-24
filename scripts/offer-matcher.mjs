@@ -1,3 +1,4 @@
+import { slugText } from "../shared/text.mjs";
 export const MAX_SOURCE_AGE_MS = 24 * 60 * 60 * 1000;
 
 export function saoPauloDate(date = new Date()) {
@@ -12,12 +13,7 @@ export function saoPauloDate(date = new Date()) {
 }
 
 export function storeKey(store, branch = "") {
-  return `${store ?? ""} ${branch ?? ""}`
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+  return slugText(`${store ?? ""} ${branch ?? ""}`);
 }
 
 function lastSuccessAt(source) {

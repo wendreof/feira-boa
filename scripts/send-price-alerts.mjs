@@ -1,46 +1,32 @@
 import { readFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
-import {
-  MAX_SOURCE_AGE_MS,
-  formatOfferPrice,
-  getVerifiedActiveOffers,
-  ruleMatchesOffer,
-  saoPauloDate,
-} from "./offer-matcher.mjs";
+import { MAX_SOURCE_AGE_MS, getVerifiedActiveOffers, saoPauloDate } from "./offer-matcher.mjs";
 import { sendNotification } from "./onesignal-client.mjs";
+import {
+  buildAlertMessage,
+  matchOffersToUsers,
+  offerUrl,
+  pendingNotifications,
+} from "./alerts/plan.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
 const IN_CHUNK_SIZE = 100;
-const dryRun = process.argv.includes("--dry-run");
-
-const requiredEnvironment = [
+const REQUIRED_ENVIRONMENT = [
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
   "ONESIGNAL_APP_ID",
   "ONESIGNAL_REST_API_KEY",
   "SITE_URL",
 ];
-const missingEnvironment = requiredEnvironment.filter((name) => !process.env[name]);
-if (missingEnvironment.length > 0) {
-  throw new Error(`Missing required environment: ${missingEnvironment.join(", ")}`);
-}
 
-const siteUrl = new URL(process.env.SITE_URL);
-if (siteUrl.protocol !== "https:") throw new Error("SITE_URL must use HTTPS.");
+function readConfig(env) {
+  const missing = REQUIRED_ENVIRONMENT.filter((name) => !env[name]);
+  if (missing.length > 0) throw new Error(`Missing required environment: ${missing.join(", ")}`);
 
-const onesignalAppId = process.env.ONESIGNAL_APP_ID;
-const onesignalRestApiKey = process.env.ONESIGNAL_REST_API_KEY;
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
-  auth: { persistSession: false, autoRefreshToken: false },
-});
-
-function sendOneSignalNotification(notification) {
-  return sendNotification({
-    appId: onesignalAppId,
-    apiKey: onesignalRestApiKey,
-    ...notification,
-  });
+  const siteUrl = new URL(env.SITE_URL);
+  if (siteUrl.protocol !== "https:") throw new Error("SITE_URL must use HTTPS.");
+  return { siteUrl, oneSignalAppId: env.ONESIGNAL_APP_ID, oneSignalApiKey: env.ONESIGNAL_REST_API_KEY };
 }
 
 function chunk(values, size) {
@@ -49,6 +35,7 @@ function chunk(values, size) {
   return chunks;
 }
 
+/** Lê todas as páginas de uma consulta. `queryFactory` devolve uma consulta nova a cada chamada. */
 async function readRows(queryFactory, orderColumns = ["id"]) {
   const rows = [];
   for (let offset = 0; ; offset += PAGE_SIZE) {
@@ -70,98 +57,39 @@ async function readRowsIn(queryFactory, column, values, orderColumns = ["id"]) {
   return rows;
 }
 
-const [feedText, sourceStateText] = await Promise.all([
-  readFile(new URL("../offers.json", import.meta.url), "utf8"),
-  readFile(new URL("../.offer-monitor-state.json", import.meta.url), "utf8"),
-]);
-const feed = JSON.parse(feedText);
-const sourceState = JSON.parse(sourceStateText);
-const today = saoPauloDate();
-const feedUpdatedAt = Date.parse(feed.updatedAt);
-if (!Number.isFinite(feedUpdatedAt)) throw new Error("offers.json has no valid updatedAt timestamp.");
-
-const rules = await readRows(() => supabase.from("alert_rules")
-  .select("id, user_id, store, product, product_type, target_price")
-  .eq("enabled", true), ["id"]);
-if (rules.length === 0) {
-  console.log(JSON.stringify({ date: today, activeOffers: 0, activeVerifiedOffers: 0, usersMatched: 0, notificationsSent: 0, dryRun }));
-  process.exit(0);
-}
-if (Date.now() - feedUpdatedAt > MAX_FEED_AGE_MS) {
-  throw new Error(`Offer feed is older than 24 hours (updatedAt=${feed.updatedAt}).`);
+async function loadFeed() {
+  const [feedText, sourceStateText] = await Promise.all([
+    readFile(new URL("../offers.json", import.meta.url), "utf8"),
+    readFile(new URL("../.offer-monitor-state.json", import.meta.url), "utf8"),
+  ]);
+  const feed = JSON.parse(feedText);
+  const feedUpdatedAt = Date.parse(feed.updatedAt);
+  if (!Number.isFinite(feedUpdatedAt)) throw new Error("offers.json has no valid updatedAt timestamp.");
+  return { feed, feedUpdatedAt, sourceState: JSON.parse(sourceStateText) };
 }
 
-const activeOffers = feed.offers.filter((offer) => offer.validFrom <= today && offer.validTo >= today);
-const offers = getVerifiedActiveOffers(feed.offers, sourceState, today);
-if (activeOffers.length > 0 && offers.length === 0) {
-  throw new Error("No verified active offers. Review changed sources and clear needs_review before sending alerts.");
-}
-
-const userIds = [...new Set(rules.map((rule) => rule.user_id))];
-const profiles = await readRowsIn(() => supabase.from("profiles")
-  .select("user_id, notifications_paused"), "user_id", userIds, ["user_id"]);
-const activeUserIds = new Set(profiles.filter((profile) => !profile.notifications_paused).map((profile) => profile.user_id));
-const matchedByUser = new Map();
-for (const rule of rules) {
-  if (!activeUserIds.has(rule.user_id)) continue;
-  for (const offer of offers) {
-    if (!ruleMatchesOffer(rule, offer)) continue;
-    const matches = matchedByUser.get(rule.user_id) ?? new Map();
-    matches.set(offer.id, offer);
-    matchedByUser.set(rule.user_id, matches);
-  }
-}
-
-const matchedOfferIds = [...new Set([...matchedByUser.values()].flatMap((matches) => [...matches.keys()]))];
-if (matchedOfferIds.length === 0) {
-  console.log(JSON.stringify({
-    date: today,
-    feedUpdatedAt: feed.updatedAt,
-    activeOffers: activeOffers.length,
-    activeVerifiedOffers: offers.length,
-    usersMatched: 0,
-    notificationsSent: 0,
-    dryRun,
-  }));
-  process.exit(0);
-}
-
-const matchedUserIds = [...matchedByUser.keys()];
-const previousLogs = [];
-for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
-  previousLogs.push(...await readRows(() => supabase.from("notification_log")
-    .select("user_id, offer_id, result")
-    .in("user_id", userGroup)
-    .in("offer_id", matchedOfferIds), ["user_id", "offer_id"]));
-}
-const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
-let notificationsSent = 0;
-let notificationsWouldSend = 0;
-let notificationsFailed = 0;
-let skippedNoDevice = 0;
-
-for (const [userId, userOffers] of matchedByUser) {
-  for (const offer of userOffers.values()) {
-    if (alreadySent.has(`${userId}:${offer.id}`)) continue;
+async function sendAlerts({ supabase, pending, config, dryRun }) {
+  const counts = { notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoDevice: 0 };
+  for (const { userId, offer } of pending) {
     if (dryRun) {
-      notificationsWouldSend += 1;
+      counts.notificationsWouldSend += 1;
       continue;
     }
-    const offerUrl = new URL(`index.html?offer=${encodeURIComponent(offer.id)}`, siteUrl);
-    const title = `${offer.store}: oferta para você`;
-    const body = `${offer.name} por ${formatOfferPrice(offer.price)} · válida até ${offer.validTo}.`;
+    const { title, body } = buildAlertMessage(offer);
     let delivered = false;
     let safeErrorCode = null;
     try {
-      const recipients = await sendOneSignalNotification({
+      const recipients = await sendNotification({
+        appId: config.oneSignalAppId,
+        apiKey: config.oneSignalApiKey,
         userId,
         title,
         body,
-        url: offerUrl.href,
+        url: offerUrl(config.siteUrl, offer),
         collapseId: `feira-${offer.id}`,
       });
       if (recipients === 0) {
-        skippedNoDevice += 1;
+        counts.skippedNoDevice += 1;
         continue;
       }
       delivered = true;
@@ -178,21 +106,65 @@ for (const [userId, userOffers] of matchedByUser) {
       error_code: delivered ? null : safeErrorCode,
     }, { onConflict: "user_id,offer_id" });
     if (error) throw error;
-    if (delivered) notificationsSent += 1;
-    else notificationsFailed += 1;
+    if (delivered) counts.notificationsSent += 1;
+    else counts.notificationsFailed += 1;
   }
+  return counts;
 }
 
-console.log(JSON.stringify({
-  date: today,
-  feedUpdatedAt: feed.updatedAt,
-  maxSourceAgeHours: MAX_SOURCE_AGE_MS / 3_600_000,
-  activeOffers: activeOffers.length,
-  activeVerifiedOffers: offers.length,
-  usersMatched: matchedByUser.size,
-  notificationsSent,
-  notificationsWouldSend,
-  notificationsFailed,
-  skippedNoDevice,
-  dryRun,
-}));
+async function main() {
+  const dryRun = process.argv.includes("--dry-run");
+  const config = readConfig(process.env);
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const today = saoPauloDate();
+  const emptySummary = { date: today, dryRun, notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoDevice: 0 };
+
+  const rules = await readRows(() => supabase.from("alert_rules")
+    .select("id, user_id, store, product, product_type, target_price")
+    .eq("enabled", true), ["id"]);
+  if (rules.length === 0) return { ...emptySummary, activeOffers: 0, activeVerifiedOffers: 0, usersMatched: 0 };
+
+  const { feed, feedUpdatedAt, sourceState } = await loadFeed();
+  if (Date.now() - feedUpdatedAt > MAX_FEED_AGE_MS) {
+    throw new Error(`Offer feed is older than 24 hours (updatedAt=${feed.updatedAt}).`);
+  }
+
+  const activeOffers = feed.offers.filter((offer) => offer.validFrom <= today && offer.validTo >= today);
+  const offers = getVerifiedActiveOffers(feed.offers, sourceState, today);
+  if (activeOffers.length > 0 && offers.length === 0) {
+    throw new Error("No verified active offers. Review changed sources and clear needs_review before sending alerts.");
+  }
+
+  const userIds = [...new Set(rules.map((rule) => rule.user_id))];
+  const profiles = await readRowsIn(() => supabase.from("profiles")
+    .select("user_id, notifications_paused"), "user_id", userIds, ["user_id"]);
+  const activeUserIds = new Set(profiles.filter((profile) => !profile.notifications_paused).map((profile) => profile.user_id));
+  const matchedByUser = matchOffersToUsers({ rules, offers, activeUserIds });
+  const summaryBase = { ...emptySummary, feedUpdatedAt: feed.updatedAt, maxSourceAgeHours: MAX_SOURCE_AGE_MS / 3_600_000, activeOffers: activeOffers.length, activeVerifiedOffers: offers.length, usersMatched: matchedByUser.size };
+
+  const matchedOfferIds = [...new Set([...matchedByUser.values()].flatMap((matches) => [...matches.keys()]))];
+  if (matchedOfferIds.length === 0) return summaryBase;
+
+  const matchedUserIds = [...matchedByUser.keys()];
+  const previousLogs = [];
+  for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
+    previousLogs.push(...await readRows(() => supabase.from("notification_log")
+      .select("user_id, offer_id, result")
+      .in("user_id", userGroup)
+      .in("offer_id", matchedOfferIds), ["user_id", "offer_id"]));
+  }
+  const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
+  const pending = pendingNotifications(matchedByUser, alreadySent);
+
+  const counts = await sendAlerts({ supabase, pending, config, dryRun });
+  return { ...summaryBase, ...counts };
+}
+
+main()
+  .then((summary) => console.log(JSON.stringify(summary)))
+  .catch((error) => {
+    console.error(error?.message ?? error);
+    process.exitCode = 1;
+  });

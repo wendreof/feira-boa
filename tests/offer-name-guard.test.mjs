@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { presentationViolations } from "../scripts/offer-name-guard.mjs";
-import { normalizeOfferPresentation } from "../scripts/adapters/common.mjs";
+import { normalizeOfferPresentation } from "../scripts/domain/presentation.mjs";
 
 test("presentationViolations flags every known flyer-junk class", () => {
   const cases = [

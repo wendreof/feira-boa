@@ -1,3 +1,4 @@
+import { slugText } from "../shared/text.mjs";
 import { createHash } from "node:crypto";
 import { readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
@@ -15,12 +16,7 @@ const MAX_BYTES = 25 * 1024 * 1024;
 const RETRY_DELAYS = [1_000, 3_000];
 
 export function storeKey(store, branch = "") {
-  return `${store ?? ""} ${branch ?? ""}`
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+  return slugText(`${store ?? ""} ${branch ?? ""}`);
 }
 
 async function loadJson(url, fallback) {

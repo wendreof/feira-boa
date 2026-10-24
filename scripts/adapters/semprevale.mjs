@@ -1,8 +1,18 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
-import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, slug, validateOffer } from "./common.mjs";
+import { classifyProduct } from "../domain/taxonomy.mjs";
+import { fetchWithRetry } from "./http.mjs";
+import { parseDateRange } from "../domain/parsing.mjs";
+import { validateOffer } from "../domain/validation.mjs";
+import { createOffer } from "./offer-factory.mjs";
 
+const SEMPREVALE_STORE = {
+  name: "Sempre Vale",
+  logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
+  branch: "Durval Nicolau",
+  source: "Folheto oficial · Durval Nicolau",
+};
 const DURVAL_NICOLAU_ENDPOINT = "https://www.semprevale.com.br/get_unidades_ofertas.php";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
@@ -128,30 +138,15 @@ export async function extractSempreVale(customUrl = null) {
     if (nameOnly.length < 2) continue;
 
     const taxonomy = classifyProduct(nameOnly, "", "Geral");
-    const icon = assignIcon(nameOnly, taxonomy.productType, taxonomy.department);
-
-    const offer = {
-      id: `sempre-${slug(`${nameOnly}-${detail}-${validity.from}`)}`,
-      store: "Sempre Vale",
-      storeLogo: "https://www.semprevale.com.br/images/logo-pequeno.png",
-      branch: "Durval Nicolau",
-      name: nameOnly,
-      brand: "",
-      detail: detail,
-      category: taxonomy.department,
-      department: taxonomy.department,
-      productType: taxonomy.productType,
-      productTypes: taxonomy.productTypes,
-      price: productPrice,
-      previousPrice: oldPrice,
-      icon,
-      tone: "#edf4e9",
-      note,
-      validFrom: validity.from,
-      validTo: validity.to,
-      source: "Folheto oficial · Durval Nicolau",
+    const offer = createOffer({
+      storeId: "sempre",
+      idKey: `${nameOnly}-${detail}-${validity.from}`,
+      store: SEMPREVALE_STORE,
       sourceUrl: flyerUrl,
-    };
+      product: { name: nameOnly, detail, price: productPrice, previousPrice: oldPrice, note },
+      validity,
+      taxonomy,
+    });
 
     if (validateOffer(offer)) {
       offers.push(offer);
@@ -161,10 +156,10 @@ export async function extractSempreVale(customUrl = null) {
   return {
     storeId: "sempre",
     store: {
-      name: "Sempre Vale",
-      branch: "Durval Nicolau",
-      logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
-      source: "Folheto oficial · Durval Nicolau",
+      name: SEMPREVALE_STORE.name,
+      branch: SEMPREVALE_STORE.branch,
+      logo: SEMPREVALE_STORE.logo,
+      source: SEMPREVALE_STORE.source,
       sourceUrl: flyerUrl,
       from: validity.from,
       to: validity.to,

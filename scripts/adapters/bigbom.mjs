@@ -1,7 +1,18 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
-import { assignIcon, classifyProduct, fetchWithRetry, parseDateRange, slug, validateOffer } from "./common.mjs";
+import { classifyProduct } from "../domain/taxonomy.mjs";
+import { fetchWithRetry } from "./http.mjs";
+import { parseDateRange } from "../domain/parsing.mjs";
+import { validateOffer } from "../domain/validation.mjs";
+import { createOffer } from "./offer-factory.mjs";
+
+const BIGBOM_STORE = {
+  name: "Big Bom",
+  logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+  branch: "Vila Zanetti · São João",
+  source: "Folheto oficial · São João da Boa Vista",
+};
 
 const DEFAULT_FLYER_URL = "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
@@ -106,30 +117,15 @@ export async function extractBigBom(customUrl = null) {
     if (nameOnly.length < 2 || /NESTA OFERTA|A UNID\.?\s*SAI\s*POR/i.test(nameOnly)) continue;
 
     const taxonomy = classifyProduct(nameOnly, "", "Geral");
-    const icon = assignIcon(nameOnly, taxonomy.productType, taxonomy.department);
-
-    const offer = {
-      id: `bigbom-${slug(`${nameOnly}-${detail}-${validity.from}`)}`,
-      store: "Big Bom",
-      storeLogo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
-      branch: "Vila Zanetti · São João",
-      name: nameOnly,
-      brand: "",
-      detail: detail,
-      category: taxonomy.department,
-      department: taxonomy.department,
-      productType: taxonomy.productType,
-      productTypes: taxonomy.productTypes,
-      price: seg.price,
-      previousPrice: null,
-      icon,
-      tone: "#edf4e9",
-      note: "",
-      validFrom: validity.from,
-      validTo: validity.to,
-      source: "Folheto oficial · São João da Boa Vista",
+    const offer = createOffer({
+      storeId: "bigbom",
+      idKey: `${nameOnly}-${detail}-${validity.from}`,
+      store: BIGBOM_STORE,
       sourceUrl: flyerUrl,
-    };
+      product: { name: nameOnly, detail, price: seg.price },
+      validity,
+      taxonomy,
+    });
 
     if (validateOffer(offer)) {
       offers.push(offer);
@@ -139,10 +135,10 @@ export async function extractBigBom(customUrl = null) {
   return {
     storeId: "bigbom",
     store: {
-      name: "Big Bom",
-      branch: "Vila Zanetti · São João",
-      logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
-      source: "Folheto oficial · São João da Boa Vista",
+      name: BIGBOM_STORE.name,
+      branch: BIGBOM_STORE.branch,
+      logo: BIGBOM_STORE.logo,
+      source: BIGBOM_STORE.source,
       sourceUrl: flyerUrl,
       from: validity.from,
       to: validity.to,

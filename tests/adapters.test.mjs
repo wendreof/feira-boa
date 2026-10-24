@@ -1,17 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  assignIcon,
-  classifyProduct,
-  fetchWithRetry,
-  normalizeOfferNote,
-  normalizeOfferPresentation,
-  parseDateRange,
-  parsePrice,
-  slug,
-  validateOffer,
-  validateSnapshot,
-} from "../scripts/adapters/common.mjs";
+import { assignIcon } from "../scripts/domain/icons.mjs";
+import { classifyProduct } from "../scripts/domain/taxonomy.mjs";
+import { fetchWithRetry } from "../scripts/adapters/http.mjs";
+import { normalizeOfferNote } from "../scripts/domain/offer-note.mjs";
+import { normalizeOfferPresentation } from "../scripts/domain/presentation.mjs";
+import { parseDateRange, parsePrice } from "../scripts/domain/parsing.mjs";
+import { validateOffer, validateSnapshot } from "../scripts/domain/validation.mjs";
+import { slugText as slug } from "../shared/text.mjs";
 import { buildPagueMenosOffer, getWeekValidity } from "../scripts/adapters/paguemenos.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {

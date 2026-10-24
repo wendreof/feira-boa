@@ -6,7 +6,7 @@ import {
   categoryOrder,
   discountRatio,
   resolveCategory,
-} from "../catalog-taxonomy.mjs";
+} from "../src/catalog-taxonomy.mjs";
 
 test("taxonomy keeps the requested sector order", () => {
   const labels = TAXONOMY_GROUPS.map((group) => group.label);

@@ -2,14 +2,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": { "allowJs": true, "checkJs": true, "noEmit": true, "strict": false, "skipLibCheck": true, "lib": ["ES2024", "DOM"] },
   "include": [
-    "shared/**/*.mjs",
+    "src/shared/**/*.mjs",
     "scripts/domain/**/*.mjs",
     "scripts/alerts/**/*.mjs",
     "scripts/feed/assemble-feed.mjs",
     "scripts/feed/validate-feed.mjs",
     "scripts/onesignal-client.mjs",
-    "offer-display.mjs",
-    "catalog-taxonomy.mjs",
+    "src/offer-display.mjs",
+    "src/catalog-taxonomy.mjs",
     "scripts/offer-name-guard.mjs",
     "scripts/offer-sector-guard.mjs"
   ],

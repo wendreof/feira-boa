@@ -1,4 +1,4 @@
-import { foldText } from "../../shared/text.mjs";
+import { foldText } from "../../src/shared/text.mjs";
 
 export function assignIcon(name, productType = "", department = "") {
   const normalize = foldText;

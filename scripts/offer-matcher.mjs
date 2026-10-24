@@ -1,4 +1,4 @@
-import { slugText } from "../shared/text.mjs";
+import { slugText } from "../src/shared/text.mjs";
 export const MAX_SOURCE_AGE_MS = 24 * 60 * 60 * 1000;
 
 export function saoPauloDate(date = new Date()) {

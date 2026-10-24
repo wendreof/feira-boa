@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatFeedUpdate, isActive, normalizeSearch } from "../view/format.ts";
+import { formatFeedUpdate, isActive, normalizeSearch } from "../src/view/format.ts";
 
 test("feed update line falls back when the timestamp is invalid", () => {
   assert.equal(formatFeedUpdate("not a date"), "Atualização das ofertas indisponível");

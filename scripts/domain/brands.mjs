@@ -1,4 +1,4 @@
-import { comparableText } from "../../shared/text.mjs";
+import { comparableText } from "../../src/shared/text.mjs";
 
 const BRAND_ALIASES = [
   ["3 Corações", ["3 CORACOES", "3 CORAÇÕES"]],

@@ -16,7 +16,7 @@ import {
 import { requireOneSignal } from "./push";
 import type { OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
-import { pushFailureMessage, resolvePushUiState } from "./push-state.js";
+import { pushFailureMessage, resolvePushUiState } from "../push-state.js";
 import { avatarUrl, loadAvatar, removeAvatar, uploadAvatar } from "./avatar";
 
 const email = document.querySelector<HTMLElement>("#account-email")!;

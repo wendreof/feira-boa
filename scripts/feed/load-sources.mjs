@@ -11,7 +11,7 @@ const ROOT = new URL("../../", import.meta.url);
  */
 export async function loadFallbackCatalog() {
   const { outputFiles } = await build({
-    entryPoints: [fileURLToPath(new URL("offers.ts", ROOT))],
+    entryPoints: [fileURLToPath(new URL("src/offers.ts", ROOT))],
     bundle: true,
     format: "iife",
     globalName: "OfferCatalog",

@@ -1,4 +1,4 @@
-import { foldText } from "../../shared/text.mjs";
+import { foldText } from "../../src/shared/text.mjs";
 
 const MONTHS = {
   janeiro: "01", jan: "01",

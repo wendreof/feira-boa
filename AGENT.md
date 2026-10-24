@@ -14,13 +14,13 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 ### Frontend
 - Plain static HTML/CSS/JS generated from TypeScript sources.
-- TypeScript entry points: `app.ts`, `login-page.ts`, `account-page.ts`, `suggestions-page.ts`.
+- TypeScript entry points (in `src/`): `src/app.ts`, `src/login-page.ts`, `src/account-page.ts`, `src/suggestions-page.ts`.
 - Bundling is done with `esbuild` via `npm run build`.
 - Tracked site artifacts are served from the repository root. `build-info.json` is generated and ignored by Git, so deployment must run `npm run build` before publishing.
 - Cloudflare Pages uses build command `npm run build` and output directory `.`. After changing build or deployment settings, verify the deployed `/build-info.json` is JSON and run `npm run check:site` against the public `SITE_URL`.
 
 ### Data pipeline
-- `offers.ts` is the curated fallback catalog.
+- `src/offers.ts` is the curated fallback catalog.
 - `scripts/adapters/*` fetch official sources; `npm run ingest:offers` writes snapshots in `state/`.
 - Pague Menos uses the official VTEX catalog API for collection `161`, paginated 50 products at a time; it filters unavailable items, deduplicates normalized name/brand/detail groups, and keeps package details derived from product names.
 - `scripts/build-offer-feed.mjs` prefers snapshots, applies brand/note presentation normalization plus legacy taxonomy, and generates `offers.json` plus build metadata.
@@ -76,7 +76,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings
 - `account.ts` — account, preferences, rules, and subscription logic
-- `account-page.ts`, `account-alerts.html` — account UI, including device/account push states
+- `src/account-page.ts`, `account-alerts.html` — account UI, including device/account push states
 - `push-state.js` — push UI state and failure-message mapping
 - `theme.ts` — theme persistence
 - `scripts/build-offer-feed.mjs` — feed generation

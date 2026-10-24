@@ -1,5 +1,5 @@
-import { resolveCategory } from "../../catalog-taxonomy.mjs";
-import { foldText } from "../../shared/text.mjs";
+import { resolveCategory } from "../../src/catalog-taxonomy.mjs";
+import { foldText } from "../../src/shared/text.mjs";
 import { presentationViolations } from "../offer-name-guard.mjs";
 import { sectorViolations } from "../offer-sector-guard.mjs";
 

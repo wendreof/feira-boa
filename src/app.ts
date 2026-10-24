@@ -1,11 +1,11 @@
 import { errorMessage } from "./errors";
 import type { Offer, OfferFeed, ProfilePreferences } from "./types";
 import { applyTheme, bindThemeToggle, type ThemePreference } from "./theme";
-import { resolveDefaultViewMode } from "./view-mode.js";
+import { resolveDefaultViewMode } from "../view-mode.js";
 import { shouldShowBrand } from "./offer-display.mjs";
 import { dateLabel, formatFeedUpdate, isActive, money, normalizeSearch, todayInSaoPaulo } from "./view/format";
 import { linkPushDeviceToUser } from "./push";
-import { showTransientStatus } from "./status-toast.js";
+import { showTransientStatus } from "../status-toast.js";
 import { applySourceFreshness } from "./source-freshness";
 import {
   ALL_SECTORS_LABEL,

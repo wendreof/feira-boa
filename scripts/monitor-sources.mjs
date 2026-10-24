@@ -1,4 +1,4 @@
-import { slugText } from "../shared/text.mjs";
+import { slugText } from "../src/shared/text.mjs";
 import { createHash } from "node:crypto";
 import { readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
@@ -9,7 +9,7 @@ export const FEED = new URL("offers.json", ROOT);
 export const STATE = new URL(".offer-monitor-state.json", ROOT);
 export const STATUS = new URL("source-status.js", ROOT);
 export const STATE_DIR = new URL("state/", ROOT);
-const OFFERS_TS = new URL("offers.ts", ROOT);
+const OFFERS_TS = new URL("src/offers.ts", ROOT);
 const USER_AGENT = "FeiraBoaOfferMonitor/1.0 (official public flyer change detection)";
 const TIMEOUT_MS = 30_000;
 const MAX_BYTES = 25 * 1024 * 1024;

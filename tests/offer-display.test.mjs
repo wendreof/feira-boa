@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { shouldShowBrand } from "../offer-display.mjs";
+import { shouldShowBrand } from "../src/offer-display.mjs";
 
 test("hides the brand when the name already contains it", () => {
   assert.equal(shouldShowBrand("Maionese Hellmann's 500g", "Hellmann's"), false);

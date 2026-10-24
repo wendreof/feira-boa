@@ -1,4 +1,4 @@
-import { slugText } from "../../shared/text.mjs";
+import { slugText } from "../../src/shared/text.mjs";
 import { assignIcon } from "../domain/icons.mjs";
 
 export const DEFAULT_OFFER_TONE = "#edf4e9";

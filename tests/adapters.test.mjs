@@ -7,7 +7,7 @@ import { normalizeOfferNote } from "../scripts/domain/offer-note.mjs";
 import { normalizeOfferPresentation } from "../scripts/domain/presentation.mjs";
 import { parseDateRange, parsePrice } from "../scripts/domain/parsing.mjs";
 import { validateOffer, validateSnapshot } from "../scripts/domain/validation.mjs";
-import { slugText as slug } from "../shared/text.mjs";
+import { slugText as slug } from "../src/shared/text.mjs";
 import { buildPagueMenosOffer, getWeekValidity } from "../scripts/adapters/paguemenos.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {

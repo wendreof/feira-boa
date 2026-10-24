@@ -1,4 +1,4 @@
-import type { Database } from "./database.types";
+import type { Database } from "./src/database.types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type SuggestionCategory = "idea" | "bug" | "content" | "other";

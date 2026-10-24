@@ -167,17 +167,6 @@ const TYPE_CATEGORY = {
 };
 
 /**
- * Tipos genéricos: o tipo sozinho não decide o setor, então as palavras do
- * produto podem refinar. Os tipos fora daqui são decididos pelo tipo, que vem
- * da categoria da própria loja.
- */
-const GENERIC_TYPES = new Set([
-  "Mercearia", "Arroz", "Feijão", "Café", "Congelados", "Doces e snacks", "Bebidas", "Bebidas alcoólicas",
-  "Sucos e bebidas", "Refrigerantes", "Cervejas", "Casa", "Casa e limpeza", "Lavanderia e limpeza",
-  "Higiene pessoal", "Papel higiênico", "Pet", "Frios e laticínios", "Outros",
-]);
-
-/**
  * Regras que podem trocar o setor do produto.
  *
  * São poucas e fortes: só quando o nome carrega um sinal que nenhum outro
@@ -318,7 +307,6 @@ export function resolveCategory(offer) {
   const text = normalizeText(`${offer?.name ?? ""} ${offer?.brand ?? ""}`);
   const types = Array.isArray(offer?.productTypes) ? offer.productTypes.filter(Boolean) : [];
   const baseType = types[0] ?? offer?.productType ?? "";
-  const generic = GENERIC_TYPES.has(baseType);
 
   if (types.includes("Churrasco") && baseType !== "Doces e snacks" && CHURRASCO_KEYWORDS.test(text) && !NOT_CHURRASCO.test(text)) {
     return { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };

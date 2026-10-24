@@ -10,7 +10,6 @@ import { spawnSync } from "node:child_process";
 const GENERATED_FILES = [
   "offers.json",
   "offers-jsonld.js",
-  "build-info.json",
   "app.js",
   "account.js",
   "admin.js",

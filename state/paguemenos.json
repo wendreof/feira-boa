@@ -9,7 +9,7 @@
     "from": "2026-10-19",
     "to": "2026-10-25"
   },
-  "fetchedAt": "2026-10-24T02:49:02.919Z",
+  "fetchedAt": "2026-10-24T03:20:02.274Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -4179,6 +4179,31 @@
       ],
       "storeCategory": "Limpeza/Casa/Limpadores",
       "price": 19.89,
+      "previousPrice": null,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-10-19",
+      "validTo": "2026-10-25",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "id": "paguemenos-limpador-multiuso-cif-cremoso-limpeza-milagrosa-cif-450ml-2026-10-19",
+      "store": "Pague Menos",
+      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Limpador Multiuso Cif Cremoso Limpeza Milagrosa",
+      "brand": "Cif",
+      "detail": "450ml",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "storeCategory": "Limpeza/Banheiro/Saponáceo",
+      "price": 24.89,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -13539,11 +13564,11 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-iogurte-liquido-yopro-23g-protein-morango-yopro-250g-2026-10-19",
+      "id": "paguemenos-iogurte-liquido-yopro-15g-protein-morango-yopro-250g-2026-10-19",
       "store": "Pague Menos",
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
       "branch": "Loja 33 · Jardim Santo André",
-      "name": "Iogurte Líquido Yopro 23g Protein Morango",
+      "name": "Iogurte Líquido Yopro 15g Protein Morango",
       "brand": "Yopro",
       "detail": "250g",
       "category": "Frios e laticínios",
@@ -13553,7 +13578,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 14.89,
+      "price": 11.99,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -14139,31 +14164,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-iogurte-liquido-yopro-15g-protein-morango-yopro-250g-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Iogurte Líquido Yopro 15g Protein Morango",
-      "brand": "Yopro",
-      "detail": "250g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Iogurtes",
-      "productTypes": [
-        "Iogurtes"
-      ],
-      "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 11.99,
-      "previousPrice": null,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-iogurte-liquido-yopro-15g-protein-doce-de-leite-havanna-yopro-250g-2026-10-19",
       "store": "Pague Menos",
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
@@ -14181,56 +14181,6 @@
       "price": 11.49,
       "previousPrice": null,
       "icon": "🍬",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-bebida-lactea-yopro-23g-protein-baunilha-yopro-250ml-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Bebida Láctea Yopro 23g Protein Baunilha",
-      "brand": "Yopro",
-      "detail": "250ml",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "Mercearia/Alimentos Funcionais/Bebida Proteica",
-      "price": 11.99,
-      "previousPrice": null,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-19",
-      "validTo": "2026-10-25",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-bebida-lactea-yopro-23g-protein-chocolate-yopro-250ml-2026-10-19",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Bebida Láctea Yopro 23g Protein Chocolate",
-      "brand": "Yopro",
-      "detail": "250ml",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "Mercearia/Alimentos Funcionais/Bebida Proteica",
-      "price": 11.99,
-      "previousPrice": null,
-      "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
       "validFrom": "2026-10-19",

@@ -109,6 +109,31 @@ function isOwnCodeUrl(url) {
   return typeof url === "string" && url.startsWith(`http://127.0.0.1:${PORT}/`);
 }
 
+/** Interações básicas da página inicial: busca, filtro de setor, limpar e favoritos sem login. */
+const INDEX_INTERACTIONS = `(async () => {
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  const cards = () => document.querySelectorAll(".offer-card").length;
+  const result = { initial: cards() };
+  const search = document.querySelector("#search-input");
+  search.value = "iogurte";
+  search.dispatchEvent(new Event("input"));
+  await wait(600);
+  result.search = cards();
+  search.value = "";
+  search.dispatchEvent(new Event("input"));
+  await wait(600);
+  document.querySelector('[data-department]:not([disabled]):not([data-department=""])')?.click();
+  await wait(300);
+  result.department = cards();
+  document.querySelector("#reset-filters").click();
+  await wait(300);
+  result.reset = cards();
+  document.querySelector("#favorites-toggle").click();
+  await wait(300);
+  result.loginDialog = document.querySelector("#reaction-login-dialog")?.open ?? null;
+  return result;
+})()`;
+
 async function checkPage(session, sessionId, page) {
   const problems = [];
   const handler = (message) => {
@@ -141,6 +166,19 @@ async function checkPage(session, sessionId, page) {
   const state = evaluation.result.value ?? {};
   if (page === "index.html" && !(state.offerCards > 0)) {
     problems.push("index.html rendered no offer cards");
+  }
+  if (page === "index.html") {
+    const interaction = await session.send("Runtime.evaluate", {
+      expression: INDEX_INTERACTIONS,
+      awaitPromise: true,
+      returnByValue: true,
+    }, sessionId);
+    const result = interaction.result.value ?? {};
+    if (!(result.search > 0 && result.search < result.initial)) problems.push(`search did not filter cards: ${JSON.stringify(result)}`);
+    if (!(result.department > 0 && result.department < result.initial)) problems.push(`sector filter did not filter cards: ${JSON.stringify(result)}`);
+    if (result.reset !== result.initial) problems.push(`reset did not restore cards: ${JSON.stringify(result)}`);
+    if (result.loginDialog !== true) problems.push("favorites toggle did not ask a signed-out user to log in");
+    state.interaction = result;
   }
   return { page, state, problems };
 }

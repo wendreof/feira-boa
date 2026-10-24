@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-24T19:34:39.529Z",
+  "updatedAt": "2026-10-24T21:20:25.978Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -6467,7 +6467,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
-      "price": 6.89,
+      "price": 7.59,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -19972,7 +19972,7 @@
         "Congelados"
       ],
       "storeCategory": "Congelados/Hambúrguer/Hambúrguer Bovino",
-      "price": 24.99,
+      "price": 25.99,
       "previousPrice": null,
       "icon": "🍔",
       "tone": "#edf4e9",

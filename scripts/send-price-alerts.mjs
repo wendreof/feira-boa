@@ -7,6 +7,7 @@ import {
   ruleMatchesOffer,
   saoPauloDate,
 } from "./offer-matcher.mjs";
+import { sendNotification } from "./onesignal-client.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
@@ -34,44 +35,12 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
-/**
- * Envia uma notificação via OneSignal para o usuário (alias external_id = user id).
- * Returns recipients count; throws on HTTP/API errors. recipients === 0 means
- * the user has no subscribed device (callers should skip, not fail).
- */
-async function sendOneSignalNotification({ userId, title, body, url, collapseId }) {
-  const response = await fetch("https://api.onesignal.com/api/v1/notifications", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${onesignalRestApiKey}`,
-    },
-    body: JSON.stringify({
-      app_id: onesignalAppId,
-      include_aliases: { external_id: [userId] },
-      channel_for_external_user_ids: "push",
-      headings: { en: title, pt: title },
-      contents: { en: body, pt: body },
-      url,
-      data: { url },
-      collapse_id: collapseId,
-      ttl: 60 * 60 * 24,
-    }),
+function sendOneSignalNotification(notification) {
+  return sendNotification({
+    appId: onesignalAppId,
+    apiKey: onesignalRestApiKey,
+    ...notification,
   });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const detail = Array.isArray(data?.errors) ? data.errors.join("; ") : JSON.stringify(data);
-    const error = new Error(`OneSignal HTTP ${response.status}: ${detail}`);
-    error.onesignalStatus = response.status;
-    throw error;
-  }
-  if (Array.isArray(data?.errors) && data.errors.length > 0) {
-    const text = data.errors.join("; ");
-    const noRecipients = /not subscribed|no players|no recipients/i.test(text);
-    if (noRecipients) return 0;
-    throw new Error(`OneSignal API error: ${text}`);
-  }
-  return Number(data?.recipients ?? 0);
 }
 
 function chunk(values, size) {

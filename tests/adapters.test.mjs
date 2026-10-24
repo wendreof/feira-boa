@@ -249,15 +249,15 @@ test("assignIcon gives each deli item its own icon", () => {
   assert.equal(assignIcon("Ketchup Bacon com Cebola Caramelizada", "Mercearia", "Mercearia"), "🥫");
 });
 
-test("normalizeOfferPresentation separates brands from product names", () => {
+test("normalizeOfferPresentation keeps the brand inside the product name", () => {
   const chicken = normalizeOfferPresentation({
     name: "COXA C/ SOBRECOXA DE FRANGO AVELÍCIA",
     brand: "",
     detail: "PCT KG",
     note: "",
   });
-  assert.equal(chicken.name, "Coxa c/ Sobrecoxa de Frango");
-  assert.equal(chicken.brand, "Avelícia");
+  assert.equal(chicken.name, "Coxa c/ Sobrecoxa de Frango Avelícia");
+  assert.equal(chicken.brand, "");
 
   const rice = normalizeOfferPresentation({
     name: "Arroz SÃO LUCAS ou SELETTO Tipo 1",
@@ -265,8 +265,8 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "5kg",
     note: "",
   });
-  assert.equal(rice.name, "Arroz Tipo 1");
-  assert.equal(rice.brand, "São Lucas / Seletto");
+  assert.equal(rice.name, "Arroz São Lucas ou Seletto Tipo 1");
+  assert.equal(rice.brand, "");
 
   const duplicate = normalizeOfferPresentation({
     name: "Sabão Em Pó Omo Expert Branco Absoluto",
@@ -274,7 +274,7 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "720g",
     note: "",
   });
-  assert.equal(duplicate.name, "Sabão Em Pó Expert Branco Absoluto");
+  assert.equal(duplicate.name, "Sabão em Pó Omo Expert Branco Absoluto");
   assert.equal(duplicate.brand, "Omo");
 
   const separate = normalizeOfferPresentation({
@@ -292,7 +292,8 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "500g",
     note: "",
   });
-  assert.equal(accentedBrand.name, "Café Tradicional 500g");
+  assert.equal(accentedBrand.name, "Café Pilão Tradicional");
+  assert.equal(accentedBrand.detail, "500g");
   assert.equal(accentedBrand.brand, "Pilão");
 
   const apostropheBrand = normalizeOfferPresentation({
@@ -301,7 +302,7 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "115g",
     note: "",
   });
-  assert.equal(apostropheBrand.name, "Salgadinho de Batata Clássica");
+  assert.equal(apostropheBrand.name, "Salgadinho de Batata Lay's Clássica");
   assert.equal(apostropheBrand.brand, "Lay's");
 
   const dated = normalizeOfferPresentation({
@@ -310,19 +311,20 @@ test("normalizeOfferPresentation separates brands from product names", () => {
     detail: "900ML",
     note: "",
   });
-  assert.equal(dated.name, "Óleo Soja");
-  assert.equal(dated.brand, "Vitaliv");
+  assert.equal(dated.name, "Óleo Soja Vitaliv");
+  assert.equal(dated.brand, "");
 });
 
-test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units lowercase", () => {
+test("normalizeOfferPresentation names are always Title Case, with units lowercase", () => {
   const condensed = normalizeOfferPresentation({
     name: "LEITE CONDENSADO MOÇA 340G SEMI DESN.",
     brand: "",
     detail: "340g",
     note: "",
   });
-  assert.equal(condensed.name, "Leite Condensado 340g Semi Desn.");
-  assert.equal(condensed.brand, "Moça");
+  assert.equal(condensed.name, "Leite Condensado Moça Semi Desn.");
+  assert.equal(condensed.detail, "340g");
+  assert.equal(condensed.brand, "");
 
   const cleaner = normalizeOfferPresentation({
     name: "LAVA ROUPAS EM PÓ",
@@ -338,8 +340,8 @@ test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units l
     detail: "350ml",
     note: "",
   });
-  assert.equal(beer.name, "Cerveja Lager");
-  assert.equal(beer.brand, "Heineken");
+  assert.equal(beer.name, "Cerveja Lager Heineken");
+  assert.equal(beer.brand, "");
 
   const mixed = normalizeOfferPresentation({
     name: "BISTECA Suína",
@@ -347,7 +349,17 @@ test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units l
     detail: "kg",
     note: "",
   });
-  assert.equal(mixed.name, "BISTECA Suína");
+  assert.equal(mixed.name, "Bisteca Suína");
+
+  const hyphen = normalizeOfferPresentation({
+    name: "REFRIGERANTE COCA-COLA 2L",
+    brand: "Coca-Cola",
+    detail: "2L",
+    note: "",
+  });
+  assert.equal(hyphen.name, "Refrigerante Coca-Cola");
+  assert.equal(hyphen.detail, "2L");
+  assert.equal(hyphen.brand, "Coca-Cola");
 });
 
 test("normalizeOfferPresentation does not mistake produce varieties for brands", () => {
@@ -366,8 +378,8 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
     detail: "140G",
     note: "",
   });
-  assert.equal(hazelnut.name, "Creme Avelã");
-  assert.equal(hazelnut.brand, "Nutella");
+  assert.equal(hazelnut.name, "Creme Avelã Nutella");
+  assert.equal(hazelnut.brand, "");
 });
 
 test("normalizeOfferPresentation moves flyer banners to a notice above the name", () => {
@@ -377,8 +389,8 @@ test("normalizeOfferPresentation moves flyer banners to a notice above the name"
     detail: "1L",
     note: "",
   });
-  assert.equal(offer.name, "Leite Uht Gfa");
-  assert.equal(offer.brand, "Líder");
+  assert.equal(offer.name, "Leite Uht Lider Gfa");
+  assert.equal(offer.brand, "");
   assert.match(offer.notice, /^Ofertas especiais deste box/);
   assert.match(offer.notice, /estoques\.$/);
 });
@@ -390,8 +402,8 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     detail: "390G",
     note: "",
   });
-  assert.equal(bread.name, "Pão de Forma Tradicional");
-  assert.equal(bread.brand, "Bauducco");
+  assert.equal(bread.name, "Pão de Forma Bauducco Tradicional");
+  assert.equal(bread.brand, "");
 
   const pasta = normalizeOfferPresentation({
     name: "LIMPEZA E PERFUMARIA BAZAR MATINAIS RESFRIADOS MACARRÃO C/ OVOS RENATA",
@@ -399,8 +411,8 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     detail: "500G",
     note: "",
   });
-  assert.equal(pasta.name, "Matinais Resfriados Macarrão c/ Ovos");
-  assert.equal(pasta.brand, "Renata");
+  assert.equal(pasta.name, "Matinais Resfriados Macarrão c/ Ovos Renata");
+  assert.equal(pasta.brand, "");
 
   const headers = normalizeOfferPresentation({
     name: "BEBIDAS MERCEARIAS AÇOUGUE MOLHO DE TOMATE FUGINI SACHÊ",
@@ -408,8 +420,8 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     detail: "300G",
     note: "",
   });
-  assert.equal(headers.name, "Molho de Tomate Sachê");
-  assert.equal(headers.brand, "Fugini");
+  assert.equal(headers.name, "Molho de Tomate Fugini Sachê");
+  assert.equal(headers.brand, "");
 
   const wine = normalizeOfferPresentation({
     name: "□ VINHO CHILENO CHILANO",
@@ -417,8 +429,8 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     detail: "750ML",
     note: "Limite por cliente— —UN",
   });
-  assert.equal(wine.name, "Vinho Chileno");
-  assert.equal(wine.brand, "Chilano");
+  assert.equal(wine.name, "Vinho Chileno Chilano");
+  assert.equal(wine.brand, "");
   assert.equal(wine.note, "", "corrupted limit excerpts must be dropped");
 
   const phantom = normalizeOfferPresentation({
@@ -456,8 +468,8 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     detail: "400ML",
     note: "",
   });
-  assert.equal(amaciante.name, "Amaciante Concentrado");
-  assert.equal(amaciante.brand, "Comfort");
+  assert.equal(amaciante.name, "Amaciante Concentrado Comfort");
+  assert.equal(amaciante.brand, "");
   assert.equal(amaciante.detail, "400ML");
 
   const toalha = normalizeOfferPresentation({
@@ -484,7 +496,7 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     detail: "11 Unid.",
     note: "",
   });
-  assert.equal(personal.name, "Papel Higiênico PERSONAL Vip 20m");
+  assert.equal(personal.name, "Papel Higiênico Personal Vip 20m");
   assert.equal(personal.detail, "11 Unid.");
   assert.equal(personal.note, "Leve 12 e pague 11");
 
@@ -494,36 +506,58 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     detail: "65/72g",
     note: "",
   });
-  assert.equal(cupNoodles.name, "Macarrão Instantâneo");
-  assert.equal(cupNoodles.brand, "Cup Noodles");
+  assert.equal(cupNoodles.name, "Macarrão Instantâneo Cup Noodles");
+  assert.equal(cupNoodles.brand, "");
   assert.equal(cupNoodles.note, "COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L");
 });
 
-test("normalizeOfferPresentation extracts famous brands from flyer names", () => {
+test("normalizeOfferPresentation keeps brand words in flyer names instead of extracting them", () => {
   const cases = [
-    ["ENERGÉTICO MONSTER ENERGY", "Energético", "Monster Energy"],
-    ["ÁGUA MINERAL BIOLEVE C/ GÁS", "Água Mineral c/ Gás", "Bioleve"],
-    ["PÃO DE FORMA WICKBOLD INTEGRAL", "Pão de Forma Integral", "Wickbold"],
-    ["SABONETE DOVE", "Sabonete", "Dove"],
-    ["DESODORANTE AERO NIVEA", "Desodorante Aero", "Nivea"],
-    ["CREME DE LEITE PIRACANJUBA", "Creme de Leite", "Piracanjuba"],
-    ["MAIONESE HELLMANN’S 500G TRADICIONAL", "Maionese 500g Tradicional", "Hellmann's"],
-    ["ARROZ TIPO 1 SERRAZUL", "Arroz Tipo 1", "Serrazul"],
-    ["SANDÁLIA HAVAIANAS TOP CN", "Sandália Top Cn", "Havaianas"],
-    ["LIMPADOR CREMOSO CIF MULTIUSO ORIGINAL 450ML 20% GTS", "Limpador Cremoso Multiuso Original 450ml 20% Gts", "Cif"],
-    ["BATATA PRINGLES SABORES 100/104/105/", "Batata Sabores 100/104/105", "Pringles"],
-    ["ACHOCOLATADO EM PÓ TODDY", "Achocolatado em Pó", "Toddy"],
-    ["MACARRÃO INSTANTÂNEO NISSIN", "Macarrão Instantâneo", "Nissin"],
-    ["REFR PO TANG", "Refr Po", "Tang"],
-    ["LEITE EM PÓ NINHO 380G +10% GRÁTIS", "Leite em Pó 380g +10% Grátis", "Ninho"],
-    ["APARTIR DE UNIDADES PAGUE: ALIMENTO PEDIGREE/ WHISKAS SABORES 3", "Alimento Sabores 3", "Pedigree / Whiskas"],
-    ["APARTIR DE UNIDADES PAGUE: 3 FILTRO DE PAPEL 3 CORAÇÕES 103 30UN", "Filtro de Papel 103 30un", "3 Corações"],
+    ["ENERGÉTICO MONSTER ENERGY", "Energético Monster Energy", "Monster"],
+    ["ÁGUA MINERAL BIOLEVE C/ GÁS", "Água Mineral Bioleve c/ Gás", "Bioleve"],
+    ["PÃO DE FORMA WICKBOLD INTEGRAL", "Pão de Forma Wickbold Integral", "Wickbold"],
+    ["SABONETE DOVE", "Sabonete Dove", "Dove"],
+    ["DESODORANTE AERO NIVEA", "Desodorante Aero Nivea", "Nivea"],
+    ["CREME DE LEITE PIRACANJUBA", "Creme de Leite Piracanjuba", "Piracanjuba"],
+    ["ARROZ TIPO 1 SERRAZUL", "Arroz Tipo 1 Serrazul", "Serrazul"],
+    ["SANDÁLIA HAVAIANAS TOP CN", "Sandália Havaianas Top Cn", "Havaianas"],
+    ["ACHOCOLATADO EM PÓ TODDY", "Achocolatado em Pó Toddy", "Toddy"],
+    ["MACARRÃO INSTANTÂNEO NISSIN", "Macarrão Instantâneo Nissin", "Nissin"],
+    ["LEITE EM PÓ NINHO 380G +10% GRÁTIS", "Leite em Pó Ninho +10% Grátis", "Ninho"],
+    ["APARTIR DE UNIDADES PAGUE: 3 FILTRO DE PAPEL 3 CORAÇÕES 103 30UN", "Filtro de Papel 3 Corações 103 30un", "Corações"],
   ];
-  for (const [name, expectedName, expectedBrand] of cases) {
+  for (const [name, expectedName, brandWord] of cases) {
     const offer = normalizeOfferPresentation({ name, brand: "", detail: "Unidade", note: "" });
     assert.equal(offer.name, expectedName, `name for ${name}`);
-    assert.equal(offer.brand, expectedBrand, `brand for ${name}`);
+    assert.equal(offer.brand, "", `brand for ${name} must not be extracted`);
+    assert.match(offer.name, new RegExp(brandWord, "i"), `brand word kept for ${name}`);
   }
+});
+
+test("normalizeOfferPresentation moves a single quantity from the name into detail", () => {
+  const lacta = normalizeOfferPresentation({ name: "Choc. Lacta 80g", brand: "", detail: "", note: "" });
+  assert.equal(lacta.name, "Choc. Lacta");
+  assert.equal(lacta.detail, "80g");
+
+  const juice = normalizeOfferPresentation({ name: "SUCO INTEGRAL AURORA TP 1,5L UVA", brand: "Aurora", detail: "Unidade", note: "" });
+  assert.equal(juice.name, "Suco Integral Aurora Tp Uva");
+  assert.equal(juice.detail, "1,5l");
+
+  const realDetail = normalizeOfferPresentation({ name: "Choc. Lacta 80g", brand: "", detail: "104G", note: "" });
+  assert.equal(realDetail.name, "Choc. Lacta");
+  assert.equal(realDetail.detail, "104G", "a real detail wins over the name quantity");
+
+  const connector = normalizeOfferPresentation({ name: "Cerveja Skol Pilsen c/ 350ml", brand: "", detail: "Unid.", note: "" });
+  assert.equal(connector.name, "Cerveja Skol Pilsen");
+  assert.equal(connector.detail, "350ml");
+
+  const kit = normalizeOfferPresentation({ name: "Kit Seda Shampoo 300ml + Condicionador 190ml", brand: "", detail: "Unid.", note: "" });
+  assert.equal(kit.name, "Kit Seda Shampoo 300ml + Condicionador 190ml", "multi-quantity names stay untouched");
+  assert.equal(kit.detail, "Unid.");
+
+  const count = normalizeOfferPresentation({ name: "Pilha Duracell Alc. Palito AAA 2un", brand: "", detail: "", note: "" });
+  assert.equal(count.name, "Pilha Duracell Alc. Palito Aaa 2un");
+  assert.equal(count.detail, "Unidade");
 });
 
 test("normalizeOfferNote fixes limits and promotional copy", () => {

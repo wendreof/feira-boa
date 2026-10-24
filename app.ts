@@ -369,7 +369,7 @@ function showFeedError(): void {
     }
   }
 
-  async function saveThemePreference(theme: ThemePreference): Promise<void> {
+  async function saveThemePreference(): Promise<void> {
     if (!currentUserId) return;
     try {
       const api = await loadAccountApi();
@@ -431,7 +431,7 @@ function showFeedError(): void {
   bindThemeToggle((theme) => {
     preferences.theme = theme;
     pendingTheme = theme;
-    if (currentUserId && preferencesLoaded) void saveThemePreference(theme);
+    if (currentUserId && preferencesLoaded) void saveThemePreference();
   });
 
   function money(value: number): string {
@@ -563,7 +563,7 @@ function showFeedError(): void {
     const meta = element("div", "card-meta");
     const brand = element("span", "card-brand");
     const spec = element("span", "spec");
-    meta.append(brand, spec);
+    meta.append(spec, brand);
     const info = element("div", "card-info");
     const priceRow = element("div", "price-row");
     const priceBlock = element("div", "price-block");

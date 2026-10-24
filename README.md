@@ -65,7 +65,7 @@ The page asks Supabase for the signed-in session and then calls the `is_admin` R
 
 The account page saves favorite stores/product types, theme, price alert rules, and pause state. Push notifications are delivered by OneSignal: permission is requested only after the user enables alerts and confirms the contents, `pwa.js` initializes the OneSignal SDK (App ID in `pwa.js`), and `service-worker.js` loads the OneSignal worker instead of handling push itself.
 
-The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `ONESIGNAL_REST_API_KEY`, and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. The sender resolves the OneSignal App ID from `pwa.js`. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and all SQL migrations are in place.
+The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `ONESIGNAL_REST_API_KEY` (an OneSignal App API key starting with `os_v2_app_`, sent as `Authorization: Key ...`; legacy `Basic` REST keys are not supported), and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. The sender resolves the OneSignal App ID from `pwa.js`. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and all SQL migrations are in place.
 
 ## Scheduled source monitoring and production
 

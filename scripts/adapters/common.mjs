@@ -271,58 +271,14 @@ const BRAND_ALIASES = [
   ["Indaiá", ["INDAIA", "INDAÍA"]],
   ["Chilano", ["CHILANO"]],
   ["Cup Noodles", ["CUP NOODLES"]],
+  ["Biju", ["BIJU"]],
+  ["Império", ["IMPERIO", "IMPÉRIO"]],
 ];
-
-const ACCENT_CLASSES = {
-  a: "[aáàâãä]", e: "[eéèêë]", i: "[iíìîï]", o: "[oóòôõö]", u: "[uúùûü]",
-  c: "[cç]", n: "[nñ]", y: "[yýÿ]",
-};
 
 function normalizeForMatch(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
-
-function escapeRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function brandPattern(alias) {
-  const tokens = normalizeForMatch(alias).split(" ").filter(Boolean);
-  if (!tokens.length || tokens.join("").length < 3) return null;
-  const source = tokens.map((token) => [...token]
-    .map((character) => ACCENT_CLASSES[character] ?? escapeRegex(character)).join(""))
-    .join("[^a-z0-9]+");
-  return new RegExp(`(?<![a-z0-9])${source}(?![a-z0-9])`, "gi");
-}
-
-function addBrandAlias(map, brand, alias) {
-  const pattern = brandPattern(alias);
-  if (!pattern) return;
-  const key = normalizeForMatch(alias);
-  if (!key || map.has(key)) return;
-  map.set(key, { brand, pattern });
-}
-
-function aliasesForBrand(brand) {
-  const key = normalizeForMatch(brand);
-  const aliases = new Map();
-  for (const [canonical, names] of BRAND_ALIASES) {
-    if (normalizeForMatch(canonical) === key || names.some((name) => normalizeForMatch(name) === key)) {
-      for (const name of names) addBrandAlias(aliases, canonical, name);
-    }
-  }
-  if (aliases.size === 0) addBrandAlias(aliases, brand, brand);
-  return [...aliases.values()];
-}
-
-const ALL_BRAND_ALIASES = (() => {
-  const aliases = new Map();
-  for (const [brand, names] of BRAND_ALIASES) {
-    for (const name of names) addBrandAlias(aliases, brand, name);
-  }
-  return [...aliases.values()];
-})();
 
 const BRAND_CANONICAL_NAMES = (() => {
   const names = new Map();
@@ -332,27 +288,6 @@ const BRAND_CANONICAL_NAMES = (() => {
   }
   return names;
 })();
-
-function findBrandMatches(name, aliases) {
-  const matches = [];
-  for (const alias of aliases) {
-    alias.pattern.lastIndex = 0;
-    for (const match of name.matchAll(alias.pattern)) {
-      matches.push({
-        start: match.index,
-        end: match.index + match[0].length,
-        brand: alias.brand,
-      });
-    }
-  }
-  matches.sort((left, right) => left.start - right.start || (right.end - right.start) - (left.end - left.start));
-  const selected = [];
-  for (const match of matches) {
-    if (selected.some((item) => match.start < item.end && match.end > item.start)) continue;
-    selected.push(match);
-  }
-  return selected;
-}
 
 /**
  * Títulos de seção do folheto (ex.: "LIMPEZA E PERFUMARIA BAZAR") que o PDF
@@ -432,8 +367,8 @@ const CASE_UNIT_WORDS = new Set([
   "pc", "pcs", "pct", "cx", "fl", "kt",
 ]);
 
-function isScreamingCase(text) {
-  return /\p{Ll}/u.test(text) === false && (text.match(/\p{L}/gu)?.length ?? 0) >= 3;
+function capitalizeCaseSegment(segment) {
+  return segment.charAt(0).toLocaleUpperCase("pt-BR") + segment.slice(1).toLocaleLowerCase("pt-BR");
 }
 
 function normalizeCaseWord(word, isFirst) {
@@ -443,16 +378,17 @@ function normalizeCaseWord(word, isFirst) {
   }
   const numberUnit = word.match(/^(\d+(?:[.,]\d+)?)([A-Za-z]+\.?)$/);
   if (numberUnit) return `${numberUnit[1]}${numberUnit[2].toLowerCase()}`;
-  return word.charAt(0).toLocaleUpperCase("pt-BR") + word.slice(1).toLocaleLowerCase("pt-BR");
+  return word.split("-").map(capitalizeCaseSegment).join("-");
 }
 
 /**
- * Converte nomes em CAIXA ALTA de folheto para leitura normal.
- * Nomes já mistos (ex.: "BISTECA Suína") passam intactos.
+ * Nome do produto sempre em Title Case (ex.: "CARNE MOÍDA 500G" e
+ * "carne moída" viram "Carne Moída 500g"). Palavras de ligação e unidades
+ * ficam em minúsculas quando não abrem o nome.
  */
 export function normalizeProductNameCase(name) {
   const value = String(name ?? "").replace(/\s+/g, " ").trim();
-  if (!value || !isScreamingCase(value)) return value;
+  if (!value) return value;
   let first = true;
   return value.split(/(\s+)/).map((part) => {
     if (!part || /^\s+$/.test(part)) return part;
@@ -513,6 +449,30 @@ function extractBundleCodes(text, payHint = "") {
   return { text: cleaned, notes };
 }
 
+const NAME_QUANTITY_PATTERN = /(?<![\p{L}\d+])(\d+(?:[.,]\d+)?)\s*(kg|g|ml|l)(?![\p{L}\d%])/giu;
+const PLACEHOLDER_DETAIL_PATTERN = /^(unidades?|unid\.?|un\.?)$/i;
+
+/**
+ * Quantidade/unidade escrita no nome (ex.: "Lacta 80g", "Suco Aurora 1,5L Uva").
+ * Só age quando há exatamente uma quantidade no nome: se o `detail` ainda é
+ * placeholder ("Unidade"), ele recebe a quantidade; se já tem quantidade real,
+ * ela prevalece e a cópia do nome sai. Nomes com várias quantidades (kits,
+ * multipacks) ficam como estão.
+ */
+export function extractNameQuantity(name, detail) {
+  const matches = [...name.matchAll(NAME_QUANTITY_PATTERN)];
+  if (matches.length !== 1) return { name, detail };
+  const [token] = matches;
+  const quantity = `${token[1]}${token[2].toLowerCase()}`;
+  const stripped = cleanProductName(
+    `${name.slice(0, token.index)} ${name.slice(token.index + token[0].length)}`
+      .replace(/\s+/g, " ")
+      .replace(/\s+(?:de|c\/|com|por)\s*$/i, ""),
+  );
+  const nextDetail = !detail || PLACEHOLDER_DETAIL_PATTERN.test(detail) ? quantity : detail;
+  return { name: stripped, detail: nextDetail };
+}
+
 export function normalizeOfferPresentation(offer) {
   const originalName = String(offer?.name ?? "").replace(/\s+/g, " ").trim();
   const originalBrand = String(offer?.brand ?? "").replace(/\s+/g, " ").trim();
@@ -520,26 +480,11 @@ export function normalizeOfferPresentation(offer) {
   const banner = takeValidityBanner(originalName);
   const detailBundle = extractBundleCodes(String(offer?.detail ?? ""));
   const nameBundle = extractBundleCodes(banner.name, detailBundle.text);
-  const baseName = cleanProductName(nameBundle.text);
-
-  const matches = originalBrand
-    ? findBrandMatches(baseName, aliasesForBrand(originalBrand))
-    : findBrandMatches(baseName, ALL_BRAND_ALIASES);
-  let brand = originalBrand;
-  let name = baseName;
-
-  if (matches.length > 0) {
-    name = cleanProductName(baseName
-      .slice(0, matches[0].start)
-      + matches.slice(1).reduce((result, match, index) => result + baseName.slice(matches[index].end, match.start), "")
-      + baseName.slice(matches[matches.length - 1].end));
-    if (!originalBrand) brand = [...new Set(matches.map((match) => match.brand))].join(" / ");
-    if (name.length < 2) {
-      name = baseName;
-      brand = originalBrand;
-    }
-  }
-  brand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(brand)) ?? brand;
+  // A marca nunca é tirada do nome: o nome fica completo e a marca só aparece
+  // quando a própria fonte informa o campo `brand`.
+  const brand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(originalBrand)) ?? originalBrand;
+  const quantity = extractNameQuantity(cleanProductName(nameBundle.text), detailBundle.text || "Unidade");
+  const baseName = quantity.name;
 
   const note = [
     normalizeOfferNote(offer?.note),
@@ -549,9 +494,9 @@ export function normalizeOfferPresentation(offer) {
 
   const result = {
     ...offer,
-    name: normalizeProductNameCase(name || baseName),
+    name: normalizeProductNameCase(baseName),
     brand,
-    detail: detailBundle.text || "Unidade",
+    detail: quantity.detail,
     note,
   };
   const notice = [banner.banner, offer?.notice].filter(Boolean).join(" · ");

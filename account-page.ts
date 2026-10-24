@@ -63,10 +63,10 @@ let avatarPath: string | null = null;
 bindThemeToggle((theme) => {
   pendingTheme = theme;
   if (preferences) preferences.theme = theme;
-  if (userId && preferencesLoaded) void saveThemePreference(theme);
+  if (userId && preferencesLoaded) void saveThemePreference();
 });
 
-async function saveThemePreference(theme: ThemePreference): Promise<void> {
+async function saveThemePreference(): Promise<void> {
   try {
     await savePreferences(userId, preferences);
     pendingTheme = null;
@@ -208,10 +208,6 @@ async function refreshRules(): Promise<void> {
   const settings = await loadAccountSettings(userId);
   rules = settings.alertRules;
   renderRules();
-}
-
-async function refreshPushAccountState(): Promise<void> {
-  await refreshPushDeviceState();
 }
 
 async function detachOneSignalFromAccount(): Promise<void> {
@@ -481,7 +477,7 @@ void getCurrentUser()
     const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));
     renderCheckboxes(favoriteStores, stores, preferences.favoriteStores);
     renderCheckboxes(favoriteProductTypes, productTypes, preferences.favoriteProductTypes);
-    if (pendingTheme) await saveThemePreference(pendingTheme);
+    if (pendingTheme) await saveThemePreference();
     if (alertStore) alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
     if (alertProduct) alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
     renderRules();

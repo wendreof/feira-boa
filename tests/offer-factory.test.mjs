@@ -15,13 +15,13 @@ test("builds the id from the store prefix and a slug of the key", () => {
   assert.equal(offer.sourceUrl, "https://alpha.test/ofertas");
 });
 
-test("applies defaults for brand, previous price, note and tone", () => {
+test("applies defaults for previous price, note and tone without a brand field", () => {
   const offer = createOffer({
     storeId: "alpha", idKey: "x", store, sourceUrl: "https://alpha.test/",
     product: { name: "Arroz", detail: "1kg", price: 9.9 },
     validity: { from: "2026-10-22", to: "2026-10-25" }, taxonomy,
   });
-  assert.equal(offer.brand, "");
+  assert.ok(!("brand" in offer), "the brand lives inside the name");
   assert.equal(offer.previousPrice, null);
   assert.equal(offer.note, "");
   assert.equal(offer.tone, DEFAULT_OFFER_TONE);

@@ -48,8 +48,8 @@ export function validateFeed({ stores, offers }) {
     assertOfferFields(offer, storeUrls);
 
     const sector = resolveCategory(offer);
-    const text = foldText(`${offer.name} ${offer.brand ?? ""}`);
-    sectorProblems.push(...sectorViolations(offer.name, offer.brand ?? "", sector.groupId, text));
+    const text = foldText(offer.name);
+    sectorProblems.push(...sectorViolations(offer.name, sector.groupId, text));
     presentationProblems.push(...presentationViolations(offer));
     ids.add(offer.id);
   }

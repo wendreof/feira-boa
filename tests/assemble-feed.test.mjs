@@ -4,7 +4,7 @@ import { assembleFeed } from "../scripts/feed/assemble-feed.mjs";
 
 const store = (name) => ({ name, branch: "Centro", sourceUrl: `https://${name.toLowerCase()}.test/`, from: "2026-10-22", to: "2026-10-25" });
 const offer = (id, storeName, name, extra = {}) => ({
-  id, store: storeName, name, brand: "", detail: "Unidade", note: "", price: 10, previousPrice: null,
+  id, store: storeName, name, detail: "Unidade", note: "", price: 10, previousPrice: null,
   validFrom: "2026-10-22", validTo: "2026-10-25", sourceUrl: `https://${storeName.toLowerCase()}.test/`,
   category: "Mercearia", ...extra,
 });

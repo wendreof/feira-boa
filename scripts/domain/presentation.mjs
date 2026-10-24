@@ -1,34 +1,37 @@
-import { BRAND_CANONICAL_NAMES, normalizeForMatch } from "./brands.mjs";
+import { BRAND_CANONICAL_NAMES, mergeBrandIntoName, normalizeForMatch } from "./brands.mjs";
 import { cleanProductName, extractNameQuantity, normalizeProductNameCase, takeValidityBanner } from "./product-name.mjs";
 import { extractBundleCodes, normalizeOfferNote } from "./offer-note.mjs";
 
+/**
+ * Fronteira única de apresentação: limpa nome/detalhe/nota e publica a oferta
+ * sem campo de marca — `BRAND_CANONICAL_NAMES` canoniza a marca informada pela
+ * fonte e `mergeBrandIntoName` a coloca dentro de `name`.
+ */
 export function normalizeOfferPresentation(offer) {
-  const originalName = String(offer?.name ?? "").replace(/\s+/g, " ").trim();
-  const originalBrand = String(offer?.brand ?? "").replace(/\s+/g, " ").trim();
+  const { brand, ...source } = offer ?? {};
+  const originalName = String(source.name ?? "").replace(/\s+/g, " ").trim();
+  const originalBrand = String(brand ?? "").replace(/\s+/g, " ").trim();
 
   const banner = takeValidityBanner(originalName);
-  const detailBundle = extractBundleCodes(String(offer?.detail ?? ""));
+  const detailBundle = extractBundleCodes(String(source.detail ?? ""));
   const nameBundle = extractBundleCodes(banner.name, detailBundle.text);
-  // A marca nunca é tirada do nome: o nome fica completo e a marca só aparece
-  // quando a própria fonte informa o campo `brand`.
-  const brand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(originalBrand)) ?? originalBrand;
+  const canonicalBrand = BRAND_CANONICAL_NAMES.get(normalizeForMatch(originalBrand)) ?? originalBrand;
   const quantity = extractNameQuantity(cleanProductName(nameBundle.text), detailBundle.text || "Unidade");
-  const baseName = quantity.name;
+  const baseName = normalizeProductNameCase(quantity.name);
 
   const note = [
-    normalizeOfferNote(offer?.note),
+    normalizeOfferNote(source.note),
     ...nameBundle.notes,
     ...detailBundle.notes,
   ].filter(Boolean).join(" · ");
 
   const result = {
-    ...offer,
-    name: normalizeProductNameCase(baseName),
-    brand,
+    ...source,
+    name: mergeBrandIntoName(baseName, canonicalBrand),
     detail: quantity.detail,
     note,
   };
-  const notice = [banner.banner, offer?.notice].filter(Boolean).join(" · ");
+  const notice = [banner.banner, source.notice].filter(Boolean).join(" · ");
   if (notice) result.notice = notice;
   return result;
 }

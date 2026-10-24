@@ -116,7 +116,7 @@ export async function extractBigBom(customUrl = null) {
 
     if (nameOnly.length < 2 || /NESTA OFERTA|A UNID\.?\s*SAI\s*POR/i.test(nameOnly)) continue;
 
-    const taxonomy = classifyProduct(nameOnly, "", "Geral");
+    const taxonomy = classifyProduct(nameOnly, "Geral");
     const offer = createOffer({
       storeId: "bigbom",
       idKey: `${nameOnly}-${detail}-${validity.from}`,

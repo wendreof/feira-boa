@@ -67,58 +67,58 @@ test("slug generates URL-safe normalized identifiers", () => {
 });
 
 test("classifyProduct maps products to departments and product types", () => {
-  const beef = classifyProduct("Costela Bovina", "Friboi", "Carnes");
+  const beef = classifyProduct("Costela Bovina", "Carnes");
   assert.equal(beef.department, "Açougue e peixaria");
   assert.equal(beef.productType, "Carne bovina");
   assert.ok(beef.productTypes.includes("Churrasco"));
 
-  const milk = classifyProduct("Leite Longa Vida Líder 1L", "Líder", "Laticínios");
+  const milk = classifyProduct("Leite Longa Vida Líder 1L", "Laticínios");
   assert.equal(milk.department, "Frios e laticínios");
   assert.equal(milk.productType, "Leites");
 
-  const detergent = classifyProduct("Lava Roupas OMO", "OMO", "Limpeza");
+  const detergent = classifyProduct("Lava Roupas OMO", "Limpeza");
   assert.equal(detergent.department, "Casa e limpeza");
   assert.equal(detergent.productType, "Lavanderia e limpeza");
 
-  const eggs = classifyProduct("Ovos Vermelhos São Caipira 10un", "", "Geral");
+  const eggs = classifyProduct("Ovos Vermelhos São Caipira 10un", "Geral");
   assert.equal(eggs.department, "Mercearia");
   assert.equal(eggs.productType, "Ovos");
 
-  const sandals = classifyProduct("Sandália Ipanema Clássica", "", "Geral");
+  const sandals = classifyProduct("Sandália Ipanema Clássica", "Geral");
   assert.equal(sandals.department, "Vestuário e calçados");
   assert.equal(sandals.productType, "Calçados");
 
-  const kettle = classifyProduct("Feirinha New Fort Flon", "", "Geral");
+  const kettle = classifyProduct("Feirinha New Fort Flon", "Geral");
   assert.equal(kettle.department, "Casa e limpeza");
   assert.equal(kettle.productType, "Casa");
 
-  const hazelnut = classifyProduct("Creme Avelã Nutella 140g", "", "Geral");
+  const hazelnut = classifyProduct("Creme Avelã Nutella 140g", "Geral");
   assert.equal(hazelnut.department, "Mercearia");
   assert.equal(hazelnut.productType, "Doces e snacks");
 
-  const unknown = classifyProduct("Produto sem categoria", "", "Geral");
+  const unknown = classifyProduct("Produto sem categoria", "Geral");
   assert.equal(unknown.department, "Outros");
   assert.equal(unknown.productType, "Outros");
 });
 
 test("classifyProduct keeps embutidos out of the meat categories", () => {
-  const sausage = classifyProduct("Linguiça Calabresa Sadia Defumada Cozida", "Sadia", "Carnes");
+  const sausage = classifyProduct("Linguiça Calabresa Sadia Defumada Cozida", "Carnes");
   assert.equal(sausage.department, "Frios e laticínios");
   assert.equal(sausage.productType, "Frios");
 
-  const ham = classifyProduct("Presunto Sadia Cozido Fatiado", "Sadia", "Frios");
+  const ham = classifyProduct("Presunto Sadia Cozido Fatiado", "Frios");
   assert.equal(ham.department, "Frios e laticínios");
   assert.equal(ham.productType, "Frios");
 
-  const bacon = classifyProduct("Bacon Defumado Sadia em Fatias", "Sadia", "Carnes");
+  const bacon = classifyProduct("Bacon Defumado Sadia em Fatias", "Carnes");
   assert.equal(bacon.department, "Frios e laticínios");
   assert.equal(bacon.productType, "Frios");
 
-  const pork = classifyProduct("Filé Mignon Suíno Sadia em Bifes", "Sadia", "Carnes");
+  const pork = classifyProduct("Filé Mignon Suíno Sadia em Bifes", "Carnes");
   assert.equal(pork.department, "Açougue e peixaria");
   assert.equal(pork.productType, "Carnes suínas");
 
-  const baconFlavor = classifyProduct("Ketchup Heinz Bacon com Cebola Caramelizada", "Heinz", "Mercearia");
+  const baconFlavor = classifyProduct("Ketchup Heinz Bacon com Cebola Caramelizada", "Mercearia");
   assert.equal(baconFlavor.department, "Mercearia");
   assert.equal(baconFlavor.productType, "Mercearia");
 });
@@ -139,7 +139,7 @@ test("buildPagueMenosOffer maps catalog products and skips unavailable items", (
   const offer = buildPagueMenosOffer(product, { validity });
 
   assert.equal(offer.name, "Café Melitta Regiões Brasileiras Sul de Minas");
-  assert.equal(offer.brand, "Melitta");
+  assert.ok(!("brand" in offer), "brand must live inside the name");
   assert.equal(offer.detail, "250g");
   assert.equal(offer.price, 24.99);
   assert.equal(offer.previousPrice, 25.99);
@@ -253,7 +253,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     note: "",
   });
   assert.equal(chicken.name, "Coxa c/ Sobrecoxa de Frango Avelícia");
-  assert.equal(chicken.brand, "");
+  assert.ok(!("brand" in chicken), "brand must live inside the name");
 
   const rice = normalizeOfferPresentation({
     name: "Arroz SÃO LUCAS ou SELETTO Tipo 1",
@@ -262,7 +262,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     note: "",
   });
   assert.equal(rice.name, "Arroz São Lucas ou Seletto Tipo 1");
-  assert.equal(rice.brand, "");
+  assert.ok(!("brand" in rice), "brand must live inside the name");
 
   const duplicate = normalizeOfferPresentation({
     name: "Sabão Em Pó Omo Expert Branco Absoluto",
@@ -271,7 +271,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     note: "",
   });
   assert.equal(duplicate.name, "Sabão em Pó Omo Expert Branco Absoluto");
-  assert.equal(duplicate.brand, "Omo");
+  assert.ok(!("brand" in duplicate), "brand must live inside the name");
 
   const separate = normalizeOfferPresentation({
     name: "Lasanha",
@@ -279,8 +279,8 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     detail: "600 g",
     note: "",
   });
-  assert.equal(separate.name, "Lasanha");
-  assert.equal(separate.brand, "Seara");
+  assert.equal(separate.name, "Lasanha Seara", "a separate brand joins the name");
+  assert.ok(!("brand" in separate), "brand must live inside the name");
 
   const accentedBrand = normalizeOfferPresentation({
     name: "Café Pilão Tradicional 500g",
@@ -290,7 +290,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
   });
   assert.equal(accentedBrand.name, "Café Pilão Tradicional");
   assert.equal(accentedBrand.detail, "500g");
-  assert.equal(accentedBrand.brand, "Pilão");
+  assert.ok(!("brand" in accentedBrand), "brand must live inside the name");
 
   const apostropheBrand = normalizeOfferPresentation({
     name: "Salgadinho de Batata Lay's Clássica",
@@ -299,7 +299,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     note: "",
   });
   assert.equal(apostropheBrand.name, "Salgadinho de Batata Lay's Clássica");
-  assert.equal(apostropheBrand.brand, "Lay's");
+  assert.ok(!("brand" in apostropheBrand), "brand must live inside the name");
 
   const dated = normalizeOfferPresentation({
     name: "19 A 21 DE OUT. ÓLEO SOJA VITALIV",
@@ -308,7 +308,7 @@ test("normalizeOfferPresentation keeps the brand inside the product name", () =>
     note: "",
   });
   assert.equal(dated.name, "Óleo Soja Vitaliv");
-  assert.equal(dated.brand, "");
+  assert.ok(!("brand" in dated), "brand must live inside the name");
 });
 
 test("normalizeOfferPresentation names are always Title Case, with units lowercase", () => {
@@ -320,7 +320,7 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
   });
   assert.equal(condensed.name, "Leite Condensado Moça Semi Desn.");
   assert.equal(condensed.detail, "340g");
-  assert.equal(condensed.brand, "");
+  assert.ok(!("brand" in condensed), "brand must live inside the name");
 
   const cleaner = normalizeOfferPresentation({
     name: "LAVA ROUPAS EM PÓ",
@@ -337,7 +337,7 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
     note: "",
   });
   assert.equal(beer.name, "Cerveja Lager Heineken");
-  assert.equal(beer.brand, "");
+  assert.ok(!("brand" in beer), "brand must live inside the name");
 
   const mixed = normalizeOfferPresentation({
     name: "BISTECA Suína",
@@ -355,7 +355,7 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
   });
   assert.equal(hyphen.name, "Refrigerante Coca-Cola");
   assert.equal(hyphen.detail, "2L");
-  assert.equal(hyphen.brand, "Coca-Cola");
+  assert.ok(!("brand" in hyphen), "brand must live inside the name");
 });
 
 test("normalizeOfferPresentation does not mistake produce varieties for brands", () => {
@@ -366,7 +366,7 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
     note: "",
   });
   assert.equal(pineapple.name, "Abacaxi Pérola Graúdo");
-  assert.equal(pineapple.brand, "");
+  assert.ok(!("brand" in pineapple), "brand must live inside the name");
 
   const hazelnut = normalizeOfferPresentation({
     name: "CREME AVELÃ NUTELLA",
@@ -375,7 +375,7 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
     note: "",
   });
   assert.equal(hazelnut.name, "Creme Avelã Nutella");
-  assert.equal(hazelnut.brand, "");
+  assert.ok(!("brand" in hazelnut), "brand must live inside the name");
 });
 
 test("normalizeOfferPresentation moves flyer banners to a notice above the name", () => {
@@ -386,7 +386,7 @@ test("normalizeOfferPresentation moves flyer banners to a notice above the name"
     note: "",
   });
   assert.equal(offer.name, "Leite Uht Lider Gfa");
-  assert.equal(offer.brand, "");
+  assert.ok(!("brand" in offer), "brand must live inside the name");
   assert.match(offer.notice, /^Ofertas especiais deste box/);
   assert.match(offer.notice, /estoques\.$/);
 });
@@ -399,7 +399,7 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     note: "",
   });
   assert.equal(bread.name, "Pão de Forma Bauducco Tradicional");
-  assert.equal(bread.brand, "");
+  assert.ok(!("brand" in bread), "brand must live inside the name");
 
   const pasta = normalizeOfferPresentation({
     name: "LIMPEZA E PERFUMARIA BAZAR MATINAIS RESFRIADOS MACARRÃO C/ OVOS RENATA",
@@ -408,7 +408,7 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     note: "",
   });
   assert.equal(pasta.name, "Matinais Resfriados Macarrão c/ Ovos Renata");
-  assert.equal(pasta.brand, "");
+  assert.ok(!("brand" in pasta), "brand must live inside the name");
 
   const headers = normalizeOfferPresentation({
     name: "BEBIDAS MERCEARIAS AÇOUGUE MOLHO DE TOMATE FUGINI SACHÊ",
@@ -417,7 +417,7 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     note: "",
   });
   assert.equal(headers.name, "Molho de Tomate Fugini Sachê");
-  assert.equal(headers.brand, "");
+  assert.ok(!("brand" in headers), "brand must live inside the name");
 
   const wine = normalizeOfferPresentation({
     name: "□ VINHO CHILENO CHILANO",
@@ -426,7 +426,7 @@ test("normalizeOfferPresentation strips promo prefixes, section headers and stra
     note: "Limite por cliente— —UN",
   });
   assert.equal(wine.name, "Vinho Chileno Chilano");
-  assert.equal(wine.brand, "");
+  assert.ok(!("brand" in wine), "brand must live inside the name");
   assert.equal(wine.note, "", "corrupted limit excerpts must be dropped");
 
   const phantom = normalizeOfferPresentation({
@@ -465,7 +465,7 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     note: "",
   });
   assert.equal(amaciante.name, "Amaciante Concentrado Comfort");
-  assert.equal(amaciante.brand, "");
+  assert.ok(!("brand" in amaciante), "brand must live inside the name");
   assert.equal(amaciante.detail, "400ML");
 
   const toalha = normalizeOfferPresentation({
@@ -503,7 +503,7 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     note: "",
   });
   assert.equal(cupNoodles.name, "Macarrão Instantâneo Cup Noodles");
-  assert.equal(cupNoodles.brand, "");
+  assert.ok(!("brand" in cupNoodles), "brand must live inside the name");
   assert.equal(cupNoodles.note, "COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L");
 });
 
@@ -525,7 +525,7 @@ test("normalizeOfferPresentation keeps brand words in flyer names instead of ext
   for (const [name, expectedName, brandWord] of cases) {
     const offer = normalizeOfferPresentation({ name, brand: "", detail: "Unidade", note: "" });
     assert.equal(offer.name, expectedName, `name for ${name}`);
-    assert.equal(offer.brand, "", `brand for ${name} must not be extracted`);
+    assert.ok(!("brand" in offer), "brand must live inside the name");
     assert.match(offer.name, new RegExp(brandWord, "i"), `brand word kept for ${name}`);
   }
 });
@@ -586,8 +586,7 @@ test("validateOffer and validateSnapshot reject invalid data and accept valid da
     store: "Loja Teste",
     storeLogo: "https://example.com/logo.png",
     branch: "Centro",
-    name: "Arroz Tipo 1",
-    brand: "Marca",
+    name: "Arroz Tipo 1 Marca",
     detail: "5kg",
     category: "Mercearia",
     department: "Mercearia",

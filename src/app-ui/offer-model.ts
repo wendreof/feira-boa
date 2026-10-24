@@ -22,7 +22,7 @@ export function matchesSearch(offer: Offer, query: string): boolean {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
   if (!terms.length) return true;
   const category = offerCategory(offer);
-  const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note, offer.notice ?? ""].join(" "));
+  const searchable = normalizeSearch([offer.name, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note, offer.notice ?? ""].join(" "));
   const words = searchable.split(" ");
   return terms.every((term) => {
     const variants = [term, ...(searchEquivalents[term] || [])];

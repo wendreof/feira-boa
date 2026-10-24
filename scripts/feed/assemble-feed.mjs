@@ -33,18 +33,18 @@ function findSnapshot(snapshotsByStore, storeName) {
  * a limpeza esvazia o nome (fragmento de preço sem produto).
  */
 function publishOffer(offer) {
-  Object.assign(offer, normalizeOfferPresentation(offer));
-  if (!offer.name) return null;
+  const published = normalizeOfferPresentation(offer);
+  if (!published.name) return null;
 
   // Re-derive the taxonomy from the store's own category so a classification
   // fix lands on every offer without waiting for the next ingestion.
-  const taxonomy = classifyProduct(offer.name, offer.brand ?? "", offer.category ?? "Outros", offer.storeCategory ?? "");
-  offer.category = taxonomy.department;
-  offer.department = taxonomy.department;
-  offer.productType = taxonomy.productType;
-  offer.productTypes = taxonomy.productTypes;
-  offer.icon = assignIcon(offer.name, taxonomy.productType, taxonomy.department);
-  return offer;
+  const taxonomy = classifyProduct(published.name, published.category ?? "Outros", published.storeCategory ?? "");
+  published.category = taxonomy.department;
+  published.department = taxonomy.department;
+  published.productType = taxonomy.productType;
+  published.productTypes = taxonomy.productTypes;
+  published.icon = assignIcon(published.name, taxonomy.productType, taxonomy.department);
+  return published;
 }
 
 /**

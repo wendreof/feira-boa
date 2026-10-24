@@ -13,7 +13,7 @@ export const DEFAULT_OFFER_TONE = "#edf4e9";
  * @param {string} fields.idKey texto que identifica a oferta dentro da loja
  * @param {object} fields.store { name, logo, branch, source }
  * @param {string} fields.sourceUrl URL pública da oferta na fonte oficial
- * @param {object} fields.product { name, brand, detail, storeCategory?, price, previousPrice?, note? }
+ * @param {object} fields.product { name, detail, storeCategory?, price, previousPrice?, note? }
  * @param {{ from: string, to: string }} fields.validity
  * @param {{ department: string, productType: string, productTypes: string[] }} fields.taxonomy
  */
@@ -24,7 +24,6 @@ export function createOffer({ storeId, idKey, store, sourceUrl, product, validit
     storeLogo: store.logo,
     branch: store.branch,
     name: product.name,
-    brand: product.brand ?? "",
     detail: product.detail,
     category: taxonomy.department,
     department: taxonomy.department,

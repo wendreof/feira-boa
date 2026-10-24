@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
+import { mergeBrandIntoName } from "../domain/brands.mjs";
 import { createOffer } from "./offer-factory.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
@@ -39,15 +40,15 @@ export async function extractCorso(customUrl = null) {
     validTo = validTo === null || campaign.to > validTo ? campaign.to : validTo;
 
     for (const item of campaign.offers) {
-      const taxonomy = classifyProduct(item.name, item.brand, item.cat, item.cat);
+      const name = mergeBrandIntoName(item.name, item.brand);
+      const taxonomy = classifyProduct(name, item.cat, item.cat);
       const offer = createOffer({
         storeId: "corso",
         idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from}`,
         store: CORSO_STORE,
         sourceUrl: pageUrl,
         product: {
-          name: item.name,
-          brand: item.brand,
+          name,
           detail: item.detail,
           storeCategory: item.cat,
           price: item.price,

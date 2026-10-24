@@ -18,8 +18,8 @@ const GENERATED_FILES = [
   "suggestions.js",
 ];
 
-function run(command, args, { allowFailure = false } = {}) {
-  const result = spawnSync(command, args, { encoding: "utf8", shell: process.platform === "win32" });
+function run(command, args, { allowFailure = false, input } = {}) {
+  const result = spawnSync(command, args, { encoding: "utf8", shell: process.platform === "win32", input });
   if (result.status !== 0 && !allowFailure) {
     throw new Error(`${command} ${args.join(" ")} failed:\n${result.stderr || result.stdout}`);
   }
@@ -60,7 +60,8 @@ function commitGenerated() {
     return;
   }
   const message = merging ? "Merge origin/main and regenerate offers" : "Regenerate offers";
-  run("git", ["commit", "-m", message]);
+  // A mensagem vai por stdin: no Windows o spawn com shell quebra espaços em args.
+  run("git", ["commit", "-F", "-"], { input: `${message}\n` });
   console.log(`Committed: ${message}`);
 }
 

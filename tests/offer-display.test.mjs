@@ -1,23 +1,23 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { shouldShowBrand } from "../src/offer-display.mjs";
+import { mergeBrandIntoName } from "../src/shared/offer-name.mjs";
 
-test("hides the brand when the name already contains it", () => {
-  assert.equal(shouldShowBrand("Maionese Hellmann's 500g", "Hellmann's"), false);
-  assert.equal(shouldShowBrand("Creme Avelã Nutella", "Nutella"), false);
-  assert.equal(shouldShowBrand("Sabão em Pó Omo Expert", "OMO"), false);
+test("keeps the name when it already carries the brand", () => {
+  assert.equal(mergeBrandIntoName("Maionese Hellmann's 500g", "Hellmann's"), "Maionese Hellmann's 500g");
+  assert.equal(mergeBrandIntoName("Creme Avelã Nutella", "Nutella"), "Creme Avelã Nutella");
+  assert.equal(mergeBrandIntoName("Sabão em Pó Omo Expert", "OMO"), "Sabão em Pó Omo Expert");
 });
 
-test("shows the brand when the name does not contain it", () => {
-  assert.equal(shouldShowBrand("Lasanha", "Seara"), true);
-  assert.equal(shouldShowBrand("Pão de Forma Tradicional", "Bauducco"), true);
+test("appends the brand when the name does not contain it", () => {
+  assert.equal(mergeBrandIntoName("Lasanha", "Seara"), "Lasanha Seara");
+  assert.equal(mergeBrandIntoName("Pão de Forma Tradicional", "Bauducco"), "Pão de Forma Tradicional Bauducco");
 });
 
 test("matches whole words only", () => {
-  assert.equal(shouldShowBrand("Biscoito Cookies", "Cook"), true);
+  assert.equal(mergeBrandIntoName("Biscoito Cookies", "Cook"), "Biscoito Cookies Cook");
 });
 
-test("hides nothing when there is no brand", () => {
-  assert.equal(shouldShowBrand("Abacaxi", ""), false);
-  assert.equal(shouldShowBrand("Abacaxi", undefined), false);
+test("ignores an empty brand", () => {
+  assert.equal(mergeBrandIntoName("Abacaxi", ""), "Abacaxi");
+  assert.equal(mergeBrandIntoName("Abacaxi", undefined), "Abacaxi");
 });

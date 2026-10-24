@@ -12,7 +12,6 @@ export interface CardRefs {
   root: HTMLElement;
   art: HTMLElement;
   name: HTMLElement;
-  brand: HTMLElement;
   spec: HTMLElement;
   info: HTMLElement;
   price: HTMLElement;

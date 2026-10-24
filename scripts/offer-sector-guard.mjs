@@ -31,16 +31,15 @@ export function expectedSectors(text) {
 
 /**
  * @param {string} name
- * @param {string} brand
  * @param {string} sectorId setor resolvido para a oferta
- * @param {string} text nome e marca já normalizados
+ * @param {string} text nome já normalizado (marca inclusa)
  * @returns {string[]} motivos da violação, vazio quando o setor está correto
  */
-export function sectorViolations(name, brand, sectorId, text) {
+export function sectorViolations(name, sectorId, text) {
   const violations = [];
   for (const { label, sector } of expectedSectors(text)) {
     if (sector === sectorId) continue;
-    violations.push(`${name} (${brand || "sem marca"}): "${label}" exige o setor ${sector}, mas foi para ${sectorId}`);
+    violations.push(`${name}: "${label}" exige o setor ${sector}, mas foi para ${sectorId}`);
   }
   return violations;
 }

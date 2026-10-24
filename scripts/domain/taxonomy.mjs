@@ -144,9 +144,10 @@ const CATEGORY_PRODUCT_TYPES = new Map([
  * `category` é a categoria da loja (fallback) e `storeCategory` é o caminho
  * completo do catálogo, quando disponível. O caminho da loja tem prioridade:
  * ele é definido pela própria loja e não depende de palpite por palavra.
+ * A marca entra no `name` antes da chamada (ver `mergeBrandIntoName`).
  */
-export function classifyProduct(name, brand, category, storeCategory = "") {
-  const text = normalizeForCategory(`${name} ${brand}`);
+export function classifyProduct(name, category, storeCategory = "") {
+  const text = normalizeForCategory(name);
   const normalizedCategory = category === "Geral" ? "Outros" : category;
   const storeType = classifyByStoreCategory(storeCategory);
   const matched = storeType

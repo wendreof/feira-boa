@@ -137,7 +137,7 @@ export async function extractSempreVale(customUrl = null) {
 
     if (nameOnly.length < 2) continue;
 
-    const taxonomy = classifyProduct(nameOnly, "", "Geral");
+    const taxonomy = classifyProduct(nameOnly, "Geral");
     const offer = createOffer({
       storeId: "sempre",
       idKey: `${nameOnly}-${detail}-${validity.from}`,

@@ -1,5 +1,6 @@
 import { foldText } from "../../src/shared/text.mjs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
+import { mergeBrandIntoName } from "../domain/brands.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { normalizeOfferPresentation } from "../domain/presentation.mjs";
 import { validateOffer } from "../domain/validation.mjs";
@@ -99,7 +100,8 @@ export function buildPagueMenosOffer(product, { pageUrl = PAGUE_MENOS_URL, valid
   const category = categoryFromPath(product?.categories?.[0]);
   const { nameOnly, detail } = splitProductName(fullName);
   const storeCategory = storeCategoryPath(product?.categories?.[0]);
-  const taxonomy = classifyProduct(nameOnly, brand, category, storeCategory);
+  const name = mergeBrandIntoName(nameOnly, brand);
+  const taxonomy = classifyProduct(name, category, storeCategory);
 
   const offer = createOffer({
     storeId: "paguemenos",
@@ -107,8 +109,7 @@ export function buildPagueMenosOffer(product, { pageUrl = PAGUE_MENOS_URL, valid
     store: { name: "Pague Menos", logo: STORE_LOGO, branch: STORE_BRANCH, source: STORE_SOURCE },
     sourceUrl: pageUrl,
     product: {
-      name: nameOnly,
-      brand,
+      name,
       detail,
       storeCategory,
       price: roundPrice(price),
@@ -126,7 +127,7 @@ function dedupeOffers(offers) {
   const unique = new Map();
   for (const offer of offers) {
     const presented = normalizeOfferPresentation(offer);
-    const key = `${presented.name}|${presented.brand}|${offer.detail}`;
+    const key = `${presented.name}|${offer.detail}`;
     const existing = unique.get(key);
     if (!existing || offer.price < existing.price) unique.set(key, offer);
   }

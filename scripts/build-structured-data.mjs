@@ -27,7 +27,6 @@ const data = {
       "@type": "Product",
       name: offer.name,
       category: offer.productType,
-      brand: offer.brand || undefined,
       offers: {
         "@type": "Offer",
         price: offer.price.toFixed(2),

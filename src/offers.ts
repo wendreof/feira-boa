@@ -1,4 +1,5 @@
 import { foldText, slugText } from "./shared/text.mjs";
+import { mergeBrandIntoName } from "./shared/offer-name.mjs";
 
 // Offer transcriptions from stores' public flyers and official offer pages.
 // Prices are in BRL. Dates are inclusive; source links point to the original offer source.
@@ -62,8 +63,8 @@ export const offerSources = {
 
 type StoreId = keyof typeof offerSources;
 
-function classifyProduct(name: string, brand: string, category: string): { department: string; productType: string; productTypes: string[] } {
-  const text = foldText(`${name} ${brand} ${category}`);
+function classifyProduct(name: string, category: string): { department: string; productType: string; productTypes: string[] } {
+  const text = foldText(`${name} ${category}`);
   const rules: Array<[RegExp, string]> = [
     [/cafe/, "Café"], [/arroz/, "Arroz"], [/feijao/, "Feijão"], [/leite em po|leite uht|leite integral|leite fermentado/, "Leites"],
     [/condicionador|shampoo|creme dental|dental|bucal|enxaguante|absorvente|sabonete|desodorante|higiene/, "Higiene pessoal"],
@@ -102,14 +103,14 @@ function classifyProduct(name: string, brand: string, category: string): { depar
 
 function makeOffer(storeId: StoreId, name: string, brand: string, detail: string, category: string, price: number, previousPrice: number | null, icon: string, note = "", special = false, validity: { from: string; to: string } | null = null): Offer {
   const store = offerSources[storeId];
-  const taxonomy = classifyProduct(name, brand, category);
+  const fullName = mergeBrandIntoName(name, brand);
+  const taxonomy = classifyProduct(fullName, category);
   return {
     id: `${storeId}-${slug(`${name}-${brand}-${detail}-${validity?.from || (special ? "2026-10-22" : store.from)}`)}`,
     store: store.name,
     storeLogo: store.logo,
     branch: store.branch,
-    name,
-    brand,
+    name: fullName,
     detail,
     category,
     ...taxonomy,

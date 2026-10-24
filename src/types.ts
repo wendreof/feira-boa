@@ -14,7 +14,6 @@ export interface Offer {
   storeLogo: string;
   branch: string;
   name: string;
-  brand: string;
   detail: string;
   category: string;
   department: string;

@@ -2,7 +2,6 @@ import { appState, type CardRefs } from "./state";
 import { element, shareIcon, favoriteButton, reactionButton } from "./elements";
 import { money, dateLabel } from "../view/format";
 import { offerCategory, offerOrder } from "./offer-model";
-import { shouldShowBrand } from "../offer-display.mjs";
 import { type Offer } from "../types";
 
 export function createOfferCard(offer: Offer): CardRefs {
@@ -24,9 +23,8 @@ export function createOfferCard(offer: Offer): CardRefs {
   const name = element("h3");
   titleRow.append(name);
   const meta = element("div", "card-meta");
-  const brand = element("span", "card-brand");
   const spec = element("span", "spec");
-  meta.append(spec, brand);
+  meta.append(spec);
   const info = element("div", "card-info");
   const priceRow = element("div", "price-row");
   const priceBlock = element("div", "price-block");
@@ -63,7 +61,7 @@ export function createOfferCard(offer: Offer): CardRefs {
   root.append(visual, body);
 
   const refs: CardRefs = {
-    root, art, name, brand, spec, info, price, oldPrice, discount, valid: validStrong, notice, note, branch,
+    root, art, name, spec, info, price, oldPrice, discount, valid: validStrong, notice, note, branch,
     sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
     like: like.button, likeCount: like.count,
   };
@@ -77,8 +75,6 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
   refs.name.textContent = offer.name;
   const category = offerCategory(offer);
   refs.info.textContent = [category.subcategory, offer.store].filter(Boolean).join(" · ");
-  refs.brand.textContent = offer.brand;
-  refs.brand.hidden = !shouldShowBrand(offer.name, offer.brand);
   refs.spec.textContent = offer.detail;
   refs.spec.hidden = !offer.detail;
   refs.price.textContent = money(offer.price);

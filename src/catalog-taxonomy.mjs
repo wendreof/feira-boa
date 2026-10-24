@@ -301,11 +301,11 @@ function pickSubcategory(groupId, text) {
  * a categoria da loja é a fonte da verdade. As regras por palavra só entram
  * quando o tipo é genérico demais para decidir o grupo.
  *
- * @param {{ name?: string, brand?: string, productType?: string, productTypes?: string[] }} offer
+ * @param {{ name?: string, productType?: string, productTypes?: string[] }} offer
  * @returns {CatalogCategory}
  */
 export function resolveCategory(offer) {
-  const text = normalizeText(`${offer?.name ?? ""} ${offer?.brand ?? ""}`);
+  const text = normalizeText(offer?.name ?? "");
   const types = Array.isArray(offer?.productTypes) ? offer.productTypes.filter(Boolean) : [];
   const baseType = types[0] ?? offer?.productType ?? "";
 

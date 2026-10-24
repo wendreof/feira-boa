@@ -29,6 +29,7 @@ interface CardRefs {
   oldPrice: HTMLElement;
   discount: HTMLElement;
   valid: HTMLElement;
+  notice: HTMLElement;
   note: HTMLElement;
   branch: HTMLElement;
   sourceLink: HTMLAnchorElement;
@@ -468,7 +469,7 @@ function showFeedError(): void {
     const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
     if (!terms.length) return true;
     const category = offerCategory(offer);
-    const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note].join(" "));
+    const searchable = normalizeSearch([offer.name, offer.brand, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note, offer.notice ?? ""].join(" "));
     const words = searchable.split(" ");
     return terms.every((term) => {
       const variants = [term, ...(searchEquivalents[term] || [])];
@@ -555,6 +556,7 @@ function showFeedError(): void {
     visual.append(sticker, art, favoriteArt);
 
     const body = element("div", "card-body");
+    const notice = element("p", "offer-notice");
     const titleRow = element("div", "card-title");
     const name = element("h3");
     titleRow.append(name);
@@ -594,11 +596,11 @@ function showFeedError(): void {
     share.append(shareIcon());
     source.append(branch, document.createTextNode(" · "), sourceLink, share);
 
-    body.append(titleRow, meta, info, priceRow, reactionGroup, note, source);
+    body.append(notice, titleRow, meta, info, priceRow, reactionGroup, note, source);
     root.append(visual, body);
 
     const refs: CardRefs = {
-      root, art, name, brand, spec, info, price, oldPrice, discount, valid: validStrong, note, branch,
+      root, art, name, brand, spec, info, price, oldPrice, discount, valid: validStrong, notice, note, branch,
       sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
       like: like.button, likeCount: like.count,
     };
@@ -632,6 +634,8 @@ function showFeedError(): void {
       refs.discount.removeAttribute("aria-label");
     }
     refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
+    refs.notice.textContent = offer.notice ?? "";
+    refs.notice.hidden = !offer.notice;
     refs.note.textContent = offer.note;
     refs.note.hidden = !offer.note;
     refs.branch.textContent = offer.branch;

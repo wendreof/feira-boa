@@ -321,7 +321,8 @@ test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units l
     detail: "340g",
     note: "",
   });
-  assert.equal(condensed.name, "Leite Condensado Moça 340g Semi Desn.");
+  assert.equal(condensed.name, "Leite Condensado 340g Semi Desn.");
+  assert.equal(condensed.brand, "Moça");
 
   const cleaner = normalizeOfferPresentation({
     name: "LAVA ROUPAS EM PÓ",
@@ -337,7 +338,8 @@ test("normalizeOfferPresentation converts flyer ALL CAPS names and keeps units l
     detail: "350ml",
     note: "",
   });
-  assert.equal(beer.name, "Cerveja Lager Heineken");
+  assert.equal(beer.name, "Cerveja Lager");
+  assert.equal(beer.brand, "Heineken");
 
   const mixed = normalizeOfferPresentation({
     name: "BISTECA Suína",
@@ -368,6 +370,162 @@ test("normalizeOfferPresentation does not mistake produce varieties for brands",
   assert.equal(hazelnut.brand, "Nutella");
 });
 
+test("normalizeOfferPresentation moves flyer banners to a notice above the name", () => {
+  const offer = normalizeOfferPresentation({
+    name: "Ofertas especiais deste box válidas para sexta e sábado, 23 e 24/10/2026 Ofertas válidas de quinta a domingo, 22 a 25/10/2026 ou enquanto durarem nossos estoques. LEITE UHT LIDER GFA",
+    brand: "",
+    detail: "1L",
+    note: "",
+  });
+  assert.equal(offer.name, "Leite Uht Gfa");
+  assert.equal(offer.brand, "Líder");
+  assert.match(offer.notice, /^Ofertas especiais deste box/);
+  assert.match(offer.notice, /estoques\.$/);
+});
+
+test("normalizeOfferPresentation strips promo prefixes, section headers and stray symbols", () => {
+  const bread = normalizeOfferPresentation({
+    name: "APARTIR DE UNIDADES PAGUE: 2 PÃO DE FORMA BAUDUCCO TRADICIONAL",
+    brand: "",
+    detail: "390G",
+    note: "",
+  });
+  assert.equal(bread.name, "Pão de Forma Tradicional");
+  assert.equal(bread.brand, "Bauducco");
+
+  const pasta = normalizeOfferPresentation({
+    name: "LIMPEZA E PERFUMARIA BAZAR MATINAIS RESFRIADOS MACARRÃO C/ OVOS RENATA",
+    brand: "",
+    detail: "500G",
+    note: "",
+  });
+  assert.equal(pasta.name, "Matinais Resfriados Macarrão c/ Ovos");
+  assert.equal(pasta.brand, "Renata");
+
+  const headers = normalizeOfferPresentation({
+    name: "BEBIDAS MERCEARIAS AÇOUGUE MOLHO DE TOMATE FUGINI SACHÊ",
+    brand: "",
+    detail: "300G",
+    note: "",
+  });
+  assert.equal(headers.name, "Molho de Tomate Sachê");
+  assert.equal(headers.brand, "Fugini");
+
+  const wine = normalizeOfferPresentation({
+    name: "□ VINHO CHILENO CHILANO",
+    brand: "",
+    detail: "750ML",
+    note: "Limite por cliente— —UN",
+  });
+  assert.equal(wine.name, "Vinho Chileno");
+  assert.equal(wine.brand, "Chilano");
+  assert.equal(wine.note, "", "corrupted limit excerpts must be dropped");
+
+  const phantom = normalizeOfferPresentation({
+    name: "NESTA EMBALAGEM A UNIDADE SAI POR:",
+    brand: "",
+    detail: "Unidade",
+    note: "",
+  });
+  assert.equal(phantom.name, "");
+});
+
+test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
+  const paper = normalizeOfferPresentation({
+    name: "PAPEL HIGIÊNICO FOLHA DUPLA 30M MIMMO",
+    brand: "",
+    detail: "LV12 PG11",
+    note: "",
+  });
+  assert.equal(paper.name, "Papel Higiênico Folha Dupla 30m Mimmo");
+  assert.equal(paper.detail, "Unidade");
+  assert.equal(paper.note, "Leve 12 e pague 11");
+
+  const sponge = normalizeOfferPresentation({
+    name: "ESPONJA BRILHUS MULTIUSO",
+    brand: "",
+    detail: "LV4 PG3",
+    note: "",
+  });
+  assert.equal(sponge.detail, "Unidade");
+  assert.equal(sponge.note, "Leve 4 e pague 3");
+
+  const amaciante = normalizeOfferPresentation({
+    name: "AMACIANTE CONCENTRADO COMFORT LV500 PG",
+    brand: "",
+    detail: "400ML",
+    note: "",
+  });
+  assert.equal(amaciante.name, "Amaciante Concentrado");
+  assert.equal(amaciante.brand, "Comfort");
+  assert.equal(amaciante.detail, "400ML");
+
+  const toalha = normalizeOfferPresentation({
+    name: "TOALHA UMEDECIDA",
+    brand: "",
+    detail: "Leve 120un e Pague 100un",
+    note: "",
+  });
+  assert.equal(toalha.detail, "Unidade");
+  assert.equal(toalha.note, "Leve 120 e pague 100");
+
+  const cereal = normalizeOfferPresentation({
+    name: "CEREAL LEVE 620G, PAGUE 520G",
+    brand: "",
+    detail: "500G",
+    note: "",
+  });
+  assert.equal(cereal.name, "Cereal");
+  assert.equal(cereal.note, "Leve 620g e pague 520g");
+
+  const personal = normalizeOfferPresentation({
+    name: "Papel Higiênico PERSONAL Vip 20m Leve 12, Pague",
+    brand: "",
+    detail: "11 Unid.",
+    note: "",
+  });
+  assert.equal(personal.name, "Papel Higiênico PERSONAL Vip 20m");
+  assert.equal(personal.detail, "11 Unid.");
+  assert.equal(personal.note, "Leve 12 e pague 11");
+
+  const cupNoodles = normalizeOfferPresentation({
+    name: "a Mais COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L 1 Macarrão Instantâneo CUP NOODLES",
+    brand: "",
+    detail: "65/72g",
+    note: "",
+  });
+  assert.equal(cupNoodles.name, "Macarrão Instantâneo");
+  assert.equal(cupNoodles.brand, "Cup Noodles");
+  assert.equal(cupNoodles.note, "COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L");
+});
+
+test("normalizeOfferPresentation extracts famous brands from flyer names", () => {
+  const cases = [
+    ["ENERGÉTICO MONSTER ENERGY", "Energético", "Monster Energy"],
+    ["ÁGUA MINERAL BIOLEVE C/ GÁS", "Água Mineral c/ Gás", "Bioleve"],
+    ["PÃO DE FORMA WICKBOLD INTEGRAL", "Pão de Forma Integral", "Wickbold"],
+    ["SABONETE DOVE", "Sabonete", "Dove"],
+    ["DESODORANTE AERO NIVEA", "Desodorante Aero", "Nivea"],
+    ["CREME DE LEITE PIRACANJUBA", "Creme de Leite", "Piracanjuba"],
+    ["MAIONESE HELLMANN’S 500G TRADICIONAL", "Maionese 500g Tradicional", "Hellmann's"],
+    ["ARROZ TIPO 1 SERRAZUL", "Arroz Tipo 1", "Serrazul"],
+    ["SANDÁLIA HAVAIANAS TOP CN", "Sandália Top Cn", "Havaianas"],
+    ["LIMPADOR CREMOSO CIF MULTIUSO ORIGINAL 450ML 20% GTS", "Limpador Cremoso Multiuso Original 450ml 20% Gts", "Cif"],
+    ["BATATA PRINGLES SABORES 100/104/105/", "Batata Sabores 100/104/105", "Pringles"],
+    ["ACHOCOLATADO EM PÓ TODDY", "Achocolatado em Pó", "Toddy"],
+    ["MACARRÃO INSTANTÂNEO NISSIN", "Macarrão Instantâneo", "Nissin"],
+    ["REFR PO TANG", "Refr Po", "Tang"],
+    ["LEITE EM PÓ NINHO 380G +10% GRÁTIS", "Leite em Pó 380g +10% Grátis", "Ninho"],
+    ["APARTIR DE UNIDADES PAGUE: ALIMENTO PEDIGREE/ WHISKAS SABORES 3", "Alimento Sabores 3", "Pedigree / Whiskas"],
+    ["APARTIR DE UNIDADES PAGUE: 3 FILTRO DE PAPEL 3 CORAÇÕES 103 30UN", "Filtro de Papel 103 30un", "3 Corações"],
+  ];
+  for (const [name, expectedName, expectedBrand] of cases) {
+    const offer = normalizeOfferPresentation({ name, brand: "", detail: "Unidade", note: "" });
+    assert.equal(offer.name, expectedName, `name for ${name}`);
+    assert.equal(offer.brand, expectedBrand, `brand for ${name}`);
+  }
+});
+
 test("normalizeOfferNote fixes limits and promotional copy", () => {
   assert.equal(normalizeOfferNote("Limite por cliente5 KG"), "Limite de 5 kg por cliente");
   assert.equal(normalizeOfferNote("Limite por\ncliente 24UN"), "Limite de 24 unidades por cliente");
@@ -383,6 +541,12 @@ test("normalizeOfferNote fixes limits and promotional copy", () => {
   assert.equal(
     normalizeOfferNote("Preço Club Plus · oferta do açougue válida de 14 a 16/10"),
     "Preço Club Plus · Oferta do açougue válida de 14 a 16/10",
+  );
+  assert.equal(normalizeOfferNote("Limite por cliente— —UN"), "", "corrupted limit without quantity is dropped");
+  assert.equal(normalizeOfferNote("Limite por cliente de 24un"), "Limite de 24 unidades por cliente");
+  assert.equal(
+    normalizeOfferNote("Limite por cliente6 UN · Pague 3 Leve 4"),
+    "Limite de 6 unidades por cliente · Pague 3 Leve 4",
   );
 });
 

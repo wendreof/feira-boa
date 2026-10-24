@@ -1,0 +1,29 @@
+// Referências aos elementos da página de conta (account.html).
+
+export const email = document.querySelector<HTMLElement>("#account-email")!;
+export const status = document.querySelector<HTMLParagraphElement>("#account-status")!;
+export const signOutButton = document.querySelector<HTMLButtonElement>("#sign-out")!;
+export const deleteAccountButton = document.querySelector<HTMLButtonElement>("#delete-account")!;
+export const displayNameInput = document.querySelector<HTMLInputElement>("#display-name-input");
+export const displayNameSaveButton = document.querySelector<HTMLButtonElement>("#display-name-save");
+export const favoritesForm = document.querySelector<HTMLFormElement>("#favorite-preferences");
+export const alertForm = document.querySelector<HTMLFormElement>("#alert-rule-form");
+export const favoriteStores = document.querySelector<HTMLFieldSetElement>("#favorite-stores");
+export const favoriteProductTypes = document.querySelector<HTMLFieldSetElement>("#favorite-product-types");
+export const alertStore = document.querySelector<HTMLSelectElement>("#alert-store");
+export const alertProduct = document.querySelector<HTMLSelectElement>("#alert-product");
+export const targetPrice = document.querySelector<HTMLInputElement>("#target-price");
+export const alertRulesList = document.querySelector<HTMLUListElement>("#alert-rules");
+export const notificationsPaused = document.querySelector<HTMLInputElement>("#notifications-paused");
+export const pushStatus = document.querySelector<HTMLElement>("#push-status");
+export const pushHelp = document.querySelector<HTMLElement>("#push-help");
+export const pushContext = document.querySelector<HTMLElement>("#push-context");
+export const pushFeedback = document.querySelector<HTMLElement>("#push-feedback");
+export const enablePushButton = document.querySelector<HTMLButtonElement>("#enable-push");
+export const disablePushButton = document.querySelector<HTMLButtonElement>("#disable-push");
+export const avatarImage = document.querySelector<HTMLImageElement>("#avatar-image");
+export const avatarPlaceholder = document.querySelector<HTMLElement>("#avatar-placeholder");
+export const avatarFile = document.querySelector<HTMLInputElement>("#avatar-file");
+export const avatarSaveButton = document.querySelector<HTMLButtonElement>("#avatar-save");
+export const avatarRemoveButton = document.querySelector<HTMLButtonElement>("#avatar-remove");
+export const avatarStatus = document.querySelector<HTMLParagraphElement>("#avatar-status");

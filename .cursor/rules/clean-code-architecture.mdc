@@ -1,0 +1,36 @@
+---
+description: Clean Code and Clean Architecture standards for all new code
+alwaysApply: true
+---
+
+# Clean Code & Clean Architecture
+
+Applies to every file added or changed in this project.
+
+## Layers
+
+- `scripts/domain/`, `src/*` domains: pure business rules, no framework or I/O imports.
+- Adapters (UI, HTTP, OneSignal, storage) live at the edges: `src/account-ui/`, `scripts/adapters/`, `scripts/*.mjs`.
+- Dependencies point inward only: adapters → use cases/domain, never the reverse.
+- Keep each module free of more than one reason to change; split files that mix UI, state and I/O.
+
+## Naming & signatures
+
+- Descriptive names over abbreviations; functions named for what they return/do.
+- Small functions with a single level of abstraction; early returns instead of deep nesting.
+- Plain data in, plain data out: prefer pure functions (as `push-state.js` does) over functions that read globals.
+- No boolean trap: take named options (`{ deviceEnabled, accountEnabled }`) and return explicit flags.
+- Inject collaborators as parameters or via a thin factory; no module-level singletons inside domain code.
+
+## Errors & side effects
+
+- Throw typed errors at the boundary, translate to user-facing messages in one place (see `pushFailureMessage`).
+- Side effects (network, DOM, notifications) are confined to adapter functions; never inside domain logic.
+- Never swallow errors silently: log with context and surface a recoverable message.
+
+## Quality bar
+
+- Keep functions readable without comments; comments only for the non-obvious "why".
+- No dead code, no commented-out blocks, no speculative abstractions.
+- Every change ships with tests in `tests/*.test.mjs` (`node --test`); update existing tests when behavior changes.
+- Run `npm run check` (typecheck + tests) before considering work done.

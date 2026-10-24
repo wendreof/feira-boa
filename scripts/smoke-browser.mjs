@@ -109,6 +109,31 @@ function isOwnCodeUrl(url) {
   return typeof url === "string" && url.startsWith(`http://127.0.0.1:${PORT}/`);
 }
 
+/** Interações básicas da página inicial: busca, filtro de setor, limpar e favoritos sem login. */
+const INDEX_INTERACTIONS = `(async () => {
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  const cards = () => document.querySelectorAll(".offer-card").length;
+  const result = { initial: cards() };
+  const search = document.querySelector("#search-input");
+  search.value = "iogurte";
+  search.dispatchEvent(new Event("input"));
+  await wait(600);
+  result.search = cards();
+  search.value = "";
+  search.dispatchEvent(new Event("input"));
+  await wait(600);
+  document.querySelector('[data-department]:not([disabled]):not([data-department=""])')?.click();
+  await wait(300);
+  result.department = cards();
+  document.querySelector("#reset-filters").click();
+  await wait(300);
+  result.reset = cards();
+  document.querySelector("#favorites-toggle").click();
+  await wait(300);
+  result.loginDialog = document.querySelector("#reaction-login-dialog")?.open ?? null;
+  return result;
+})()`;
+
 async function checkPage(session, sessionId, page) {
   const problems = [];
   const handler = (message) => {
@@ -142,7 +167,111 @@ async function checkPage(session, sessionId, page) {
   if (page === "index.html" && !(state.offerCards > 0)) {
     problems.push("index.html rendered no offer cards");
   }
+  if (page === "index.html") {
+    const interaction = await session.send("Runtime.evaluate", {
+      expression: INDEX_INTERACTIONS,
+      awaitPromise: true,
+      returnByValue: true,
+    }, sessionId);
+    const result = interaction.result.value ?? {};
+    if (!(result.search > 0 && result.search < result.initial)) problems.push(`search did not filter cards: ${JSON.stringify(result)}`);
+    if (!(result.department > 0 && result.department < result.initial)) problems.push(`sector filter did not filter cards: ${JSON.stringify(result)}`);
+    if (result.reset !== result.initial) problems.push(`reset did not restore cards: ${JSON.stringify(result)}`);
+    if (result.loginDialog !== true) problems.push("favorites toggle did not ask a signed-out user to log in");
+    state.interaction = result;
+  }
   return { page, state, problems };
+}
+
+async function navigate(session, sessionId, url) {
+  const loaded = new Promise((resolveLoad) => {
+    session.onEvent((message) => {
+      if (message.sessionId === sessionId && message.method === "Page.loadEventFired") resolveLoad();
+    });
+  });
+  await session.send("Page.navigate", { url: `http://127.0.0.1:${PORT}/${url}` }, sessionId);
+  await Promise.race([loaded, new Promise((done) => setTimeout(done, 15000))]);
+  await new Promise((done) => setTimeout(done, 3000));
+}
+
+async function evaluate(session, sessionId, expression) {
+  const response = await session.send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true }, sessionId);
+  if (response.exceptionDetails) throw new Error(response.exceptionDetails.text ?? "evaluation failed");
+  return response.result.value;
+}
+
+/**
+ * Fluxo com conta de teste (SMOKE_EMAIL / SMOKE_PASSWORD): entra pelo formulário,
+ * confere a página de conta, e alterna um favorito e uma curtida (desfazendo ao final).
+ * As credenciais ficam só em variáveis de ambiente, nunca no repositório.
+ */
+async function checkSignedIn(session, sessionId, { email, password }) {
+  const problems = [];
+  const exceptions = [];
+  session.onEvent((message) => {
+    if (message.sessionId === sessionId && message.method === "Runtime.exceptionThrown") {
+      const details = message.params.exceptionDetails;
+      if (isOwnCodeUrl(details.url ?? "")) exceptions.push(details.exception?.description ?? details.text);
+    }
+  });
+
+  await navigate(session, sessionId, "login.html?returnTo=account.html");
+  await evaluate(session, sessionId, `(() => {
+    const emailInput = document.querySelector("#auth-email");
+    const passwordInput = document.querySelector("#auth-password");
+    emailInput.value = ${JSON.stringify(email)};
+    emailInput.dispatchEvent(new Event("input", { bubbles: true }));
+    passwordInput.value = ${JSON.stringify(password)};
+    passwordInput.dispatchEvent(new Event("input", { bubbles: true }));
+    document.querySelector("#auth-submit").click();
+    return true;
+  })()`);
+  // A página navega ao concluir o login; consultas separadas evitam perder a sessão de DevTools.
+  let landed = "";
+  for (let attempt = 0; attempt < 60 && !String(landed).endsWith("account.html"); attempt += 1) {
+    await new Promise((done) => setTimeout(done, 500));
+    landed = await evaluate(session, sessionId, "location.pathname").catch(() => "");
+  }
+  if (!String(landed).endsWith("account.html")) {
+    problems.push(`sign-in did not reach account.html (ended at ${landed})`);
+    return { page: "signed-in", state: { landed }, problems };
+  }
+
+  await new Promise((done) => setTimeout(done, 3000));
+  const account = await evaluate(session, sessionId, `({
+    email: document.querySelector("#account-email")?.textContent ?? "",
+    status: document.querySelector("#account-status")?.textContent ?? "",
+  })`);
+  if (account.email !== email) problems.push(`account page shows "${account.email}" instead of the test email`);
+  if (/Não foi possível verificar|Tente novamente/.test(account.status)) problems.push(`account status: ${account.status}`);
+
+  await navigate(session, sessionId, "index.html");
+  const toggled = await evaluate(session, sessionId, `(async () => {
+    const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+    const favorite = document.querySelector(".offer-card .favorite-toggle-art");
+    const like = document.querySelector('.offer-card .offer-reaction-button[data-reaction="like"]');
+    const favoriteBefore = favorite.getAttribute("aria-pressed");
+    favorite.click();
+    await wait(2000);
+    const favoriteAfter = favorite.getAttribute("aria-pressed");
+    favorite.click();
+    await wait(2000);
+    const favoriteRestored = favorite.getAttribute("aria-pressed");
+    const likeBefore = like.getAttribute("aria-pressed");
+    like.click();
+    await wait(2000);
+    const likeAfter = like.getAttribute("aria-pressed");
+    like.click();
+    await wait(2000);
+    const likeRestored = like.getAttribute("aria-pressed");
+    return { favoriteBefore, favoriteAfter, favoriteRestored, likeBefore, likeAfter, likeRestored };
+  })()`);
+  if (toggled.favoriteAfter === toggled.favoriteBefore) problems.push("favorite toggle did not change state");
+  if (toggled.favoriteRestored !== toggled.favoriteBefore) problems.push("favorite was not restored after the test");
+  if (toggled.likeAfter === toggled.likeBefore) problems.push("reaction did not change state");
+  if (toggled.likeRestored !== toggled.likeBefore) problems.push("reaction was not restored after the test");
+  if (exceptions.length > 0) problems.push(`exceptions while signed in: ${exceptions.join(" | ")}`);
+  return { page: "signed-in", state: { email: account.email, ...toggled }, problems };
 }
 
 async function main() {
@@ -166,6 +295,12 @@ async function main() {
     await session.send("Runtime.enable", {}, sessionId);
     for (const page of PAGES) {
       results.push(await checkPage(session, sessionId, page));
+    }
+    if (process.env.SMOKE_EMAIL && process.env.SMOKE_PASSWORD) {
+      results.push(await checkSignedIn(session, sessionId, {
+        email: process.env.SMOKE_EMAIL,
+        password: process.env.SMOKE_PASSWORD,
+      }));
     }
     session.close();
   } finally {

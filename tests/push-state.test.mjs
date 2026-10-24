@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { pushFailureMessage, resolvePushUiState } from "../push-state.js";
+import { isDevicePushEnabled, pushFailureMessage, resolvePushUiState } from "../push-state.js";
 
 test("push UI distinguishes devices and accounts", () => {
   const newAccount = resolvePushUiState({ deviceEnabled: false, accountEnabled: false, permissionDenied: false });
@@ -35,4 +35,19 @@ test("push errors produce actionable messages", () => {
   assert.match(pushFailureMessage(new Error("Não foi possível salvar este dispositivo para notificações.")), /salvar este dispositivo/);
   assert.match(pushFailureMessage(new Error("falha inesperada")), /Tente novamente/);
   assert.match(pushFailureMessage("falha inesperada"), /Tente novamente/);
+});
+
+test("push failures report their own cause instead of a generic alert", () => {
+  assert.match(pushFailureMessage(new Error("Permissão não concedida.")), /aceite o aviso/);
+  assert.match(pushFailureMessage(new Error("O navegador não ativou as notificações. Tente novamente.")), /confirmou a inscrição/);
+  assert.match(pushFailureMessage(new Error("O serviço de notificações não carregou. Verifique a conexão e recarregue a página.")), /conexão/);
+  assert.match(pushFailureMessage(new Error("falha inesperada")), /falha inesperada/);
+});
+
+test("device is enabled when the browser granted permission during activation", () => {
+  assert.equal(isDevicePushEnabled({ permission: "granted", optedIn: true }), true);
+  assert.equal(isDevicePushEnabled({ permission: "granted", optedIn: false, activatedNow: true }), true);
+  assert.equal(isDevicePushEnabled({ permission: "default", optedIn: false, activatedNow: true }), false);
+  assert.equal(isDevicePushEnabled({ permission: "granted", optedIn: false }), false);
+  assert.equal(isDevicePushEnabled({ permission: "denied", optedIn: false, activatedNow: true }), false);
 });

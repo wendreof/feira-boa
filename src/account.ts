@@ -188,15 +188,24 @@ export async function savePreferences(userId: string, preferences: ProfilePrefer
   if (error) throw error;
 }
 
+/** Indica se a conta tem ao menos um dispositivo com notificações salvas. */
+export async function hasPushSubscriptions(userId: string): Promise<boolean> {
+  const { count, error } = await supabase
+    .from("push_subscriptions")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId);
+  if (error) throw error;
+  return (count ?? 0) > 0;
+}
+
 export async function loadAccountSettings(userId: string): Promise<AccountSettings> {
-  const [{ data: profile, error: profileError }, { data: rules, error: rulesError }, { count, error: pushError }] = await Promise.all([
+  const [{ data: profile, error: profileError }, { data: rules, error: rulesError }, pushEnabled] = await Promise.all([
     supabase.from("profiles").select("preferences, notifications_paused, display_name").eq("user_id", userId).maybeSingle(),
     supabase.from("alert_rules").select("id, store, product, product_type, target_price, enabled").eq("user_id", userId).order("created_at"),
-    supabase.from("push_subscriptions").select("id", { count: "exact", head: true }).eq("user_id", userId),
+    hasPushSubscriptions(userId),
   ]);
   if (profileError) throw profileError;
   if (rulesError) throw rulesError;
-  if (pushError) throw pushError;
   const displayName = typeof profile?.display_name === "string" && profile.display_name.trim()
     ? profile.display_name.trim()
     : null;
@@ -204,7 +213,7 @@ export async function loadAccountSettings(userId: string): Promise<AccountSettin
     preferences: parsePreferences(profile?.preferences),
     displayName,
     notificationsPaused: profile?.notifications_paused ?? false,
-    pushEnabled: (count ?? 0) > 0,
+    pushEnabled,
     alertRules: rules ?? [],
   };
 }

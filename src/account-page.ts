@@ -73,6 +73,7 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
   applyTheme(preferences.theme);
   accountState.preferencesLoaded = true;
   accountState.rules = settings.alertRules;
+  accountState.accountPushEnabled = settings.pushEnabled;
   if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
   void (async () => {
     try {

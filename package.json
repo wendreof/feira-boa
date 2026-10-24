@@ -12,6 +12,7 @@
     "build:icons": "node scripts/build-icons.mjs",
     "ingest:offers": "node scripts/ingest-offers.mjs",
     "check:site": "node scripts/check-site-health.mjs",
+    "sync": "node scripts/sync.mjs",
     "send:price-alerts": "node scripts/send-price-alerts.mjs",
     "send:price-alerts:dry": "node scripts/send-price-alerts.mjs --dry-run",
     "review:source": "node scripts/review-source.mjs",

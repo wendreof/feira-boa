@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T14:17:55.948Z",
+  "updatedAt": "2026-10-25T21:37:59.745Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -14365,8 +14365,8 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 2.79,
-      "previousPrice": 3.89,
+      "price": 3.89,
+      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

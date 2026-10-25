@@ -1,4 +1,5 @@
-import { avatarUrl, loadAvatar, removeAvatar, uploadAvatar } from "../avatar";
+import { AVATAR_SIZE, loadAvatar, removeAvatar, setAvatarImage, uploadAvatar } from "../avatar";
+import { withSpinner } from "../loading";
 import { errorMessage } from "../account";
 import { accountState } from "./state";
 import { setStatus } from "./ui";
@@ -11,6 +12,10 @@ import {
   avatarStatus,
 } from "./dom";
 
+function avatarHost(): HTMLElement | null {
+  return avatarImage?.parentElement ?? null;
+}
+
 export function setAvatarStatus(message: string): void {
   if (avatarStatus) avatarStatus.textContent = message;
   setStatus(message);
@@ -18,22 +23,13 @@ export function setAvatarStatus(message: string): void {
 
 export function renderAvatar(): void {
   const path = accountState.avatarPath;
-  if (avatarImage) {
-    if (path) {
-      avatarImage.src = avatarUrl(path);
-      avatarImage.hidden = false;
-    } else {
-      avatarImage.removeAttribute("src");
-      avatarImage.hidden = true;
-    }
-  }
+  if (avatarImage) setAvatarImage(avatarImage, path, AVATAR_SIZE.preview);
   if (avatarPlaceholder) avatarPlaceholder.hidden = Boolean(path);
   if (avatarRemoveButton) avatarRemoveButton.disabled = !path;
 }
 
 export async function refreshAvatar(): Promise<void> {
-  const current = await loadAvatar(accountState.userId);
-  accountState.avatarPath = current.path;
+  accountState.avatarPath = await withSpinner(avatarHost(), () => loadAvatar(accountState.userId));
   renderAvatar();
 }
 
@@ -46,7 +42,7 @@ async function saveAvatar(button: HTMLButtonElement): Promise<void> {
   button.disabled = true;
   setAvatarStatus("Enviando a foto do perfil…");
   try {
-    accountState.avatarPath = await uploadAvatar(accountState.userId, file, accountState.avatarPath);
+    accountState.avatarPath = await withSpinner(avatarHost(), () => uploadAvatar(accountState.userId, file, accountState.avatarPath));
     if (avatarFile) avatarFile.value = "";
     renderAvatar();
     setAvatarStatus("Foto do perfil atualizada.");

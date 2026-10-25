@@ -66,6 +66,22 @@ export function normalizeProductNameCase(name) {
 }
 
 /**
+ * Abreviação de unidade do folheto ("11 Unid.", "Unids.") vira a palavra
+ * completa ("11 unidades", "Unidade"): a oferta publicada nunca encurta
+ * "unidade"/"unidades".
+ */
+export function expandDetailUnits(detail) {
+  const value = String(detail ?? "").replace(/\s+/g, " ").trim();
+  if (!value) return value;
+  return value
+    .replace(/(\b\d+(?:[.,]\d+)?)\s*unids?\b\.?/gi, (full, count) => {
+      const isSingle = Number(count.replace(",", ".")) === 1;
+      return `${count} ${isSingle ? "unidade" : "unidades"}`;
+    })
+    .replace(/\bunids?\b\.?/gi, "unidade");
+}
+
+/**
  * Frase de validade que o folheto imprime ACIMA do produto e o PDF cola no
  * nome (ex.: "Ofertas válidas de quinta a domingo ... durarem nossos estoques.")
  * O texto vira `notice` (aviso acima do nome), nunca nome.

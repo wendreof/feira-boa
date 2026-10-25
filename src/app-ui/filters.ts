@@ -48,10 +48,11 @@ export function renderPopularItems(): void {
   ];
   const featured: Array<{ id: string; label: string; icon: string }> = [
     { id: "carnes", label: "Carnes", icon: "🥩" },
+    { id: "bebidas_alcoolicas", label: "Bebidas alcoólicas", icon: "🍺" },
     { id: "bebidas", label: "Bebidas", icon: "🥤" },
   ];
   const rest = RANDOM_CATEGORY_ORDER
-    .filter((groupId) => groupId !== "bebidas" && groupId !== "outros" && (counts.get(groupId) ?? 0) > 0)
+    .filter((groupId) => groupId !== "bebidas" && groupId !== "bebidas_alcoolicas" && groupId !== "outros" && (counts.get(groupId) ?? 0) > 0)
     .map((groupId) => {
       const group = TAXONOMY_GROUPS.find((item) => item.id === groupId)!;
       return { id: group.id, label: group.label, icon: CATEGORY_ICONS[group.id] ?? "🛒" };

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-24T23:07:01.879Z",
+  "updatedAt": "2026-10-25T14:17:55.948Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -8725,7 +8725,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Biscoitos",
-      "price": 6.19,
+      "price": 5.99,
       "previousPrice": null,
       "icon": "🍩",
       "tone": "#edf4e9",
@@ -9109,7 +9109,7 @@
         "Mercearia"
       ],
       "storeCategory": "Café da Manhã/Padaria/Torrada",
-      "price": 9.49,
+      "price": 8.99,
       "previousPrice": null,
       "icon": "🍞",
       "tone": "#edf4e9",
@@ -19169,7 +19169,7 @@
         "Congelados"
       ],
       "storeCategory": "Congelados/Hambúrguer/Hambúrguer Bovino",
-      "price": 24.99,
+      "price": 25.99,
       "previousPrice": null,
       "icon": "🍔",
       "tone": "#edf4e9",
@@ -26184,7 +26184,7 @@
       ],
       "storeCategory": "Perfumaria/Cabelos/Condicionador",
       "price": 35.99,
-      "previousPrice": 46.99,
+      "previousPrice": 44.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

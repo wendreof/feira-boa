@@ -38,10 +38,10 @@ export function updateAccountControls(): void {
     topbarAccount.setAttribute("href", "account.html");
     topbarAccount.setAttribute("aria-label", "Minha conta");
     if (signedIn) {
-      // Default person icon until the photo loads (or if there is none).
-      if (!topbarAccountImage?.src) renderTopbarAvatar(null);
+      // Ícone de pessoa até a foto chegar (ou se não houver).
+      if (!topbarAccountImage?.src) clearTopbarAvatar();
     } else {
-      renderTopbarAvatar(null);
+      clearTopbarAvatar();
     }
   }
   if (topbarHello && !signedIn) topbarHello.hidden = true;
@@ -51,14 +51,7 @@ export function updateAccountControls(): void {
   if (signedIn) setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
 }
 
-function renderTopbarAvatar(url: string | null): void {
-  if (!topbarAccount) return;
-  if (url && topbarAccountImage) {
-    topbarAccountImage.src = url;
-    topbarAccountImage.hidden = false;
-    if (topbarAccountFallback) topbarAccountFallback.hidden = true;
-    return;
-  }
+function clearTopbarAvatar(): void {
   if (topbarAccountImage) {
     topbarAccountImage.removeAttribute("src");
     topbarAccountImage.hidden = true;
@@ -68,12 +61,17 @@ function renderTopbarAvatar(url: string | null): void {
 
 export async function refreshTopbarAvatar(userId: string): Promise<void> {
   try {
-    const { loadAvatar, avatarUrl } = await import("../avatar");
-    const state = await loadAvatar(userId);
-    renderTopbarAvatar(state.url ?? (state.path ? avatarUrl(state.path) : null));
+    const { loadAvatar, setAvatarImage, AVATAR_SIZE } = await import("../avatar");
+    const path = await loadAvatar(userId);
+    if (path && topbarAccountImage) {
+      setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar);
+      if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+    } else {
+      clearTopbarAvatar();
+    }
   } catch (error) {
     console.warn("Could not load the topbar avatar.", error);
-    renderTopbarAvatar(null);
+    clearTopbarAvatar();
   }
   try {
     const { loadDisplayName } = await import("../account");

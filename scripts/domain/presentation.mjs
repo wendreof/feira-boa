@@ -1,5 +1,5 @@
 import { BRAND_CANONICAL_NAMES, mergeBrandIntoName, normalizeForMatch } from "./brands.mjs";
-import { cleanProductName, extractNameQuantity, normalizeProductNameCase, takeValidityBanner } from "./product-name.mjs";
+import { cleanProductName, expandDetailUnits, extractNameQuantity, normalizeProductNameCase, takeValidityBanner } from "./product-name.mjs";
 import { extractBundleCodes, normalizeOfferNote } from "./offer-note.mjs";
 
 /**
@@ -28,7 +28,7 @@ export function normalizeOfferPresentation(offer) {
   const result = {
     ...source,
     name: mergeBrandIntoName(baseName, canonicalBrand),
-    detail: quantity.detail,
+    detail: normalizeProductNameCase(expandDetailUnits(quantity.detail)),
     note,
   };
   const notice = [banner.banner, source.notice].filter(Boolean).join(" · ");

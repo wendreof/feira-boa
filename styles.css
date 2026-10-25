@@ -41,10 +41,14 @@
 .account-identity strong{overflow-wrap:anywhere;font-size:14px}
 .avatar-block{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-areas:"title title" "preview help" "preview actions";gap:8px 16px;margin:20px 0 8px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#f8faf6}
 .avatar-title{grid-area:title;margin:0;font:750 14px 'Manrope',sans-serif}
-.avatar-preview{grid-area:preview;display:grid;place-items:center;width:72px;height:72px;border:1px solid var(--line);border-radius:50%;overflow:hidden;background:var(--mint)}
+.avatar-preview{grid-area:preview;display:grid;place-items:center;position:relative;width:72px;height:72px;border:1px solid var(--line);border-radius:50%;overflow:hidden;background:var(--mint)}
 .avatar-image{width:100%;height:100%;object-fit:cover}
 .avatar-image[hidden],.avatar-placeholder[hidden]{display:none}
 .avatar-placeholder{font-size:30px;line-height:1}
+.spinner{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.spinner::before{content:"";width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:spinner-rotate .7s linear infinite}
+@keyframes spinner-rotate{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spinner::before{animation-duration:1.4s}}
 .avatar-help{grid-area:help;margin:0;color:var(--muted);font-size:12px;line-height:1.5}
 .avatar-actions{grid-area:actions;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .avatar-file{max-width:100%;color:var(--muted);font:500 12px 'DM Sans',sans-serif}
@@ -222,7 +226,7 @@
 body{--sidebar-offset:248px;padding-left:var(--sidebar-offset);transition:padding-left .2s ease}
 .topbar{width:calc(100% + var(--sidebar-offset));margin-left:calc(-1 * var(--sidebar-offset));padding:0 26px;z-index:6}
 .menu-toggle{display:inline-flex;align-items:center;gap:9px;min-height:40px;margin-right:auto;margin-left:20px;padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#445248;font:700 12px 'DM Sans',sans-serif;cursor:pointer}
-.topbar-account{display:inline-grid;place-items:center;width:36px;height:36px;flex:0 0 auto;margin-left:4px;border:1px solid var(--line);border-radius:50%;background:var(--mint);color:var(--green);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.topbar-account{display:inline-grid;place-items:center;position:relative;width:36px;height:36px;flex:0 0 auto;margin-left:4px;border:1px solid var(--line);border-radius:50%;background:var(--mint);color:var(--green);overflow:hidden;transition:border-color .15s,box-shadow .15s}
 .topbar-hello{margin-left:12px;color:#3f4c44;font:750 13px 'DM Sans',sans-serif;white-space:nowrap}
 .topbar-hello[hidden]{display:none}
 @media(max-width:760px){.topbar-hello{display:none}}

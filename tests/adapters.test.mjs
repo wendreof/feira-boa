@@ -354,7 +354,7 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
     note: "",
   });
   assert.equal(hyphen.name, "Refrigerante Coca-Cola");
-  assert.equal(hyphen.detail, "2L");
+  assert.equal(hyphen.detail, "2l");
   assert.ok(!("brand" in hyphen), "brand must live inside the name");
 });
 
@@ -466,7 +466,7 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
   });
   assert.equal(amaciante.name, "Amaciante Concentrado Comfort");
   assert.ok(!("brand" in amaciante), "brand must live inside the name");
-  assert.equal(amaciante.detail, "400ML");
+  assert.equal(amaciante.detail, "400ml");
 
   const toalha = normalizeOfferPresentation({
     name: "TOALHA UMEDECIDA",
@@ -493,7 +493,7 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
     note: "",
   });
   assert.equal(personal.name, "Papel Higiênico Personal Vip 20m");
-  assert.equal(personal.detail, "11 Unid.");
+  assert.equal(personal.detail, "11 unidades");
   assert.equal(personal.note, "Leve 12 e pague 11");
 
   const cupNoodles = normalizeOfferPresentation({
@@ -541,7 +541,7 @@ test("normalizeOfferPresentation moves a single quantity from the name into deta
 
   const realDetail = normalizeOfferPresentation({ name: "Choc. Lacta 80g", brand: "", detail: "104G", note: "" });
   assert.equal(realDetail.name, "Choc. Lacta");
-  assert.equal(realDetail.detail, "104G", "a real detail wins over the name quantity");
+  assert.equal(realDetail.detail, "104g", "a real detail wins over the name quantity");
 
   const connector = normalizeOfferPresentation({ name: "Cerveja Skol Pilsen c/ 350ml", brand: "", detail: "Unid.", note: "" });
   assert.equal(connector.name, "Cerveja Skol Pilsen");
@@ -549,7 +549,7 @@ test("normalizeOfferPresentation moves a single quantity from the name into deta
 
   const kit = normalizeOfferPresentation({ name: "Kit Seda Shampoo 300ml + Condicionador 190ml", brand: "", detail: "Unid.", note: "" });
   assert.equal(kit.name, "Kit Seda Shampoo 300ml + Condicionador 190ml", "multi-quantity names stay untouched");
-  assert.equal(kit.detail, "Unid.");
+  assert.equal(kit.detail, "Unidade");
 
   const count = normalizeOfferPresentation({ name: "Pilha Duracell Alc. Palito AAA 2un", brand: "", detail: "", note: "" });
   assert.equal(count.name, "Pilha Duracell Alc. Palito Aaa 2un");

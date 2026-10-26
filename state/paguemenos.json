@@ -9,7 +9,7 @@
     "from": "2026-10-26",
     "to": "2026-11-01"
   },
-  "fetchedAt": "2026-10-26T18:09:55.011Z",
+  "fetchedAt": "2026-10-26T18:51:55.968Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -12915,7 +12915,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 4.79,
+      "price": 4.59,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",

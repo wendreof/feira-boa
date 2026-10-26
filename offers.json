@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-26T18:09:55.011Z",
+  "updatedAt": "2026-10-26T18:51:55.968Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -15210,7 +15210,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 4.79,
+      "price": 4.59,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",

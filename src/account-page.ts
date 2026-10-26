@@ -11,12 +11,12 @@ import { requireOneSignal } from "./push";
 import type { OfferFeed } from "./types";
 import { applyTheme } from "./theme";
 import { refreshAvatar, bindAvatarControls } from "./account-ui/avatar-controls";
-import { detachOneSignalFromAccount, bindPushControls, refreshPushDeviceState } from "./account-ui/push-controls";
-import { bindRuleControls, renderCheckboxes, renderRules, makeOption } from "./account-ui/rules-controls";
+import { detachOneSignalFromAccount } from "./account-ui/push-controls";
+import { renderCheckboxes } from "./account-ui/options";
 import { bindPreferenceControls, bindThemeControls, saveThemePreference } from "./account-ui/preference-controls";
 import { accountState } from "./account-ui/state";
 import { setActionsDisabled, setStatus } from "./account-ui/ui";
-import { displayNameInput, email, notificationsPaused, alertProduct, alertStore, favoriteProductTypes, favoriteStores, signOutButton, deleteAccountButton } from "./account-ui/dom";
+import { displayNameInput, email, favoriteProductTypes, favoriteStores, signOutButton, deleteAccountButton } from "./account-ui/dom";
 
 function bindAccountActions(): void {
   signOutButton.addEventListener("click", async () => {
@@ -47,7 +47,7 @@ function bindAccountActions(): void {
   });
 }
 
-/** Carrega a conta, preferências, alertas e opções de ofertas da sessão atual. */
+/** Carrega a conta, preferências e opções de ofertas da sessão atual. */
 async function loadAccount(user: { id: string; email?: string | null }): Promise<void> {
   accountState.userId = user.id;
   email.textContent = user.email ?? "E-mail não disponível";
@@ -72,9 +72,7 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
   accountState.preferences = preferences;
   applyTheme(preferences.theme);
   accountState.preferencesLoaded = true;
-  accountState.rules = settings.alertRules;
   accountState.accountPushEnabled = settings.pushEnabled;
-  if (notificationsPaused) notificationsPaused.checked = settings.notificationsPaused;
   void (async () => {
     try {
       const oneSignal = await requireOneSignal();
@@ -82,7 +80,6 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
     } catch (error) {
       console.warn("Could not associate OneSignal with the account.", error);
     }
-    await refreshPushDeviceState();
   })();
 
   const stores = [...new Set(response.offers.map((offer) => offer.store))].sort((a, b) => a.localeCompare(b, "pt-BR"));
@@ -90,15 +87,10 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
   renderCheckboxes(favoriteStores, stores, preferences.favoriteStores);
   renderCheckboxes(favoriteProductTypes, productTypes, preferences.favoriteProductTypes);
   if (accountState.pendingTheme) await saveThemePreference();
-  if (alertStore) alertStore.replaceChildren(makeOption("Qualquer loja", ""), ...stores.map((store) => makeOption(store, store)));
-  if (alertProduct) alertProduct.replaceChildren(makeOption("Escolha um tipo de produto", ""), ...productTypes.map((type) => makeOption(type, type)));
-  renderRules();
   setStatus("Suas preferências estão sincronizadas.");
 }
 
 bindThemeControls();
-bindPushControls();
-bindRuleControls();
 bindAvatarControls();
 bindPreferenceControls();
 bindAccountActions();

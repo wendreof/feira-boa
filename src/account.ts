@@ -5,28 +5,10 @@ import { supabase } from "./supabase-client";
 
 export { errorMessage };
 
-export interface AlertRule {
-  id: string;
-  store: string | null;
-  product: string | null;
-  product_type: string | null;
-  target_price: number;
-  enabled: boolean;
-}
-
-export interface NewAlertRule {
-  store: string | null;
-  product: string | null;
-  product_type: string | null;
-  target_price: number;
-}
-
 export interface AccountSettings {
   preferences: ProfilePreferences;
   displayName: string | null;
-  notificationsPaused: boolean;
   pushEnabled: boolean;
-  alertRules: AlertRule[];
 }
 
 const emptyPreferences: ProfilePreferences = {
@@ -199,50 +181,19 @@ export async function hasPushSubscriptions(userId: string): Promise<boolean> {
 }
 
 export async function loadAccountSettings(userId: string): Promise<AccountSettings> {
-  const [{ data: profile, error: profileError }, { data: rules, error: rulesError }, pushEnabled] = await Promise.all([
-    supabase.from("profiles").select("preferences, notifications_paused, display_name").eq("user_id", userId).maybeSingle(),
-    supabase.from("alert_rules").select("id, store, product, product_type, target_price, enabled").eq("user_id", userId).order("created_at"),
+  const [{ data: profile, error: profileError }, pushEnabled] = await Promise.all([
+    supabase.from("profiles").select("preferences, display_name").eq("user_id", userId).maybeSingle(),
     hasPushSubscriptions(userId),
   ]);
   if (profileError) throw profileError;
-  if (rulesError) throw rulesError;
   const displayName = typeof profile?.display_name === "string" && profile.display_name.trim()
     ? profile.display_name.trim()
     : null;
   return {
     preferences: parsePreferences(profile?.preferences),
     displayName,
-    notificationsPaused: profile?.notifications_paused ?? false,
     pushEnabled,
-    alertRules: rules ?? [],
   };
-}
-
-export async function loadAlertRules(userId: string): Promise<AlertRule[]> {
-  const { data, error } = await supabase
-    .from("alert_rules")
-    .select("id, store, product, product_type, target_price, enabled")
-    .eq("user_id", userId)
-    .order("created_at");
-  if (error) throw error;
-  return data ?? [];
-}
-
-export async function createAlertRule(userId: string, rule: NewAlertRule): Promise<void> {
-  const { error } = await supabase.from("alert_rules").insert({ user_id: userId, ...rule });
-  if (error) throw error;
-}
-
-export async function removeAlertRule(userId: string, ruleId: string): Promise<void> {
-  const { error } = await supabase.from("alert_rules").delete().eq("id", ruleId).eq("user_id", userId);
-  if (error) throw error;
-}
-
-export async function setNotificationsPaused(userId: string, paused: boolean): Promise<void> {
-  const { error } = await supabase
-    .from("profiles")
-    .upsert({ user_id: userId, notifications_paused: paused }, { onConflict: "user_id" });
-  if (error) throw error;
 }
 
 export async function savePushSubscription(userId: string, subscription: PushSubscription): Promise<void> {

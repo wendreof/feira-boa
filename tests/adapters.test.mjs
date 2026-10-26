@@ -346,6 +346,15 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
     note: "",
   });
   assert.equal(mixed.name, "Bisteca Suína");
+  assert.equal(mixed.detail, "kg");
+
+  const kilo = normalizeOfferPresentation({
+    name: "FILEZINHO SOLTINHO SEARA",
+    brand: "",
+    detail: "1 KG",
+    note: "",
+  });
+  assert.equal(kilo.detail, "1kg", "kilogram details are always number+unit, like 1kg");
 
   const hyphen = normalizeOfferPresentation({
     name: "REFRIGERANTE COCA-COLA 2L",

@@ -135,7 +135,8 @@ export async function extractSempreVale(customUrl = null) {
     const detail = unitMatch ? unitMatch[0].trim() : "Unidade";
     const nameOnly = desc.replace(new RegExp(`\\s*${detail.replace(".", "\\.")}\\s*$`, "i"), "").trim();
 
-    if (nameOnly.length < 2) continue;
+    // Etiquetas de preço soltas no folheto ("2,79") viram nomes sem palavras e colidem no id.
+    if (nameOnly.length < 2 || !/\p{L}{2,}/u.test(nameOnly)) continue;
 
     const taxonomy = classifyProduct(nameOnly, "Geral");
     const offer = createOffer({

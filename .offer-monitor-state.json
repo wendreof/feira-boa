@@ -5,14 +5,14 @@
     "branch": "Vila Zanetti · São João",
     "store_id": "big-bom",
     "store_key": "big-bom-vila-zanetti-sao-joao",
-    "sha256": "b6cfa8fadb38ea09b45c0f76ea6ee04bb234f7d8725e285f2d449bfa03a95ed9",
+    "sha256": "0f8c7c2315e259088df170b3c3487b4222d573da58b602231efff9a80572b1f3",
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-25T23:10:26.553Z",
-    "last_success_at": "2026-10-25T23:10:26.553Z",
+    "checked_at": "2026-10-26T18:09:56.536Z",
+    "last_success_at": "2026-10-26T18:09:56.536Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0": {
     "url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
@@ -21,29 +21,29 @@
     "store_id": "pague-menos",
     "store_key": "pague-menos-loja-33-jardim-santo-andre",
     "catalog_total": 1039,
-    "week_window": "2026-10-19/2026-10-25",
+    "week_window": "2026-10-26/2026-11-01",
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-25T23:10:29.306Z",
-    "last_success_at": "2026-10-25T23:10:29.306Z",
+    "checked_at": "2026-10-26T18:09:58.351Z",
+    "last_success_at": "2026-10-26T18:09:58.351Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
-  "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf": {
-    "url": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
+  "https://www.semprevale.com.br/downloads/ofertas/e91f7ae2-de57-49a4-b456-8f35969d6562-campanha-574-crop-baixa(3).pdf": {
+    "url": "https://www.semprevale.com.br/downloads/ofertas/e91f7ae2-de57-49a4-b456-8f35969d6562-campanha-574-crop-baixa(3).pdf",
     "store": "Sempre Vale",
     "branch": "Durval Nicolau",
     "store_id": "sempre-vale",
     "store_key": "sempre-vale-durval-nicolau",
-    "sha256": "6648c5ccb1f4276964757ccf28f37535071c8e96cc076388e4dd3618ae208c6a",
+    "sha256": "b82b166b046bfba69acfe0a84dd7b040a610446789b8bd13824b44b0e64bcea6",
     "status": 200,
     "content_type": "application/pdf",
-    "final_url": "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa(3).pdf",
-    "checked_at": "2026-10-25T23:10:29.568Z",
-    "last_success_at": "2026-10-25T23:10:29.568Z",
+    "final_url": "https://www.semprevale.com.br/downloads/ofertas/e91f7ae2-de57-49a4-b456-8f35969d6562-campanha-574-crop-baixa(3).pdf",
+    "checked_at": "2026-10-26T18:09:58.633Z",
+    "last_success_at": "2026-10-26T18:09:58.633Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
     "url": "https://spassosabores.com.br/ofertas-sao-joao/",
@@ -51,12 +51,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "332d102987273318f13e7fc89a043613c6dd5dd7eb7d21033a2ab73dd438a405",
+    "sha256": "31851faad4b53e583512d184fe43b20aa4e250f6dce59f5308f368b61ad96346",
     "status": 200,
-    "content_type": "text/html",
+    "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-25T23:10:31.933Z",
-    "last_success_at": "2026-10-25T23:10:31.933Z",
+    "checked_at": "2026-10-26T18:10:00.789Z",
+    "last_success_at": "2026-10-26T18:10:00.789Z",
     "last_error": null,
     "needs_review": true
   },
@@ -70,8 +70,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-25T23:10:32.916Z",
-    "last_success_at": "2026-10-25T23:10:32.916Z",
+    "checked_at": "2026-10-26T18:10:01.739Z",
+    "last_success_at": "2026-10-26T18:10:01.739Z",
     "last_error": null,
     "needs_review": false
   }

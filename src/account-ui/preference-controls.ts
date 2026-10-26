@@ -1,15 +1,14 @@
 import { bindThemeToggle } from "../theme";
-import { errorMessage, saveDisplayName, savePreferences, setNotificationsPaused } from "../account";
+import { errorMessage, saveDisplayName, savePreferences } from "../account";
 import { accountState } from "./state";
 import { setStatus } from "./ui";
-import { checkedValues } from "./rules-controls";
+import { checkedValues } from "./options";
 import {
   displayNameInput,
   displayNameSaveButton,
   favoriteProductTypes,
   favoriteStores,
   favoritesForm,
-  notificationsPaused,
 } from "./dom";
 
 /** Salva o tema escolhido nas preferências da conta. */
@@ -50,19 +49,6 @@ async function saveFavorites(form: HTMLFormElement, event: SubmitEvent): Promise
   }
 }
 
-async function togglePaused(toggle: HTMLInputElement): Promise<void> {
-  toggle.disabled = true;
-  try {
-    await setNotificationsPaused(accountState.userId, toggle.checked);
-    setStatus(toggle.checked ? "Alertas pausados." : "Alertas retomados.");
-  } catch (error) {
-    toggle.checked = !toggle.checked;
-    setStatus(`Não foi possível atualizar: ${errorMessage(error)}`);
-  } finally {
-    toggle.disabled = false;
-  }
-}
-
 async function saveDisplayNameFromInput(button: HTMLButtonElement): Promise<void> {
   const value = displayNameInput?.value.trim() ?? "";
   if (value.length < 2) {
@@ -84,9 +70,7 @@ async function saveDisplayNameFromInput(button: HTMLButtonElement): Promise<void
 
 export function bindPreferenceControls(): void {
   const form = favoritesForm;
-  const toggle = notificationsPaused;
   const saveButton = displayNameSaveButton;
-  if (form && (favoriteStores || favoriteProductTypes)) form.addEventListener("submit", (event) => saveFavorites(form, event));
-  if (toggle) toggle.addEventListener("change", () => togglePaused(toggle));
+  if (form && (favoriteStores || favoriteProductTypes)) form.addEventListener("submit", (event) => form && saveFavorites(form, event));
   if (saveButton) saveButton.addEventListener("click", () => saveDisplayNameFromInput(saveButton));
 }

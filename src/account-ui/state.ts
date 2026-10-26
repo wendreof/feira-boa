@@ -1,12 +1,10 @@
-import type { AlertRule } from "../account";
 import type { ProfilePreferences } from "../types";
 import type { ThemePreference } from "../theme";
 
-/** Estado compartilhado da página de conta. */
+/** Estado compartilhado das páginas de conta e alertas (conta, dispositivo e avatar). */
 export const accountState: {
   userId: string;
   preferences: ProfilePreferences | null;
-  rules: AlertRule[];
   preferencesLoaded: boolean;
   pendingTheme: ThemePreference | null;
   accountPushEnabled: boolean;
@@ -15,7 +13,6 @@ export const accountState: {
 } = {
   userId: "",
   preferences: null,
-  rules: [],
   preferencesLoaded: false,
   pendingTheme: null,
   accountPushEnabled: false,

@@ -81,6 +81,22 @@ export function expandDetailUnits(detail) {
     .replace(/\bunids?\b\.?/gi, "unidade");
 }
 
+const DETAIL_UNIT_SYMBOLS = "kg|g|mg|ml|l|lt|un|cm|mm|m|pct|cx";
+const SPLIT_QUANTITY_PATTERN = new RegExp(`(\\d(?:[.,]\\d)?)\\s+(${DETAIL_UNIT_SYMBOLS})\\b`, "gi");
+const UNIT_ONLY_PATTERN = new RegExp(`^(${DETAIL_UNIT_SYMBOLS})$`, "i");
+
+/**
+ * Unidade de medida sempre no formato "1kg": número colado na unidade e
+ * símbolo em minúsculas ("1 KG" e "1 kg" viram "1kg", "Kg" vira "kg").
+ * Palavras por extenso ("11 unidades") ficam com espaço, como no nome.
+ */
+export function joinDetailQuantity(detail) {
+  const value = String(detail ?? "").replace(/\s+/g, " ").trim();
+  if (!value) return value;
+  const joined = value.replace(SPLIT_QUANTITY_PATTERN, (full, amount, unit) => `${amount}${unit.toLowerCase()}`);
+  return UNIT_ONLY_PATTERN.test(joined) ? joined.toLowerCase() : joined;
+}
+
 /**
  * Frase de validade que o folheto imprime ACIMA do produto e o PDF cola no
  * nome (ex.: "Ofertas válidas de quinta a domingo ... durarem nossos estoques.")

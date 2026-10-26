@@ -9,7 +9,7 @@
   <title>Alertas de preço — Feira Boa</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261022-card2x">
+  <link rel="stylesheet" href="styles.css?v=20261026-alerts-ui">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body class="auth-page">
@@ -27,39 +27,61 @@
       <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true">⌂</span><span>Ofertas</span></a>
       <a class="sidebar-link" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true">♡</span><span>Favoritos</span></a>
       <a class="sidebar-link" id="nav-account" href="account.html" aria-label="Minha conta"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-account-label>Minha conta</span></a>
-      <div class="sidebar-subnav" aria-label="Seções da minha conta">
-        <a href="account-stores.html">Lojas favoritas</a>
-        <a href="account-favorites.html">Produtos favoritos</a>
-        <a href="account-alerts.html" aria-current="page">Alertas de preço</a>
-      </div>
+      <a class="sidebar-link" href="alerts.html" aria-label="Alertas de preço" aria-current="page"><span aria-hidden="true">🔔</span><span>Alertas</span></a>
       <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true">✎</span><span>Sugestões</span></a>
     </nav>
     <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Escuro</span></button></div>
   </aside>
   <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu" tabindex="-1"></button>
 
-  <main class="auth-main account-settings-main">
-    <a class="back-link" href="account.html">← Minha conta</a>
-    <section class="auth-card account-settings-card" aria-labelledby="account-title">
-      <p class="eyebrow"><span class="pulse"></span> Preferências</p>
-      <h1 id="account-title">Alertas de preço</h1>
-      <p class="auth-description">Crie regras para acompanhar preços e gerencie notificações.</p>
-      <div class="account-identity"><span class="account-identity-label">Conectado como</span><strong id="account-email">Verificando sessão…</strong></div>
-      <section class="preferences-section" aria-labelledby="alerts-title">
-        <h2 id="alerts-title">Suas regras</h2>
-        <p class="preferences-help">Defina um preço máximo para acompanhar um tipo de produto em uma ou todas as lojas.</p>
-        <form id="alert-rule-form" class="preferences-form">
+  <main class="auth-main account-settings-main alerts-main">
+    <section class="auth-card account-settings-card" aria-labelledby="alerts-title">
+      <header class="alerts-header">
+        <p class="eyebrow"><span class="pulse"></span> Alertas</p>
+        <h1 id="alerts-title">Alertas de preço</h1>
+        <p class="auth-description">Escolha um produto e o preço máximo que você quer pagar. Avisamos quando uma oferta chegar nesse valor.</p>
+      </header>
+
+      <div class="alerts-banner" id="alerts-banner" role="status" hidden><span id="alerts-banner-text"></span></div>
+
+      <dl class="alerts-summary">
+        <div class="summary-tile"><dt>Alertas ativos</dt><dd id="summary-active">0</dd></div>
+        <div class="summary-tile"><dt>Avisos enviados</dt><dd id="summary-sent">0</dd></div>
+        <div class="summary-tile"><dt>Alertas criados</dt><dd id="summary-limit">0 de 20</dd></div>
+      </dl>
+
+      <div class="alerts-tabs" role="group" aria-label="Seções de alertas">
+        <button type="button" class="alerts-tab" id="tab-rules" aria-controls="panel-rules" aria-pressed="true">Meus alertas</button>
+        <button type="button" class="alerts-tab" id="tab-history" aria-controls="panel-history" aria-pressed="false">Histórico</button>
+      </div>
+
+      <section class="alerts-panel" id="panel-rules" aria-label="Meus alertas">
+        <form id="alert-rule-form" class="alert-form">
+          <h2 id="alert-form-title">Novo alerta</h2>
           <label for="alert-product">Tipo de produto</label>
           <select id="alert-product" required><option value="">Carregando…</option></select>
           <label for="alert-store">Loja</label>
           <select id="alert-store"><option value="">Qualquer loja</option></select>
           <label for="target-price">Avisar quando custar até</label>
-          <div class="price-input"><span>R$</span><input id="target-price" type="number" min="0.01" step="0.01" placeholder="0,00" required></div>
-          <button class="account-button" type="submit">Criar alerta</button>
+          <div class="price-input"><span>R$</span><input id="target-price" type="number" min="0.01" max="10000" step="0.01" inputmode="decimal" placeholder="0,00" required></div>
+          <p class="alert-form-error" id="alert-form-error" role="alert" hidden></p>
+          <div class="alert-form-actions">
+            <button class="account-button" id="alert-submit" type="submit">Criar alerta</button>
+            <button class="account-button secondary" id="alert-cancel" type="button" hidden>Cancelar edição</button>
+          </div>
         </form>
-        <ul id="alert-rules" class="alert-rules"><li class="preference-empty">Carregando alertas…</li></ul>
-        <label class="pause-alerts"><input id="notifications-paused" type="checkbox"><span>Pausar alertas</span></label>
+
+        <div class="alerts-list-head"><h2>Seus alertas</h2><span id="alerts-count">0 de 20</span></div>
+        <ul id="alert-rules" class="alert-cards"><li class="alerts-empty">Carregando alertas…</li></ul>
+
+        <label class="pause-alerts"><input id="notifications-paused" type="checkbox"><span>Pausar todos os alertas</span></label>
       </section>
+
+      <section class="alerts-panel" id="panel-history" aria-label="Histórico de avisos" hidden>
+        <p class="preferences-help">Avisos enviados para este usuário, do mais recente para o mais antigo.</p>
+        <ul id="alert-history" class="history-list"><li class="alerts-empty">Carregando histórico…</li></ul>
+      </section>
+
       <section class="preferences-section device-notifications" aria-labelledby="device-notifications-title">
         <h2 id="device-notifications-title">Notificações neste dispositivo</h2>
         <p class="preferences-help push-status" aria-live="polite"><strong id="push-status">Verificando…</strong></p>
@@ -71,14 +93,14 @@
         </div>
         <p class="push-feedback" id="push-feedback" role="status" aria-live="polite" hidden></p>
       </section>
-      <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
-      <div class="account-settings-actions"><button type="button" class="account-button secondary" id="sign-out">Sair</button><button type="button" class="account-button danger" id="delete-account">Excluir conta</button></div>
+
+      <p id="alerts-status" class="account-status" role="status" aria-live="polite"></p>
     </section>
   </main>
   <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Ofertas locais para facilitar suas compras.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
   <script src="navigation.js"></script>
   <script src="site-version.js"></script>
-  <script src="account.js"></script>
+  <script src="alerts.js"></script>
   <script src="pwa.js"></script>
 </body>
 </html>

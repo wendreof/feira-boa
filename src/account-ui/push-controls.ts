@@ -36,7 +36,9 @@ async function browserPushSubscription(): Promise<PushSubscription | null> {
 export async function refreshPushDeviceState(): Promise<void> {
   try {
     const oneSignal = await requireOneSignal();
-    accountState.devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true;
+    // Inscrito no SDK mas sem permissão do navegador não recebe push: não mostrar como ativo.
+    const browserAllows = "Notification" in window && Notification.permission === "granted";
+    accountState.devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true && browserAllows;
   } catch {
     accountState.devicePushEnabled = false;
   }

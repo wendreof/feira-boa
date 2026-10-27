@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-26T18:51:55.968Z",
+  "updatedAt": "2026-10-27T00:21:50.711Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -21916,7 +21916,7 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 3.99,
+      "price": 3.89,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",

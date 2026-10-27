@@ -110,6 +110,8 @@ export interface Database {
           sent_at: string;
           result: "sent" | "failed";
           error_code: string | null;
+          title: string | null;
+          body: string | null;
         };
         Insert: {
           id?: number;
@@ -118,6 +120,8 @@ export interface Database {
           sent_at?: string;
           result: "sent" | "failed";
           error_code?: string | null;
+          title?: string | null;
+          body?: string | null;
         };
         Update: {
           id?: number;
@@ -126,6 +130,8 @@ export interface Database {
           sent_at?: string;
           result?: "sent" | "failed";
           error_code?: string | null;
+          title?: string | null;
+          body?: string | null;
         };
         Relationships: [];
       };

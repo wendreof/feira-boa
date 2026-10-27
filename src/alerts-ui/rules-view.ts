@@ -3,7 +3,6 @@ import {
   createAlertRule,
   deleteAlertRule,
   loadAlertRules,
-  setAlertRuleEnabled,
   updateAlertRule,
   type AlertRule,
 } from "../alerts";
@@ -14,7 +13,6 @@ import {
   alertsBanner,
   describeRule,
   parseTargetPrice,
-  ruleStatus,
   validateAlertRule,
   formatDateTime,
 } from "../shared/alert-rules.mjs";
@@ -34,7 +32,6 @@ import {
   alertsStatus,
   summaryActive,
   summaryLimit,
-  summarySent,
   targetPrice,
 } from "./dom";
 
@@ -54,15 +51,13 @@ function deviceNotificationsPermissionDenied(): boolean {
 
 /** Atualiza contadores do topo e o aviso de situação dos alertas. */
 export function renderSummary(): void {
-  const activeCount = alertsState.rules.filter((rule) => rule.enabled).length;
+  const activeCount = alertsState.rules.length;
   if (summaryActive) summaryActive.textContent = String(activeCount);
-  if (summarySent) summarySent.textContent = String(alertsState.history.filter((entry) => entry.result === "sent").length);
-  if (summaryLimit) summaryLimit.textContent = `${alertsState.rules.length} de ${MAX_ALERT_RULES}`;
-  if (alertsCount) alertsCount.textContent = `${alertsState.rules.length} de ${MAX_ALERT_RULES}`;
+  if (summaryLimit) summaryLimit.textContent = `${activeCount} de ${MAX_ALERT_RULES}`;
+  if (alertsCount) alertsCount.textContent = `${activeCount} de ${MAX_ALERT_RULES}`;
 
   const banner = alertsBanner({
     activeCount,
-    notificationsPaused: alertsState.notificationsPaused,
     deviceEnabled: accountState.devicePushEnabled,
     permissionDenied: deviceNotificationsPermissionDenied(),
   });
@@ -86,10 +81,9 @@ function ruleActionButton(label: string, action: string, ruleId: string, extraCl
 
 function renderRuleCard(rule: AlertRule): HTMLLIElement {
   const { title, scope, price } = describeRule(rule);
-  const status = ruleStatus(rule, { notificationsPaused: alertsState.notificationsPaused });
 
   const item = document.createElement("li");
-  item.className = `alert-card is-${status.key}`;
+  item.className = "alert-card";
 
   const main = document.createElement("div");
   main.className = "alert-card-main";
@@ -98,10 +92,7 @@ function renderRuleCard(rule: AlertRule): HTMLLIElement {
   head.className = "alert-card-head";
   const name = document.createElement("strong");
   name.textContent = title;
-  const pill = document.createElement("span");
-  pill.className = `status-pill is-${status.key}`;
-  pill.textContent = status.label;
-  head.append(name, pill);
+  head.append(name);
 
   const meta = document.createElement("p");
   meta.className = "alert-card-meta";
@@ -115,13 +106,8 @@ function renderRuleCard(rule: AlertRule): HTMLLIElement {
 
   const actions = document.createElement("div");
   actions.className = "alert-card-actions";
-  const toggleLabel = rule.enabled ? "Pausar" : "Ativar";
-  const toggle = ruleActionButton(toggleLabel, "toggle", rule.id, "account-button secondary");
-  toggle.setAttribute("aria-label", `${toggleLabel} alerta de ${title}`);
-  toggle.setAttribute("aria-pressed", String(rule.enabled));
   actions.append(
     ruleActionButton("Editar", "edit", rule.id),
-    toggle,
     ruleActionButton("Excluir", "delete", rule.id, "text-button danger-text"),
   );
 
@@ -247,17 +233,6 @@ async function runRuleAction(button: HTMLButtonElement): Promise<void> {
     return;
   }
 
-  if (action === "toggle") {
-    button.disabled = true;
-    try {
-      await setAlertRuleEnabled(alertsState.userId, rule.id, !rule.enabled);
-      await refreshRules();
-      setAlertsStatus(rule.enabled ? "Alerta pausado. Você não receberá avisos deste produto." : "Alerta ativado.");
-    } catch (error) {
-      button.disabled = false;
-      setAlertsStatus(`Não foi possível alterar o alerta: ${errorMessage(error)}`);
-    }
-  }
 }
 
 export function bindRulesView(): void {

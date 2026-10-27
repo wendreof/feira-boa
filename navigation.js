@@ -63,7 +63,7 @@
   termsLink.href = "termos.html";
   termsLink.setAttribute("aria-label", "Termos de uso");
   termsLink.setAttribute("data-sidebar-link", "terms");
-  termsLink.innerHTML = '<span aria-hidden="true">§</span><span>Termos</span>';
+  termsLink.innerHTML = '<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></span><span>Termos</span>';
   suggestionsLink?.after(termsLink);
 
   const isOffersPage = currentUrl.pathname === "/" || currentUrl.pathname.endsWith("/index.html");

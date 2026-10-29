@@ -9,7 +9,7 @@
     "from": "2026-10-26",
     "to": "2026-11-01"
   },
-  "fetchedAt": "2026-10-28T16:34:51.218Z",
+  "fetchedAt": "2026-10-29T00:48:19.781Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -2043,7 +2043,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 13.99,
-      "previousPrice": 22.99,
+      "previousPrice": 21.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2930,7 +2930,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
-      "price": 14.99,
+      "price": 14.29,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -2978,7 +2978,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
-      "price": 15.89,
+      "price": 14.99,
       "previousPrice": null,
       "icon": "🥨",
       "tone": "#edf4e9",
@@ -4803,7 +4803,7 @@
         "Mercearia"
       ],
       "storeCategory": "Café da Manhã/Padaria/Torrada",
-      "price": 4.99,
+      "price": 4.79,
       "previousPrice": null,
       "icon": "🍞",
       "tone": "#edf4e9",
@@ -9099,7 +9099,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
-      "price": 3.89,
+      "price": 3.99,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -11283,7 +11283,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 12.99,
+      "price": 11.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -12171,7 +12171,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 17.99,
+      "price": 17.59,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -12219,7 +12219,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 17.99,
+      "price": 17.59,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -16022,7 +16022,7 @@
       ],
       "storeCategory": "Frios e Laticínios/Frios/Presunto",
       "price": 11.99,
-      "previousPrice": 15.59,
+      "previousPrice": 14.99,
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16238,7 +16238,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Snack",
       "price": 4.59,
-      "previousPrice": 4.89,
+      "previousPrice": 4.98,
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16262,7 +16262,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Snack",
       "price": 4.59,
-      "previousPrice": 4.99,
+      "previousPrice": 5.19,
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16981,7 +16981,7 @@
         "Congelados"
       ],
       "storeCategory": "Congelados/Pratos Prontos/Lasanha Congelada",
-      "price": 13.49,
+      "price": 13.89,
       "previousPrice": null,
       "icon": "🍝",
       "tone": "#edf4e9",
@@ -20173,8 +20173,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Isotônico",
-      "price": 4.89,
-      "previousPrice": null,
+      "price": 4.99,
+      "previousPrice": 5.69,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -23005,7 +23005,7 @@
         "Mercearia"
       ],
       "storeCategory": "Café da Manhã/Cereal e Granola/Cereal Matinal",
-      "price": 27.89,
+      "price": 27.59,
       "previousPrice": null,
       "icon": "🌾",
       "tone": "#edf4e9",
@@ -23413,7 +23413,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Molhos Frios/Maionese",
-      "price": 24.99,
+      "price": 22.99,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -23557,7 +23557,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
-      "price": 15.99,
+      "price": 15.45,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -23822,7 +23822,7 @@
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Caldos",
       "price": 3.39,
-      "previousPrice": 3.79,
+      "previousPrice": 3.49,
       "icon": "🍲",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

@@ -12,7 +12,7 @@
     "checked_at": "2026-10-30T02:45:46.688Z",
     "last_success_at": "2026-10-30T02:45:46.688Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0": {
     "url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
@@ -28,7 +28,7 @@
     "checked_at": "2026-10-30T02:45:48.512Z",
     "last_success_at": "2026-10-30T02:45:48.512Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf": {
     "url": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
@@ -43,7 +43,7 @@
     "checked_at": "2026-10-30T02:45:48.671Z",
     "last_success_at": "2026-10-30T02:45:48.671Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
     "url": "https://spassosabores.com.br/ofertas-sao-joao/",
@@ -58,7 +58,7 @@
     "checked_at": "2026-10-30T02:45:51.953Z",
     "last_success_at": "2026-10-30T02:45:51.953Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false
   },
   "https://corso.com.br/jornalfrente.php": {
     "url": "https://corso.com.br/jornalfrente.php",

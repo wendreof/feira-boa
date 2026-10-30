@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T01:52:01.282Z",
+  "updatedAt": "2026-10-30T02:45:45.291Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -11191,7 +11191,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
-      "price": 3.89,
+      "price": 3.99,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T02:27:41.566Z",
+  "updatedAt": "2026-10-30T02:39:53.938Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -4903,7 +4903,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 8.99,
-      "previousPrice": 9.99,
+      "previousPrice": 9.39,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11191,7 +11191,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
-      "price": 3.89,
+      "price": 3.99,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",

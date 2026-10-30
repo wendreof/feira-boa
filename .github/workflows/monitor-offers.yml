@@ -48,6 +48,9 @@ jobs:
         continue-on-error: true
         run: npm run monitor:sources
 
+      - name: Clear source review when new snapshots pass plausibility checks
+        run: node scripts/apply-plausibility-review.mjs
+
       - name: Save updated offers and source status
         id: changes
         shell: bash

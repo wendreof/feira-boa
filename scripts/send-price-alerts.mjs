@@ -10,6 +10,7 @@ import {
 } from "./alerts/plan.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
+const ALERT_DISCLAIMER = "Aviso: o preço vem do folheto publicado pela loja e pode ter mudado ou estar incorreto. Confirme na loja antes de comprar.";
 const PAGE_SIZE = 1000;
 const IN_CHUNK_SIZE = 100;
 const REQUIRED_ENVIRONMENT = [
@@ -81,7 +82,7 @@ async function sendAlerts({ supabase, pending, config, chatIdByUser, dryRun }) {
       continue;
     }
     const { title, body } = buildAlertMessage(offer);
-    const text = `${title}\n${body}\n${offerUrl(config.siteUrl, offer)}`;
+    const text = `${title}\n${body}\n${offerUrl(config.siteUrl, offer)}\n\n${ALERT_DISCLAIMER}`;
     let delivered = false;
     let safeErrorCode = null;
     try {

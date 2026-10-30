@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
 import { MAX_SOURCE_AGE_MS, getVerifiedActiveOffers, saoPauloDate } from "./offer-matcher.mjs";
-import { sendNotification } from "./onesignal-client.mjs";
+import { sendTelegramMessage, TelegramApiError } from "./telegram-client.mjs";
 import {
   buildAlertMessage,
   matchOffersToUsers,
@@ -15,8 +15,7 @@ const IN_CHUNK_SIZE = 100;
 const REQUIRED_ENVIRONMENT = [
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
-  "ONESIGNAL_APP_ID",
-  "ONESIGNAL_REST_API_KEY",
+  "TELEGRAM_BOT_TOKEN",
   "SITE_URL",
 ];
 
@@ -26,7 +25,7 @@ function readConfig(env) {
 
   const siteUrl = new URL(env.SITE_URL);
   if (siteUrl.protocol !== "https:") throw new Error("SITE_URL must use HTTPS.");
-  return { siteUrl, oneSignalAppId: env.ONESIGNAL_APP_ID, oneSignalApiKey: env.ONESIGNAL_REST_API_KEY };
+  return { siteUrl, telegramToken: env.TELEGRAM_BOT_TOKEN };
 }
 
 function chunk(values, size) {
@@ -59,35 +58,38 @@ async function loadFeed() {
   return { feed, feedUpdatedAt, sourceState: JSON.parse(sourceStateText) };
 }
 
-async function sendAlerts({ supabase, pending, config, dryRun }) {
-  const counts = { notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoDevice: 0 };
+/** Código gravado em notification_log.error_code; nunca inclui o texto da API. */
+function telegramErrorCode(error) {
+  if (error instanceof TelegramApiError) {
+    if (error.telegramStatus === 403) return "telegram_blocked";
+    return `telegram_http_${error.telegramStatus}`;
+  }
+  return "telegram_api_error";
+}
+
+async function sendAlerts({ supabase, pending, config, chatIdByUser, dryRun }) {
+  const counts = { notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoChannel: 0 };
   for (const { userId, offer } of pending) {
     if (dryRun) {
       counts.notificationsWouldSend += 1;
       continue;
     }
+    const chatId = chatIdByUser.get(userId);
+    // Sem vínculo de Telegram não há canal: não grava histórico, tenta de novo no próximo job.
+    if (!chatId) {
+      counts.skippedNoChannel += 1;
+      continue;
+    }
     const { title, body } = buildAlertMessage(offer);
+    const text = `${title}\n${body}\n${offerUrl(config.siteUrl, offer)}`;
     let delivered = false;
     let safeErrorCode = null;
     try {
-      const recipients = await sendNotification({
-        appId: config.oneSignalAppId,
-        apiKey: config.oneSignalApiKey,
-        userId,
-        title,
-        body,
-        url: offerUrl(config.siteUrl, offer),
-        collapseId: `feira-${offer.id}`,
-      });
-      if (recipients === 0) {
-        counts.skippedNoDevice += 1;
-        continue;
-      }
+      await sendTelegramMessage(config.telegramToken, chatId, text);
       delivered = true;
     } catch (error) {
-      const status = Number(error?.onesignalStatus);
-      safeErrorCode = status ? `onesignal_http_${status}` : "onesignal_api_error";
-      console.error(`OneSignal send failed for user ${userId} offer ${offer.id}: ${error.message}`);
+      safeErrorCode = telegramErrorCode(error);
+      console.error(`Telegram send failed for user ${userId} offer ${offer.id}: ${error.message}`);
     }
     // Guarda o texto exato enviado para a página de mensagens.
     const { error } = await supabase.from("notification_log").upsert({
@@ -113,7 +115,7 @@ async function main() {
     auth: { persistSession: false, autoRefreshToken: false },
   });
   const today = saoPauloDate();
-  const emptySummary = { date: today, dryRun, notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoDevice: 0 };
+  const emptySummary = { date: today, dryRun, notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoChannel: 0 };
 
   const rules = await readRows(() => supabase.from("alert_rules")
     .select("id, user_id, store, product, product_type, target_price")
@@ -148,7 +150,17 @@ async function main() {
   const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
   const pending = pendingNotifications(matchedByUser, alreadySent);
 
-  const counts = await sendAlerts({ supabase, pending, config, dryRun });
+  const chatIdByUser = new Map();
+  if (!dryRun && pending.length > 0) {
+    for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
+      const links = await readRows(() => supabase.from("telegram_links")
+        .select("user_id, chat_id")
+        .in("user_id", userGroup), ["user_id"]);
+      for (const link of links) chatIdByUser.set(link.user_id, Number(link.chat_id));
+    }
+  }
+
+  const counts = await sendAlerts({ supabase, pending, config, chatIdByUser, dryRun });
   return { ...summaryBase, ...counts };
 }
 

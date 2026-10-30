@@ -72,6 +72,45 @@ export interface Database {
         };
         Relationships: [];
       };
+      telegram_link_tokens: {
+        Row: {
+          token: string;
+          user_id: string;
+          created_at: string;
+          expires_at: string;
+        };
+        Insert: {
+          token: string;
+          user_id: string;
+          created_at?: string;
+          expires_at?: string;
+        };
+        Update: {
+          token?: string;
+          user_id?: string;
+          created_at?: string;
+          expires_at?: string;
+        };
+        Relationships: [];
+      };
+      telegram_links: {
+        Row: {
+          user_id: string;
+          chat_id: number;
+          linked_at: string;
+        };
+        Insert: {
+          user_id: string;
+          chat_id: number;
+          linked_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          chat_id?: number;
+          linked_at?: string;
+        };
+        Relationships: [];
+      };
       push_subscriptions: {
         Row: {
           id: string;

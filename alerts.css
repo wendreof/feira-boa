@@ -1,0 +1,492 @@
+/* Página de alertas de preço. Escopo: .alerts-main. Usa as variáveis de tema de styles.css/theme.css. */
+
+.alerts-main {
+  width: min(100% - 32px, 1040px);
+  justify-content: flex-start;
+  padding: 36px 0 56px;
+}
+
+.alerts-page {
+  display: grid;
+  gap: 20px;
+}
+
+.alerts-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* Cabeçalho */
+.alerts-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, #43b06f33 0%, transparent 60%),
+    linear-gradient(135deg, var(--mint) 0%, var(--white) 100%);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.alerts-hero h1 {
+  margin: 0;
+  font: 800 clamp(30px, 5vw, 42px) / 1.05 'Manrope', sans-serif;
+  letter-spacing: -1.6px;
+}
+
+.alerts-lede {
+  max-width: 520px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.alerts-main .eyebrow {
+  margin-bottom: 12px;
+}
+
+.alerts-stats {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.alerts-stats .stat-tile {
+  min-width: 124px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.alerts-stats dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.alerts-stats dd {
+  margin: 4px 0 0;
+  font: 800 22px / 1.1 'Manrope', sans-serif;
+  color: var(--green);
+}
+
+.alerts-banner {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid #91b49a;
+  background: var(--mint);
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.alerts-banner[data-tone="warning"] {
+  border-color: #e0b25c;
+  background: #fff7e6;
+  color: #7a5200;
+}
+
+/* Layout principal: formulário + lista */
+.alerts-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+/* Formulário (sem caixa própria: fica dentro do cartão) */
+.alert-form {
+  display: grid;
+  gap: 10px;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.alert-form h2 {
+  margin: 0;
+  font: 800 19px 'Manrope', sans-serif;
+  letter-spacing: -0.4px;
+}
+
+.alert-form-intro {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.alert-form > label {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.alert-form select,
+.alert-form .price-input {
+  width: 100%;
+}
+
+.alert-form select,
+.alert-form .price-input input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 13px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 600 14px 'DM Sans', sans-serif;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.alert-form select:focus,
+.alert-form .price-input input:focus {
+  outline: none;
+  border-color: #70a383;
+  box-shadow: 0 0 0 3px #155b3b1f;
+}
+
+.alert-form .price-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.alert-form .price-input span {
+  position: absolute;
+  left: 13px;
+  z-index: 1;
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.alert-form .price-input input {
+  padding-left: 42px;
+  font: 800 18px 'Manrope', sans-serif;
+}
+
+.alert-form-error {
+  margin: 0;
+  color: #a22f36;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.alert-form-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.alert-form-actions .account-button {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1f7a4e, #43b06f);
+  color: #fff;
+  font: 800 14px 'Manrope', sans-serif;
+  box-shadow: 0 10px 22px #155b3b33;
+}
+
+.alert-form-actions .account-button.secondary {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.alerts-status {
+  margin: 12px 0 0;
+  min-height: 1.4em;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* Lista de alertas */
+.alerts-list-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.alerts-list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.alerts-list-head h2 {
+  margin: 0;
+  font: 800 19px 'Manrope', sans-serif;
+  letter-spacing: -0.4px;
+}
+
+.alerts-list-head span {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.alert-cards {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.alert-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px 14px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.alert-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, #43b06f, #f1c75b);
+}
+
+.alert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px #203c2714;
+}
+
+.alert-card-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.alert-card-head strong {
+  font: 800 15px / 1.25 'Manrope', sans-serif;
+}
+
+.alert-card-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.alert-card-date {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.alert-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.alert-card-actions .text-button {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--green);
+  font: 800 12px 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+.alert-card-actions .text-button:hover {
+  background: var(--mint);
+}
+
+.alert-card-actions .danger-text {
+  color: #a22f36;
+}
+
+.alerts-empty {
+  display: grid;
+  gap: 6px;
+  padding: 26px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  list-style: none;
+}
+
+.alerts-empty strong {
+  color: var(--ink);
+  font: 800 16px 'Manrope', sans-serif;
+}
+
+/* Canais de notificação. Cada canal é uma entrada em src/alerts-ui/channels.ts. */
+.channels-head h2 {
+  margin: 0;
+  font: 800 19px 'Manrope', sans-serif;
+  letter-spacing: -0.4px;
+}
+
+.channels-head p {
+  margin: 6px 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.channel-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.channel-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.channel-card.is-linked {
+  border-color: #91b49a;
+}
+
+.channel-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.channel-card-head strong {
+  font: 800 16px 'Manrope', sans-serif;
+}
+
+.channel-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.channel-badge[data-state="linked"] {
+  background: var(--mint);
+  border-color: transparent;
+  color: var(--green);
+}
+
+.channel-badge[data-state="pending"] {
+  background: #fff7e6;
+  border-color: transparent;
+  color: #7a5200;
+}
+
+.channel-desc,
+.channel-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.channel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.channel-actions .account-button {
+  border-radius: 12px;
+  padding: 9px 14px;
+  font: 800 13px 'Manrope', sans-serif;
+}
+
+.channel-actions .danger-action {
+  color: #a22f36;
+  border-color: #e7b9bc;
+}
+
+.channels-card .push-feedback {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+/* Telas menores */
+@media (max-width: 900px) {
+  .alerts-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .alerts-main {
+    padding-top: 22px;
+  }
+
+  .alerts-hero {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 22px;
+  }
+
+  .alerts-stats {
+    width: 100%;
+  }
+
+  .alerts-stats .stat-tile {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .alerts-card {
+    padding: 18px;
+  }
+
+  .alert-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

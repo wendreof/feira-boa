@@ -4,7 +4,7 @@ import { createOfferCard, updateOfferCard } from "./card";
 import { feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink, resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount } from "./dom";
 import { getPriceBounds } from "./filters";
 import { money, isActive, todayInSaoPaulo } from "../view/format";
-import { offerCategory, offerOrder, matchesSearch, matchesSector } from "./offer-model";
+import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./offer-model";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -33,7 +33,7 @@ export function renderOffers(): void {
     (appState.sharedOfferId || matchesReaction) && (appState.sharedOfferId || matchesDiscount) &&
     (appState.sharedOfferId || min === null || offer.price >= min) && (appState.sharedOfferId || max === null || offer.price <= max) && (appState.sharedOfferId || matchesSearch(offer, input.value));
   });
-  if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => offerOrder(a) - offerOrder(b));
+  if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => randomOfferRank(a) - randomOfferRank(b));
   if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
   if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
   if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => discountRatio(b) - discountRatio(a));

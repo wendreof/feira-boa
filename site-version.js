@@ -8,7 +8,7 @@ if (versionElement && buildDetailsElement) {
       return response.json();
     })
     .then((build) => {
-      versionElement.textContent = `v${build.version}`;
+      versionElement.textContent = build.build ? `v${build.version} (build ${build.build})` : `v${build.version}`;
       const buildTime = new Date(build.builtAt).toLocaleString("pt-BR", { dateStyle: "medium", timeStyle: "short" });
       buildDetailsElement.textContent = `Build ${build.commit} · ${buildTime}${build.dirty ? " · alterações locais" : ""}`;
     })

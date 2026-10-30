@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="styles.css?v=20261022-card2x">
   <link rel="stylesheet" href="theme.css">
 </head>
-<body>
+<body data-login-gate>
   <header class="topbar">
     <a class="brand" href="index.html" aria-label="Feira Boa, início"><img class="brand-mark" src="favicon.svg" alt=""><span>feira boa</span></a>
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="app-sidebar" aria-expanded="false"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>Menu</span></button>
@@ -37,8 +37,8 @@
       <a class="sidebar-link" href="index.html#top" aria-label="Ofertas" data-sidebar-link="offers"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span><span>Ofertas</span></a>
       <a class="sidebar-link" id="nav-favorites" href="index.html?view=favorites#top" aria-label="Favoritos"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg></span><span>Favoritos</span></a>
       <a class="sidebar-link" id="nav-account" href="login.html" aria-label="Entrar"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span data-account-label>Entrar</span></a>
-      <a class="sidebar-link" href="alerts.html" aria-label="Alertas de preço" data-sidebar-link="alerts"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"/><path d="M10.2 20.5a2 2 0 0 0 3.6 0"/></svg></span><span>Alertas</span></a>
-      <a class="sidebar-link" href="mensagens.html" aria-label="Mensagens de alertas" data-sidebar-link="messages"><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7 12 13l8.5-6"/></svg></span><span>Mensagens</span></a>
+      <a class="sidebar-link" href="alerts.html" aria-label="Alertas de preço" data-sidebar-link="alerts"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span>Alertas</span></a>
+      <a class="sidebar-link" href="mensagens.html" aria-label="Notificações" data-sidebar-link="messages"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"/><path d="M10.2 20.5a2 2 0 0 0 3.6 0"/></svg></span><span>Notificações</span></a>
       <a class="sidebar-link" href="suggestions.html" aria-label="Enviar sugestão" data-sidebar-link="suggestions"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5l-4-4L4 16z"/></svg></span><span>Sugestões</span></a>
     </nav>
     <div class="sidebar-bottom"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false"><span data-theme-icon aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><span data-theme-label>Escuro</span></button></div>
@@ -156,8 +156,10 @@
       <a href="https://facebook.com/semprevalesupermercados" target="_blank" rel="noopener">Facebook</a>
     </section>
   </main>
-  <footer class="footer"><span>Feira Boa · São João da Boa Vista</span><span>Consulte as lojas para confirmar preços, estoque e condições.</span><details class="build-version"><summary id="site-version">Versão</summary><span id="site-build-details">Carregando build…</span></details><span>Made with &lt;3 by WLF Techs</span></footer>
+  <footer class="footer" data-site-footer></footer>
   <script src="navigation.js"></script>
+  <script src="login-gate.js"></script>
+  <script src="site-footer.js"></script>
   <script src="site-version.js"></script>
   <script src="source-status.js"></script>
   <script src="stores.js"></script>

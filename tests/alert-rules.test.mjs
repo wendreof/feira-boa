@@ -58,14 +58,20 @@ test("describeRule falls back to product and any-store labels", () => {
   assert.equal(describeRule({ product_type: "Carne bovina", store: "Corso", target_price: 99.76 }).price, "R$ 99,76");
 });
 
-test("alertsBanner explains blocked and inactive device states", () => {
-  assert.equal(alertsBanner({ activeCount: 0, deviceEnabled: false }), null);
-  assert.match(alertsBanner({ activeCount: 2, deviceEnabled: false, permissionDenied: true }).message, /bloqueou/);
-  assert.equal(alertsBanner({ activeCount: 2, deviceEnabled: false }).tone, "warning");
-  assert.equal(alertsBanner({ activeCount: 2, deviceEnabled: true }).tone, "ok");
+test("alertsBanner warns when no notification channel is connected", () => {
+  assert.equal(alertsBanner({ activeCount: 0, channelEnabled: false }), null);
+  assert.equal(alertsBanner({ activeCount: 2, channelEnabled: false }).tone, "warning");
+  assert.match(alertsBanner({ activeCount: 2, channelEnabled: false }).message, /canal/);
+  assert.equal(alertsBanner({ activeCount: 2, channelEnabled: true }).tone, "ok");
 });
 
-test("failureHint maps OneSignal error codes to readable text", () => {
+test("failureHint maps Telegram error codes to readable text", () => {
+  assert.match(failureHint("telegram_blocked"), /bloqueie|Desbloqueie/);
+  assert.match(failureHint("telegram_http_400"), /recusou/);
+  assert.match(failureHint("telegram_api_error"), /Telegram/);
+});
+
+test("failureHint still maps legacy OneSignal error codes", () => {
   assert.match(failureHint("onesignal_http_400"), /recusou/);
   assert.match(failureHint("onesignal_api_error"), /conexão/);
   assert.match(failureHint(null), /não identificado/);

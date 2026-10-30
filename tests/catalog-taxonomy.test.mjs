@@ -71,6 +71,23 @@ test("resolveCategory sends barbecue products to the churrasco group", () => {
   assert.notEqual(snack.groupId, "churrasco");
 });
 
+test("resolveCategory obeys the sector the name requires when the flyer merged two products", () => {
+  const wine = resolveCategory({
+    name: "Vinho Chileno Concha Y Toro Reservado 19,90 Filé da Coxa de Frango Ad'oro kg Granel",
+    productType: "Bebidas alcoólicas",
+    productTypes: ["Bebidas alcoólicas", "Churrasco"],
+  });
+  assert.equal(wine.groupId, "bebidas_alcoolicas");
+  assert.equal(wine.subcategory, "Vinhos e destilados");
+
+  const cleaner = resolveCategory({
+    name: "Detergente Neutro Ypê 500ml Frango Inteiro Congelado",
+    productType: "Lavanderia e limpeza",
+    productTypes: ["Lavanderia e limpeza", "Churrasco"],
+  });
+  assert.equal(cleaner.groupId, "limpeza");
+});
+
 test("categoryOrder follows the sector order", () => {
   const frescos = categoryOrder(resolveCategory({ name: "Banana", productTypes: ["Hortifruti"] }));
   const mercearia = categoryOrder(resolveCategory({ name: "Arroz", productTypes: ["Arroz"] }));

@@ -7,11 +7,9 @@ import {
   loadDisplayName,
   signOut,
 } from "./account";
-import { requireOneSignal } from "./push";
 import type { OfferFeed } from "./types";
 import { applyTheme } from "./theme";
 import { refreshAvatar, bindAvatarControls } from "./account-ui/avatar-controls";
-import { detachOneSignalFromAccount } from "./account-ui/push-controls";
 import { renderCheckboxes } from "./account-ui/options";
 import { bindPreferenceControls, bindThemeControls, saveThemePreference } from "./account-ui/preference-controls";
 import { accountState } from "./account-ui/state";
@@ -23,7 +21,6 @@ function bindAccountActions(): void {
     setActionsDisabled(true);
     setStatus("Saindo…");
     try {
-      await detachOneSignalFromAccount();
       await signOut();
       window.location.replace("index.html");
     } catch (error) {
@@ -37,7 +34,6 @@ function bindAccountActions(): void {
     setActionsDisabled(true);
     setStatus("Excluindo conta…");
     try {
-      await detachOneSignalFromAccount();
       await deleteAccount();
       window.location.replace("index.html");
     } catch (error) {
@@ -72,15 +68,6 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
   accountState.preferences = preferences;
   applyTheme(preferences.theme);
   accountState.preferencesLoaded = true;
-  accountState.accountPushEnabled = settings.pushEnabled;
-  void (async () => {
-    try {
-      const oneSignal = await requireOneSignal();
-      await oneSignal.login(accountState.userId);
-    } catch (error) {
-      console.warn("Could not associate OneSignal with the account.", error);
-    }
-  })();
 
   const stores = [...new Set(response.offers.map((offer) => offer.store))].sort((a, b) => a.localeCompare(b, "pt-BR"));
   const productTypes = [...new Set(response.offers.flatMap((offer) => offer.productTypes))].sort((a, b) => a.localeCompare(b, "pt-BR"));

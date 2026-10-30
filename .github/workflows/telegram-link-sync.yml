@@ -1,0 +1,42 @@
+name: Sync Telegram links
+
+on:
+  schedule:
+    # A cada 15 minutos: confirma vínculos do Telegram logo após o usuário tocar em Iniciar.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Só este workflow chama getUpdates do bot; o grupo evita execuções sobrepostas.
+concurrency:
+  group: feira-boa-telegram-updates
+  cancel-in-progress: false
+
+jobs:
+  sync-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SUPABASE_URL: https://muiuvmhzzbqflxznpnez.supabase.co
+    steps:
+      - name: Check out main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Confirm Telegram link requests
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: node scripts/telegram-links.mjs

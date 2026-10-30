@@ -82,7 +82,7 @@ test("site health check validates public HTML and data files", async () => {
   };
   assert.deepEqual(await checkSiteHealth("https://feira.example/", fetchStub, { now, requireSecurityHeaders: true }), {
     host: "feira.example",
-    filesChecked: 8,
+    filesChecked: 6,
     offers: 1,
     commit: "abc1234",
     feedUpdatedAt: "2026-10-18T14:00:00Z",

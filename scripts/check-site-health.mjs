@@ -54,7 +54,7 @@ export async function checkSiteHealth(siteUrlValue, fetchImpl = fetch, {
   }
   if (siteUrl.search || siteUrl.hash) throw new Error("SITE_URL must not include a query or fragment.");
   const base = siteUrl.href.endsWith("/") ? siteUrl : new URL(`${siteUrl.href}/`);
-  const files = ["index.html", "offers.json", "build-info.json", "service-worker.js", "manifest.webmanifest", "source-status.js", "onesignal/OneSignalSDK.page.es6.js", "onesignal/OneSignalSDKWorker.js"];
+  const files = ["index.html", "offers.json", "build-info.json", "service-worker.js", "manifest.webmanifest", "source-status.js"];
   const responses = await Promise.all(files.map(async (file) => {
     const response = await fetchImpl(new URL(file, base), { signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error(`${file} returned HTTP ${response.status}.`);
@@ -67,8 +67,6 @@ export async function checkSiteHealth(siteUrlValue, fetchImpl = fetch, {
   if (!content["index.html"].toLowerCase().includes("feira boa")) throw new Error("index.html does not contain the Feira Boa site.");
   if (!content["service-worker.js"].includes('addEventListener("fetch"')) throw new Error("service-worker.js has no fetch handler.");
   const swText = content["service-worker.js"];
-  const hasPushHandler = swText.includes('addEventListener("push"') || swText.includes("OneSignalSDK");
-  if (!hasPushHandler) throw new Error("service-worker.js has no push handler or OneSignal worker.");
   if (!content["source-status.js"].includes("FEIRA_SOURCE_STATUS")) throw new Error("source-status.js is missing status data.");
   validateOfferFeed(content["offers.json"], { now, maxAgeMs: maxFeedAgeMs });
   validateBuildInfo(content["build-info.json"], { expectedCommit, requireClean });

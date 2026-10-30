@@ -1,13 +1,12 @@
 import {
   errorMessage,
   getCurrentUser,
-  hasPushSubscriptions,
   loadPreferences,
 } from "./account";
 import { loadAlertRules } from "./alerts";
 import { applyTheme } from "./theme";
 import { accountState } from "./account-ui/state";
-import { bindPushControls, refreshPushDeviceState } from "./account-ui/push-controls";
+import { bindChannels, loadChannels } from "./alerts-ui/channels";
 import type { OfferFeed } from "./types";
 import { alertsState } from "./alerts-ui/state";
 import { bindRulesView, renderFormOptions, renderRules, renderSummary, setAlertsStatus } from "./alerts-ui/rules-view";
@@ -26,23 +25,17 @@ async function loadCatalog(): Promise<void> {
 async function loadPage(userId: string): Promise<void> {
   accountState.userId = userId;
   alertsState.userId = userId;
-  const [rules, pushEnabled, preferences] = await Promise.all([
-    loadAlertRules(userId),
-    hasPushSubscriptions(userId),
-    loadPreferences(userId),
-    loadCatalog(),
-  ]);
+  const [rules, preferences] = await Promise.all([loadAlertRules(userId), loadPreferences(userId)]);
+  await Promise.all([loadCatalog(), loadChannels(userId)]);
   alertsState.rules = rules;
-  accountState.accountPushEnabled = pushEnabled;
   applyTheme(preferences.theme);
   renderRules();
-  await refreshPushDeviceState();
   renderSummary();
   setAlertsStatus("");
 }
 
 bindRulesView();
-bindPushControls();
+bindChannels(renderSummary);
 
 void getCurrentUser()
   .then(async (user) => {

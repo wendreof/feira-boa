@@ -1,14 +1,13 @@
-const CACHE_NAME = "feira-boa-shell-v7";
+const CACHE_NAME = "feira-boa-shell-v8";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 
-// OneSignal owns push display, click handling and subscription renewal.
-// The worker is self-hosted so ad blockers cannot break push via cdn.onesignal.com.
-try {
-  importScripts("/onesignal/OneSignalSDKWorker.js");
-} catch (error) {
-  // Offline or missing file: caching still works; push needs the next load.
-  console.warn("OneSignal worker script unavailable.", error);
-}
+// OneSignal (push) foi desativado e substituído pelas notificações do Telegram.
+// Para reativar, restaure o bloco abaixo e os arquivos em /onesignal/:
+// try {
+//   importScripts("/onesignal/OneSignalSDKWorker.js");
+// } catch (error) {
+//   console.warn("OneSignal worker script unavailable.", error);
+// }
 
 const SHELL = [
   "/",
@@ -20,6 +19,7 @@ const SHELL = [
   "/app.js",
   "/navigation.js",
   "/site-footer.js",
+  "/login-gate.js",
   "/pwa.js",
   "/manifest.webmanifest",
   "/favicon.svg",
@@ -27,8 +27,6 @@ const SHELL = [
   "/icons/icon-512.png",
   "/offers.json",
   "/source-status.js",
-  "/onesignal/OneSignalSDK.page.es6.js",
-  "/onesignal/OneSignalSDKWorker.js",
 ];
 const NETWORK_FIRST = ["/offers.json", "/source-status.js", "/build-info.json"];
 
@@ -112,5 +110,4 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(staleWhileRevalidate(request));
 });
 
-// Push display, notification clicks and subscription renewal are handled by
-// the OneSignal worker imported above; do not add custom push listeners here.
+// Sem listeners de push: o canal atual é o Telegram, que não usa Web Push.

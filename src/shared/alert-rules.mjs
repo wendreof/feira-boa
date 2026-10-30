@@ -97,19 +97,18 @@ export function describeRule(rule) {
 
 /**
  * Aviso no topo da página, ou null quando não há nada a dizer.
+ * `channelEnabled` indica se ao menos um canal de notificação está conectado.
  * @returns {{ tone: "ok" | "warning", message: string } | null}
  */
-export function alertsBanner({ activeCount, deviceEnabled, permissionDenied = false }) {
+export function alertsBanner({ activeCount, channelEnabled }) {
   if (activeCount === 0) return null;
-  if (!deviceEnabled) {
+  if (!channelEnabled) {
     return {
       tone: "warning",
-      message: permissionDenied
-        ? "O navegador bloqueou as notificações. Libere o site nas configurações para receber avisos."
-        : "Seus alertas estão ativos, mas este dispositivo não recebe notificações. Ative abaixo.",
+      message: "Seus alertas estão ativos, mas nenhum canal de notificação está conectado. Conecte um canal abaixo para receber os avisos.",
     };
   }
-  return { tone: "ok", message: "Você receberá avisos neste dispositivo quando houver ofertas dentro dos seus alertas." };
+  return { tone: "ok", message: "Você receberá avisos pelos canais conectados quando houver ofertas dentro dos seus alertas." };
 }
 
 /** Estado de um envio do histórico. */
@@ -122,6 +121,10 @@ export function notificationStatus(entry) {
 /** Explicação curta para envios que falharam, a partir do código gravado pelo job. */
 export function failureHint(errorCode) {
   if (!errorCode) return "Motivo não identificado.";
+  if (errorCode === "telegram_blocked") return "O Telegram não permite mensagens deste bot. Desbloqueie o bot no Telegram para voltar a receber avisos.";
+  if (errorCode.startsWith("telegram_http_")) return "O Telegram recusou o envio.";
+  if (errorCode === "telegram_api_error") return "Falha de conexão com o Telegram.";
+  // Envios antigos, feitos pelo canal de push anterior.
   if (errorCode.startsWith("onesignal_http_4")) return "O serviço de notificações recusou o envio.";
   if (errorCode === "onesignal_api_error") return "Falha de conexão com o serviço de notificações.";
   return "Motivo não identificado.";

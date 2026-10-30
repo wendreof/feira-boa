@@ -6,8 +6,8 @@ import {
   updateAlertRule,
   type AlertRule,
 } from "../alerts";
-import { accountState } from "../account-ui/state";
 import { makeOption } from "../account-ui/options";
+import { anyChannelLinked } from "./channels";
 import {
   MAX_ALERT_RULES,
   alertsBanner,
@@ -45,10 +45,6 @@ function setFormError(message: string): void {
   alertFormError.hidden = !message;
 }
 
-function deviceNotificationsPermissionDenied(): boolean {
-  return "Notification" in window && Notification.permission === "denied";
-}
-
 /** Atualiza contadores do topo e o aviso de situação dos alertas. */
 export function renderSummary(): void {
   const activeCount = alertsState.rules.length;
@@ -58,8 +54,7 @@ export function renderSummary(): void {
 
   const banner = alertsBanner({
     activeCount,
-    deviceEnabled: accountState.devicePushEnabled,
-    permissionDenied: deviceNotificationsPermissionDenied(),
+    channelEnabled: anyChannelLinked(),
   });
   if (!bannerElement || !alertsBannerText) return;
   bannerElement.hidden = !banner;

@@ -9,9 +9,9 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-30T03:27:01.870Z",
+    "checked_at": "2026-10-30T12:46:51.618Z",
     "last_success_at": "2026-10-30T03:27:01.870Z",
-    "last_error": null,
+    "last_error": "Error",
     "needs_review": false
   },
   "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0": {
@@ -25,8 +25,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-30T03:27:03.986Z",
-    "last_success_at": "2026-10-30T03:27:03.986Z",
+    "checked_at": "2026-10-30T12:46:56.675Z",
+    "last_success_at": "2026-10-30T12:46:56.675Z",
     "last_error": null,
     "needs_review": false
   },
@@ -40,8 +40,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
-    "checked_at": "2026-10-30T03:27:04.386Z",
-    "last_success_at": "2026-10-30T03:27:04.386Z",
+    "checked_at": "2026-10-30T12:46:56.867Z",
+    "last_success_at": "2026-10-30T12:46:56.867Z",
     "last_error": null,
     "needs_review": false
   },
@@ -51,12 +51,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "6593bfbceefdead3c2c30910c14c91f55368aac9e66221402a789d5beab2c84a",
+    "sha256": "6a5ca1d60dcfcf67dfc042938474a8c8aa944b85c9c172fa982d9a3c347b8520",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-30T03:27:06.362Z",
-    "last_success_at": "2026-10-30T03:27:06.362Z",
+    "checked_at": "2026-10-30T12:46:58.693Z",
+    "last_success_at": "2026-10-30T12:46:58.693Z",
     "last_error": null,
     "needs_review": true
   },
@@ -66,13 +66,13 @@
     "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
     "store_id": "supermercado-corso",
     "store_key": "supermercado-corso-rua-eduardo-lopes-castilho-495-sao-joao",
-    "sha256": "22a6d8827b79f6da71383ac45d82439aaac441383f9569f6fd9f1b9f17734252",
+    "sha256": "76276a0ac6dbb43552328eea5ff1145366b41f23ec0adf82ff8babc33083a54c",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-30T03:27:07.630Z",
-    "last_success_at": "2026-10-30T03:27:07.630Z",
+    "checked_at": "2026-10-30T12:46:59.823Z",
+    "last_success_at": "2026-10-30T12:46:59.823Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T15:23:04.358Z",
+  "updatedAt": "2026-10-30T16:40:35.653Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5180,7 +5180,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 12.99,
-      "previousPrice": 14.99,
+      "previousPrice": 14.79,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11757,7 +11757,7 @@
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
       "price": 5.99,
-      "previousPrice": 7.89,
+      "previousPrice": 8.29,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14700,30 +14700,6 @@
       "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
       "branch": "Loja 33 · Jardim Santo André",
       "name": "Iogurte Funcional Activia Ameixa Zero",
-      "detail": "510g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Iogurtes",
-      "productTypes": [
-        "Iogurtes"
-      ],
-      "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 17.99,
-      "previousPrice": null,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-10-26",
-      "validTo": "2026-11-01",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-iogurte-funcional-activia-morango-activia-510g-2026-10-26",
-      "store": "Pague Menos",
-      "storeLogo": "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Iogurte Funcional Activia Morango",
       "detail": "510g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",

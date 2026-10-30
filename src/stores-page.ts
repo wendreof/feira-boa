@@ -1,6 +1,10 @@
 import { applySourceFreshness } from "./source-freshness";
+import { initStoreRatings } from "./stores-ratings";
 
 applySourceFreshness();
+void initStoreRatings().catch((error: unknown) => {
+  console.warn("Could not initialize store ratings.", error);
+});
 
 for (const image of document.querySelectorAll<HTMLImageElement>(".source-logo img")) {
   const logo = image.parentElement;

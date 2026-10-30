@@ -1,4 +1,4 @@
-const CACHE_NAME = "feira-boa-shell-v8";
+const CACHE_NAME = "feira-boa-shell-v9";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 
 // OneSignal (push) foi desativado e substituído pelas notificações do Telegram.
@@ -15,6 +15,8 @@ const SHELL = [
   "/offline.html",
   "/styles.css",
   "/theme.css",
+  "/stores.css",
+  "/alerts.css",
   "/theme-bootstrap.js",
   "/app.js",
   "/navigation.js",

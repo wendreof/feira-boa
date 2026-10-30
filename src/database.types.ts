@@ -207,6 +207,25 @@ export interface Database {
         };
         Relationships: [];
       };
+      store_ratings: {
+        Row: {
+          user_id: string;
+          store_id: string;
+          rating: number;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          store_id: string;
+          rating: number;
+          updated_at?: string;
+        };
+        Update: {
+          rating?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       offer_reactions: {
         Row: {
           user_id: string;
@@ -231,6 +250,10 @@ export interface Database {
       get_offer_reaction_counts: {
         Args: Record<string, never>;
         Returns: { offer_id: string; likes: number; dislikes: number }[];
+      };
+      store_rating_summary: {
+        Args: Record<string, never>;
+        Returns: { store_id: string; average: number; total: number }[];
       };
       is_admin: {
         Args: Record<string, never>;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T13:35:04.969Z",
+  "updatedAt": "2026-10-30T15:23:04.358Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5204,7 +5204,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 8.99,
-      "previousPrice": 9.39,
+      "previousPrice": 9.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -6284,8 +6284,8 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Lava Roupas",
-      "price": 19.99,
-      "previousPrice": 31.99,
+      "price": 31.99,
+      "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12140,7 +12140,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Molhos Frios/Mostarda",
-      "price": 6.99,
+      "price": 7.49,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",

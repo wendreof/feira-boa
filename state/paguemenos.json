@@ -9,7 +9,7 @@
     "from": "2026-10-26",
     "to": "2026-11-01"
   },
-  "fetchedAt": "2026-10-30T13:35:04.969Z",
+  "fetchedAt": "2026-10-30T15:23:04.358Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -2811,7 +2811,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 8.99,
-      "previousPrice": 9.39,
+      "previousPrice": 9.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -3891,8 +3891,8 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Lava Roupas",
-      "price": 19.99,
-      "previousPrice": 31.99,
+      "price": 31.99,
+      "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9747,7 +9747,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Molhos Frios/Mostarda",
-      "price": 6.99,
+      "price": 7.49,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",

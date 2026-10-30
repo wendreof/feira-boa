@@ -82,7 +82,8 @@ export function expandDetailUnits(detail) {
       const isSingle = Number(count.replace(",", ".")) === 1;
       return `${count} ${isSingle ? "unidade" : "unidades"}`;
     })
-    .replace(/\bunids?\b\.?/gi, "unidade");
+    .replace(/\bunids?\b\.?/gi, "unidade")
+    .replace(/^(\d+(?:[.,]\d+)?)\s*l$/i, (full, amount) => `${amount} ${amount === "1" ? "Litro" : "Litros"}`);
 }
 
 const DETAIL_UNIT_SYMBOLS = "kg|g|mg|ml|l|lt|un|cm|mm|m|pct|cx";

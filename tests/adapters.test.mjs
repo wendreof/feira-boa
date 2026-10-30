@@ -363,7 +363,7 @@ test("normalizeOfferPresentation names are always Title Case, with units lowerca
     note: "",
   });
   assert.equal(hyphen.name, "Refrigerante Coca-Cola");
-  assert.equal(hyphen.detail, "2l");
+  assert.equal(hyphen.detail, "2 Litros");
   assert.ok(!("brand" in hyphen), "brand must live inside the name");
 });
 
@@ -546,7 +546,7 @@ test("normalizeOfferPresentation moves a single quantity from the name into deta
 
   const juice = normalizeOfferPresentation({ name: "SUCO INTEGRAL AURORA TP 1,5L UVA", brand: "Aurora", detail: "Unidade", note: "" });
   assert.equal(juice.name, "Suco Integral Aurora Tp Uva");
-  assert.equal(juice.detail, "1,5l");
+  assert.equal(juice.detail, "1,5 Litros");
 
   const realDetail = normalizeOfferPresentation({ name: "Choc. Lacta 80g", brand: "", detail: "104G", note: "" });
   assert.equal(realDetail.name, "Choc. Lacta");

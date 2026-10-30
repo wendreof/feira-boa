@@ -6,10 +6,9 @@ import { formatOfferPrice, ruleMatchesOffer } from "../offer-matcher.mjs";
  *
  * @returns {Map<string, Map<string, object>>} userId -> (offerId -> oferta)
  */
-export function matchOffersToUsers({ rules, offers, activeUserIds }) {
+export function matchOffersToUsers({ rules, offers }) {
   const matchedByUser = new Map();
   for (const rule of rules) {
-    if (!activeUserIds.has(rule.user_id)) continue;
     for (const offer of offers) {
       if (!ruleMatchesOffer(rule, offer)) continue;
       const matches = matchedByUser.get(rule.user_id) ?? new Map();

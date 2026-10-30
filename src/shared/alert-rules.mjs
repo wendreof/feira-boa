@@ -95,22 +95,12 @@ export function describeRule(rule) {
   };
 }
 
-/** Status de uma regra. "Suspenso" = regra ligada, mas todos os alertas estão pausados. */
-export function ruleStatus(rule, { notificationsPaused = false } = {}) {
-  if (!rule.enabled) return { key: "paused", label: "Pausado" };
-  if (notificationsPaused) return { key: "suspended", label: "Suspenso" };
-  return { key: "active", label: "Ativo" };
-}
-
 /**
  * Aviso no topo da página, ou null quando não há nada a dizer.
  * @returns {{ tone: "ok" | "warning", message: string } | null}
  */
-export function alertsBanner({ activeCount, notificationsPaused, deviceEnabled, permissionDenied = false }) {
+export function alertsBanner({ activeCount, deviceEnabled, permissionDenied = false }) {
   if (activeCount === 0) return null;
-  if (notificationsPaused) {
-    return { tone: "warning", message: "Todos os alertas estão pausados. Desmarque “Pausar alertas” para voltar a receber avisos." };
-  }
   if (!deviceEnabled) {
     return {
       tone: "warning",

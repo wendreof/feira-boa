@@ -24,6 +24,9 @@ export interface NotificationEntry {
   sent_at: string;
   result: "sent" | "failed";
   error_code: string | null;
+  /** Texto exato enviado. Nulo em envios anteriores à gravação do conteúdo. */
+  title: string | null;
+  body: string | null;
 }
 
 const RULE_COLUMNS = "id, store, product, product_type, target_price, enabled, created_at";
@@ -55,16 +58,6 @@ export async function updateAlertRule(userId: string, ruleId: string, input: Ale
   if (error) throw error;
 }
 
-/** Ativa ou desativa uma regra sem perder seus dados. */
-export async function setAlertRuleEnabled(userId: string, ruleId: string, enabled: boolean): Promise<void> {
-  const { error } = await supabase
-    .from("alert_rules")
-    .update({ enabled })
-    .eq("id", ruleId)
-    .eq("user_id", userId);
-  if (error) throw error;
-}
-
 export async function deleteAlertRule(userId: string, ruleId: string): Promise<void> {
   const { error } = await supabase
     .from("alert_rules")
@@ -74,28 +67,11 @@ export async function deleteAlertRule(userId: string, ruleId: string): Promise<v
   if (error) throw error;
 }
 
-export async function loadNotificationsPaused(userId: string): Promise<boolean> {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("notifications_paused")
-    .eq("user_id", userId)
-    .maybeSingle();
-  if (error) throw error;
-  return data?.notifications_paused ?? false;
-}
-
-export async function setNotificationsPaused(userId: string, paused: boolean): Promise<void> {
-  const { error } = await supabase
-    .from("profiles")
-    .upsert({ user_id: userId, notifications_paused: paused }, { onConflict: "user_id" });
-  if (error) throw error;
-}
-
-/** Envios mais recentes para o usuário, do mais novo para o mais antigo. */
+/** Mensagens enviadas ao usuário, da mais nova para a mais antiga. */
 export async function loadNotificationHistory(userId: string): Promise<NotificationEntry[]> {
   const { data, error } = await supabase
     .from("notification_log")
-    .select("offer_id, sent_at, result, error_code")
+    .select("offer_id, sent_at, result, error_code, title, body")
     .eq("user_id", userId)
     .order("sent_at", { ascending: false })
     .limit(HISTORY_LIMIT);

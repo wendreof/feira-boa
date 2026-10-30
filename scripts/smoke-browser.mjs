@@ -17,7 +17,7 @@ const ROOT = resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-
 const PORT = 8787;
 const DEBUG_PORT = 9877;
 const PAGES = [
-  "index.html", "lojas.html", "login.html", "account.html", "alerts.html",
+  "index.html", "lojas.html", "login.html", "account.html", "alerts.html", "mensagens.html",
   "account-favorites.html", "account-stores.html", "suggestions.html", "termos.html",
 ];
 const BROWSERS = [

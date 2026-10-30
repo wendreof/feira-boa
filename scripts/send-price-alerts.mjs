@@ -48,15 +48,6 @@ async function readRows(queryFactory, orderColumns = ["id"]) {
   }
 }
 
-async function readRowsIn(queryFactory, column, values, orderColumns = ["id"]) {
-  const unique = [...new Set(values.filter(Boolean))];
-  const rows = [];
-  for (const group of chunk(unique, IN_CHUNK_SIZE)) {
-    rows.push(...await readRows(() => queryFactory().in(column, group), orderColumns));
-  }
-  return rows;
-}
-
 async function loadFeed() {
   const [feedText, sourceStateText] = await Promise.all([
     readFile(new URL("../offers.json", import.meta.url), "utf8"),
@@ -98,12 +89,15 @@ async function sendAlerts({ supabase, pending, config, dryRun }) {
       safeErrorCode = status ? `onesignal_http_${status}` : "onesignal_api_error";
       console.error(`OneSignal send failed for user ${userId} offer ${offer.id}: ${error.message}`);
     }
+    // Guarda o texto exato enviado para a página de mensagens.
     const { error } = await supabase.from("notification_log").upsert({
       user_id: userId,
       offer_id: offer.id,
       sent_at: new Date().toISOString(),
       result: delivered ? "sent" : "failed",
       error_code: delivered ? null : safeErrorCode,
+      title,
+      body,
     }, { onConflict: "user_id,offer_id" });
     if (error) throw error;
     if (delivered) counts.notificationsSent += 1;
@@ -137,11 +131,7 @@ async function main() {
     throw new Error("No verified active offers. Review changed sources and clear needs_review before sending alerts.");
   }
 
-  const userIds = [...new Set(rules.map((rule) => rule.user_id))];
-  const profiles = await readRowsIn(() => supabase.from("profiles")
-    .select("user_id, notifications_paused"), "user_id", userIds, ["user_id"]);
-  const activeUserIds = new Set(profiles.filter((profile) => !profile.notifications_paused).map((profile) => profile.user_id));
-  const matchedByUser = matchOffersToUsers({ rules, offers, activeUserIds });
+  const matchedByUser = matchOffersToUsers({ rules, offers });
   const summaryBase = { ...emptySummary, feedUpdatedAt: feed.updatedAt, maxSourceAgeHours: MAX_SOURCE_AGE_MS / 3_600_000, activeOffers: activeOffers.length, activeVerifiedOffers: offers.length, usersMatched: matchedByUser.size };
 
   const matchedOfferIds = [...new Set([...matchedByUser.values()].flatMap((matches) => [...matches.keys()]))];

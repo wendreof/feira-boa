@@ -9,14 +9,8 @@ const offer = (id, extra = {}) => ({
 test("matches an enabled rule to offers at or below the target price", () => {
   const rules = [{ user_id: "u1", store: "Alpha", product_type: "Arroz", target_price: "25" }];
   const offers = [offer("cheap", { price: 20 }), offer("pricey", { price: 30 })];
-  const matched = matchOffersToUsers({ rules, offers, activeUserIds: new Set(["u1"]) });
+  const matched = matchOffersToUsers({ rules, offers });
   assert.deepEqual([...matched.get("u1").keys()], ["cheap"]);
-});
-
-test("ignores rules of users who paused notifications", () => {
-  const rules = [{ user_id: "u1", store: "Alpha", product_type: "Arroz", target_price: "25" }];
-  const matched = matchOffersToUsers({ rules, offers: [offer("a")], activeUserIds: new Set() });
-  assert.equal(matched.size, 0);
 });
 
 test("pending notifications skip pairs already sent", () => {

@@ -7,7 +7,6 @@ import {
   describeRule,
   failureHint,
   parseTargetPrice,
-  ruleStatus,
   validateAlertRule,
 } from "../src/shared/alert-rules.mjs";
 
@@ -52,12 +51,6 @@ test("validateAlertRule enforces the per-account limit only when creating", () =
   assert.equal(validateAlertRule({ productType: "Carne bovina", targetPrice: 5, rules, productTypes, editingId: "0" }).ok, true);
 });
 
-test("ruleStatus reports paused and suspended states", () => {
-  assert.equal(ruleStatus({ enabled: true }).key, "active");
-  assert.equal(ruleStatus({ enabled: true }, { notificationsPaused: true }).key, "suspended");
-  assert.equal(ruleStatus({ enabled: false }, { notificationsPaused: true }).key, "paused");
-});
-
 test("describeRule falls back to product and any-store labels", () => {
   assert.deepEqual(describeRule({ product_type: null, product: "Arroz", store: null, target_price: 10 }), {
     title: "Arroz", scope: "Qualquer loja", price: describeRule({ target_price: 10 }).price,
@@ -65,11 +58,11 @@ test("describeRule falls back to product and any-store labels", () => {
   assert.equal(describeRule({ product_type: "Carne bovina", store: "Corso", target_price: 99.76 }).price, "R$ 99,76");
 });
 
-test("alertsBanner explains paused, blocked and inactive device states", () => {
-  assert.equal(alertsBanner({ activeCount: 0, notificationsPaused: true, deviceEnabled: false }), null);
-  assert.equal(alertsBanner({ activeCount: 2, notificationsPaused: true, deviceEnabled: true }).tone, "warning");
-  assert.match(alertsBanner({ activeCount: 2, notificationsPaused: false, deviceEnabled: false, permissionDenied: true }).message, /bloqueou/);
-  assert.equal(alertsBanner({ activeCount: 2, notificationsPaused: false, deviceEnabled: true }).tone, "ok");
+test("alertsBanner explains blocked and inactive device states", () => {
+  assert.equal(alertsBanner({ activeCount: 0, deviceEnabled: false }), null);
+  assert.match(alertsBanner({ activeCount: 2, deviceEnabled: false, permissionDenied: true }).message, /bloqueou/);
+  assert.equal(alertsBanner({ activeCount: 2, deviceEnabled: false }).tone, "warning");
+  assert.equal(alertsBanner({ activeCount: 2, deviceEnabled: true }).tone, "ok");
 });
 
 test("failureHint maps OneSignal error codes to readable text", () => {

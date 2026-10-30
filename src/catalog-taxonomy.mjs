@@ -1,4 +1,5 @@
 import { foldText } from "./shared/text.mjs";
+import { expectedSectors } from "../scripts/offer-sector-guard.mjs";
 /**
  * Taxonomia de catálogo do Feira Boa.
  *
@@ -308,22 +309,41 @@ export function resolveCategory(offer) {
   const text = normalizeText(offer?.name ?? "");
   const types = Array.isArray(offer?.productTypes) ? offer.productTypes.filter(Boolean) : [];
   const baseType = types[0] ?? offer?.productType ?? "";
+  // Sinal inegociável do nome (álcool, pet, limpeza...): folhetos trazem nomes
+  // de dois produtos num card só e a palavra forte decide o setor no fim.
+  const required = expectedSectors(text)[0];
 
+  let resolved = null;
   if (types.includes("Churrasco") && baseType !== "Doces e snacks" && CHURRASCO_KEYWORDS.test(text) && !NOT_CHURRASCO.test(text)) {
-    return { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };
+    resolved = { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };
   }
 
-  for (const rule of GROUP_OVERRIDE_RULES) {
-    if (rule.excludeTypes?.includes(baseType)) continue;
-    if (!rule.re.test(text)) continue;
-    if (rule.excludeText?.test(text)) continue;
-    const subcategory = pickSubcategory(rule.groupId, text);
-    if (subcategory) return { groupId: rule.groupId, subcategory };
+  if (!resolved) {
+    for (const rule of GROUP_OVERRIDE_RULES) {
+      if (rule.excludeTypes?.includes(baseType)) continue;
+      if (!rule.re.test(text)) continue;
+      if (rule.excludeText?.test(text)) continue;
+      const subcategory = pickSubcategory(rule.groupId, text);
+      if (subcategory) {
+        resolved = { groupId: rule.groupId, subcategory };
+        break;
+      }
+    }
   }
 
-  const mapped = TYPE_CATEGORY[baseType] ?? TYPE_CATEGORY[offer?.productType ?? ""] ?? { groupId: "outros", subcategory: "Outros" };
-  const refined = pickSubcategory(mapped.groupId, text);
-  return { groupId: mapped.groupId, subcategory: refined ?? mapped.subcategory };
+  if (!resolved) {
+    const mapped = TYPE_CATEGORY[baseType] ?? TYPE_CATEGORY[offer?.productType ?? ""] ?? { groupId: "outros", subcategory: "Outros" };
+    const refined = pickSubcategory(mapped.groupId, text);
+    resolved = { groupId: mapped.groupId, subcategory: refined ?? mapped.subcategory };
+  }
+
+  if (required && required.sector !== resolved.groupId) {
+    return {
+      groupId: required.sector,
+      subcategory: pickSubcategory(required.sector, text) ?? GROUP_BY_ID.get(required.sector)?.subcategories[0] ?? "Outros",
+    };
+  }
+  return resolved;
 }
 
 /**

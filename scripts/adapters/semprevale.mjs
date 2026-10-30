@@ -1,9 +1,6 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const { PDFParse } = require("pdf-parse");
+import { readFileSync } from "node:fs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
 import { fetchWithRetry } from "./http.mjs";
-import { parseDateRange } from "../domain/parsing.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
 
@@ -16,11 +13,17 @@ const SEMPREVALE_STORE = {
 const DURVAL_NICOLAU_ENDPOINT = "https://www.semprevale.com.br/get_unidades_ofertas.php";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
-export async function extractSempreVale(customUrl = null) {
-  let flyerUrl = customUrl;
-  let validity = null;
+// Manual transcription of the official flyer (campaign PDF). The flyer's text layer
+// splits each price into separate glyph runs and places names in a visual grid, so
+// automatic extraction mis-pairs names and prices. Offers are read from the flyer and
+// kept in data/sempre-campaigns.json. If the store publishes a new flyer, the discovery
+// check below stops the ingest (the previous snapshot is kept) until the JSON is updated.
+const TRANSCRIPTION = JSON.parse(readFileSync(new URL("./data/sempre-campaigns.json", import.meta.url), "utf8"));
 
-  if (!flyerUrl) {
+export async function extractSempreVale(customUrl = null) {
+  const flyerUrl = customUrl || TRANSCRIPTION.flyerUrl;
+
+  if (!customUrl) {
     const formRes = await fetchWithRetry(DURVAL_NICOLAU_ENDPOINT, {
       method: "POST",
       headers: {
@@ -34,123 +37,43 @@ export async function extractSempreVale(customUrl = null) {
 
     const pdfMatch = html.match(/href=["'](downloads\/ofertas\/[^"']+\.pdf)["']/i);
     if (!pdfMatch) throw new Error("Could not discover Sempre Vale flyer link in official page.");
-    flyerUrl = new URL(pdfMatch[1], "https://www.semprevale.com.br/").href;
-
-    const dateMatch = html.match(/de\s*(\d{1,2}\/\d{1,2})\s*at[eé]\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);
-    validity = parseDateRange(dateMatch ? dateMatch[0] : "", 2026);
+    const currentFlyer = new URL(pdfMatch[1], "https://www.semprevale.com.br/").href;
+    if (currentFlyer !== flyerUrl) {
+      throw new Error(
+        `Sempre Vale published a new flyer (${currentFlyer}). Re-transcribe scripts/adapters/data/sempre-campaigns.json before ingesting.`,
+      );
+    }
   }
 
-  const res = await fetchWithRetry(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
-  if (!res.ok) throw new Error(`Could not fetch Sempre Vale flyer PDF (${res.status})`);
+  const offers = [];
+  let validFrom = null;
+  let validTo = null;
 
-  const buffer = Buffer.from(await res.arrayBuffer());
-  const parser = new PDFParse({ data: buffer });
-  await parser.load();
-  const text = (await parser.getText()).text;
+  for (const campaign of TRANSCRIPTION.campaigns) {
+    validFrom = validFrom === null || campaign.from < validFrom ? campaign.from : validFrom;
+    validTo = validTo === null || campaign.to > validTo ? campaign.to : validTo;
 
-  if (!validity) {
-    const fallbackMatch = text.match(/(?:DE\s+)?(\d{1,2})\s*(?:A|AT[EÉ]|-)\s*(\d{1,2}(?:\/\d{1,2}(?:\/\d{4})?|\s*DE\s*[A-Z]+))/i);
-    validity = parseDateRange(fallbackMatch ? fallbackMatch[0] : "", 2026) || { from: "2026-10-19", to: "2026-10-21" };
-  }
+    for (const item of campaign.offers) {
+      const taxonomy = classifyProduct(item.name, "Geral", item.cat);
+      const offer = createOffer({
+        storeId: "sempre",
+        idKey: `${item.name}-${item.detail}-${campaign.from}`,
+        store: SEMPREVALE_STORE,
+        sourceUrl: flyerUrl,
+        product: {
+          name: item.name,
+          detail: item.detail,
+          price: item.price,
+          previousPrice: item.oldPrice ?? null,
+          note: item.note || "",
+        },
+        validity: { from: campaign.from, to: campaign.to },
+        taxonomy,
+      });
 
-  const normalized = text.replace(/\t/g, "\n");
-  const priceRegex = /R\$\s*(\d+)\s*[,.]\s*(\d{2})/g;
-  const matches = [];
-  let m;
-  while ((m = priceRegex.exec(normalized)) !== null) {
-    matches.push({
-      full: m[0],
-      price: parseFloat(`${m[1]}.${m[2]}`),
-      index: m.index,
-      length: m[0].length,
-    });
-  }
-
-  let segments = [];
-  let lastIndex = 0;
-  for (let i = 0; i < matches.length; i++) {
-    const textBefore = normalized.substring(lastIndex, matches[i].index).trim();
-    segments.push({
-      text: textBefore,
-      price: matches[i].price,
-      index: matches[i].index,
-    });
-    lastIndex = matches[i].index + matches[i].length;
-  }
-
-  let offers = [];
-  let currentText = "";
-  let pendingOldPrice = null;
-  let currentNote = "";
-
-  for (let i = 0; i < segments.length; i++) {
-    const seg = segments[i];
-    const rawText = seg.text;
-
-    const limitMatch = rawText.match(/Limite\s+(?:por\s+)?cliente[^\n\r]*/i);
-    let cleanedText = rawText;
-    if (limitMatch) {
-      currentNote = `${currentNote ? `${currentNote} · ` : ""}${limitMatch[0].trim()}`.trim();
-      cleanedText = cleanedText.replace(limitMatch[0], "").trim();
-    }
-
-    const bundleMatch = cleanedText.match(/Pague\s+\d+\s+Leve\s+\d+[^\n\r]*/i);
-    if (bundleMatch) {
-      currentNote = `${currentNote ? `${currentNote} · ` : ""}${bundleMatch[0].trim()}`.trim();
-      cleanedText = cleanedText.replace(bundleMatch[0], "").trim();
-    }
-
-    if (cleanedText.length > 0) {
-      currentText = `${currentText ? `${currentText} ` : ""}${cleanedText}`.trim();
-    }
-
-    const nextSeg = segments[i + 1];
-    const nextTextClean = nextSeg ? nextSeg.text.replace(/Limite[^\n]*|Pague[^\n]*/gi, "").trim() : "hasText";
-    const nextTextIsEmpty = nextTextClean.length === 0;
-
-    if (nextSeg && nextTextIsEmpty && nextSeg.price < seg.price) {
-      pendingOldPrice = seg.price;
-      continue;
-    }
-
-    const productPrice = seg.price;
-    const oldPrice = pendingOldPrice;
-    pendingOldPrice = null;
-
-    let desc = currentText.replace(/\s+/g, " ")
-      .replace(/--\s*\d+\s*of\s*\d+\s*--/gi, "")
-      .replace(/DE\s+\d+\s+A\s+\d+[^.]*OUT\.?/gi, "")
-      .replace(/DE\s+\d+\s+A\s+\d+\/\d+\/\d+/gi, "")
-      .trim();
-
-    currentText = "";
-    const note = currentNote;
-    currentNote = "";
-
-    if (/^Nesta promo[çc][aã]o\s+a\s+unidade/i.test(desc) || desc.length < 3) {
-      continue;
-    }
-
-    const unitMatch = desc.match(/(?:(?:\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l|unids?\.?))|granel\s+kg|pct\s+kg|un\.|par|bdj\s+\d+g|l4p3|lv\s*\d+\s*pg\s*\d+|cada\s+100g)$/i);
-    const detail = unitMatch ? unitMatch[0].trim() : "Unidade";
-    const nameOnly = desc.replace(new RegExp(`\\s*${detail.replace(".", "\\.")}\\s*$`, "i"), "").trim();
-
-    // Etiquetas de preço soltas no folheto ("2,79") viram nomes sem palavras e colidem no id.
-    if (nameOnly.length < 2 || !/\p{L}{2,}/u.test(nameOnly)) continue;
-
-    const taxonomy = classifyProduct(nameOnly, "Geral");
-    const offer = createOffer({
-      storeId: "sempre",
-      idKey: `${nameOnly}-${detail}-${validity.from}`,
-      store: SEMPREVALE_STORE,
-      sourceUrl: flyerUrl,
-      product: { name: nameOnly, detail, price: productPrice, previousPrice: oldPrice, note },
-      validity,
-      taxonomy,
-    });
-
-    if (validateOffer(offer)) {
-      offers.push(offer);
+      if (validateOffer(offer)) {
+        offers.push(offer);
+      }
     }
   }
 
@@ -162,8 +85,8 @@ export async function extractSempreVale(customUrl = null) {
       logo: SEMPREVALE_STORE.logo,
       source: SEMPREVALE_STORE.source,
       sourceUrl: flyerUrl,
-      from: validity.from,
-      to: validity.to,
+      from: validFrom,
+      to: validTo,
     },
     fetchedAt: new Date().toISOString(),
     sourceUrl: flyerUrl,

@@ -51,7 +51,7 @@ const telegram: ChannelImpl = {
     window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=${token}`, "_blank", "noopener");
     const { error: clearError } = await supabase.from("telegram_link_tokens").delete().eq("user_id", userId);
     if (clearError) throw clearError;
-    // O job de sincronização roda a cada 15 min: o link precisa durar bem mais que isso.
+    // O job de sincronização roda a cada 5 min: o link (15 min) ainda dura bem mais que um ciclo.
     const expiresAt = new Date(Date.now() + LINK_TTL_MS).toISOString();
     const { error } = await supabase.from("telegram_link_tokens").insert({ token, user_id: userId, expires_at: expiresAt });
     if (error) throw error;

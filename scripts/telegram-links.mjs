@@ -1,5 +1,5 @@
 // Troca tokens de vinculo (/start <token>) por chat_id em telegram_links.
-// Roda a cada 15 minutos pelo workflow telegram-link-sync.yml.
+// Roda a cada 5 minutos pelo workflow telegram-link-sync.yml.
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { getTelegramUpdates, parseStartToken, sendTelegramMessage } from "./telegram-client.mjs";

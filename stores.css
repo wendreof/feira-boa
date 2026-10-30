@@ -1,0 +1,65 @@
+/* Avaliação de lojas (src/stores-ratings.ts). Usa as variáveis de tema de styles.css/theme.css. */
+
+.store-rating {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.store-rating-summary {
+  margin: 0;
+  color: var(--ink);
+  font: 800 13px 'Manrope', sans-serif;
+}
+
+.store-rating-hint,
+.store-rating-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.store-rating-status:empty {
+  display: none;
+}
+
+.store-rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.store-star {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+  color: #b9c3bc;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.store-star:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: #70a383;
+}
+
+.store-star.is-on {
+  color: #e0a526;
+  border-color: #e7c16a;
+  background: #fff7e6;
+}
+
+.store-star:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.store-star:focus-visible {
+  outline: 3px solid #155b3b35;
+  outline-offset: 2px;
+}

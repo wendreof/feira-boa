@@ -11,6 +11,17 @@ export function offerOrder(offer: Offer): number {
   const [groupIndex, subIndex] = categoryOrder(offerCategory(offer));
   return groupIndex * 100 + subIndex;
 }
+// Ordem aleatoria da lista "Recomendadas": sorteada uma vez por abertura da pagina,
+// assim a ordem muda a cada visita mas nao embaralha de novo a cada filtro.
+const randomRanks = new Map<string, number>();
+export function randomOfferRank(offer: Offer): number {
+  let rank = randomRanks.get(offer.id);
+  if (rank === undefined) {
+    rank = Math.random();
+    randomRanks.set(offer.id, rank);
+  }
+  return rank;
+}
 export const CATEGORY_ICONS: Record<string, string> = {
   frescos: "🥬", mercearia: "🥫", bebidas: "🥤", bebidas_alcoolicas: "🍺", congelados: "🧊", saudaveis: "🥗", limpeza: "🧺",
   higiene: "🧴", infantil: "🍼", pet: "🐾", casa: "🏠", churrasco: "🔥", vestuario: "👕", outros: "🏷️",

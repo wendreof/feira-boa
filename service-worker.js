@@ -19,6 +19,7 @@ const SHELL = [
   "/theme-bootstrap.js",
   "/app.js",
   "/navigation.js",
+  "/site-footer.js",
   "/pwa.js",
   "/manifest.webmanifest",
   "/favicon.svg",

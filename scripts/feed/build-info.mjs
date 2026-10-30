@@ -18,7 +18,23 @@ export function resolveBuildCommit(env = process.env, git = gitValue) {
   }
 }
 
+/**
+ * Numero sequencial da build: cresce a cada commit (= a cada deploy da branch).
+ * Usa o numero da execucao do GitHub Actions quando disponivel.
+ */
+export function resolveBuildNumber(env = process.env, git = gitValue) {
+  const fromEnv = Number.parseInt(env.GITHUB_RUN_NUMBER ?? "", 10);
+  if (Number.isFinite(fromEnv) && fromEnv > 0) return fromEnv;
+  try {
+    const count = Number.parseInt(git(["rev-list", "--count", "HEAD"]), 10);
+    return Number.isFinite(count) && count > 0 ? count : 0;
+  } catch {
+    return 0;
+  }
+}
+
 export function createBuildInfo({ version, builtAt = new Date().toISOString(), env, git }) {
   const { commit, dirty } = resolveBuildCommit(env, git);
-  return { version, commit, builtAt, dirty };
+  const build = resolveBuildNumber(env, git);
+  return { version, build, commit, builtAt, dirty };
 }

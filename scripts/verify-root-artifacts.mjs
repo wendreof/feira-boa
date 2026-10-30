@@ -19,6 +19,7 @@ const requiredFiles = [
   "theme.css",
   "theme-bootstrap.js",
   "navigation.js",
+  "site-footer.js",
   "pwa.js",
   "site-version.js",
   "source-status.js",

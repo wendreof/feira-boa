@@ -38,8 +38,12 @@ function capitalizeCaseSegment(segment) {
   return segment.charAt(0).toLocaleUpperCase("pt-BR") + segment.slice(1).toLocaleLowerCase("pt-BR");
 }
 
+// Marcas com capitalização interna que o Title Case não pode reescrever.
+const PRESERVED_CASE_WORDS = new Map([["mccain", "McCain"]]);
+
 function normalizeCaseWord(word, isFirst) {
   const bare = word.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+  if (PRESERVED_CASE_WORDS.has(bare)) return PRESERVED_CASE_WORDS.get(bare);
   if (!isFirst && (CASE_MINOR_WORDS.has(bare) || CASE_UNIT_WORDS.has(bare))) {
     return word.toLowerCase();
   }
@@ -78,7 +82,8 @@ export function expandDetailUnits(detail) {
       const isSingle = Number(count.replace(",", ".")) === 1;
       return `${count} ${isSingle ? "unidade" : "unidades"}`;
     })
-    .replace(/\bunids?\b\.?/gi, "unidade");
+    .replace(/\bunids?\b\.?/gi, "unidade")
+    .replace(/^(\d+(?:[.,]\d+)?)\s*l$/i, (full, amount) => `${amount} ${amount === "1" ? "Litro" : "Litros"}`);
 }
 
 const DETAIL_UNIT_SYMBOLS = "kg|g|mg|ml|l|lt|un|cm|mm|m|pct|cx";

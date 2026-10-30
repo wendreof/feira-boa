@@ -1,10 +1,11 @@
 name: Send price alerts
 
 on:
-  schedule:
-    # 10:23 and 21:23 UTC = 07:23 and 18:23 São Paulo (UTC-3),
-    # ~15 min after each ingestion run so alerts see fresh prices.
-    - cron: "23 10,21 * * *"
+  # Roda logo após cada ingestão de ofertas (qualquer conclusão: a ingestão
+  # que falhou mantém o snapshot anterior, e o gate de frescor protege o envio).
+  workflow_run:
+    workflows: ["Ingest and monitor official offer sources"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +27,8 @@ jobs:
       - name: Check out main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          # Sempre o main atual: a ingestão acabou de commitar offers.json nele.
+          ref: main
           persist-credentials: false
 
       - name: Set up Node.js

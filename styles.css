@@ -1051,3 +1051,7 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .password-toggle{padding:12px 10px}
   .offline-page .account-button{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px}
 }
+@media (max-width:450px){
+  .topbar .searchbox{flex:1 1 0;min-width:0;width:auto}
+  .topbar .searchbox input{width:100%;min-width:0}
+}

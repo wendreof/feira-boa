@@ -3,6 +3,30 @@
 Last updated: 2026-10-23 (OneSignal follow-ups + price-alert ops issue #22 resolved)
 Repository: `C:\Users\wendreof\Documents\Codex\2026-10-15\id\feira-boa`
 
+## Mobile-first pass (in progress, 2026-10-30)
+
+Goal: every page must look right on phones (most users are mobile) without breaking desktop. Pages: `index`, `lojas`, `account`, `alerts`, `mensagens`, `suggestions`, `login`, `termos`, `admin`, `offline`.
+
+### Done
+- **Account name block squeezed to ~56px** (`/account` "Como gostaria de ser chamado?"). Cause: the `@media(max-width:450px){.avatar-block{grid-template-columns:56px ...}}` rule overrode `.display-name-block`. Fixed by scoping it to `.avatar-block:not(.display-name-block)` in `styles.css`.
+- **Account page mobile polish** (`styles.css`, `@media(max-width:760px)` block after the 450px rule): wider card, stacked name input/button, 2-column avatar actions, full-width "Sair" / "Excluir conta" buttons.
+- **Store cards squeezed on `/lojas`** (text column wrapped letter by letter). Cause: `.store-source` is a flex row, and the rating block (`.store-rating`, appended by `src/stores-ratings.ts`) became a third flex column. Fixed in `stores.css` with a `@media (max-width:760px)` grid: logo + text on row 1, "Ver folheto" button full width on row 2, rating full width on row 3. Desktop untouched.
+- **Playwright MCP configured globally** in `~/.config/opencode/opencode.json` (not in the repo): `npx @playwright/mcp@latest --browser chrome`. Requires an opencode restart to load.
+
+### Review pass (2026-10-30, Playwright MCP, 390x844 and 1280x900)
+- Reviewed screenshots: `/lojas`, `/index`, `/login`, `/account` (signed in with the test account), `/alerts` (redirects to login when signed out, as expected).
+- No page-level horizontal overflow on any of the 10 pages at either width.
+- `/index` hero account panel: legacy `.account-panel>div ...` rules (written for an older layout) hid its title and forced a grey nowrap ellipsis on mobile. Scoped them with `:not(.account-panel-text)` in `styles.css`; title and description now read correctly.
+- `.popular-items` category chips overflow the viewport by design: the row is an `overflow-x:auto` carousel. Not a bug; no change.
+- Tap targets: login "Esqueci a senha", "Criar conta grátis", "Mostrar", and offline "Tentar novamente" were 14-25px tall. Added a `max-width:760px` block at the end of `styles.css` raising them to 44px.
+- Kept as-is on purpose: header "Menu" (38px, compact header by design), theme toggle (40px), filter chips inside the horizontal scroller (33px), brand link.
+- Not reviewed visually yet: `mensagens`, `suggestions`, `termos`, `admin`, `offline` (only overflow and tap-target checks ran).
+
+### Next steps
+1. Visually review `mensagens`, `suggestions`, `termos`, `admin`, and `offline` at 390x844.
+2. Re-run the overflow check after the new `styles.css` block and confirm desktop 1280px is unchanged.
+3. Decide whether to commit the mobile changes (`styles.css`, `stores.css`, `CONTINUE_PLAN.md`). Do not commit `.playwright-mcp/` screenshots.
+
 ## OneSignal follow-ups (resolved 2026-10-23)
 
 Reproduced in browser console after the OneSignal migration (self-hosted SDK in `onesignal/`, init in `pwa.js`, worker via `importScripts` in `service-worker.js`):

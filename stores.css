@@ -175,6 +175,67 @@
     transform: scaleY(1);
   }
 }
+/* Mobile: logo + texto lado a lado; botão e avaliação ocupam a largura toda (sem espremer o texto). */
+@media (max-width: 760px) {
+  .store-source {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px 12px;
+    align-items: start;
+    padding: 14px;
+    margin: 0;
+  }
+  .store-source > .source-logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .store-source > .source-copy {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 4px;
+  }
+  .store-source > .source-copy > strong {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .store-source > .source-copy > span:last-child {
+    font-size: 12px;
+  }
+  .store-source > .source-button {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 13px;
+    text-align: center;
+    white-space: normal;
+  }
+  .store-source > .store-rating {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 0;
+  }
+  .store-rating-stars {
+    gap: 6px;
+  }
+  .store-rating .store-star {
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+  }
+  .store-rating-hint,
+  .store-rating-summary {
+    font-size: 13px;
+  }
+  .local-stores-heading .subhead {
+    font-size: 13px;
+  }
+}
+
 /* Efeitos discretos: valores reduzidos para hover e toque nos cards de lojas. */
 .store-source:hover {
   transform: translateY(-2px);

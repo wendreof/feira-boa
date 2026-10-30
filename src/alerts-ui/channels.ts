@@ -25,6 +25,8 @@ interface ChannelStatus {
   pending: boolean;
 }
 
+const LINK_TTL_MS = 24 * 60 * 60 * 1000;
+
 function randomToken(): string {
   const bytes = new Uint8Array(24);
   crypto.getRandomValues(bytes);
@@ -48,7 +50,9 @@ const telegram: ChannelImpl = {
     window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=${token}`, "_blank", "noopener");
     const { error: clearError } = await supabase.from("telegram_link_tokens").delete().eq("user_id", userId);
     if (clearError) throw clearError;
-    const { error } = await supabase.from("telegram_link_tokens").insert({ token, user_id: userId });
+    // O job de sincronização roda a cada 15 min: o link precisa durar bem mais que isso.
+    const expiresAt = new Date(Date.now() + LINK_TTL_MS).toISOString();
+    const { error } = await supabase.from("telegram_link_tokens").insert({ token, user_id: userId, expires_at: expiresAt });
     if (error) throw error;
   },
   async disconnect(userId) {

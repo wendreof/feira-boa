@@ -6,6 +6,7 @@ import { getTelegramUpdates, parseStartToken, sendTelegramMessage } from "./tele
 
 const LINKED_TEXT = "Pronto! Seus alertas de preço agora chegam por aqui.";
 const EXPIRED_TEXT = "Este link expirou ou já foi usado. Gere um novo link na página de alertas do Feira Boa.";
+const HELP_TEXT = "Para receber alertas de preço aqui, abra a página de alertas do Feira Boa no site e toque em Conectar Telegram.";
 
 /**
  * Processa as atualizações pendentes do bot e confirma as que foram lidas.
@@ -13,13 +14,21 @@ const EXPIRED_TEXT = "Este link expirou ou já foi usado. Gere um novo link na p
  */
 export async function syncTelegramLinks({ supabase, token, now = new Date() }) {
   const updates = await getTelegramUpdates(token);
-  const counts = { updates: updates.length, linked: 0, expired: 0 };
+  const counts = { updates: updates.length, linked: 0, expired: 0, help: 0 };
 
   for (const update of updates) {
     const message = update.message;
     const chatId = message?.chat?.id;
     const startToken = parseStartToken(message?.text);
-    if (!chatId || !startToken) continue;
+    if (!chatId) continue;
+    if (!startToken) {
+      // /start sem token (ex.: digitado direto no bot): orienta o usuário em vez de ignorar.
+      if (/^\/start(?:@\w+)?\s*$/.test(String(message?.text ?? "").trim())) {
+        counts.help += 1;
+        await reply(token, chatId, HELP_TEXT);
+      }
+      continue;
+    }
 
     try {
       const { data: row, error } = await supabase

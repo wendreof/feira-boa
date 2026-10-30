@@ -82,6 +82,7 @@ const BRAND_ALIASES = [
   ["Del Valle", ["DEL VALLE"]],
   ["Neve", ["NEVE"]],
   ["Friboi", ["FRIBOI"]],
+  ["McCain", ["MCCAIN", "MC CAIN", "M C CAIN"]],
   ["Energy Dog", ["ENERGY DOG"]],
   ["Coca-Cola", ["COCA COLA", "COCA-COLA"]],
   ["Frutap", ["FRUTAP"]],

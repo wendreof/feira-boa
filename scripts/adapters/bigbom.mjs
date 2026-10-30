@@ -112,7 +112,10 @@ export async function extractBigBom(customUrl = null) {
 
     const unitMatch = fullName.match(/(?:(?:Lata\s+)?\d+(?:[.,]\d+)?(?:\s*\/\s*\d+(?:[.,]\d+)?)?\s*(?:kg|g|ml|l|unids?\.?)|kg|unid\.?)$/i);
     const detail = unitMatch ? unitMatch[0].trim() : "Unidade";
-    const nameOnly = fullName.replace(new RegExp(`\\s*${detail.replace(".", "\\.")}\\s*$`, "i"), "").trim();
+    const nameOnly = fullName
+      .replace(new RegExp(`\\s*${detail.replace(".", "\\.")}\\s*$`, "i"), "")
+      .replace(/\bBatata M C Cain\b/i, "Batata McCain")
+      .trim();
 
     if (nameOnly.length < 2 || /NESTA OFERTA|A UNID\.?\s*SAI\s*POR/i.test(nameOnly)) continue;
 

@@ -4,6 +4,7 @@
 import { errorMessage } from "../errors";
 import { supabase } from "../supabase-client";
 import { TELEGRAM_BOT_USERNAME } from "../telegram-config";
+import { showToast } from "../shared/toast";
 
 interface ChannelImpl {
   id: string;
@@ -77,6 +78,7 @@ function setFeedback(message: string, isError = false): void {
   feedback.textContent = message;
   feedback.hidden = !message;
   feedback.dataset.tone = isError ? "error" : "ok";
+  if (message) showToast(message, isError ? "error" : "ok");
 }
 
 function statusFor(channel: ChannelImpl): ChannelStatus {

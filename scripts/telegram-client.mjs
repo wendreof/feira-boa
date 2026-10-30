@@ -28,7 +28,8 @@ export async function telegramCall(token, method, params = {}) {
 
 /** Envia texto simples (sem parse_mode, para não quebrar com nomes de produto). */
 export function sendTelegramMessage(token, chatId, text) {
-  return telegramCall(token, "sendMessage", { chat_id: chatId, text, disable_web_page_preview: false });
+  // Sem preview: o Telegram não puxa o banner do site; o ícone da oferta vai no texto.
+  return telegramCall(token, "sendMessage", { chat_id: chatId, text, disable_web_page_preview: true });
 }
 
 /** Lê atualizações pendentes. Passe `offset = último update_id + 1` para confirmá-las. */

@@ -7,6 +7,7 @@ import {
   type AlertRule,
 } from "../alerts";
 import { makeOption } from "../account-ui/options";
+import { showToast } from "../shared/toast";
 import { anyChannelLinked } from "./channels";
 import {
   MAX_ALERT_RULES,
@@ -193,6 +194,7 @@ async function submitForm(event: SubmitEvent): Promise<void> {
     }
     await refreshRules();
     setFormMode(null);
+    showToast(editingId ? "Alerta atualizado." : "Alerta criado.");
     setAlertsStatus(editingId ? "Alerta atualizado." : "Alerta criado. Você será avisado quando uma oferta chegar a esse preço.");
   } catch (error) {
     setFormError(`Não foi possível salvar: ${errorMessage(error)}`);
@@ -220,7 +222,7 @@ async function runRuleAction(button: HTMLButtonElement): Promise<void> {
       await deleteAlertRule(alertsState.userId, rule.id);
       if (alertsState.editingId === rule.id) setFormMode(null);
       await refreshRules();
-      setAlertsStatus("Alerta excluído.");
+      setAlertsStatus("Alerta excluído."); showToast("Alerta excluído.");
     } catch (error) {
       button.disabled = false;
       setAlertsStatus(`Não foi possível excluir: ${errorMessage(error)}`);

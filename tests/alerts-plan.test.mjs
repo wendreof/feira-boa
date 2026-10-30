@@ -23,7 +23,7 @@ test("pending notifications skip pairs already sent", () => {
 test("alert message carries store, product, price and validity", () => {
   const message = buildAlertMessage(offer("a", { price: 19.9 }));
   assert.equal(message.title, "Alpha: oferta para você");
-  assert.match(message.body, /^Arroz Tipo 1 por R\$\s?19,90 · válida até 2026-10-25\.$/);
+  assert.match(message.body, /^Arroz Tipo 1 por R\$\s?19,90 · válida até 2026\/10\/25\.$/);
 });
 
 test("offer link points to the offer on the site", () => {

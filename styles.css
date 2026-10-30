@@ -691,3 +691,345 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 
 .source-flag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#fff4e0;color:#8a6a2b;font-size:10px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
 :root[data-theme="dark"] .source-flag{background:#3a321e;color:#f0d89a}
+
+/* Cards de oferta: cantos arredondados, vidro (glass) e animação ao passar o mouse. */
+.offer-card {
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: 0 10px 30px rgba(32, 60, 39, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform;
+}
+
+.offer-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  transition: background-position 0.9s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 24px 50px rgba(32, 60, 39, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(67, 176, 111, 0.45);
+}
+
+.offer-card:hover::after {
+  background-position: -120% 0;
+}
+
+.offer-card .visual {
+  border-radius: 22px 22px 0 0;
+}
+
+.offer-card .product-art {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.offer-card:hover .product-art {
+  transform: rotate(-3deg) scale(1.12);
+}
+
+.offer-card .offer-sticker {
+  border-radius: 999px;
+  transition: transform 0.3s ease;
+}
+
+.offer-card:hover .offer-sticker {
+  transform: scale(1.08);
+}
+
+.offer-card .price {
+  transition: color 0.3s ease;
+}
+
+.offer-card:hover .price {
+  color: #1f7a4e;
+}
+
+/* Vista em lista mantém o estilo plano. */
+.list-view .offer-card {
+  border-radius: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.list-view .offer-card::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offer-card,
+  .offer-card::after,
+  .offer-card .product-art,
+  .offer-card .offer-sticker,
+  .offer-card .price {
+    transition: none !important;
+  }
+  .offer-card:hover,
+  .offer-card:hover .product-art,
+  .offer-card:hover .offer-sticker {
+    transform: none !important;
+  }
+}
+/* Toasts (src/shared/toast.ts). */
+.toast-stack {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 50;
+  display: grid;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 36px));
+  pointer-events: none;
+}
+
+.toast {
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(23, 37, 31, 0.92);
+  color: #fff;
+  font: 700 13px / 1.4 'DM Sans', sans-serif;
+  box-shadow: 0 14px 34px rgba(16, 33, 24, 0.28);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.toast-ok { border-left: 4px solid #43b06f; }
+.toast-error { border-left: 4px solid #e0566b; }
+.toast-info { border-left: 4px solid #f1c75b; }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { transition: none; transform: none; }
+}
+/* Vista em lista: efeito ao passar o mouse e ao tocar (celular). */
+.list-view .offer-card {
+  position: relative;
+  border-radius: 16px;
+  margin: 2px 0;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list-view .offer-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, #43b06f, #f1c75b);
+  transform: scaleY(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.list-view .offer-card:hover {
+  transform: translateX(6px);
+  background: linear-gradient(90deg, rgba(67, 176, 111, 0.10), rgba(255, 255, 255, 0.9) 60%);
+  box-shadow: 0 12px 26px rgba(32, 60, 39, 0.12);
+}
+
+.list-view .offer-card:hover::before {
+  transform: scaleY(1);
+}
+
+.list-view .offer-card:hover .product-art {
+  transform: rotate(-4deg) scale(1.1);
+}
+
+.list-view .offer-card .product-art {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root[data-theme="dark"] .list-view .offer-card:hover {
+  background: linear-gradient(90deg, rgba(145, 211, 159, 0.12), rgba(27, 36, 30, 0.9) 60%);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+/* Toque no celular: sem hover, o card encolhe levemente ao ser pressionado. */
+@media (hover: none) {
+  .offer-card:hover,
+  .store-source:hover {
+    transform: none;
+  }
+  .offer-card:active,
+  .store-source:active,
+  .list-view .offer-card:active {
+    transform: scale(0.97);
+    transition-duration: 0.12s;
+  }
+  .list-view .offer-card:active {
+    background: rgba(67, 176, 111, 0.12);
+  }
+}
+/* Lista de ofertas: layout final da linha (miniatura | texto | preço). Sem corte à direita. */
+.list-view .offer-card {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.list-view .visual {
+  width: 64px;
+  height: 64px;
+  min-height: 64px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.list-view .card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: 14px;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+}
+
+.list-view .card-body > * {
+  min-width: 0;
+}
+
+.list-view .price-row {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  width: auto;
+  margin: 0;
+  min-width: max-content;
+  white-space: nowrap;
+}
+
+.list-view .offer-notice,
+.list-view .offer-note,
+.list-view .card-source {
+  grid-column: 1 / -1;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.list-view .offer-notice {
+  margin: 6px 0 0;
+  padding: 6px 9px;
+  border-radius: 10px;
+  line-height: 1.35;
+}
+
+@media (max-width: 560px) {
+  .list-view .offer-card {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .list-view .visual {
+    width: 52px;
+    height: 52px;
+    min-height: 52px;
+  }
+  .list-view .card-body {
+    column-gap: 8px;
+  }
+  .list-view .price {
+    font-size: 17px;
+  }
+}
+/* Efeitos discretos: valores reduzidos para hover e toque nos cards de oferta. */
+.offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(32, 60, 39, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  border-color: rgba(67, 176, 111, 0.3);
+}
+.offer-card::after {
+  display: none;
+}
+.offer-card:hover .product-art {
+  transform: rotate(-2deg) scale(1.04);
+}
+.offer-card:hover .offer-sticker {
+  transform: none;
+}
+.offer-card:hover .price {
+  color: var(--green);
+}
+.list-view .offer-card:hover {
+  transform: translateX(2px);
+  background: rgba(67, 176, 111, 0.05);
+  box-shadow: none;
+}
+.list-view .offer-card::before {
+  width: 3px;
+  top: 12px;
+  bottom: 12px;
+}
+.list-view .offer-card:hover .product-art {
+  transform: rotate(-2deg) scale(1.04);
+}
+:root[data-theme="dark"] .list-view .offer-card:hover {
+  background: rgba(145, 211, 159, 0.05);
+  box-shadow: none;
+}
+@media (hover: none) {
+  .offer-card:active,
+  .list-view .offer-card:active {
+    transform: scale(0.99);
+  }
+}
+/* Barra inferior do celular: 4 itens (Ofertas, Favoritos, Alertas, Entrar) com efeito de toque. */
+@media (max-width: 760px) {
+  .mobile-bottom-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .mobile-nav-link {
+    transition: background 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .mobile-nav-icon {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s ease;
+  }
+  .mobile-nav-link:active {
+    transform: scale(0.94);
+    background: var(--mint);
+  }
+  .mobile-nav-link:active .mobile-nav-icon {
+    transform: translateY(-2px);
+  }
+  .mobile-nav-link[aria-current="page"] .mobile-nav-icon {
+    color: var(--green);
+  }
+}
+@media (hover: hover) and (max-width: 760px) {
+  .mobile-nav-link:hover .mobile-nav-icon {
+    transform: translateY(-1px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-link,
+  .mobile-nav-icon {
+    transition: none !important;
+    transform: none !important;
+  }
+}

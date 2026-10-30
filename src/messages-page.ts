@@ -3,6 +3,7 @@ import { loadNotificationHistory, type NotificationEntry } from "./alerts";
 import { applyTheme } from "./theme";
 import type { Offer, OfferFeed } from "./types";
 import { failureHint, formatBrl, formatDateTime, notificationStatus } from "./shared/alert-rules.mjs";
+import { markMessagesSeen } from "./shared/notification-badge";
 
 const listElement = document.querySelector<HTMLUListElement>("#messages-list");
 const countElement = document.querySelector<HTMLElement>("#messages-count");
@@ -110,6 +111,10 @@ async function loadPage(userId: string): Promise<void> {
   applyTheme(preferences.theme);
   renderMessages(entries);
   setStatus("");
+  // Abrir a lista marca tudo como lido; falha aqui não atrapalha a página.
+  void markMessagesSeen().catch((error: unknown) => {
+    console.warn("Could not mark messages as seen.", error);
+  });
 }
 
 void getCurrentUser()

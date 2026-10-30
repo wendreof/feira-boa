@@ -17,6 +17,7 @@ const requiredFiles = [
   "navigation.js",
   "site-footer.js",
   "login-gate.js",
+  "notification-badge.js",
   "pwa.js",
   "site-version.js",
   "source-status.js",

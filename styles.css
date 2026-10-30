@@ -1055,3 +1055,4 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .topbar .searchbox{flex:1 1 0;min-width:0;width:auto}
   .topbar .searchbox input{width:100%;min-width:0}
 }
+.sidebar-link .nav-badge{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#b34747;color:#fff;font:800 11px/22px 'DM Sans',sans-serif;text-align:center;box-shadow:0 0 0 2px var(--topbar-bg,#fff)}

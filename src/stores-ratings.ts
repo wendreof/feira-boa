@@ -2,6 +2,7 @@
 // Média e quantidade são públicas (store_rating_summary); a nota do usuário só
 // é carregada e salva com sessão ativa.
 import { supabase } from "./supabase-client";
+import { showToast } from "./shared/toast";
 
 interface Summary {
   average: number;
@@ -131,7 +132,9 @@ function bindStars(): void {
     stars.forEach((star) => { star.disabled = true; });
     if (status) status.textContent = "Salvando sua nota…";
     try {
-      await rate(storeId, Number(button.dataset.rating));
+      const value = Number(button.dataset.rating);
+      await rate(storeId, value);
+      showToast(`Nota salva: ${value} de 5 para ${storeNameOf(card)}.`, "ok");
       await refresh();
     } catch (error) {
       console.warn("Could not save the store rating.", error);

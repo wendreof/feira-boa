@@ -63,3 +63,137 @@
   outline: 3px solid #155b3b35;
   outline-offset: 2px;
 }
+
+/* Cards de lojas: vidro, cantos arredondados e animação ao passar o mouse. */
+.store-source {
+  position: relative;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.74));
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 10px 28px rgba(32, 60, 39, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.store-source::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #43b06f, #f1c75b);
+  transform: scaleY(0.3);
+  transform-origin: top;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.store-source::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.5) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  transition: background-position 0.9s ease;
+}
+
+.store-source:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px rgba(32, 60, 39, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(67, 176, 111, 0.45);
+}
+
+.store-source:hover::before {
+  transform: scaleY(1);
+}
+
+.store-source:hover::after {
+  background-position: -120% 0;
+}
+
+.store-source .source-logo {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.store-source:hover .source-logo {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.store-source .source-button {
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.store-source:hover .source-button {
+  transform: translateX(2px);
+}
+
+:root[data-theme="dark"] .store-source {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(160deg, rgba(27, 36, 30, 0.92), rgba(20, 28, 23, 0.76));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="dark"] .store-source:hover {
+  border-color: rgba(145, 211, 159, 0.5);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-source,
+  .store-source::before,
+  .store-source::after,
+  .store-source .source-logo,
+  .store-source .source-button {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+/* Celular: toque mostra resposta visual (sem hover). */
+@media (hover: none) {
+  .store-source:hover {
+    transform: none;
+    box-shadow: 0 10px 28px rgba(32, 60, 39, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  .store-source:hover::before {
+    transform: scaleY(0.3);
+  }
+  .store-source:hover::after {
+    background-position: 120% 0;
+  }
+  .store-source:active {
+    transform: scale(0.98);
+    transition-duration: 0.12s;
+    border-color: rgba(67, 176, 111, 0.45);
+  }
+  .store-source:active::before {
+    transform: scaleY(1);
+  }
+}
+/* Efeitos discretos: valores reduzidos para hover e toque nos cards de lojas. */
+.store-source:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(32, 60, 39, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(67, 176, 111, 0.3);
+}
+.store-source::before {
+  width: 3px;
+}
+.store-source::after {
+  display: none;
+}
+.store-source:hover .source-logo {
+  transform: none;
+}
+.store-source:hover .source-button {
+  transform: none;
+}
+:root[data-theme="dark"] .store-source:hover {
+  border-color: rgba(145, 211, 159, 0.3);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}

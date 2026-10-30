@@ -52,6 +52,14 @@
 
       <div class="alerts-banner" id="alerts-banner" role="status" hidden><span id="alerts-banner-text"></span></div>
 
+      <section class="alerts-card channels-card" aria-labelledby="channels-title">
+        <div class="channels-head">
+          <h2 id="channels-title">Canais de notificação</h2>
+          <p>Escolha por onde receber os avisos de preço. Você pode conectar ou desconectar cada canal quando quiser.</p>
+        </div>
+        <ul id="notification-channels" class="channel-list"><li class="alerts-empty">Carregando canais…</li></ul>
+        <p class="push-feedback" id="channel-feedback" role="status" aria-live="polite" hidden></p>
+      </section>
       <div class="alerts-layout" id="panel-rules">
         <section class="alerts-card alert-form-card" aria-labelledby="alert-form-title">
           <form id="alert-rule-form" class="alert-form">
@@ -77,15 +85,6 @@
           <ul id="alert-rules" class="alert-cards"><li class="alerts-empty">Carregando alertas…</li></ul>
         </section>
       </div>
-
-      <section class="alerts-card channels-card" aria-labelledby="channels-title">
-        <div class="channels-head">
-          <h2 id="channels-title">Canais de notificação</h2>
-          <p>Escolha por onde receber os avisos de preço. Você pode conectar ou desconectar cada canal quando quiser.</p>
-        </div>
-        <ul id="notification-channels" class="channel-list"><li class="alerts-empty">Carregando canais…</li></ul>
-        <p class="push-feedback" id="channel-feedback" role="status" aria-live="polite" hidden></p>
-      </section>
     </div>
   </main>
   <footer class="footer" data-site-footer></footer>

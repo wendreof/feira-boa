@@ -33,11 +33,17 @@ export function pendingNotifications(matchedByUser, alreadySent) {
   return pending;
 }
 
+/** "2026-11-01" -> "2026/11/01" (yyyy/MM/dd). Valores fora do formato são devolvidos sem mudança. */
+export function formatIsoDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value ?? ""));
+  return match ? `${match[1]}/${match[2]}/${match[3]}` : String(value ?? "");
+}
+
 /** Título e corpo da notificação de uma oferta. */
 export function buildAlertMessage(offer) {
   return {
     title: `${offer.store}: oferta para você`,
-    body: `${offer.name} por ${formatOfferPrice(offer.price)} · válida até ${offer.validTo}.`,
+    body: `${offer.name} por ${formatOfferPrice(offer.price)} · válida até ${formatIsoDate(offer.validTo)}.`,
   };
 }
 

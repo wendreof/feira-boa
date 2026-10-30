@@ -82,7 +82,8 @@ async function sendAlerts({ supabase, pending, config, chatIdByUser, dryRun }) {
       continue;
     }
     const { title, body } = buildAlertMessage(offer);
-    const text = `${title}\n${body}\n${offerUrl(config.siteUrl, offer)}\n\n${ALERT_DISCLAIMER}`;
+    const icon = offer.icon ? `${offer.icon} ` : "";
+    const text = `${icon}${title}\n${body}\n${offerUrl(config.siteUrl, offer)}\n\n${ALERT_DISCLAIMER}\n\nFeira Boa · Economia que faz bem`;
     let delivered = false;
     let safeErrorCode = null;
     try {

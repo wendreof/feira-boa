@@ -5,14 +5,14 @@
     "branch": "Vila Zanetti · São João",
     "store_id": "big-bom",
     "store_key": "big-bom-vila-zanetti-sao-joao",
-    "sha256": "0f8c7c2315e259088df170b3c3487b4222d573da58b602231efff9a80572b1f3",
+    "sha256": "7c34fbf4c5f0128f802ee9f7252341a2c904a7128be555295990ada9a7c6f581",
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-10-30T12:46:51.618Z",
-    "last_success_at": "2026-10-30T03:27:01.870Z",
-    "last_error": "Error",
-    "needs_review": false
+    "checked_at": "2026-10-30T13:35:06.515Z",
+    "last_success_at": "2026-10-30T13:35:06.515Z",
+    "last_error": null,
+    "needs_review": true
   },
   "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0": {
     "url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
@@ -25,8 +25,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-10-30T12:46:56.675Z",
-    "last_success_at": "2026-10-30T12:46:56.675Z",
+    "checked_at": "2026-10-30T13:35:08.689Z",
+    "last_success_at": "2026-10-30T13:35:08.689Z",
     "last_error": null,
     "needs_review": false
   },
@@ -40,9 +40,9 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
-    "checked_at": "2026-10-30T12:46:56.867Z",
+    "checked_at": "2026-10-30T13:35:09.044Z",
     "last_success_at": "2026-10-30T12:46:56.867Z",
-    "last_error": null,
+    "last_error": "TypeError",
     "needs_review": false
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
@@ -51,12 +51,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "6a5ca1d60dcfcf67dfc042938474a8c8aa944b85c9c172fa982d9a3c347b8520",
+    "sha256": "d4ea0b8dbbb3b252247203675f141af3405e98998e99fdc246de215934dc2b04",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-10-30T12:46:58.693Z",
-    "last_success_at": "2026-10-30T12:46:58.693Z",
+    "checked_at": "2026-10-30T13:35:44.168Z",
+    "last_success_at": "2026-10-30T13:35:44.168Z",
     "last_error": null,
     "needs_review": true
   },
@@ -70,8 +70,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-10-30T12:46:59.823Z",
-    "last_success_at": "2026-10-30T12:46:59.823Z",
+    "checked_at": "2026-10-30T13:35:45.422Z",
+    "last_success_at": "2026-10-30T13:35:45.422Z",
     "last_error": null,
     "needs_review": true
   }

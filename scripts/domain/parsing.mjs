@@ -19,6 +19,16 @@ export function parseDateRange(text, referenceYear = new Date().getFullYear()) {
   if (!text || typeof text !== "string") return null;
   const clean = foldText(text).replace(/\s+/g, " ").trim();
 
+  // Pattern 0: DD de [mes] a DD de [mes] de [ano]. Some flyers cross a
+  // month boundary, so the start and end month need to be parsed separately.
+  const m0 = clean.match(/(\d{1,2})\s+de\s+([a-z]+)\s*(?:a|ate|-)\s*(\d{1,2})\s+de\s+([a-z]+)\s+de\s+(\d{4})/);
+  if (m0 && MONTHS[m0[2]] && MONTHS[m0[4]]) {
+    return {
+      from: `${m0[5]}-${MONTHS[m0[2]]}-${m0[1].padStart(2, "0")}`,
+      to: `${m0[5]}-${MONTHS[m0[4]]}-${m0[3].padStart(2, "0")}`,
+    };
+  }
+
   // Pattern 1: de DD/MM ate DD/MM/YYYY or DD/MM a DD/MM/YYYY
   const m1 = clean.match(/(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?\s*(?:ate|a|-)\s*(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m1) {

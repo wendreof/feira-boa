@@ -28,7 +28,9 @@ export async function extractBigBom(customUrl = null) {
   const fullText = (await parser.getText()).text;
 
   // Extract dates
-  const dateMatch = fullText.match(/OFERTAS V[AÁ]LIDAS DE\s*([^\n\r]+)/i);
+  // The flyer often breaks its validity range across separate text lines, for
+  // example: "30 DE OUTUBRO A" then "02 DE NOVEMBRO DE 2026".
+  const dateMatch = fullText.match(/OFERTAS V[AÁ]LIDAS DE\s*([\s\S]{0,100}?\bDE\s+\d{4})/i);
   const validity = parseDateRange(dateMatch ? dateMatch[1] : "", 2026);
   if (!validity) throw new Error("Could not read the Big Bom flyer validity dates.");
 

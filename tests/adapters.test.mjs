@@ -23,6 +23,9 @@ test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d4 = parseDateRange("19 a 21 de out.", 2026);
   assert.deepEqual(d4, { from: "2026-10-19", to: "2026-10-21" });
 
+  const d5 = parseDateRange("30 de outubro a 02 de novembro de 2026");
+  assert.deepEqual(d5, { from: "2026-10-30", to: "2026-11-02" });
+
   assert.equal(parseDateRange(""), null);
   assert.equal(parseDateRange("sem data"), null);
 });
@@ -514,6 +517,15 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
   assert.equal(cupNoodles.name, "Macarrão Instantâneo Cup Noodles");
   assert.ok(!("brand" in cupNoodles), "brand must live inside the name");
   assert.equal(cupNoodles.note, "COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L");
+
+  const toddynho = normalizeOfferPresentation({
+    name: "a Mais COMPRE 2 UNIDS. E GANHE SUKITA DE 2L1 Bebida Láctea TODDYNHO",
+    brand: "",
+    detail: "200g",
+    note: "",
+  });
+  assert.equal(toddynho.name, "Bebida Láctea Toddynho");
+  assert.equal(toddynho.note, "COMPRE 2 UNIDS. E GANHE SUKITA DE 2L");
 });
 
 test("normalizeOfferPresentation keeps brand words in flyer names instead of extracting them", () => {

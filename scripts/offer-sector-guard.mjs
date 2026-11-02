@@ -37,8 +37,10 @@ export function expectedSectors(text) {
  */
 export function sectorViolations(name, sectorId, text) {
   const violations = [];
+  const petGrooming = /\b(antipulgas|para caes|para gatos|sanol dog|shampoo pet|higiene animal)\b/.test(text);
   for (const { label, sector } of expectedSectors(text)) {
     if (sector === sectorId) continue;
+    if (petGrooming && label === "higiene" && sector === "higiene" && sectorId === "pet") continue;
     violations.push(`${name}: "${label}" exige o setor ${sector}, mas foi para ${sectorId}`);
   }
   return violations;

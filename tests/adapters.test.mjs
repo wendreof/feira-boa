@@ -9,6 +9,7 @@ import { parseDateRange, parsePrice } from "../scripts/domain/parsing.mjs";
 import { validateOffer, validateSnapshot } from "../scripts/domain/validation.mjs";
 import { slugText as slug } from "../src/shared/text.mjs";
 import { buildPagueMenosOffer, getWeekValidity } from "../scripts/adapters/paguemenos.mjs";
+import { buildSpaniOffer } from "../scripts/adapters/spani.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d1 = parseDateRange("Ofertas válidas de 19/10 até 21/10/2026");
@@ -197,6 +198,34 @@ test("buildPagueMenosOffer extracts package details and maps catalog categories"
   const cosmetic = buildPagueMenosOffer(product("Espuma de Barbear Hidratante"), { validity });
   assert.equal(cosmetic.department, "Higiene e cuidados");
   assert.equal(cosmetic.productType, "Higiene pessoal");
+});
+
+test("buildSpaniOffer maps VIP Commerce promo prices and bundle notes", () => {
+  const validity = getWeekValidity();
+  const product = {
+    produto_id: 2,
+    descricao: "Odorizador Aerossol Glade 360ml Spray",
+    disponivel: true,
+    em_oferta: true,
+    unidade_sigla: "UN",
+    secao_id: 129,
+    link: "odorizador-aerossol-glade",
+    oferta: {
+      nome: "Mais por menos",
+      menor_preco: "11.990",
+      preco_antigo: "12.49",
+      quantidade_minima: 3,
+    },
+  };
+  const offer = buildSpaniOffer(product, { validity });
+  assert.ok(offer);
+  assert.equal(offer.store, "Spani Atacadista");
+  assert.equal(offer.price, 11.99);
+  assert.equal(offer.previousPrice, 12.49);
+  assert.match(offer.note, /Mais por menos/);
+  assert.match(offer.note, /mín\. 3 un\./);
+  assert.equal(offer.sourceUrl, "https://www.spanionline.com.br/ofertas");
+  assert.equal(buildSpaniOffer({ ...product, disponivel: false }, { validity }), null);
 });
 
 test("assignIcon assigns appropriate emojis to products", () => {

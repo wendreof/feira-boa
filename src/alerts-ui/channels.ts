@@ -2,9 +2,11 @@
 // Cada canal implementa a mesma interface; para adicionar um canal, crie uma
 // entrada em CHANNELS. A lista é renderizada sozinha.
 import { errorMessage } from "../errors";
+import { removePushSubscription, savePushSubscription } from "../account";
 import { supabase } from "../supabase-client";
 import { TELEGRAM_BOT_USERNAME } from "../telegram-config";
 import { showToast } from "../shared/toast";
+import { getPushSubscription, isPushConfigured, subscribeToPush, unsubscribeFromPush } from "../push";
 
 interface ChannelLinkState {
   linked: boolean;
@@ -100,8 +102,40 @@ const telegram: ChannelImpl = {
   },
 };
 
+const browserPush: ChannelImpl = {
+  id: "push",
+  name: "Navegador",
+  description: "Receba avisos de preço como notificação neste dispositivo (gratuito).",
+  available: () => isPushConfigured() && "Notification" in window && "serviceWorker" in navigator,
+  async load(userId) {
+    const local = await getPushSubscription();
+    if (!local?.endpoint) return { linked: false, deliveryBlocked: false };
+    const { data, error } = await supabase
+      .from("push_subscriptions")
+      .select("endpoint")
+      .eq("user_id", userId)
+      .eq("endpoint", local.endpoint)
+      .maybeSingle();
+    if (error) throw error;
+    return { linked: Boolean(data), deliveryBlocked: false };
+  },
+  async connect(userId) {
+    const approved = window.confirm(
+      "A Feira Boa enviará alertas de preço que você criou, com produto, loja, preço e validade. Ativar neste navegador?",
+    );
+    if (!approved) return;
+    const subscription = await subscribeToPush();
+    await savePushSubscription(userId, subscription);
+  },
+  async disconnect(userId) {
+    const subscription = await getPushSubscription();
+    if (subscription?.endpoint) await removePushSubscription(userId, subscription.endpoint);
+    await unsubscribeFromPush();
+  },
+};
+
 /** Canais disponíveis, na ordem em que aparecem na página. */
-const CHANNELS: ChannelImpl[] = [telegram];
+const CHANNELS: ChannelImpl[] = [telegram, browserPush];
 
 const statuses = new Map<string, ChannelStatus>();
 let currentUserId: string | null = null;

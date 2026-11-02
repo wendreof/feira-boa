@@ -44,6 +44,8 @@ jobs:
         env:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_SUBJECT: ${{ vars.VAPID_SUBJECT }}
         run: node scripts/send-price-alerts.mjs
 
       - name: Open or update failure issue

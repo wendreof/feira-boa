@@ -12,12 +12,22 @@ import {
   partitionTelegramDelivery,
   pendingNotifications,
 } from "./alerts/plan.mjs";
+import {
+  buildPushPayloadForOffer,
+  configureVapid,
+  pushErrorCode,
+  readVapidConfig,
+  sendWebPush,
+  subscriptionFromRow,
+} from "./push-client.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
 const IN_CHUNK_SIZE = 100;
 const TELEGRAM_SEND_GAP_MS = 40;
-const NOTIFICATION_CHANNEL = "telegram";
+const PUSH_SEND_GAP_MS = 20;
+const CHANNEL_TELEGRAM = "telegram";
+const CHANNEL_PUSH = "push";
 const REQUIRED_ENVIRONMENT = [
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
@@ -31,7 +41,9 @@ function readConfig(env) {
 
   const siteUrl = new URL(env.SITE_URL);
   if (siteUrl.protocol !== "https:") throw new Error("SITE_URL must use HTTPS.");
-  return { siteUrl, telegramToken: env.TELEGRAM_BOT_TOKEN };
+  const vapid = readVapidConfig(env);
+  if (vapid) configureVapid(vapid);
+  return { siteUrl, telegramToken: env.TELEGRAM_BOT_TOKEN, vapid };
 }
 
 function chunk(values, size) {
@@ -68,6 +80,19 @@ async function loadFeed() {
   return { feed, feedUpdatedAt, sourceState: JSON.parse(sourceStateText) };
 }
 
+async function loadAlreadySent(supabase, channel, userIds, offerIds) {
+  if (userIds.length === 0 || offerIds.length === 0) return new Set();
+  const previousLogs = [];
+  for (const userGroup of chunk(userIds, IN_CHUNK_SIZE)) {
+    previousLogs.push(...await readRows(() => supabase.from("notification_log")
+      .select("user_id, offer_id, result")
+      .eq("channel", channel)
+      .in("user_id", userGroup)
+      .in("offer_id", offerIds), ["user_id", "offer_id"]));
+  }
+  return new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
+}
+
 /** Código gravado em notification_log.error_code; nunca inclui o texto da API. */
 function telegramErrorCode(error) {
   if (error instanceof TelegramApiError) {
@@ -82,11 +107,11 @@ async function markTelegramBlocked(supabase, userId) {
   await supabase.from("telegram_links").update({ delivery_blocked: true, delivery_blocked_at: now }).eq("user_id", userId);
 }
 
-async function logNotification(supabase, { userId, offerId, delivered, safeErrorCode, title, body }) {
+async function logNotification(supabase, { channel, userId, offerId, delivered, safeErrorCode, title, body }) {
   const { error } = await supabase.from("notification_log").upsert({
     user_id: userId,
     offer_id: offerId,
-    channel: NOTIFICATION_CHANNEL,
+    channel,
     sent_at: new Date().toISOString(),
     result: delivered ? "sent" : "failed",
     error_code: delivered ? null : safeErrorCode,
@@ -96,7 +121,7 @@ async function logNotification(supabase, { userId, offerId, delivered, safeError
   if (error) throw error;
 }
 
-async function sendOneAlert({ supabase, config, chatId, userId, offer, today, counts }) {
+async function sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, counts }) {
   const { title, body } = buildAlertMessage(offer);
   const text = buildTelegramText(offer, config.siteUrl, today);
   const replyMarkup = buildTelegramReplyMarkup(offer, config.siteUrl);
@@ -110,18 +135,60 @@ async function sendOneAlert({ supabase, config, chatId, userId, offer, today, co
     console.error(`Telegram send failed for user ${userId} offer ${offer.id}: ${error.message}`);
     if (safeErrorCode === "telegram_blocked") await markTelegramBlocked(supabase, userId);
   }
-  await logNotification(supabase, { userId, offerId: offer.id, delivered, safeErrorCode, title, body });
+  await logNotification(supabase, {
+    channel: CHANNEL_TELEGRAM,
+    userId,
+    offerId: offer.id,
+    delivered,
+    safeErrorCode,
+    title,
+    body,
+  });
   if (delivered) counts.notificationsSent += 1;
   else counts.notificationsFailed += 1;
   await sleep(TELEGRAM_SEND_GAP_MS);
 }
 
+async function sendOnePushAlert({ supabase, config, userId, offer, subscriptions, counts }) {
+  const { title, body } = buildAlertMessage(offer);
+  const payload = buildPushPayloadForOffer({ offer, siteUrl: config.siteUrl, title, body });
+  let delivered = false;
+  let safeErrorCode = null;
+  for (const row of subscriptions) {
+    try {
+      await sendWebPush(subscriptionFromRow(row), payload);
+      delivered = true;
+      await supabase.from("push_subscriptions").update({ last_used_at: new Date().toISOString() }).eq("endpoint", row.endpoint);
+    } catch (error) {
+      safeErrorCode = pushErrorCode(error);
+      console.error(`Push send failed for user ${userId} offer ${offer.id}: ${error.message}`);
+      if (safeErrorCode === "push_subscription_gone") {
+        await supabase.from("push_subscriptions").delete().eq("endpoint", row.endpoint);
+      }
+    }
+    await sleep(PUSH_SEND_GAP_MS);
+  }
+  await logNotification(supabase, {
+    channel: CHANNEL_PUSH,
+    userId,
+    offerId: offer.id,
+    delivered,
+    safeErrorCode: delivered ? null : safeErrorCode,
+    title,
+    body,
+  });
+  if (delivered) counts.pushSent += 1;
+  else counts.pushFailed += 1;
+}
+
 async function sendAlerts({
   supabase,
-  pending,
+  telegramPending,
   digests,
+  pushPending,
   config,
   chatIdByUser,
+  subscriptionsByUser,
   pausedUsers,
   blockedUsers,
   today,
@@ -135,9 +202,13 @@ async function sendAlerts({
     skippedPaused: 0,
     skippedBlocked: 0,
     digestsSent: 0,
+    pushSent: 0,
+    pushWouldSend: 0,
+    pushFailed: 0,
+    skippedNoPush: 0,
   };
 
-  for (const { userId, offer } of pending) {
+  for (const { userId, offer } of telegramPending) {
     if (dryRun) {
       counts.notificationsWouldSend += 1;
       continue;
@@ -155,7 +226,7 @@ async function sendAlerts({
       counts.skippedNoChannel += 1;
       continue;
     }
-    await sendOneAlert({ supabase, config, chatId, userId, offer, today, counts });
+    await sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, counts });
   }
 
   for (const { userId, offers } of digests) {
@@ -179,6 +250,22 @@ async function sendAlerts({
     await sleep(TELEGRAM_SEND_GAP_MS);
   }
 
+  if (!config.vapid) return counts;
+
+  for (const { userId, offer } of pushPending) {
+    if (dryRun) {
+      counts.pushWouldSend += 1;
+      continue;
+    }
+    if (pausedUsers.has(userId)) continue;
+    const subscriptions = subscriptionsByUser.get(userId) ?? [];
+    if (subscriptions.length === 0) {
+      counts.skippedNoPush += 1;
+      continue;
+    }
+    await sendOnePushAlert({ supabase, config, userId, offer, subscriptions, counts });
+  }
+
   return counts;
 }
 
@@ -200,6 +287,11 @@ async function main() {
     skippedPaused: 0,
     skippedBlocked: 0,
     digestsSent: 0,
+    pushSent: 0,
+    pushWouldSend: 0,
+    pushFailed: 0,
+    skippedNoPush: 0,
+    pushEnabled: Boolean(config.vapid),
   };
 
   const rules = await readRows(() => supabase.from("alert_rules")
@@ -239,22 +331,21 @@ async function main() {
   }
 
   const matchedUserIds = [...matchedByUser.keys()];
-  const previousLogs = [];
-  for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
-    previousLogs.push(...await readRows(() => supabase.from("notification_log")
-      .select("user_id, offer_id, result")
-      .eq("channel", NOTIFICATION_CHANNEL)
-      .in("user_id", userGroup)
-      .in("offer_id", matchedOfferIds), ["user_id", "offer_id"]));
-  }
-  const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
-  const allPending = pendingNotifications(matchedByUser, alreadySent);
-  const { immediate, digests } = partitionTelegramDelivery(allPending);
+  const [alreadySentTelegram, alreadySentPush] = await Promise.all([
+    loadAlreadySent(supabase, CHANNEL_TELEGRAM, matchedUserIds, matchedOfferIds),
+    loadAlreadySent(supabase, CHANNEL_PUSH, matchedUserIds, matchedOfferIds),
+  ]);
+  const telegramPendingAll = pendingNotifications(matchedByUser, alreadySentTelegram);
+  const pushPendingAll = pendingNotifications(matchedByUser, alreadySentPush);
+  const { immediate: telegramPending, digests } = partitionTelegramDelivery(telegramPendingAll);
+  const { immediate: pushPending } = partitionTelegramDelivery(pushPendingAll);
 
   const pausedUsers = new Set();
   const blockedUsers = new Set();
   const chatIdByUser = new Map();
-  if (!dryRun && (immediate.length > 0 || digests.length > 0)) {
+  const subscriptionsByUser = new Map();
+  const needsDeliveryData = !dryRun && (telegramPending.length > 0 || digests.length > 0 || (config.vapid && pushPending.length > 0));
+  if (needsDeliveryData) {
     for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
       const profiles = await readRows(() => supabase.from("profiles")
         .select("user_id, notifications_paused")
@@ -262,12 +353,24 @@ async function main() {
       for (const profile of profiles) {
         if (profile.notifications_paused) pausedUsers.add(profile.user_id);
       }
-      const links = await readRows(() => supabase.from("telegram_links")
-        .select("user_id, chat_id, delivery_blocked")
-        .in("user_id", userGroup), ["user_id"]);
-      for (const link of links) {
-        chatIdByUser.set(link.user_id, Number(link.chat_id));
-        if (link.delivery_blocked) blockedUsers.add(link.user_id);
+      if (telegramPending.length > 0 || digests.length > 0) {
+        const links = await readRows(() => supabase.from("telegram_links")
+          .select("user_id, chat_id, delivery_blocked")
+          .in("user_id", userGroup), ["user_id"]);
+        for (const link of links) {
+          chatIdByUser.set(link.user_id, Number(link.chat_id));
+          if (link.delivery_blocked) blockedUsers.add(link.user_id);
+        }
+      }
+      if (config.vapid && pushPending.length > 0) {
+        const subs = await readRows(() => supabase.from("push_subscriptions")
+          .select("user_id, endpoint, p256dh, auth_key")
+          .in("user_id", userGroup), ["endpoint"]);
+        for (const row of subs) {
+          const list = subscriptionsByUser.get(row.user_id) ?? [];
+          list.push(row);
+          subscriptionsByUser.set(row.user_id, list);
+        }
       }
     }
   }
@@ -277,10 +380,12 @@ async function main() {
   try {
     counts = await sendAlerts({
       supabase,
-      pending: immediate,
+      telegramPending,
       digests,
+      pushPending,
       config,
       chatIdByUser,
+      subscriptionsByUser,
       pausedUsers,
       blockedUsers,
       today,
@@ -298,7 +403,10 @@ async function main() {
   }
 
   const summary = { ...summaryBase, ...counts };
-  if (summary.notificationsFailed > 0 && summary.notificationsSent > 0) status = "partial";
+  const anyFailed = summary.notificationsFailed > 0 || summary.pushFailed > 0;
+  const anySent = summary.notificationsSent > 0 || summary.pushSent > 0;
+  if (anyFailed && anySent) status = "partial";
+  else if (anyFailed && !anySent) status = "failed";
   await supabase.from("alert_runs").insert({
     started_at: runStarted,
     finished_at: new Date().toISOString(),

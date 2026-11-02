@@ -118,7 +118,9 @@ export function partitionTelegramDelivery(pending, maxPerUser = TELEGRAM_MAX_OFF
   const digests = [];
   for (const [userId, items] of byUser) {
     immediate.push(...items.slice(0, maxPerUser));
-    if (items.length > maxPerUser) digests.push({ userId, offers: items.slice(maxPerUser) });
+    if (items.length > maxPerUser) {
+      digests.push({ userId, offers: items.slice(maxPerUser).map((item) => item.offer) });
+    }
   }
   return { immediate, digests };
 }

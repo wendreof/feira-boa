@@ -33,7 +33,7 @@ const SHELL = [
   "/offers.json",
   "/source-status.js",
 ];
-const NETWORK_FIRST = ["/offers.json", "/source-status.js", "/build-info.json"];
+const NETWORK_FIRST = ["/offers.json", "/snapshot-manifest.json", "/source-status.js", "/build-info.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {

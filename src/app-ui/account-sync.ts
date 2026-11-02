@@ -3,6 +3,7 @@ import { applyTheme } from "../theme";
 import { errorMessage } from "../errors";
 import { linkPushDeviceToUser } from "../push";
 import { renderOffers } from "./render";
+import { refreshAlertsInvitePanel, syncAlertsInviteForUser } from "./alerts-invite";
 import { setAccountStatus, updateAccountControls, refreshTopbarAvatar, primeTopbarAvatar } from "./topbar";
 
 function readGuestFavorites(): Set<string> {
@@ -81,6 +82,7 @@ export async function connectAccount(userId: string): Promise<void> {
     }
     void refreshTopbarAvatar(userId, avatarPath);
     void linkPushDeviceToUser(userId);
+    await syncAlertsInviteForUser(userId);
     renderOffers();
     setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
   } catch (error) {

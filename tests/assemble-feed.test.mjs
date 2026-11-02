@@ -62,3 +62,27 @@ test("metadata-only snapshots publish the store and skip fallback offers", () =>
   assert.deepEqual(warnings.missingSnapshotStores, ["Beta"]);
   assert.deepEqual(feed.stores.find((entry) => entry.name === "Alpha")?.flyerImages, ["https://alpha.test/flyer.png"]);
 });
+
+test("publishes the previous snapshot as archivedCampaigns", () => {
+  const snapshots = [{
+    storeId: "alpha",
+    store: store("Alpha"),
+    fetchedAt: "2026-11-02T10:00:00.000Z",
+    offers: [offer("a-live", "Alpha", "Café", { validFrom: "2026-11-02", validTo: "2026-11-04", sourceUrl: "https://alpha.test/new.pdf" })],
+  }];
+  snapshots[0].store.sourceUrl = "https://alpha.test/new.pdf";
+  snapshots[0].store.from = "2026-11-02";
+  snapshots[0].store.to = "2026-11-04";
+  const previousSnapshots = [{
+    storeId: "alpha",
+    store: { ...store("Alpha"), sourceUrl: "https://alpha.test/old.pdf", from: "2026-10-29", to: "2026-11-01" },
+    supersededAt: "2026-11-02T09:00:00.000Z",
+    offers: [offer("a-old", "Alpha", "Arroz", { validFrom: "2026-10-29", validTo: "2026-11-01", sourceUrl: "https://alpha.test/old.pdf" })],
+  }];
+  const { feed } = assembleFeed({
+    fallbackStores, fallbackOffers, fallbackUpdatedAt: "2026-10-22T00:00:00.000Z", snapshots, previousSnapshots,
+  });
+  assert.equal(feed.archivedCampaigns.length, 1);
+  assert.match(feed.archivedCampaigns[0].offers[0].id, /^arch-alpha-/);
+  assert.equal(feed.archivedCampaigns[0].offers[0].sourceUrl, "https://alpha.test/old.pdf");
+});

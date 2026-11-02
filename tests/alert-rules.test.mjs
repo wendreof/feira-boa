@@ -4,11 +4,13 @@ import test from "node:test";
 import {
   MAX_ALERT_RULES,
   alertsBanner,
+  countEnabledAlertRules,
   describeRule,
   failureHint,
   formatCalendarDate,
   formatDateTime,
   parseTargetPrice,
+  shouldPromoteAlertsCreation,
   validateAlertRule,
 } from "../src/shared/alert-rules.mjs";
 
@@ -70,6 +72,13 @@ test("alertsBanner warns when no notification channel is connected", () => {
   assert.equal(alertsBanner({ activeCount: 2, channelEnabled: false }).tone, "warning");
   assert.match(alertsBanner({ activeCount: 2, channelEnabled: false }).message, /canal/);
   assert.equal(alertsBanner({ activeCount: 2, channelEnabled: true }).tone, "ok");
+});
+
+test("countEnabledAlertRules and shouldPromoteAlertsCreation gate the home invite", () => {
+  assert.equal(countEnabledAlertRules([{ enabled: true }, { enabled: false }]), 1);
+  assert.equal(shouldPromoteAlertsCreation({ enabledRuleCount: 0 }), true);
+  assert.equal(shouldPromoteAlertsCreation({ enabledRuleCount: 1 }), false);
+  assert.equal(shouldPromoteAlertsCreation({ enabledRuleCount: 0, favoritesOnly: true }), false);
 });
 
 test("failureHint maps Telegram error codes to readable text", () => {

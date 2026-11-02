@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && node scripts/build-offer-feed.mjs && node scripts/build-structured-data.mjs && esbuild src/app.ts --bundle --minify --outfile=app.js --target=es2020 && esbuild src/stores-page.ts --bundle --minify --outfile=stores.js --target=es2020 && esbuild src/login-page.ts --bundle --minify --outfile=login.js --target=es2020 && esbuild src/account-page.ts --bundle --minify --outfile=account.js --target=es2020 && esbuild src/suggestions-page.ts --bundle --minify --outfile=suggestions.js --target=es2020 && esbuild src/admin-page.ts --bundle --minify --outfile=admin.js --target=es2020 && esbuild src/alerts-page.ts --bundle --minify --outfile=alerts.js --target=es2020 && esbuild src/messages-page.ts --bundle --minify --outfile=messages.js --target=es2020 && esbuild src/shared/site-footer.ts --bundle --minify --outfile=site-footer.js --target=es2020 && esbuild src/shared/login-gate.ts --bundle --minify --outfile=login-gate.js --target=es2020 && esbuild src/notification-badge-page.ts --bundle --minify --outfile=notification-badge.js --target=es2020 && node scripts/verify-root-artifacts.mjs",
-    "test": "node --test",
+    "test": "node --test \"tests/**/*.test.mjs\"",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.check.json",
     "verify:artifacts": "node scripts/verify-root-artifacts.mjs",
     "build:social-card": "node scripts/build-social-card.mjs",
@@ -20,6 +20,8 @@
     "monitor:status": "node scripts/write-source-status.mjs",
     "test:logos": "node scripts/test-store-logos-playwright.mjs",
     "test:expiry-ui": "node scripts/test-offer-expiry-playwright.mjs",
+    "test:archive-ui": "node scripts/test-offer-archive-playwright.mjs",
+    "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs",
     "telegram:setup": "node scripts/set-telegram-bot.mjs"
   },
   "devDependencies": {

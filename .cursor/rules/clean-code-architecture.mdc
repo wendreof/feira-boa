@@ -32,5 +32,6 @@ Applies to every file added or changed in this project.
 
 - Keep functions readable without comments; comments only for the non-obvious "why".
 - No dead code, no commented-out blocks, no speculative abstractions.
-- Every change ships with tests in `tests/*.test.mjs` (`node --test`); update existing tests when behavior changes.
-- Run `npm run check` (typecheck + tests) before considering work done.
+- Every change ships with tests in `tests/*.test.mjs` (`npm test`); update existing tests when behavior changes.
+- Visible UI or layout changes also add or extend a script under `scripts/test-*-playwright.mjs` and pass `npm run test:ui` (requires `npx playwright install chromium`).
+- Run `npm run typecheck`, `npm test`, and `npm run test:ui` before considering work done.

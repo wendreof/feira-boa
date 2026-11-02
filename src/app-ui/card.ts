@@ -5,8 +5,9 @@ import { offerCategory, offerOrder } from "./offer-model";
 import { createOfferStoreLogo, updateOfferStoreLogo } from "./store-logo";
 import { type Offer } from "../types";
 
-export function createOfferCard(offer: Offer): CardRefs {
+export function createOfferCard(offer: Offer, options?: { archived?: boolean }): CardRefs {
   const root = element("article", "offer-card");
+  if (options?.archived) root.classList.add("is-archived");
   root.dataset.offerId = offer.id;
   root.dataset.categoryRank = String(offerOrder(offer));
 
@@ -97,19 +98,25 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
     refs.discount.removeAttribute("aria-label");
   }
   refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
-  const expiryLabel = expiryHighlightLabel(offer);
+  const archived = refs.root.classList.contains("is-archived");
+  const expiryLabel = archived ? null : expiryHighlightLabel(offer);
   refs.expiryFlag.textContent = expiryLabel ?? "";
   refs.expiryFlag.hidden = !expiryLabel;
   refs.valid.parentElement?.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-today", expiryLabel === "Último dia");
-  if (expiryLabel) {
+  if (archived) {
+    refs.sticker.textContent = "Encerrado";
+    refs.sticker.classList.remove("offer-sticker-expiry", "offer-sticker-expiry-today");
+    refs.sticker.classList.add("offer-sticker-archived");
+  } else if (expiryLabel) {
     refs.sticker.textContent = expiryLabel;
+    refs.sticker.classList.remove("offer-sticker-archived");
     refs.sticker.classList.add("offer-sticker-expiry");
     refs.sticker.classList.toggle("offer-sticker-expiry-today", expiryLabel === "Último dia");
   } else {
     refs.sticker.textContent = "OFERTA";
-    refs.sticker.classList.remove("offer-sticker-expiry", "offer-sticker-expiry-today");
+    refs.sticker.classList.remove("offer-sticker-expiry", "offer-sticker-expiry-today", "offer-sticker-archived");
   }
   refs.notice.textContent = offer.notice ?? "";
   refs.notice.hidden = !offer.notice;
@@ -139,4 +146,13 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
   if (appState.currentUserId) refs.like.removeAttribute("aria-haspopup");
   else refs.like.setAttribute("aria-haspopup", "dialog");
   refs.likeCount.textContent = String(counts.likes);
+  if (archived) {
+    for (const button of refs.favoriteButtons) button.disabled = true;
+    refs.like.disabled = true;
+    refs.like.setAttribute("aria-disabled", "true");
+  } else {
+    for (const button of refs.favoriteButtons) button.disabled = false;
+    refs.like.disabled = false;
+    refs.like.removeAttribute("aria-disabled");
+  }
 }

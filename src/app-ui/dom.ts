@@ -10,6 +10,9 @@ export const reactionLoginTitle = document.querySelector<HTMLElement>("#reaction
 export const reactionLoginDescription = document.querySelector<HTMLElement>("#reaction-login-description")!;
 
 export const grid = document.querySelector<HTMLDivElement>("#offer-grid")!;
+export const archiveSection = document.querySelector<HTMLElement>("#archive-section")!;
+export const archiveSubtitle = document.querySelector<HTMLElement>("#archive-subtitle")!;
+export const archiveGrid = document.querySelector<HTMLDivElement>("#offer-grid-archive")!;
 export const filters = document.querySelector<HTMLDivElement>("#filters")!;
 export const storeFilters = document.querySelector<HTMLDivElement>("#store-filters")!;
 export const popularItems = document.querySelector<HTMLDivElement>("#popular-items")!;

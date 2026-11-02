@@ -37,7 +37,7 @@ function assertOfferFields(offer, storeUrls) {
  * estruturais. Problemas de setor e de texto de apresentação são coletados e
  * reportados juntos.
  */
-export function validateFeed({ stores, offers }) {
+export function validateFeed({ stores, offers, archivedCampaigns = [] }) {
   const storeUrls = assertStores(stores);
   const ids = new Set();
   const sectorProblems = [];
@@ -52,6 +52,17 @@ export function validateFeed({ stores, offers }) {
     sectorProblems.push(...sectorViolations(offer.name, sector.groupId, text));
     presentationProblems.push(...presentationViolations(offer));
     ids.add(offer.id);
+  }
+
+  for (const campaign of archivedCampaigns) {
+    if (!campaign?.storeId || !campaign?.store) throw new Error("Archived campaign is missing store metadata.");
+    assertStores([campaign.store]);
+    const archivedUrls = new Set([campaign.store.sourceUrl]);
+    for (const offer of campaign.offers ?? []) {
+      if (!offer.id || ids.has(offer.id)) throw new Error(`Missing or duplicate archived offer ID: ${offer.id}`);
+      assertOfferFields(offer, archivedUrls);
+      ids.add(offer.id);
+    }
   }
 
   if (sectorProblems.length > 0) {

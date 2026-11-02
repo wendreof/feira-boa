@@ -83,6 +83,14 @@
         <span class="account-button" id="account-access">Entrar ou criar conta</span>
         <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
       </a>
+      <a class="account-panel alerts-invite-panel" id="alerts-invite" href="login.html?returnTo=alerts.html" hidden>
+        <span class="account-panel-icon" aria-hidden="true">🔔</span>
+        <div class="account-panel-text">
+          <strong>Receba avisos quando o preço baixar</strong>
+          <span id="alerts-invite-copy">Crie alertas de preço grátis — Telegram ou navegador.</span>
+        </div>
+        <span class="account-button" id="alerts-invite-action">Criar meu alerta</span>
+      </a>
     </section>
 
     <section class="category-bar" aria-label="Explorar por categoria">
@@ -116,6 +124,16 @@
       <button id="feed-retry" class="feed-retry" type="button" hidden>Tentar novamente</button>
       <div class="catalog-note-row"><p class="catalog-note">A busca mostra as ofertas cadastradas aqui. Os folhetos oficiais podem ter outros produtos; abra a fonte da loja para consultar a lista completa.</p><details class="offer-disclaimer"><summary aria-label="Informações sobre as ofertas" title="Informações sobre as ofertas"><span aria-hidden="true">i</span></summary><div class="offer-disclaimer-popover">As ofertas podem mudar ou terminar antes da data informada. Confirme com a loja; a Feira Boa não garante a disponibilidade nem se responsabiliza por ofertas encerradas.</div></details></div>
       <div class="offer-grid" id="offer-grid"></div>
+      <section class="archive-results" id="archive-section" hidden>
+        <details class="archive-panel" open>
+          <summary class="archive-summary">
+            <span class="archive-summary-title">Encartes anteriores</span>
+            <span class="archive-summary-hint" id="archive-subtitle"></span>
+          </summary>
+          <p class="archive-note">Preços encerrados — referência do último folheto monitorado antes da troca de campanha.</p>
+          <div class="offer-grid" id="offer-grid-archive"></div>
+        </details>
+      </section>
       <div class="empty-state" id="empty-state" hidden><span class="empty-icon">⌕</span><strong>Nenhuma oferta encontrada</strong><span id="empty-help">Tente outro nome de produto ou escolha “Todas”.</span><a class="empty-directory-link" href="lojas.html">Ver folhetos oficiais das lojas</a><button class="empty-reset" id="reset-filters" type="button">Limpar busca e filtros</button></div>
       <p id="share-status" class="status-toast" role="status" aria-live="polite" aria-atomic="true"></p>
     </section>

@@ -21,7 +21,7 @@
     "test:logos": "node scripts/test-store-logos-playwright.mjs",
     "test:expiry-ui": "node scripts/test-offer-expiry-playwright.mjs",
     "test:archive-ui": "node scripts/test-offer-archive-playwright.mjs",
-    "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs",
+    "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs && node scripts/test-terms-playwright.mjs",
     "telegram:setup": "node scripts/set-telegram-bot.mjs"
   },
   "devDependencies": {

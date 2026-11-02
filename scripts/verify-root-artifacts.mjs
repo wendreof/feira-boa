@@ -36,6 +36,7 @@ const requiredFiles = [
   "manifest.webmanifest",
   "offers-jsonld.js",
   "_headers",
+  "ads.txt",
   "favicon.svg",
   "social-card.png",
   "icons/icon-192.png",

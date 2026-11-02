@@ -1,7 +1,13 @@
-const CACHE_NAME = "feira-boa-shell-v16";
+const CACHE_NAME = "feira-boa-shell-v18";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
+const NOTIFICATION_ICON = "/icons/notification-96.png";
+const NOTIFICATION_BADGE = "/icons/badge-72.png";
 
 // Web Push (VAPID): alertas gratuitos pelo navegador; Telegram continua em paralelo.
+
+function assetUrl(path) {
+  return new URL(path, self.location.origin).href;
+}
 
 const SHELL = [
   "/",
@@ -22,6 +28,8 @@ const SHELL = [
   "/favicon.svg",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
+  "/icons/notification-96.png",
+  "/icons/badge-72.png",
   "/offers.json",
   "/source-status.js",
 ];
@@ -39,6 +47,12 @@ self.addEventListener("install", (event) => {
     await Promise.allSettled(SHELL.map((url) => cache.add(url)));
     await self.skipWaiting();
   })());
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    event.waitUntil(self.skipWaiting());
+  }
 });
 
 self.addEventListener("activate", (event) => {
@@ -119,7 +133,8 @@ self.addEventListener("push", (event) => {
       body: payload.body,
       tag: payload.tag,
       data: { url: payload.url },
-      icon: "/icons/icon-192.png",
+      icon: assetUrl(NOTIFICATION_ICON),
+      badge: assetUrl(NOTIFICATION_BADGE),
     });
   })());
 });
@@ -134,6 +149,8 @@ self.addEventListener("notificationclick", (event) => {
         await client.focus();
         if ("navigate" in client && typeof client.navigate === "function") {
           await client.navigate(target);
+        } else {
+          await self.clients.openWindow(target);
         }
         return;
       }

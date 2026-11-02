@@ -7,6 +7,7 @@ import { loadAlertRules } from "./alerts";
 import { applyTheme } from "./theme";
 import { accountState } from "./account-ui/state";
 import { bindChannels, loadChannels } from "./alerts-ui/channels";
+import { linkPushDeviceToUser, syncPushServiceWorker } from "./push";
 import type { OfferFeed } from "./types";
 import { alertsState } from "./alerts-ui/state";
 import { bindRulesView, renderFormOptions, renderRules, renderSummary, setAlertsStatus } from "./alerts-ui/rules-view";
@@ -27,6 +28,11 @@ async function loadPage(userId: string): Promise<void> {
   alertsState.userId = userId;
   const [rules, profile] = await Promise.all([loadAlertRules(userId), loadPreferences(userId)]);
   await Promise.all([loadCatalog(), loadChannels(userId)]);
+  void syncPushServiceWorker().then(async () => {
+    await linkPushDeviceToUser(userId);
+    await loadChannels(userId);
+    renderSummary();
+  });
   alertsState.rules = rules;
   applyTheme(profile.preferences.theme);
   renderRules();

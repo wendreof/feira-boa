@@ -3,20 +3,15 @@
   "store": {
     "name": "Spasso Sabores",
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-    "logo": "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-faction-icon-website-spasso-sabores-270x270.png",
+    "logo": "logos/spasso.png",
     "source": "Folheto oficial · Loja São João",
     "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
     "from": "2026-11-01",
     "to": "2026-11-07"
   },
-  "fetchedAt": "2026-11-01T16:46:07.101Z",
+  "fetchedAt": "2026-11-02T00:35:18.906Z",
   "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
-  "flyerImages": [
-    "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-logo-site-spasso-sabores.png",
-    "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-logo-site-spasso-sabores.png",
-    "https://spassosabores.com.br/wp-content/uploads/2026/10/FLV-SPASSO-1.png",
-    "https://spassosabores.com.br/wp-content/uploads/2026/10/ACOUGUE-SPASSO-1.png"
-  ],
+  "flyerImages": [],
   "offers": [],
   "status": "image_flyer_pending_transcription"
 }

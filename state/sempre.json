@@ -3,19 +3,19 @@
   "store": {
     "name": "Sempre Vale",
     "branch": "Durval Nicolau",
-    "logo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+    "logo": "logos/semprevale.png",
     "source": "Folheto oficial · Durval Nicolau",
     "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
     "from": "2026-10-29",
     "to": "2026-11-01"
   },
-  "fetchedAt": "2026-11-01T16:45:37.354Z",
+  "fetchedAt": "2026-11-02T00:34:52.757Z",
   "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
   "offers": [
     {
       "id": "sempre-linguica-toscana-perdigao-nabrasa-kg-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Linguiça Toscana Perdigão Nabrasa",
       "detail": "Kg",
@@ -39,7 +39,7 @@
     {
       "id": "sempre-contrafile-bovino-c-osso-bistecao-friboi-kg-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Contrafilé Bovino c/ Osso (Bistecão) Friboi",
       "detail": "Kg",
@@ -63,7 +63,7 @@
     {
       "id": "sempre-oleo-de-soja-liza-900ml-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Óleo de Soja Liza",
       "detail": "900ml",
@@ -86,7 +86,7 @@
     {
       "id": "sempre-creme-de-leite-piracanjuba-200g-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Creme de Leite Piracanjuba",
       "detail": "200g",
@@ -109,7 +109,7 @@
     {
       "id": "sempre-refrigerante-coca-cola-menos-acucar-2-5l-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Refrigerante Coca-Cola Menos Açúcar",
       "detail": "2,5L",
@@ -132,7 +132,7 @@
     {
       "id": "sempre-cerveja-lager-amstel-350ml-2026-10-30",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Cerveja Lager Amstel",
       "detail": "350ml",
@@ -155,7 +155,7 @@
     {
       "id": "sempre-arroz-tipo-1-manua-5kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Arroz Tipo 1 Manuá",
       "detail": "5kg",
@@ -178,7 +178,7 @@
     {
       "id": "sempre-feijao-carioca-serrazul-1kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Feijão Carioca Serrazul",
       "detail": "1kg",
@@ -201,7 +201,7 @@
     {
       "id": "sempre-leite-longa-vida-lider-integral-1l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Leite Longa Vida Líder Integral",
       "detail": "1L",
@@ -224,7 +224,7 @@
     {
       "id": "sempre-cafe-melitta-tradicional-500g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Café Melitta Tradicional",
       "detail": "500g",
@@ -247,7 +247,7 @@
     {
       "id": "sempre-acucar-refinado-caravelas-1kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Açúcar Refinado Caravelas",
       "detail": "1kg",
@@ -270,7 +270,7 @@
     {
       "id": "sempre-contrafile-bovino-friboi-estrela-peca-a-vacuo-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Contrafilé Bovino Friboi / Estrela Peça a Vácuo",
       "detail": "Kg",
@@ -294,7 +294,7 @@
     {
       "id": "sempre-panceta-suina-congelada-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Panceta Suína Congelada",
       "detail": "Kg",
@@ -318,7 +318,7 @@
     {
       "id": "sempre-coxinha-da-asa-de-frango-ad-oro-soltinhos-1kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Coxinha da Asa de Frango Ad'oro Soltinhos",
       "detail": "1kg",
@@ -342,7 +342,7 @@
     {
       "id": "sempre-file-da-coxa-de-frango-ad-oro-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Filé da Coxa de Frango Ad'oro",
       "detail": "Kg",
@@ -366,7 +366,7 @@
     {
       "id": "sempre-vinho-chileno-concha-y-toro-reservado-750ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Vinho Chileno Concha y Toro Reservado",
       "detail": "750ml",
@@ -389,7 +389,7 @@
     {
       "id": "sempre-cerveja-pilsen-crystal-350ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Cerveja Pilsen Crystal",
       "detail": "350ml",
@@ -412,7 +412,7 @@
     {
       "id": "sempre-cerveja-lager-heineken-zero-alcool-330ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Cerveja Lager Heineken Zero Álcool",
       "detail": "330ml",
@@ -435,7 +435,7 @@
     {
       "id": "sempre-energetico-monster-energy-473ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Energético Monster Energy",
       "detail": "473ml",
@@ -458,7 +458,7 @@
     {
       "id": "sempre-aperitivo-nacional-bitter-campari-998ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Aperitivo Nacional Bitter Campari",
       "detail": "998ml",
@@ -481,7 +481,7 @@
     {
       "id": "sempre-agua-mineral-lindoya-verao-c-gas-510ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Água Mineral Lindoya Verão c/ Gás",
       "detail": "510ml",
@@ -504,7 +504,7 @@
     {
       "id": "sempre-refresco-em-po-frisco-18g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Refresco em Pó Frisco",
       "detail": "18g",
@@ -527,7 +527,7 @@
     {
       "id": "sempre-nectar-maguary-1l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Néctar Maguary",
       "detail": "1L",
@@ -550,7 +550,7 @@
     {
       "id": "sempre-whisky-americano-jack-daniel-s-1l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Whisky Americano Jack Daniel's",
       "detail": "1L",
@@ -573,7 +573,7 @@
     {
       "id": "sempre-salsicha-hot-dog-perdigao-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Salsicha Hot Dog Perdigão",
       "detail": "Kg",
@@ -596,7 +596,7 @@
     {
       "id": "sempre-linguica-calabresa-defumada-seara-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Linguiça Calabresa Defumada Seara",
       "detail": "Kg",
@@ -620,7 +620,7 @@
     {
       "id": "sempre-lasanha-sadia-sabores-600g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Lasanha Sadia Sabores",
       "detail": "600g",
@@ -643,7 +643,7 @@
     {
       "id": "sempre-salame-ouro-perdigao-fatiado-100g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Salame Ouro Perdigão Fatiado",
       "detail": "100g",
@@ -666,7 +666,7 @@
     {
       "id": "sempre-pao-de-alho-santa-massa-400g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Pão de Alho Santa Massa",
       "detail": "400g",
@@ -690,7 +690,7 @@
     {
       "id": "sempre-presunto-seara-s-capa-fatiado-cada-100g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Presunto Seara s/ Capa Fatiado",
       "detail": "Cada 100g",
@@ -713,7 +713,7 @@
     {
       "id": "sempre-requeijao-cremoso-frutap-tradicional-380g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Requeijão Cremoso Frutap Tradicional",
       "detail": "380g",
@@ -736,7 +736,7 @@
     {
       "id": "sempre-iogurte-liquido-nestle-1150g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Iogurte Líquido Nestlé",
       "detail": "1150g",
@@ -759,7 +759,7 @@
     {
       "id": "sempre-suco-natural-one-laranja-refrigerado-1-3l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Suco Natural One Laranja Refrigerado",
       "detail": "1,3L",
@@ -782,7 +782,7 @@
     {
       "id": "sempre-sorvete-pimpinella-1-8l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Sorvete Pimpinella",
       "detail": "1,8L",
@@ -805,7 +805,7 @@
     {
       "id": "sempre-pao-de-forma-visconti-tradicional-400g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Pão de Forma Visconti Tradicional",
       "detail": "400g",
@@ -828,7 +828,7 @@
     {
       "id": "sempre-massa-wrap-crock-tradicional-180g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Massa Wrap Crock Tradicional",
       "detail": "180g",
@@ -851,7 +851,7 @@
     {
       "id": "sempre-bolo-santa-edwiges-200g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Bolo Santa Edwiges",
       "detail": "200g",
@@ -874,7 +874,7 @@
     {
       "id": "sempre-biscoito-colonial-amendoim-300g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Biscoito Colonial Amendoim",
       "detail": "300g",
@@ -897,7 +897,7 @@
     {
       "id": "sempre-pudim-sempre-vale-leite-condensado-kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Pudim Sempre Vale Leite Condensado",
       "detail": "Kg",
@@ -920,7 +920,7 @@
     {
       "id": "sempre-molho-de-tomate-fugini-sache-300g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Molho de Tomate Fugini Sachê",
       "detail": "300g",
@@ -943,7 +943,7 @@
     {
       "id": "sempre-macarrao-semola-galo-parafuso-ave-maria-spaghetti-500g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Macarrão Sêmola Galo Parafuso/Ave Maria/Spaghetti",
       "detail": "500g",
@@ -966,7 +966,7 @@
     {
       "id": "sempre-milho-verde-fugini-170g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Milho Verde Fugini",
       "detail": "170g",
@@ -989,7 +989,7 @@
     {
       "id": "sempre-palmito-de-acai-equador-inteiro-300g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Palmito de Açaí Equador Inteiro",
       "detail": "300g",
@@ -1012,7 +1012,7 @@
     {
       "id": "sempre-maionese-hellmann-s-tradicional-500g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Maionese Hellmann's Tradicional",
       "detail": "500g",
@@ -1035,7 +1035,7 @@
     {
       "id": "sempre-ketchup-hellmann-s-tradicional-380g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Ketchup Hellmann's Tradicional",
       "detail": "380g",
@@ -1058,7 +1058,7 @@
     {
       "id": "sempre-achocolatado-em-po-toddy-370g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Achocolatado em Pó Toddy",
       "detail": "370g",
@@ -1081,7 +1081,7 @@
     {
       "id": "sempre-leite-em-po-ninho-380g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Leite em Pó Ninho",
       "detail": "380g",
@@ -1104,7 +1104,7 @@
     {
       "id": "sempre-bebida-lactea-italakinho-chocolate-200ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Bebida Láctea Italakinho Chocolate",
       "detail": "200ml",
@@ -1127,7 +1127,7 @@
     {
       "id": "sempre-biscoito-marilan-300g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Biscoito Marilan",
       "detail": "300g",
@@ -1150,7 +1150,7 @@
     {
       "id": "sempre-biscoito-wafer-bauducco-chocolate-140g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Biscoito Wafer Bauducco Chocolate",
       "detail": "140g",
@@ -1173,7 +1173,7 @@
     {
       "id": "sempre-biscoito-recheado-passatempo-chocolate-130g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Biscoito Recheado Passatempo Chocolate",
       "detail": "130g",
@@ -1196,7 +1196,7 @@
     {
       "id": "sempre-chocolate-wafer-lacta-bis-100-8g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Chocolate Wafer Lacta Bis",
       "detail": "100,8g",
@@ -1219,7 +1219,7 @@
     {
       "id": "sempre-panetone-marilan-recheado-frutas-400g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Panetone Marilan Recheado Frutas",
       "detail": "400g",
@@ -1242,7 +1242,7 @@
     {
       "id": "sempre-bombom-lacta-favoritos-250-6g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Bombom Lacta Favoritos",
       "detail": "250,6g",
@@ -1265,7 +1265,7 @@
     {
       "id": "sempre-filtro-de-papel-melitta-103-30un-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Filtro de Papel Melitta 103",
       "detail": "30un.",
@@ -1288,7 +1288,7 @@
     {
       "id": "sempre-feirinha-fort-lar-assadeira-50-pcs-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Feirinha Fort Lar Assadeira",
       "detail": "50 pcs",
@@ -1311,7 +1311,7 @@
     {
       "id": "sempre-vassoura-condor-madri-un-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Vassoura Condor Madri",
       "detail": "Un.",
@@ -1334,7 +1334,7 @@
     {
       "id": "sempre-pilha-duracell-alcalina-palito-aaa-aa-4un-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Pilha Duracell Alcalina Palito AAA/AA",
       "detail": "4un",
@@ -1357,7 +1357,7 @@
     {
       "id": "sempre-carvao-jacare-2-5kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Carvão Jacaré",
       "detail": "2,5kg",
@@ -1380,7 +1380,7 @@
     {
       "id": "sempre-racao-energy-dog-pequenas-medias-1kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Ração Energy Dog Pequenas/Médias",
       "detail": "1kg",
@@ -1403,7 +1403,7 @@
     {
       "id": "sempre-sache-champ-kitekat-sabores-unidade-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Sachê Champ / Kitekat Sabores",
       "detail": "Unidade",
@@ -1426,7 +1426,7 @@
     {
       "id": "sempre-flor-calandiva-p11-unidade-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Flor Calandiva P11",
       "detail": "Unidade",
@@ -1449,7 +1449,7 @@
     {
       "id": "sempre-vela-moroaba-7-dias-votiva-santo-un-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Vela Moroabá 7 Dias Votiva Santo",
       "detail": "Un",
@@ -1472,7 +1472,7 @@
     {
       "id": "sempre-lampada-led-elgin-bca-9w-bivolt-unidade-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Lâmpada LED Elgin Bca 9W Bivolt",
       "detail": "Unidade",
@@ -1495,7 +1495,7 @@
     {
       "id": "sempre-sabonete-palmolive-85g-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Sabonete Palmolive",
       "detail": "85g",
@@ -1518,7 +1518,7 @@
     {
       "id": "sempre-kit-shampoo-dove-350ml-condicionador-150ml-unidade-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Kit Shampoo Dove 350ml + Condicionador 150ml",
       "detail": "Unidade",
@@ -1541,7 +1541,7 @@
     {
       "id": "sempre-creme-tratamento-skala-1kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Creme Tratamento Skala",
       "detail": "1kg",
@@ -1564,7 +1564,7 @@
     {
       "id": "sempre-desodorante-aero-rexona-lv-pg-250ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Desodorante Aero Rexona LV+ PG-",
       "detail": "250ml",
@@ -1587,7 +1587,7 @@
     {
       "id": "sempre-absorvente-intimus-gel-tripla-protecao-suave-c-abas-32un-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Absorvente Intimus Gel Tripla Proteção Suave c/ Abas",
       "detail": "32un",
@@ -1610,7 +1610,7 @@
     {
       "id": "sempre-limpador-multiuso-veja-gold-10-desconto-500ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Limpador Multiuso Veja Gold 10% Desconto",
       "detail": "500ml",
@@ -1633,7 +1633,7 @@
     {
       "id": "sempre-papel-higienico-fd-mili-max-neutro-60m-6rl-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Papel Higiênico Fd. Mili Max Neutro",
       "detail": "60m 6rl.",
@@ -1656,7 +1656,7 @@
     {
       "id": "sempre-lava-roupas-em-po-omo-lavagem-perfeita-1-4kg-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Lava Roupas em Pó Omo Lavagem Perfeita",
       "detail": "1,4kg",
@@ -1679,7 +1679,7 @@
     {
       "id": "sempre-lava-roupa-liquido-tixan-ype-refil-900ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Lava Roupa Líquido Tixan Ypê Refil",
       "detail": "900ml",
@@ -1702,7 +1702,7 @@
     {
       "id": "sempre-amaciante-baby-soft-2l-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Amaciante Baby Soft",
       "detail": "2L",
@@ -1725,7 +1725,7 @@
     {
       "id": "sempre-saponaceo-ype-cremoso-300ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Saponáceo Ypê Cremoso",
       "detail": "300ml",
@@ -1748,7 +1748,7 @@
     {
       "id": "sempre-lava-loucas-liquido-limpol-500ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Lava Louças Líquido Limpol",
       "detail": "500ml",
@@ -1771,7 +1771,7 @@
     {
       "id": "sempre-desinfetante-urca-500ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Desinfetante Urca",
       "detail": "500ml",
@@ -1794,7 +1794,7 @@
     {
       "id": "sempre-limpador-perfumado-zulu-500ml-2026-10-29",
       "store": "Sempre Vale",
-      "storeLogo": "https://www.semprevale.com.br/images/logo-pequeno.png",
+      "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
       "name": "Limpador Perfumado Zulu",
       "detail": "500ml",

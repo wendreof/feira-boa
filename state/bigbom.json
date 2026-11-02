@@ -3,19 +3,19 @@
   "store": {
     "name": "Big Bom",
     "branch": "Vila Zanetti · São João",
-    "logo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+    "logo": "logos/bigbom.png",
     "source": "Folheto oficial · São João da Boa Vista",
     "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
     "from": "2026-10-30",
     "to": "2026-11-02"
   },
-  "fetchedAt": "2026-11-01T17:33:23.428Z",
+  "fetchedAt": "2026-11-02T00:34:54.575Z",
   "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
   "offers": [
     {
       "id": "bigbom-feijao-broto-legal-carioca-1kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Feijão BROTO LEGAL Carioca",
       "detail": "1kg",
@@ -38,7 +38,7 @@
     {
       "id": "bigbom-contra-file-ancho-bovino-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "CONTRA FILÉ ANCHO Bovino",
       "detail": "kg",
@@ -62,7 +62,7 @@
     {
       "id": "bigbom-lava-roupas-em-po-brilhante-limpeza-total-2-2kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Lava Roupas em Pó BRILHANTE Limpeza Total",
       "detail": "2,2kg",
@@ -85,7 +85,7 @@
     {
       "id": "bigbom-cerveja-heineken-long-neck-330ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Cerveja HEINEKEN Long Neck",
       "detail": "330ml",
@@ -108,7 +108,7 @@
     {
       "id": "bigbom-farinha-dona-benta-trigo-1kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Farinha DONA BENTA Trigo",
       "detail": "1kg",
@@ -131,7 +131,7 @@
     {
       "id": "bigbom-leite-condensado-moca-tp-395g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Leite Condensado MOÇA TP",
       "detail": "395g",
@@ -154,7 +154,7 @@
     {
       "id": "bigbom-oleo-liza-soja-900ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Óleo LIZA Soja",
       "detail": "900ml",
@@ -177,7 +177,7 @@
     {
       "id": "bigbom-arroz-broto-legal-tipo-1-5kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Arroz BROTO LEGAL Tipo 1",
       "detail": "5kg",
@@ -200,7 +200,7 @@
     {
       "id": "bigbom-sobrecoxas-perdigao-temperada-assa-facil-1-2kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Sobrecoxas PERDIGÃO Temperada Assa Fácil",
       "detail": "1,2kg",
@@ -223,7 +223,7 @@
     {
       "id": "bigbom-panceta-suina-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "PANCETA Suína",
       "detail": "kg",
@@ -247,7 +247,7 @@
     {
       "id": "bigbom-acem-bovino-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "ACÉM Bovino",
       "detail": "kg",
@@ -270,7 +270,7 @@
     {
       "id": "bigbom-picanha-suina-frinni-temperada-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Picanha Suína FRINNI Temperada",
       "detail": "kg",
@@ -294,7 +294,7 @@
     {
       "id": "bigbom-refrigerante-coca-cola-2l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Refrigerante COCA-COLA",
       "detail": "2L",
@@ -317,7 +317,7 @@
     {
       "id": "bigbom-cerveja-imperio-c-15-latas-de-350ml-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Cerveja IMPÉRIO c/ 15 Latas de 350ml",
       "detail": "Unid.",
@@ -340,7 +340,7 @@
     {
       "id": "bigbom-whiskey-jim-beam-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Whiskey JIM BEAM",
       "detail": "1L",
@@ -363,7 +363,7 @@
     {
       "id": "bigbom-cerveja-stella-artois-pure-gold-lata-350ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Cerveja STELLA ARTOIS Pure Gold",
       "detail": "Lata 350ml",
@@ -386,7 +386,7 @@
     {
       "id": "bigbom-agua-sanitaria-ype-cloro-ativo-2l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Água Sanitária YPÊ Cloro Ativo",
       "detail": "2L",
@@ -409,7 +409,7 @@
     {
       "id": "bigbom-amaciante-downy-refil-750ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Amaciante DOWNY Refil",
       "detail": "750ml",
@@ -432,7 +432,7 @@
     {
       "id": "bigbom-papel-higienico-mili-max-60m-folha-dupla-c-4-rolos-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Papel Higiênico MILI Max 60m Folha Dupla c/ 4 Rolos",
       "detail": "Unid.",
@@ -455,7 +455,7 @@
     {
       "id": "bigbom-inseticida-raid-multi-insetos-aerossol-leve-mais-pague-menos-420ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Inseticida RAID Multi Insetos Aerossol Leve Mais, Pague Menos",
       "detail": "420ml",
@@ -478,7 +478,7 @@
     {
       "id": "bigbom-hamburguer-texas-burguer-tradicional-56g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Hambúrguer TEXAS BURGUER Tradicional",
       "detail": "56g",
@@ -501,7 +501,7 @@
     {
       "id": "bigbom-steak-perdigao-recheado-100g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Steak PERDIGÃO Recheado",
       "detail": "100g",
@@ -524,7 +524,7 @@
     {
       "id": "bigbom-polpa-de-fruta-demarchi-100g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Polpa de Fruta DEMARCHI",
       "detail": "100g",
@@ -547,7 +547,7 @@
     {
       "id": "bigbom-pizza-big-bom-500g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Pizza BIG BOM",
       "detail": "500g",
@@ -570,7 +570,7 @@
     {
       "id": "bigbom-a-mais-compre-2-unids-e-ganhe-sukita-de-2l1-bebida-lactea-toddynho-200ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "a Mais COMPRE 2 UNIDS. E GANHE SUKITA DE 2L1 Bebida Láctea TODDYNHO",
       "detail": "200ml",
@@ -593,7 +593,7 @@
     {
       "id": "bigbom-chocolate-snickers-40g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Chocolate SNICKERS",
       "detail": "40g",
@@ -616,7 +616,7 @@
     {
       "id": "bigbom-bolinho-renata-divertix-40g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Bolinho RENATA Divertix",
       "detail": "40g",
@@ -639,7 +639,7 @@
     {
       "id": "bigbom-biscoito-bono-ou-negresco-recheado-90g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Biscoito BONO ou NEGRESCO Recheado",
       "detail": "90g",
@@ -662,7 +662,7 @@
     {
       "id": "bigbom-macarrao-instantaneo-cup-noodles-65-70g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Macarrão Instantâneo CUP NOODLES",
       "detail": "65/70g",
@@ -685,7 +685,7 @@
     {
       "id": "bigbom-bebida-lactea-shefa-chocolate-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Bebida Láctea SHEFA Chocolate",
       "detail": "1L",
@@ -708,7 +708,7 @@
     {
       "id": "bigbom-barra-de-cereal-nutry-22g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Barra de Cereal NUTRY",
       "detail": "22g",
@@ -731,7 +731,7 @@
     {
       "id": "bigbom-molho-de-tomate-salsaretti-300g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Molho de Tomate SALSARETTI",
       "detail": "300g",
@@ -754,7 +754,7 @@
     {
       "id": "bigbom-agua-de-coco-coco-quadrado-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Água de Coco COCO QUADRADO",
       "detail": "1L",
@@ -777,7 +777,7 @@
     {
       "id": "bigbom-refresco-maguary-tp-200ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Refresco MAGUARY TP",
       "detail": "200ml",
@@ -800,7 +800,7 @@
     {
       "id": "bigbom-refrigerante-pepsi-lata-zero-acucar-350ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Refrigerante PEPSI Lata Zero Açúcar",
       "detail": "350ml",
@@ -823,7 +823,7 @@
     {
       "id": "bigbom-agua-mineral-bioleve-c-gas-510ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Água Mineral BIOLEVE c/ Gás",
       "detail": "510ml",
@@ -846,7 +846,7 @@
     {
       "id": "bigbom-removedor-suprema-500ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Removedor SUPREMA",
       "detail": "500ml",
@@ -869,7 +869,7 @@
     {
       "id": "bigbom-saco-p-lixo-fortao-15l-30l-50l-e-100l-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Saco p/ Lixo FORTÃO 15L/30L/50L e 100L",
       "detail": "Unid.",
@@ -892,7 +892,7 @@
     {
       "id": "bigbom-esponja-de-la-de-aco-assolan-45g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Esponja de Lã de Aço ASSOLAN",
       "detail": "45g",
@@ -915,7 +915,7 @@
     {
       "id": "bigbom-papel-toalha-yuri-fit-c-2-rolos-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Papel Toalha YURI FIT c/ 2 Rolos",
       "detail": "Unid.",
@@ -938,7 +938,7 @@
     {
       "id": "bigbom-salsicha-perdigao-hot-dog-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Salsicha PERDIGÃO Hot Dog",
       "detail": "kg",
@@ -961,7 +961,7 @@
     {
       "id": "bigbom-linguica-marchiori-fina-pernil-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Linguiça MARCHIORI Fina Pernil",
       "detail": "kg",
@@ -985,7 +985,7 @@
     {
       "id": "bigbom-queijo-rigoni-minas-padrao-kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Queijo RIGONI Minas Padrão",
       "detail": "kg",
@@ -1008,7 +1008,7 @@
     {
       "id": "bigbom-linguica-aurora-toscana-700g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Linguiça AURORA Toscana",
       "detail": "700g",
@@ -1032,7 +1032,7 @@
     {
       "id": "bigbom-pao-de-alho-hiper-310g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Pão de Alho HIPER",
       "detail": "310g",
@@ -1056,7 +1056,7 @@
     {
       "id": "bigbom-acai-nuty-exceto-pacoca-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Açaí NUTY *Exceto Paçoca",
       "detail": "1L",
@@ -1079,7 +1079,7 @@
     {
       "id": "bigbom-jardineira-easychef-congelada-1-1kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Jardineira EASYCHEF Congelada",
       "detail": "1,1kg",
@@ -1102,7 +1102,7 @@
     {
       "id": "bigbom-bebida-lactea-vigor-480g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Bebida Láctea VIGOR",
       "detail": "480g",
@@ -1125,7 +1125,7 @@
     {
       "id": "bigbom-acucar-alto-alegre-refinado-1kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Açúcar ALTO ALEGRE Refinado",
       "detail": "1kg",
@@ -1148,7 +1148,7 @@
     {
       "id": "bigbom-leite-em-po-aurora-400g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Leite em Pó AURORA",
       "detail": "400g",
@@ -1171,7 +1171,7 @@
     {
       "id": "bigbom-azeite-montessence-extra-virgem-500ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Azeite MONTESSENCE Extra Virgem",
       "detail": "500ml",
@@ -1194,7 +1194,7 @@
     {
       "id": "bigbom-cafe-toninho-almofada-vacuo-500g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Café TONINHO Almofada/Vácuo",
       "detail": "500g",
@@ -1217,7 +1217,7 @@
     {
       "id": "bigbom-cookies-merba-200-225g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Cookies MERBA",
       "detail": "200/225g",
@@ -1240,7 +1240,7 @@
     {
       "id": "bigbom-macarrao-costazzurra-grano-duro-450-500g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Macarrão COSTAZZURRA Grano Duro",
       "detail": "450/500g",
@@ -1263,7 +1263,7 @@
     {
       "id": "bigbom-passata-costazzurra-680g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Passata COSTAZZURRA",
       "detail": "680g",
@@ -1286,7 +1286,7 @@
     {
       "id": "bigbom-chocolate-choco-fun-80g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Chocolate CHOCO FUN",
       "detail": "80g",
@@ -1309,7 +1309,7 @@
     {
       "id": "bigbom-biscoito-sol-350g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Biscoito SOL",
       "detail": "350g",
@@ -1332,7 +1332,7 @@
     {
       "id": "bigbom-pao-de-forma-panco-tradicional-500g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Pão de Forma PANCO Tradicional",
       "detail": "500g",
@@ -1355,7 +1355,7 @@
     {
       "id": "bigbom-achocolatado-apti-400g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Achocolatado APTI",
       "detail": "400g",
@@ -1378,7 +1378,7 @@
     {
       "id": "bigbom-salgadinho-doritos-queijo-nacho-183g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Salgadinho DORITOS Queijo Nacho",
       "detail": "183g",
@@ -1401,7 +1401,7 @@
     {
       "id": "bigbom-tortilha-natural-life-top-6-170g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Tortilha NATURAL LIFE Top 6",
       "detail": "170g",
@@ -1424,7 +1424,7 @@
     {
       "id": "bigbom-pasta-de-amendoim-dr-peanut-600g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Pasta de Amendoim DR PEANUT",
       "detail": "600g",
@@ -1447,7 +1447,7 @@
     {
       "id": "bigbom-bebida-moving-hydro-protein-500ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Bebida MOVING Hydro Protein",
       "detail": "500ml",
@@ -1470,7 +1470,7 @@
     {
       "id": "bigbom-tapioca-akio-500g-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Tapioca AKIO",
       "detail": "500g",
@@ -1493,7 +1493,7 @@
     {
       "id": "bigbom-suco-de-uva-aurora-tp-1-5l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Suco de Uva AURORA TP",
       "detail": "1,5L",
@@ -1516,7 +1516,7 @@
     {
       "id": "bigbom-aguardente-ypioca-ouro-965ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Aguardente YPIOCA Ouro",
       "detail": "965ml",
@@ -1539,7 +1539,7 @@
     {
       "id": "bigbom-kit-cerveja-bierbaum-c-3-unids-de-600ml-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Kit Cerveja BIERBAUM c/ 3 Unids. de 600ml",
       "detail": "Unid.",
@@ -1562,7 +1562,7 @@
     {
       "id": "bigbom-gin-rock-s-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Gin ROCK’S",
       "detail": "1L",
@@ -1585,7 +1585,7 @@
     {
       "id": "bigbom-vinho-linda-donna-lambrusco-750ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Vinho LINDA DONNA Lambrusco",
       "detail": "750ml",
@@ -1608,7 +1608,7 @@
     {
       "id": "bigbom-espumante-aurora-750ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Espumante AURORA",
       "detail": "750ml",
@@ -1631,7 +1631,7 @@
     {
       "id": "bigbom-vinho-casillero-del-diablo-750ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Vinho CASILLERO DEL DIABLO",
       "detail": "750ml",
@@ -1654,7 +1654,7 @@
     {
       "id": "bigbom-vinho-sutter-home-750ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Vinho SUTTER HOME",
       "detail": "750ml",
@@ -1677,7 +1677,7 @@
     {
       "id": "bigbom-desodorante-rexona-aerossol-250ml-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Desodorante REXONA Aerossol",
       "detail": "250ml",
@@ -1700,7 +1700,7 @@
     {
       "id": "bigbom-kit-elseve-shampoo-375ml-condicionador-170ml-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Kit ELSEVE Shampoo 375ml + Condicionador 170ml",
       "detail": "Unid.",
@@ -1723,7 +1723,7 @@
     {
       "id": "bigbom-fralda-descartavel-pampers-confort-sec-bag-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Fralda Descartável PAMPERS Confort Sec Bag",
       "detail": "Unid.",
@@ -1746,7 +1746,7 @@
     {
       "id": "bigbom-conj-de-sabonetes-protex-c-6-unids-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Conj. de Sabonetes PROTEX c/ 6 Unids.",
       "detail": "Unid.",
@@ -1769,7 +1769,7 @@
     {
       "id": "bigbom-conj-de-copos-nadir-amazon-c-6-unids-de-190ml-unid-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Conj. de Copos NADIR Amazon c/ 6 Unids. de 190ml",
       "detail": "Unid.",
@@ -1792,7 +1792,7 @@
     {
       "id": "bigbom-vassoura-esfrelux-phenix-unidade-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Vassoura ESFRELUX Phenix",
       "detail": "Unidade",
@@ -1815,7 +1815,7 @@
     {
       "id": "bigbom-oleo-bardahl-20w-50-api-sl-1l-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Óleo BARDAHL 20W 50 API SL",
       "detail": "1L",
@@ -1838,7 +1838,7 @@
     {
       "id": "bigbom-carvao-monocarvoeiro-4kg-2026-10-30",
       "store": "Big Bom",
-      "storeLogo": "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+      "storeLogo": "logos/bigbom.png",
       "branch": "Vila Zanetti · São João",
       "name": "Carvão MONOCARVOEIRO",
       "detail": "4kg",

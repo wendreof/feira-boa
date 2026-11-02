@@ -27,7 +27,9 @@ For UI checks against the built site, serve the repository root and run the Play
 npm run build
 node scripts/dev-static-server.mjs   # http://127.0.0.1:8790
 npm run test:expiry-ui               # list/grid expiry labels
+npm run test:archive-ui              # encartes anteriores (grayscale)
 npm run test:logos                   # store logos on lojas.html
+npm run test:ui                      # all Playwright checks above
 ```
 
 Each script starts the static server on port 8790 when nothing is listening. Install browsers once with `npx playwright install chromium`. Optional sign-in for logo tests: set `FEIRA_E2E_EMAIL` and `FEIRA_E2E_PASSWORD` in the environment (never commit credentials).

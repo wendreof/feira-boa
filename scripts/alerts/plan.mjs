@@ -126,13 +126,19 @@ export function partitionTelegramDelivery(pending, maxPerUser = TELEGRAM_MAX_OFF
 }
 
 export function buildTelegramDigestText(offers, siteUrl) {
-  const alertsUrl = new URL("alertas.html", siteUrl).href;
+  void siteUrl;
   const preview = offers.slice(0, 8).map((offer) => {
     const icon = offer.icon ? `${offer.icon} ` : "";
     return `• ${icon}${offer.name} · ${formatOfferPrice(offer.price)} · ${offer.store}`;
   });
   const tail = offers.length > 8 ? `\n… e mais ${offers.length - 8}.` : "";
-  return `Mais ${offers.length} oferta(s) nos seus alertas:\n${preview.join("\n")}${tail}\n\nVer regras: ${alertsUrl}`;
+  return `Mais ${offers.length} oferta(s) nos seus alertas:\n${preview.join("\n")}${tail}\n\n${TELEGRAM_DISCLAIMER}`;
+}
+
+export function buildTelegramDigestReplyMarkup(siteUrl) {
+  return {
+    inline_keyboard: [[{ text: "Ver alertas no site", url: new URL("alertas.html", siteUrl).href }]],
+  };
 }
 
 /** Link da oferta no site, usado pela notificação. */

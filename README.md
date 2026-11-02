@@ -13,21 +13,34 @@ Local supermarket offers for São João da Boa Vista.
 - Hide offers outside their printed validity dates.
 - Switch between light and dark themes; signed-in users sync the choice with their account.
 
-The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed contains 1,288 offers across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
+The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed size changes with each ingest across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
 
 ## Run locally
 
-The app uses TypeScript for offer data and browser interactions. Run `npm ci`, `npm run build`, and `npm test` before shipping. `offers.json` is built from the latest snapshots in `state/`; the curated data in `offers.ts` is a development fallback and is only published when no snapshot exists at all, so outdated prices never mix with fresh ones. `npm run ingest:offers` fetches official sources and updates snapshots; `npm run monitor:sources` records source health. The site footer shows the semantic version, commit, build time, and whether local changes were present. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+The app uses TypeScript for offer data and browser interactions. Run `npm ci`, `npm run build`, `npm run typecheck`, and `npm test` before shipping. `offers.json` is built from the latest snapshots in `state/`; the curated data in `offers.ts` is a development fallback and is only published when no snapshot exists at all, so outdated prices never mix with fresh ones. `npm run ingest:offers` fetches official sources and updates snapshots; `npm run monitor:sources` records source health. The site footer shows the semantic version, commit, build time, and whether local changes were present. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+
+### Static server and Playwright
+
+For UI checks against the built site, serve the repository root and run the Playwright scripts:
+
+```bash
+npm run build
+node scripts/dev-static-server.mjs   # http://127.0.0.1:8790
+npm run test:expiry-ui               # list/grid expiry labels
+npm run test:logos                   # store logos on lojas.html
+```
+
+Each script starts the static server on port 8790 when nothing is listening. Install browsers once with `npx playwright install chromium`. Optional sign-in for logo tests: set `FEIRA_E2E_EMAIL` and `FEIRA_E2E_PASSWORD` in the environment (never commit credentials).
 
 ## Supabase accounts
 
 Email accounts are optional and use the dedicated `login.html` page. Guest favorites stay in the current browser; signed-in favorites sync through the `profiles` table. The browser uses the Supabase publishable key in `supabase-config.ts`, which is public by design. Row Level Security limits every user-owned row to its owner. Never put a database password or service-role key in frontend files.
 
-Run every migration in order for a new environment before enabling account sync, suggestions, and offer votes:
+Run every migration in `supabase/migrations/` in filename order for a new environment before enabling account sync, suggestions, offer votes, Telegram alerts, and admin tools:
 
-1. Run `supabase/migrations/202610180001_profiles_and_alerts.sql`, `202610180002_favorite_product_types.sql`, `202610180003_theme_preference.sql`, `202610180004_suggestions.sql`, `202610180005_offer_reactions.sql`, `202610180006_offer_reaction_permissions.sql`, `202610200001_suggestion_retention.sql`, `202610200002_account_caps.sql`, and `202610210001_admin_access.sql` in the project SQL Editor.
+1. Apply the SQL migrations in the Supabase SQL Editor (or `supabase db push` against the project).
 2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
-3. Deploy `supabase/functions/delete-account` with `supabase functions deploy delete-account --project-ref muiuvmhzzbqflxznpnez` and keep `SUPABASE_SERVICE_ROLE_KEY` in the function's server-side secrets. The delete button calls this function after an explicit confirmation.
+3. Deploy Edge Functions as needed: `delete-account` (account deletion from the settings page) and `telegram-webhook` (bot commands and account linking). Keep service-role and bot secrets in Supabase function secrets only, never in the browser bundle.
 
 The app remains browsable without an account. Guest theme choices are saved in the current browser; signed-in theme choices sync through `profiles.preferences`. Until the migrations and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
 
@@ -63,9 +76,9 @@ delete from public.admin_users where user_id = (
 
 The page asks Supabase for the signed-in session and then calls the `is_admin` RPC; without an allowlisted account it shows an authorization message and loads no data. The aggregate counters come from the `get_admin_alert_stats` RPC, which re-checks the allowlist on the server. The page is `noindex` and is not part of the sitemap.
 
-The account page saves favorite stores/product types, theme, price alert rules, and pause state. Push notifications are delivered by OneSignal: permission is requested only after the user enables alerts and confirms the contents, `pwa.js` initializes the OneSignal SDK (App ID in `pwa.js`), and `service-worker.js` loads the OneSignal worker instead of handling push itself.
+The account page saves favorite stores/product types, display name, theme, price alert rules, Telegram linking, and pause state. Push notifications are delivered by OneSignal: permission is requested only after the user enables alerts and confirms the contents, `pwa.js` initializes the OneSignal SDK (App ID in `pwa.js`), and `service-worker.js` loads the OneSignal worker instead of handling push itself. Telegram price alerts use the bot webhook (`supabase/functions/telegram-webhook`) plus the GitHub sender below; link the bot from the alerts page or `/start` deep link.
 
-The daily workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs`. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY` and `ONESIGNAL_REST_API_KEY` (an OneSignal App API key starting with `os_v2_app_`, sent as `Authorization: Key ...`; legacy `Basic` REST keys are not supported), and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. The sender resolves the OneSignal App ID from `pwa.js`. The action reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Run it manually only after these settings and all SQL migrations are in place.
+The workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs` after each ingest workflow finishes (and supports manual runs). Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, and `ONESIGNAL_REST_API_KEY` (an OneSignal App API key starting with `os_v2_app_`, sent as `Authorization: Key ...`; legacy `Basic` REST keys are not supported), and set the Actions variable `SITE_URL` to the deployed HTTPS site URL. The sender resolves the OneSignal App ID from `pwa.js`. It reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Telegram messages use the same disclaimer and inline buttons as documented in `scripts/alerts/plan.mjs`. Run it manually only after these settings and all SQL migrations are in place.
 
 ## Scheduled source monitoring and production
 

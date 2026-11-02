@@ -4,6 +4,7 @@ import { MAX_SOURCE_AGE_MS, getVerifiedActiveOffers, saoPauloDate } from "./offe
 import { sendTelegramMessage, TelegramApiError } from "./telegram-client.mjs";
 import {
   buildAlertMessage,
+  buildTelegramDigestReplyMarkup,
   buildTelegramDigestText,
   buildTelegramReplyMarkup,
   buildTelegramText,
@@ -166,8 +167,9 @@ async function sendAlerts({
     const chatId = chatIdByUser.get(userId);
     if (!chatId) continue;
     const text = buildTelegramDigestText(offers, config.siteUrl);
+    const replyMarkup = buildTelegramDigestReplyMarkup(config.siteUrl);
     try {
-      await sendTelegramMessage(config.telegramToken, chatId, text, { linkPreview: false });
+      await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup, linkPreview: false });
       counts.digestsSent += 1;
     } catch (error) {
       const code = telegramErrorCode(error);

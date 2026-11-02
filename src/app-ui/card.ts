@@ -22,9 +22,7 @@ export function createOfferCard(offer: Offer): CardRefs {
   const notice = element("p", "offer-notice");
   const titleRow = element("div", "card-title");
   const name = element("h3");
-  const expiryFlag = element("span", "offer-expiry-flag");
-  expiryFlag.hidden = true;
-  titleRow.append(name, expiryFlag);
+  titleRow.append(name);
   const meta = element("div", "card-meta");
   const spec = element("span", "spec");
   meta.append(spec);
@@ -48,6 +46,8 @@ export function createOfferCard(offer: Offer): CardRefs {
   reactionGroup.append(favoriteReaction, like.button);
 
   const note = element("p", "offer-note");
+  const expiryFlag = element("span", "offer-expiry-flag");
+  expiryFlag.hidden = true;
   const source = element("div", "card-source");
   const { root: storeLogo, fallback: storeLogoFallback, img: storeLogoImg } = createOfferStoreLogo();
   const sourceLink = element("a");
@@ -58,7 +58,7 @@ export function createOfferCard(offer: Offer): CardRefs {
   share.type = "button";
   share.dataset.shareId = offer.id;
   share.append(shareIcon());
-  source.append(storeLogo, document.createTextNode(" · "), sourceLink, share);
+  source.append(storeLogo, document.createTextNode(" · "), sourceLink, expiryFlag, share);
 
   body.append(notice, titleRow, meta, info, priceRow, reactionGroup, note, source);
   root.append(visual, body);

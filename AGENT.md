@@ -76,7 +76,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings
 - `account.ts` — account, preferences, rules, and subscription logic
-- `src/account-page.ts`, `account-alerts.html` — account UI, including device/account push states
+- `src/account-page.ts`, `account.html` — account UI, including device/account push states
 - `push-state.js` — push UI state and failure-message mapping
 - `theme.ts` — theme persistence
 - `scripts/build-offer-feed.mjs` — feed generation

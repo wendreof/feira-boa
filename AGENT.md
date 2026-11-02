@@ -120,15 +120,10 @@ npm run send:price-alerts
 
 ## Token-saving workflow preferences
 
-This repo explicitly prefers a compact, low-noise agent style.
+This repo uses **Caveman Ultra** by default (see `.cursor/rules/caveman-ultra.mdc` — always applied in Cursor).
 
-- Use Caveman Ultra style for assistant responses: short, direct, no fluff.
+- Short, direct agent replies; minimal exploration; narrow validation.
 - Use RTK v0.50.0 when available and configured in the shell; if the global Codex hook is not available yet, use RTK directly when possible.
-- Keep searches and file reads precise and limited to the files needed for the task.
-- Prefer targeted reads and narrow line ranges over broad scans.
-- Show summaries, not huge logs, for long-running commands.
-- Avoid repeated context gathering and unrelated exploration.
-- Treat the build/test/test-run loop as the source of truth for validation.
 
 ### Practical RTK/Caveman workflow
 1. Define the exact task and the minimal file set.

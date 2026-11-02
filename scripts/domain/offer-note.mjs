@@ -64,7 +64,10 @@ export function extractBundleCodes(text, payHint = "") {
         if (pay) pushNote(formatBundleAmount(takeQty, takeUnit), formatBundleAmount(pay[1], pay[2]));
         return " ";
       })
-    .replace(/\s*\b(compre\s*\d+\s*unids?\b\.?\s*e\s*ganhe\b.*?\b\d+(?:[.,]\d+)?\s*l\b)\s*\d*/gi, (full, promo) => {
+    // Some Big Bom PDF text runs the promotion quantity into the following
+    // product (for example "SUKITA DE 2L1 Bebida Láctea"). Keep the promo
+    // as a note and discard the stray digit before the product name.
+    .replace(/\s*\b(compre\s*\d+\s*unids?\b\.?\s*e\s*ganhe\b.*?\b\d+(?:[.,]\d+)?\s*l)\s*\d*/gi, (full, promo) => {
       notes.push(promo.replace(/\s+/g, " ").trim());
       return " ";
     })

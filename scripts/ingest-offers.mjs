@@ -14,7 +14,7 @@ await mkdir(STATE_DIR, { recursive: true });
 const ADAPTERS = [
   { id: "sempre", name: "Sempre Vale", runner: extractSempreVale },
   { id: "bigbom", name: "Big Bom", runner: extractBigBom },
-  { id: "corso", name: "Supermercado Corso", runner: extractCorso },
+  { id: "corso", name: "Corso", runner: extractCorso },
   { id: "paguemenos", name: "Pague Menos", runner: extractPagueMenos },
   { id: "spasso", name: "Spasso Sabores", runner: extractSpasso },
 ];

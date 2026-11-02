@@ -42,6 +42,11 @@ const requiredFiles = [
   "icons/maskable-512.png",
   "icons/notification-96.png",
   "icons/badge-72.png",
+  "logos/semprevale.png",
+  "logos/bigbom.png",
+  "logos/paguemenos.png",
+  "logos/spasso.png",
+  "logos/corso.png",
 ];
 
 const failures = [];

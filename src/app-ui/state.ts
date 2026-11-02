@@ -17,10 +17,14 @@ export interface CardRefs {
   price: HTMLElement;
   oldPrice: HTMLElement;
   discount: HTMLElement;
+  sticker: HTMLElement;
   valid: HTMLElement;
+  expiryFlag: HTMLElement;
   notice: HTMLElement;
   note: HTMLElement;
-  branch: HTMLElement;
+  storeLogo: HTMLSpanElement;
+  storeLogoFallback: HTMLSpanElement;
+  storeLogoImg: HTMLImageElement;
   sourceLink: HTMLAnchorElement;
   share: HTMLButtonElement;
   favoriteButtons: HTMLButtonElement[];

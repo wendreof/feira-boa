@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatFeedUpdate, isActive, normalizeSearch } from "../src/view/format.ts";
+import { formatFeedUpdate, isActive, normalizeSearch, addCalendarDays, expiryHighlightLabel } from "../src/view/format.ts";
 
 test("feed update line falls back when the timestamp is invalid", () => {
   assert.equal(formatFeedUpdate("not a date"), "Atualização das ofertas indisponível");
@@ -18,4 +18,13 @@ test("offer is active on both validity boundaries and not outside them", () => {
   assert.equal(isActive(offer, "2026-10-25"), true);
   assert.equal(isActive(offer, "2026-10-21"), false);
   assert.equal(isActive(offer, "2026-10-26"), false);
+});
+
+test("expiry highlight flags today and tomorrow before the offer ends", () => {
+  const offer = { validFrom: "2026-10-20", validTo: "2026-10-25" };
+  assert.equal(addCalendarDays("2026-10-24", 1), "2026-10-25");
+  assert.equal(expiryHighlightLabel(offer, "2026-10-25"), "Último dia");
+  assert.equal(expiryHighlightLabel(offer, "2026-10-24"), "Expira amanhã");
+  assert.equal(expiryHighlightLabel(offer, "2026-10-23"), null);
+  assert.equal(expiryHighlightLabel(offer, "2026-10-26"), null);
 });

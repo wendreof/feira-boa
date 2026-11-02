@@ -6,10 +6,11 @@ import { fetchWithRetry } from "./http.mjs";
 import { parseDateRange } from "../domain/parsing.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const BIGBOM_STORE = {
   name: "Big Bom",
-  logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+  logo: logoUrlForStoreId("bigbom"),
   branch: "Vila Zanetti · São João",
   source: "Folheto oficial · São João da Boa Vista",
 };
@@ -28,7 +29,9 @@ export async function extractBigBom(customUrl = null) {
   const fullText = (await parser.getText()).text;
 
   // Extract dates
-  const dateMatch = fullText.match(/OFERTAS V[AÁ]LIDAS DE\s*([^\n\r]+)/i);
+  // The flyer often breaks its validity range across separate text lines, for
+  // example: "30 DE OUTUBRO A" then "02 DE NOVEMBRO DE 2026".
+  const dateMatch = fullText.match(/OFERTAS V[AÁ]LIDAS DE\s*([\s\S]{0,100}?\bDE\s+\d{4})/i);
   const validity = parseDateRange(dateMatch ? dateMatch[1] : "", 2026);
   if (!validity) throw new Error("Could not read the Big Bom flyer validity dates.");
 

@@ -44,3 +44,25 @@ export function todayInSaoPaulo(): string {
 export function isActive(offer: { validFrom: string; validTo: string }, today: string = todayInSaoPaulo()): boolean {
   return today >= offer.validFrom && today <= offer.validTo;
 }
+
+/** Soma dias a uma data AAAA-MM-DD (meio-dia UTC evita borda de fuso). */
+export function addCalendarDays(isoDate: string, days: number): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const anchor = new Date(Date.UTC(year, month - 1, day, 12));
+  anchor.setUTCDate(anchor.getUTCDate() + days);
+  return anchor.toISOString().slice(0, 10);
+}
+
+/**
+ * Rótulo curto quando a validade está perto do fim (oferta ainda ativa hoje).
+ * `null` quando não há destaque.
+ */
+export function expiryHighlightLabel(
+  offer: { validFrom: string; validTo: string },
+  today: string = todayInSaoPaulo(),
+): string | null {
+  if (!isActive(offer, today)) return null;
+  if (offer.validTo === addCalendarDays(today, 1)) return "Expira amanhã";
+  if (offer.validTo === today) return "Último dia";
+  return null;
+}

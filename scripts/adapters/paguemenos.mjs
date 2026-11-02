@@ -5,13 +5,14 @@ import { fetchWithRetry } from "./http.mjs";
 import { normalizeOfferPresentation } from "../domain/presentation.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const PAGUE_MENOS_URL = "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0";
 const PAGUE_MENOS_API_URL = "https://www.superpaguemenos.com.br/api/catalog_system/pub/products/search";
 const PAGUE_MENOS_COLLECTION_ID = "161";
 const PAGE_SIZE = 50;
 const MAX_PAGES = 40;
-const STORE_LOGO = "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png";
+const STORE_LOGO = logoUrlForStoreId("paguemenos");
 const STORE_BRANCH = "Loja 33 · Jardim Santo André";
 const STORE_SOURCE = "Ofertas online oficiais · Loja 33";
 const USER_AGENT = "FeiraBoaOfferIngest/1.1 (official public catalog API)";

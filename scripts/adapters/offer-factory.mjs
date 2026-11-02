@@ -1,4 +1,5 @@
 import { slugText } from "../../src/shared/text.mjs";
+import { logoUrlForStoreName } from "../../src/shared/store-logos.mjs";
 import { assignIcon } from "../domain/icons.mjs";
 
 export const DEFAULT_OFFER_TONE = "#edf4e9";
@@ -21,7 +22,7 @@ export function createOffer({ storeId, idKey, store, sourceUrl, product, validit
   const offer = {
     id: `${storeId}-${slugText(idKey)}`,
     store: store.name,
-    storeLogo: store.logo,
+    storeLogo: logoUrlForStoreName(store.name) ?? store.logo,
     branch: store.branch,
     name: product.name,
     detail: product.detail,

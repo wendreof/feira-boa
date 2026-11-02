@@ -22,7 +22,9 @@ export function createOfferCard(offer: Offer): CardRefs {
   const notice = element("p", "offer-notice");
   const titleRow = element("div", "card-title");
   const name = element("h3");
-  titleRow.append(name);
+  const expiryFlag = element("span", "offer-expiry-flag");
+  expiryFlag.hidden = true;
+  titleRow.append(name, expiryFlag);
   const meta = element("div", "card-meta");
   const spec = element("span", "spec");
   meta.append(spec);
@@ -35,9 +37,7 @@ export function createOfferCard(offer: Offer): CardRefs {
   priceBlock.append(price, discount, oldPrice);
   const valid = element("span", "valid-until", "Válido");
   const validStrong = element("strong");
-  const expiryFlag = element("span", "offer-expiry-flag");
-  expiryFlag.hidden = true;
-  valid.append(validStrong, expiryFlag);
+  valid.append(validStrong);
   priceRow.append(priceBlock, valid);
 
   const reactionGroup = element("div", "offer-reactions");
@@ -100,7 +100,7 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
   const expiryLabel = expiryHighlightLabel(offer);
   refs.expiryFlag.textContent = expiryLabel ?? "";
   refs.expiryFlag.hidden = !expiryLabel;
-  refs.expiryFlag.parentElement?.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
+  refs.valid.parentElement?.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-today", expiryLabel === "Último dia");
   if (expiryLabel) {

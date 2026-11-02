@@ -25,10 +25,10 @@ async function loadCatalog(): Promise<void> {
 async function loadPage(userId: string): Promise<void> {
   accountState.userId = userId;
   alertsState.userId = userId;
-  const [rules, preferences] = await Promise.all([loadAlertRules(userId), loadPreferences(userId)]);
+  const [rules, profile] = await Promise.all([loadAlertRules(userId), loadPreferences(userId)]);
   await Promise.all([loadCatalog(), loadChannels(userId)]);
   alertsState.rules = rules;
-  applyTheme(preferences.theme);
+  applyTheme(profile.preferences.theme);
   renderRules();
   renderSummary();
   setAlertsStatus("");

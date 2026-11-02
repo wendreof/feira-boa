@@ -5,7 +5,7 @@ import { applySourceFreshness } from "./source-freshness";
 import { bindThemeToggle } from "./theme";
 import { formatFeedUpdate } from "./view/format";
 import { favoritesToggle, feedRetry, feedStatus, mobileNavFavoritesLink, mobileNavOffersLink, navFavoritesLink, updatedLabel } from "./app-ui/dom";
-import { bindCompactTopbar, setAccountStatus } from "./app-ui/topbar";
+import { bindCompactTopbar, setAccountStatus, updateAccountControls } from "./app-ui/topbar";
 import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
 import { connectAccount, loadAccountApi, loadReactionsApi, saveThemePreference } from "./app-ui/account-sync";
@@ -67,6 +67,8 @@ function restoreAccountSession(): void {
         await connectAccount(user.id);
         return;
       }
+      document.documentElement.dataset.authBootstrap = "guest";
+      updateAccountControls();
       setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
       if (appState.favoriteOnly) {
         askForLogin(favoritesToggle, "favorite", () => {
@@ -84,6 +86,8 @@ function restoreAccountSession(): void {
     }
   })();
 }
+
+restoreAccountSession();
 
 (async function startApp(): Promise<void> {
   feedStatus.textContent = "Carregando ofertas…";
@@ -115,7 +119,6 @@ function restoreAccountSession(): void {
   updatedLabel.title = "Data da última atualização do catálogo de ofertas";
 
   loadReactionTotals();
-  restoreAccountSession();
 })().catch((error: unknown) => {
   console.error("Feira Boa could not load offers.", error);
   showFeedError();

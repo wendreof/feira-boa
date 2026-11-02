@@ -3,7 +3,7 @@ import { applyTheme } from "../theme";
 import { errorMessage } from "../errors";
 import { linkPushDeviceToUser } from "../push";
 import { renderOffers } from "./render";
-import { setAccountStatus, updateAccountControls, refreshTopbarAvatar } from "./topbar";
+import { setAccountStatus, updateAccountControls, refreshTopbarAvatar, primeTopbarAvatar } from "./topbar";
 
 function readGuestFavorites(): Set<string> {
   try {
@@ -51,9 +51,10 @@ export async function saveThemePreference(): Promise<void> {
 export async function connectAccount(userId: string): Promise<void> {
   appState.currentUserId = userId;
   updateAccountControls();
+  primeTopbarAvatar(userId);
   try {
     const api = await loadAccountApi();
-    const remotePreferences = await api.loadPreferences(userId);
+    const { preferences: remotePreferences, avatarPath } = await api.loadPreferences(userId);
     const guestFavorites = readGuestFavorites();
     appState.preferences = {
       ...remotePreferences,
@@ -78,7 +79,7 @@ export async function connectAccount(userId: string): Promise<void> {
     } catch (reactionError) {
       console.warn("Could not load saved offer reactions.", reactionError);
     }
-    void refreshTopbarAvatar(userId);
+    void refreshTopbarAvatar(userId, avatarPath);
     void linkPushDeviceToUser(userId);
     renderOffers();
     setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");

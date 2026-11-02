@@ -1,5 +1,12 @@
 import { supabase } from "./supabase-client";
 import { hideSpinner, showSpinner } from "./loading";
+import {
+  clearCachedAvatarPath,
+  readCachedAvatarPath,
+  writeCachedAvatarPath,
+} from "../scripts/domain/avatar-cache.mjs";
+
+export { readCachedAvatarPath, writeCachedAvatarPath, clearCachedAvatarPath };
 
 export const AVATAR_BUCKET = "avatars";
 export const AVATAR_MAX_BYTES = 2 * 1024 * 1024;
@@ -41,9 +48,29 @@ export function avatarUrl(path: string, sizePx?: number): string {
   return avatarBucket().getPublicUrl(path, options).data.publicUrl;
 }
 
+function preloadAvatarUrl(url: string): void {
+  if (typeof document === "undefined") return;
+  if (document.querySelector(`link[data-feira-avatar-preload="${CSS.escape(url)}"]`)) return;
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "image";
+  link.href = url;
+  link.setAttribute("data-feira-avatar-preload", url);
+  document.head.append(link);
+}
+
+function avatarImageIsLoaded(image: HTMLImageElement): boolean {
+  return image.complete && image.naturalWidth > 0;
+}
+
+function currentAvatarSrc(image: HTMLImageElement): string {
+  return image.currentSrc || image.src || "";
+}
+
 /**
- * Preenche a imagem no tamanho do lugar e mantém o spinner até ela carregar.
- * Se a CDN não servir a transformação, cai para o arquivo original.
+ * Preenche a imagem no tamanho do lugar. Mantém a foto anterior visível ao trocar
+ * de URL e só mostra spinner na primeira carga. Se a CDN não servir a transformação,
+ * cai para o arquivo original.
  */
 export function setAvatarImage(image: HTMLImageElement, path: string | null, sizePx: number): void {
   const host = image.parentElement;
@@ -58,9 +85,22 @@ export function setAvatarImage(image: HTMLImageElement, path: string | null, siz
 
   const sizedUrl = avatarUrl(path, sizePx);
   const fullUrl = avatarUrl(path);
+  preloadAvatarUrl(sizedUrl);
+  image.fetchPriority = "high";
+
+  const loadedSrc = currentAvatarSrc(image);
+  if ((loadedSrc === sizedUrl || loadedSrc === fullUrl) && avatarImageIsLoaded(image)) {
+    hideSpinner(host);
+    image.hidden = false;
+    return;
+  }
+
+  const hadVisibleImage = !image.hidden && avatarImageIsLoaded(image);
   let retriedFullSize = false;
-  image.hidden = true;
-  showSpinner(host);
+  if (!hadVisibleImage) {
+    image.hidden = true;
+    showSpinner(host);
+  }
   const settle = (visible: boolean): void => {
     image.onload = null;
     image.onerror = null;
@@ -71,13 +111,14 @@ export function setAvatarImage(image: HTMLImageElement, path: string | null, siz
   image.onerror = () => {
     if (!retriedFullSize) {
       retriedFullSize = true;
+      preloadAvatarUrl(fullUrl);
       image.src = fullUrl;
       return;
     }
-    settle(false);
+    settle(hadVisibleImage);
   };
   image.src = sizedUrl;
-  if (image.complete && image.naturalWidth > 0) settle(true);
+  if (avatarImageIsLoaded(image)) settle(true);
 }
 
 /** Caminho do arquivo no bucket; nulo quando a conta não tem foto. */
@@ -147,6 +188,7 @@ export async function uploadAvatar(userId: string, file: File, currentPath: stri
       console.warn("Could not remove the previous avatar file.", cleanupError);
     });
   }
+  writeCachedAvatarPath(userId, path, sessionStorage);
   return path;
 }
 
@@ -160,6 +202,7 @@ export async function removeAvatar(userId: string, currentPath: string | null): 
     .update({ avatar_path: null })
     .eq("user_id", userId);
   if (updateError) throw updateError;
+  writeCachedAvatarPath(userId, null, sessionStorage);
 }
 
 function isMissingObjectError(message: string): boolean {

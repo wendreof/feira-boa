@@ -33,10 +33,10 @@ export function pendingNotifications(matchedByUser, alreadySent) {
   return pending;
 }
 
-/** "2026-11-01" -> "2026/11/01" (yyyy/MM/dd). Valores fora do formato são devolvidos sem mudança. */
+/** "2026-11-01" -> "01/11/2026" (validade em mensagens). Valores fora do formato são devolvidos sem mudança. */
 export function formatIsoDate(value) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value ?? ""));
-  return match ? `${match[1]}/${match[2]}/${match[3]}` : String(value ?? "");
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : String(value ?? "");
 }
 
 /** "2026-11-01" -> "01/11". Valores fora do formato são devolvidos sem mudança. */

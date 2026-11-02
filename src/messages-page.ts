@@ -2,7 +2,7 @@ import { errorMessage, getCurrentUser, loadPreferences } from "./account";
 import { loadNotificationHistory, type NotificationEntry } from "./alerts";
 import { applyTheme } from "./theme";
 import type { Offer, OfferFeed } from "./types";
-import { failureHint, formatBrl, formatDateTime, notificationStatus } from "./shared/alert-rules.mjs";
+import { failureHint, formatBrl, formatCalendarDate, formatDateTime, notificationStatus } from "./shared/alert-rules.mjs";
 import { markMessagesSeen } from "./shared/notification-badge";
 
 const listElement = document.querySelector<HTMLUListElement>("#messages-list");
@@ -20,6 +20,12 @@ function messageTitle(entry: NotificationEntry, offer: Offer | undefined): strin
   return offer ? `${offer.store}: ${offer.name}` : "Oferta encerrada";
 }
 
+function formatStoredBody(body: string): string {
+  return body
+    .replace(/válida até (\d{4})\/(\d{2})\/(\d{2})/g, "válida até $3/$2/$1")
+    .replace(/válida até (\d{4})-(\d{2})-(\d{2})/g, "válida até $3/$2/$1");
+}
+
 function renderMessage(entry: NotificationEntry): HTMLLIElement {
   const offer = offersById.get(entry.offer_id);
   const status = notificationStatus(entry);
@@ -27,10 +33,8 @@ function renderMessage(entry: NotificationEntry): HTMLLIElement {
   const item = document.createElement("li");
   item.className = `message-item is-${status.key}`;
 
-  const details = document.createElement("details");
-  details.className = "message-details";
-
-  const summary = document.createElement("summary");
+  const head = document.createElement("div");
+  head.className = "message-head";
   const title = document.createElement("strong");
   title.textContent = messageTitle(entry, offer);
   const pill = document.createElement("span");
@@ -38,14 +42,14 @@ function renderMessage(entry: NotificationEntry): HTMLLIElement {
   pill.textContent = status.label;
   const when = document.createElement("small");
   when.textContent = formatDateTime(entry.sent_at);
-  summary.append(title, pill, when);
+  head.append(title, pill, when);
 
   const content = document.createElement("div");
   content.className = "message-content";
   if (entry.body) {
     const body = document.createElement("p");
     body.className = "message-body";
-    body.textContent = entry.body;
+    body.textContent = formatStoredBody(entry.body);
     content.append(body);
   } else {
     const missing = document.createElement("p");
@@ -56,7 +60,7 @@ function renderMessage(entry: NotificationEntry): HTMLLIElement {
   if (offer) {
     const detail = document.createElement("p");
     detail.className = "message-meta";
-    detail.textContent = `${offer.store} · ${formatBrl(offer.price)} · válida até ${offer.validTo}`;
+    detail.textContent = `${offer.store} · ${formatBrl(offer.price)} · válida até ${formatCalendarDate(offer.validTo)}`;
     content.append(detail);
     const link = document.createElement("a");
     link.className = "text-button";
@@ -71,8 +75,7 @@ function renderMessage(entry: NotificationEntry): HTMLLIElement {
     content.append(reason);
   }
 
-  details.append(summary, content);
-  item.append(details);
+  item.append(head, content);
   return item;
 }
 
@@ -103,12 +106,12 @@ async function loadCatalog(): Promise<void> {
 }
 
 async function loadPage(userId: string): Promise<void> {
-  const [entries, preferences] = await Promise.all([
+  const [entries, profile] = await Promise.all([
     loadNotificationHistory(userId),
     loadPreferences(userId),
     loadCatalog(),
   ]);
-  applyTheme(preferences.theme);
+  applyTheme(profile.preferences.theme);
   renderMessages(entries);
   setStatus("");
   // Abrir a lista marca tudo como lido; falha aqui não atrapalha a página.

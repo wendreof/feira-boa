@@ -4,17 +4,25 @@ import { normalizeOfferPresentation } from "../domain/presentation.mjs";
 import { applyPublishedLogos } from "../domain/store-logos.mjs";
 
 /**
- * Snapshots válidos são os que trazem loja e ao menos uma oferta.
+ * Indexa snapshots que trazem metadados da loja (com ou sem ofertas transcritas).
  * @returns {Map<string, any>} snapshots indexados por storeId (ou nome da loja)
  */
 export function indexSnapshots(snapshots) {
   const byStore = new Map();
   for (const snapshot of snapshots) {
-    if (snapshot?.store && Array.isArray(snapshot.offers) && snapshot.offers.length > 0) {
+    if (snapshot?.store) {
       byStore.set(snapshot.storeId || snapshot.store.name, snapshot);
     }
   }
   return byStore;
+}
+
+function publishStore(snapshot) {
+  const published = { ...snapshot.store };
+  if (Array.isArray(snapshot.flyerImages) && snapshot.flyerImages.length > 0) {
+    published.flyerImages = snapshot.flyerImages;
+  }
+  return published;
 }
 
 function latestFetchedAt(snapshots, fallbackUpdatedAt) {
@@ -72,9 +80,8 @@ export function assembleFeed({ fallbackStores, fallbackOffers, fallbackUpdatedAt
   for (const storeName of storeNames) {
     const snapshot = findSnapshot(snapshotsByStore, storeName);
     if (snapshot) {
-      // A loja continua visível mesmo que o snapshot traga poucas ofertas.
-      storeMap.set(snapshot.store.name, snapshot.store);
-      rawOffers.push(...snapshot.offers);
+      storeMap.set(snapshot.store.name, publishStore(snapshot));
+      rawOffers.push(...(snapshot.offers ?? []));
     } else if (fallbackByStore.has(storeName)) {
       if (hasSnapshots) missingSnapshotStores.push(storeName);
       else rawOffers.push(...fallbackByStore.get(storeName));

@@ -63,6 +63,14 @@ function startPendingPoll(onChange: () => void): void {
   }, PENDING_POLL_MS);
 }
 
+function channelErrorMessage(error: unknown): string {
+  const message = errorMessage(error);
+  if (/push service error|registration failed/i.test(message)) {
+    return "O navegador não conseguiu registrar push (serviço recusou). Atualize a página, confirme HTTPS e tente de novo. Em Chrome: Configurações → Privacidade → notificações permitidas para este site.";
+  }
+  return message;
+}
+
 function randomToken(): string {
   const bytes = new Uint8Array(24);
   crypto.getRandomValues(bytes);
@@ -124,6 +132,8 @@ const browserPush: ChannelImpl = {
       "A Feira Boa enviará alertas de preço que você criou, com produto, loja, preço e validade. Ativar neste navegador?",
     );
     if (!approved) return;
+    const prior = await getPushSubscription();
+    if (prior) await prior.unsubscribe().catch(() => undefined);
     const subscription = await subscribeToPush();
     await savePushSubscription(userId, subscription);
   },
@@ -283,7 +293,7 @@ async function runAction(action: string, channel: ChannelImpl, onChange: () => v
       setFeedback(`${channel.name} desconectado.`);
     }
   } catch (error) {
-    setFeedback(`Não foi possível concluir: ${errorMessage(error)}`, true);
+    setFeedback(`Não foi possível concluir: ${channelErrorMessage(error)}`, true);
   }
   renderChannels();
   onChange();

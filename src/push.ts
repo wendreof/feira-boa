@@ -8,14 +8,35 @@ function urlBase64ToUint8Array(base64: string): Uint8Array {
   return Uint8Array.from(raw, (character) => character.charCodeAt(0));
 }
 
+let registrationTask: Promise<ServiceWorkerRegistration> | null = null;
+
 export function isPushConfigured(): boolean {
   return VAPID_PUBLIC_KEY.length > 0;
 }
 
+async function ensureServiceWorkerRegistration(): Promise<ServiceWorkerRegistration> {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+    throw new Error("Este navegador não suporta notificações push.");
+  }
+  if (!registrationTask) {
+    registrationTask = (async () => {
+      let registration = await navigator.serviceWorker.getRegistration("/");
+      if (!registration) {
+        registration = await navigator.serviceWorker.register("/service-worker.js", {
+          scope: "/",
+          updateViaCache: "none",
+        });
+      }
+      await navigator.serviceWorker.ready;
+      return registration;
+    })();
+  }
+  return registrationTask;
+}
+
 export async function getServiceWorkerRegistration(): Promise<ServiceWorkerRegistration | null> {
-  if (!("serviceWorker" in navigator) || !("PushManager" in window)) return null;
   try {
-    return await navigator.serviceWorker.ready;
+    return await ensureServiceWorkerRegistration();
   } catch {
     return null;
   }
@@ -27,26 +48,37 @@ export async function getPushSubscription(): Promise<PushSubscription | null> {
   return registration.pushManager.getSubscription();
 }
 
+async function subscribeWithVapid(registration: ServiceWorkerRegistration): Promise<PushSubscription> {
+  return registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as BufferSource,
+  });
+}
+
 export async function subscribeToPush(): Promise<PushSubscription> {
   if (!isPushConfigured()) {
     throw new Error("Notificações do navegador ainda não estão disponíveis neste site.");
   }
-  const registration = await getServiceWorkerRegistration();
-  if (!registration) {
-    throw new Error("Este navegador não suporta notificações push.");
-  }
+  const registration = await ensureServiceWorkerRegistration();
   const permission = await Notification.requestPermission();
   if (permission !== "granted") {
     throw new Error(permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
   }
-  let subscription = await registration.pushManager.getSubscription();
-  if (!subscription) {
-    subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as BufferSource,
-    });
+
+  const existing = await registration.pushManager.getSubscription();
+  if (existing) return existing;
+
+  try {
+    return await subscribeWithVapid(registration);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (/push service error|invalid key|registration failed/i.test(message)) {
+      const stale = await registration.pushManager.getSubscription();
+      if (stale) await stale.unsubscribe().catch(() => undefined);
+      return subscribeWithVapid(registration);
+    }
+    throw error;
   }
-  return subscription;
 }
 
 export async function unsubscribeFromPush(): Promise<void> {

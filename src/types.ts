@@ -37,6 +37,14 @@ export interface OfferFeed {
   updatedAt: string;
   stores: OfferSource[];
   offers: Offer[];
+  archivedCampaigns?: ArchivedCampaign[];
+}
+
+export interface ArchivedCampaign {
+  storeId: string;
+  store: OfferSource;
+  supersededAt: string | null;
+  offers: Offer[];
 }
 
 export interface ProfilePreferences {

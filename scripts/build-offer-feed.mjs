@@ -1,7 +1,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { assembleFeed } from "./feed/assemble-feed.mjs";
 import { createBuildInfo } from "./feed/build-info.mjs";
-import { loadFallbackCatalog, loadSnapshots } from "./feed/load-sources.mjs";
+import { loadFallbackCatalog, loadPreviousSnapshots, loadSnapshots } from "./feed/load-sources.mjs";
 import { validateFeed } from "./feed/validate-feed.mjs";
 
 const fallback = await loadFallbackCatalog();
@@ -10,6 +10,7 @@ const { feed, warnings } = assembleFeed({
   fallbackOffers: fallback.offers,
   fallbackUpdatedAt: fallback.offersUpdatedAt,
   snapshots: await loadSnapshots(),
+  previousSnapshots: await loadPreviousSnapshots(),
 });
 
 if (warnings.missingSnapshotStores.length > 0) {

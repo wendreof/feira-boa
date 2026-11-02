@@ -1,6 +1,7 @@
 import { assignIcon } from "../domain/icons.mjs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
 import { normalizeOfferPresentation } from "../domain/presentation.mjs";
+import { ARCHIVE_OFFER_CAP, archivedOfferId } from "../domain/snapshot-campaign.mjs";
 import { applyPublishedLogos } from "../domain/store-logos.mjs";
 
 /**
@@ -56,6 +57,32 @@ function publishOffer(offer) {
   return published;
 }
 
+function publishArchivedCampaigns(previousSnapshots) {
+  const archivedCampaigns = [];
+  for (const snapshot of previousSnapshots) {
+    if (!snapshot?.store || !Array.isArray(snapshot.offers) || snapshot.offers.length === 0) continue;
+    const storeId = snapshot.storeId || snapshot.store.name;
+    const publishedOffers = [];
+    for (const offer of snapshot.offers.slice(0, ARCHIVE_OFFER_CAP)) {
+      const published = publishOffer({ ...offer, id: archivedOfferId(storeId, offer.id) });
+      if (published) publishedOffers.push(published);
+    }
+    if (publishedOffers.length === 0) continue;
+    const { offers: logoOffers } = applyPublishedLogos({
+      stores: [publishStore(snapshot)],
+      offers: publishedOffers,
+      snapshotsByStore: new Map([[storeId, snapshot]]),
+    });
+    archivedCampaigns.push({
+      storeId,
+      store: publishStore(snapshot),
+      supersededAt: snapshot.supersededAt || snapshot.fetchedAt || null,
+      offers: logoOffers,
+    });
+  }
+  return archivedCampaigns;
+}
+
 /**
  * Monta o feed publicado. Snapshots das lojas têm prioridade; o catálogo
  * curado (`fallback`) só entra quando nenhum snapshot existe, para não misturar
@@ -64,9 +91,9 @@ function publishOffer(offer) {
  * Função pura: não lê nem escreve arquivos.
  */
 /**
- * @param {{ fallbackStores: any[], fallbackOffers: any[], fallbackUpdatedAt: string, snapshots: any[] }} input
+ * @param {{ fallbackStores: any[], fallbackOffers: any[], fallbackUpdatedAt: string, snapshots: any[], previousSnapshots?: any[] }} input
  */
-export function assembleFeed({ fallbackStores, fallbackOffers, fallbackUpdatedAt, snapshots }) {
+export function assembleFeed({ fallbackStores, fallbackOffers, fallbackUpdatedAt, snapshots, previousSnapshots = [] }) {
   const snapshotsByStore = indexSnapshots(snapshots);
   const hasSnapshots = snapshotsByStore.size > 0;
   const updatedAt = latestFetchedAt([...snapshotsByStore.values()], fallbackUpdatedAt);
@@ -102,8 +129,16 @@ export function assembleFeed({ fallbackStores, fallbackOffers, fallbackUpdatedAt
     snapshotsByStore,
   });
 
+  const archivedCampaigns = publishArchivedCampaigns(previousSnapshots);
+
   return {
-    feed: { schemaVersion: 1, updatedAt, stores: publishedStores, offers: publishedOffers },
+    feed: {
+      schemaVersion: 1,
+      updatedAt,
+      stores: publishedStores,
+      offers: publishedOffers,
+      archivedCampaigns,
+    },
     warnings: { missingSnapshotStores, droppedOffers },
   };
 }

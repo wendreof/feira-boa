@@ -1,13 +1,77 @@
 import { TAXONOMY_GROUPS, discountRatio } from "../catalog-taxonomy.mjs";
 import { appState } from "./state";
 import { createOfferCard, updateOfferCard } from "./card";
-import { feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink, resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount } from "./dom";
+import {
+  feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink,
+  resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount,
+  archiveSection, archiveSubtitle, archiveGrid,
+} from "./dom";
 import { getPriceBounds } from "./filters";
-import { money, isActive, todayInSaoPaulo } from "../view/format";
+import { money, isActive, todayInSaoPaulo, dateLabel } from "../view/format";
 import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./offer-model";
+import type { Offer } from "../types";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
+}
+
+function matchesArchivedFilters(offer: Offer, today: string, min: number | null, max: number | null): boolean {
+  const category = offerCategory(offer);
+  return (appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore)
+    && matchesSector(category)
+    && (!appState.activeProductType || category.subcategory === appState.activeProductType)
+    && (min === null || offer.price >= min)
+    && (max === null || offer.price <= max)
+    && matchesSearch(offer, input.value)
+    && offer.validTo < today;
+}
+
+function renderArchivedOffers(today: string, min: number | null, max: number | null): void {
+  const hideArchive = Boolean(appState.sharedOfferId) || appState.favoriteOnly || sortSelect.value === "top-rated";
+  if (hideArchive) {
+    archiveSection.hidden = true;
+    archiveGrid.replaceChildren();
+    for (const [id, card] of appState.archivedCards) {
+      card.root.remove();
+      appState.archivedCards.delete(id);
+    }
+    return;
+  }
+
+  const matching = appState.archivedCampaigns.flatMap((campaign) => campaign.offers.filter((offer) => matchesArchivedFilters(offer, today, min, max)));
+  if (matching.length === 0) {
+    archiveSection.hidden = true;
+    archiveGrid.replaceChildren();
+    for (const [id, card] of appState.archivedCards) {
+      card.root.remove();
+      appState.archivedCards.delete(id);
+    }
+    return;
+  }
+
+  archiveSection.hidden = false;
+  const storeNames = [...new Set(matching.map((offer) => offer.store))];
+  const periodHints = appState.archivedCampaigns
+    .filter((campaign) => matching.some((offer) => offer.store === campaign.store.name))
+    .map((campaign) => `${campaign.store.name} · até ${dateLabel(campaign.store.to)}`);
+  archiveSubtitle.textContent = `${matching.length} ${matching.length === 1 ? "oferta encerrada" : "ofertas encerradas"}${storeNames.length === 1 ? "" : ` · ${storeNames.length} lojas`}${periodHints.length === 1 ? ` · ${periodHints[0]}` : ""}`;
+
+  const matchingIds = new Set(matching.map((offer) => offer.id));
+  for (const [id, card] of appState.archivedCards) {
+    if (!matchingIds.has(id)) {
+      card.root.remove();
+      appState.archivedCards.delete(id);
+    }
+  }
+  for (const offer of matching) {
+    let card = appState.archivedCards.get(offer.id);
+    if (!card) {
+      card = createOfferCard(offer, { archived: true });
+      appState.archivedCards.set(offer.id, card);
+    }
+    updateOfferCard(card, offer);
+    archiveGrid.append(card.root);
+  }
 }
 
 export function renderOffers(): void {
@@ -59,6 +123,8 @@ export function renderOffers(): void {
   }
   if (matching.length === 0) grid.replaceChildren();
   if (focused?.isConnected) focused.focus({ preventScroll: true });
+
+  renderArchivedOffers(today, priceRangeReversed ? null : min, priceRangeReversed ? null : max);
 
   feedStatus.hidden = true;
   feedRetry.hidden = true;

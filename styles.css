@@ -1057,4 +1057,16 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .topbar .searchbox{flex:1 1 0;min-width:0;width:auto}
   .topbar .searchbox input{width:100%;min-width:0}
 }
+.archive-results{margin-top:28px;padding-top:8px;border-top:1px dashed var(--line)}
+.archive-panel{border:0}
+.archive-summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:8px 0}
+.archive-summary::-webkit-details-marker{display:none}
+.archive-summary-title{font:800 18px 'Manrope',sans-serif;letter-spacing:-.4px}
+.archive-summary-hint{color:var(--muted);font-size:13px}
+.archive-note{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.45}
+.offer-card.is-archived{filter:grayscale(1);opacity:.9}
+.offer-card.is-archived .offer-sticker-archived{background:#5f6d63;color:#fff}
+.offer-card.is-archived .price,.offer-card.is-archived .product-art{opacity:.95}
+:root[data-theme="dark"] .offer-card.is-archived{opacity:.78}
+:root[data-theme="dark"] .offer-card.is-archived .offer-sticker-archived{background:#4a524c}
 .sidebar-link .nav-badge{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#b34747;color:#fff;font:800 11px/22px 'DM Sans',sans-serif;text-align:center;box-shadow:0 0 0 2px var(--topbar-bg,#fff)}

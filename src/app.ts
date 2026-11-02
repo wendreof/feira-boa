@@ -26,8 +26,14 @@ function showFeedError(): void {
 function initializeState(feed: OfferFeed): void {
   const params = new URLSearchParams(window.location.search);
   appState.offers = feed.offers;
+  appState.archivedCampaigns = feed.archivedCampaigns ?? [];
   appState.storeNames = ["Todas as lojas", ...new Set(feed.offers.map((offer) => offer.store))];
   appState.categories = new Map(feed.offers.map((offer) => [offer.id, resolveCategory(offer)]));
+  for (const campaign of appState.archivedCampaigns) {
+    for (const offer of campaign.offers) {
+      appState.categories.set(offer.id, resolveCategory(offer));
+    }
+  }
   appState.favoriteOnly = params.get("view") === "favorites";
   appState.viewMode = readViewMode();
   appState.sharedOfferId = params.get("offer");

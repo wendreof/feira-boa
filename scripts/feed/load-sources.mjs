@@ -50,3 +50,25 @@ export async function loadSnapshots() {
   }
   return snapshots;
 }
+
+/**
+ * Lê o encarte anterior de cada loja em state/previous/.
+ */
+export async function loadPreviousSnapshots() {
+  const previousDir = new URL("state/previous/", ROOT);
+  let files;
+  try {
+    files = await readdir(previousDir);
+  } catch {
+    return [];
+  }
+  const snapshots = [];
+  for (const file of files.filter((name) => name.endsWith(".json"))) {
+    try {
+      snapshots.push(JSON.parse(await readFile(new URL(file, previousDir), "utf8")));
+    } catch {
+      // Ignora arquivo inválido.
+    }
+  }
+  return snapshots;
+}

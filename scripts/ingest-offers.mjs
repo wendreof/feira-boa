@@ -6,10 +6,13 @@ import { extractSempreVale } from "./adapters/semprevale.mjs";
 import { extractPagueMenos } from "./adapters/paguemenos.mjs";
 import { extractSpasso } from "./adapters/spasso.mjs";
 import { extractCorso } from "./adapters/corso.mjs";
+import { snapshotCampaignChanged } from "./domain/snapshot-campaign.mjs";
 import { validateSnapshot } from "./domain/validation.mjs";
 
 const STATE_DIR = new URL("../state/", import.meta.url);
+const PREVIOUS_DIR = new URL("../state/previous/", import.meta.url);
 await mkdir(STATE_DIR, { recursive: true });
+await mkdir(PREVIOUS_DIR, { recursive: true });
 
 const ADAPTERS = [
   { id: "sempre", name: "Sempre Vale", runner: extractSempreVale },
@@ -34,6 +37,12 @@ async function saveSnapshot(storeId, snapshot) {
   await writeFile(fileUrl, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8");
 }
 
+async function savePreviousSnapshot(storeId, snapshot) {
+  const payload = { ...snapshot, supersededAt: new Date().toISOString() };
+  const fileUrl = new URL(`../state/previous/${storeId}.json`, import.meta.url);
+  await writeFile(fileUrl, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
+}
+
 async function ingestAll() {
   console.log("Starting automatic offer ingestion for all stores...");
   const results = [];
@@ -45,6 +54,9 @@ async function ingestAll() {
       const snapshot = await runner();
 
       if (snapshot.offers.length > 0 && validateSnapshot(snapshot)) {
+        if (existing?.offers?.length > 0 && snapshotCampaignChanged(existing, snapshot)) {
+          await savePreviousSnapshot(id, existing);
+        }
         await saveSnapshot(id, snapshot);
         console.log(`[${name}] OK: Extracted ${snapshot.offers.length} offers (valid ${snapshot.store.from} to ${snapshot.store.to}).`);
         results.push({ id, name, status: "updated", count: snapshot.offers.length });

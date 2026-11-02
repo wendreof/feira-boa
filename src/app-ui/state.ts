@@ -1,4 +1,4 @@
-import type { Offer, ProfilePreferences } from "../types";
+import type { ArchivedCampaign, Offer, ProfilePreferences } from "../types";
 import type { ThemePreference } from "../theme";
 import type { OfferReaction } from "../offer-reactions";
 
@@ -35,6 +35,7 @@ export interface CardRefs {
 /** Estado da página de ofertas, compartilhado pelos módulos de app-ui. */
 export const appState: {
   offers: Offer[];
+  archivedCampaigns: ArchivedCampaign[];
   storeNames: string[];
   categories: Map<string, { groupId: string; subcategory: string }>;
   activeDepartment: string;
@@ -53,8 +54,10 @@ export const appState: {
   accountApi: AccountApi | null;
   reactionsApi: ReactionsApi | null;
   cards: Map<string, CardRefs>;
+  archivedCards: Map<string, CardRefs>;
 } = {
   offers: [],
+  archivedCampaigns: [],
   storeNames: [],
   categories: new Map(),
   activeDepartment: "",
@@ -73,4 +76,5 @@ export const appState: {
   accountApi: null,
   reactionsApi: null,
   cards: new Map(),
+  archivedCards: new Map(),
 };

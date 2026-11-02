@@ -2,7 +2,7 @@ name: Sync Telegram links
 
 on:
   schedule:
-    # Backup de vínculo quando o webhook falhar; com webhook ativo, getUpdates fica vazio.
+    # Backup de vínculo quando o webhook falhar; com webhook ativo, getUpdates retorna 409 e o job termina ok.
     - cron: "*/1 * * * *"
   workflow_dispatch:
 

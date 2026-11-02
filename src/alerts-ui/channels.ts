@@ -22,6 +22,8 @@ interface ChannelImpl {
   connect(userId: string): Promise<void>;
   disconnect(userId: string): Promise<void>;
   waitingHint?: string;
+  /** Texto fixo de compatibilidade (ex.: navegadores). */
+  supportHint?: string;
 }
 
 interface ChannelStatus {
@@ -114,6 +116,7 @@ const browserPush: ChannelImpl = {
   id: "push",
   name: "Navegador",
   description: "Receba avisos de preço como notificação neste dispositivo (gratuito).",
+  supportHint: "Recomendado: Chrome ou Edge. O Brave pode bloquear notificações — use o Telegram nesse caso.",
   available: () => isPushConfigured() && "Notification" in window && "serviceWorker" in navigator,
   async load(userId) {
     const local = await getPushSubscription();
@@ -245,7 +248,14 @@ function renderChannel(channel: ChannelImpl): HTMLLIElement {
     actions.append(actionButton("Conectar", "connect", channel.id));
   }
 
-  item.append(head, description, actions);
+  item.append(head, description);
+  if (channel.supportHint && channel.available()) {
+    const support = document.createElement("p");
+    support.className = "channel-hint";
+    support.textContent = channel.supportHint;
+    item.append(support);
+  }
+  item.append(actions);
   return item;
 }
 

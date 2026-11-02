@@ -91,7 +91,9 @@ test("partitionTelegramDelivery caps per user and builds digest list", () => {
   assert.equal(immediate.length, 3);
   assert.equal(digests.length, 1);
   assert.equal(digests[0].offers.length, 1);
+  assert.equal(digests[0].offers[0].name, "Arroz Tipo 1");
   assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /alertas\.html/);
+  assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /Arroz Tipo 1/);
 });
 
 test("expiryHighlightForAlerts flags tomorrow", () => {

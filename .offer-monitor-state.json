@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-11-02T03:41:17.223Z",
-    "last_success_at": "2026-11-02T03:41:17.223Z",
+    "checked_at": "2026-11-02T03:46:07.075Z",
+    "last_success_at": "2026-11-02T03:46:07.075Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-02T03:41:19.567Z",
-    "last_success_at": "2026-11-02T03:41:19.567Z",
+    "checked_at": "2026-11-02T03:46:08.662Z",
+    "last_success_at": "2026-11-02T03:46:08.662Z",
     "last_error": null,
     "needs_review": true
   },
@@ -40,8 +40,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-02T03:41:20.942Z",
-    "last_success_at": "2026-11-02T03:41:20.942Z",
+    "checked_at": "2026-11-02T03:46:09.541Z",
+    "last_success_at": "2026-11-02T03:46:09.541Z",
     "last_error": null,
     "needs_review": false
   },
@@ -55,8 +55,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf",
-    "checked_at": "2026-11-02T03:41:21.324Z",
-    "last_success_at": "2026-11-02T03:41:21.324Z",
+    "checked_at": "2026-11-02T03:46:09.605Z",
+    "last_success_at": "2026-11-02T03:46:09.605Z",
     "last_error": null,
     "needs_review": false
   },
@@ -70,8 +70,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-02T03:41:23.588Z",
-    "last_success_at": "2026-11-02T03:41:23.588Z",
+    "checked_at": "2026-11-02T03:46:11.909Z",
+    "last_success_at": "2026-11-02T03:46:11.909Z",
     "last_error": null,
     "needs_review": true
   }

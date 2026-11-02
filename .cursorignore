@@ -1,0 +1,32 @@
+# Copy this file to the repo root as `.cursorignore` (same syntax as .gitignore).
+# Cursor uses it to skip indexing huge/generated paths and save tokens.
+
+# Generated feed and snapshots
+offers.json
+snapshot-manifest.json
+build-info.json
+state/
+
+# esbuild bundles and generated JS at repo root
+app.js
+stores.js
+login.js
+account.js
+suggestions.js
+admin.js
+alerts.js
+messages.js
+site-footer.js
+login-gate.js
+notification-badge.js
+offers-jsonld.js
+source-status.js
+
+node_modules/
+.playwright-mcp/
+tmp/
+tmp-logos/
+dist/
+
+social-card.png
+icons/

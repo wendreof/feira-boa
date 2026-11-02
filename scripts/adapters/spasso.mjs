@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { fetchWithRetry } from "./http.mjs";
+import { filterSpassoFlyerImages } from "./spasso-flyer-images.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
@@ -11,8 +12,9 @@ export async function extractSpasso(customUrl = null) {
   if (!res.ok) throw new Error(`Could not fetch Spasso page (${res.status})`);
   const html = await res.text();
 
-  // Extract images
-  const images = [...html.matchAll(/src=["'](https:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.png)["']/gi)].map(m => m[1]);
+  const images = filterSpassoFlyerImages(
+    [...html.matchAll(/src=["'](https:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.png)["']/gi)].map((m) => m[1]),
+  );
 
   // Read existing snapshot if available to retain still-valid curated items
   let existingOffers = [];
@@ -53,7 +55,7 @@ export async function extractSpasso(customUrl = null) {
     },
     fetchedAt: new Date().toISOString(),
     sourceUrl: pageUrl,
-    flyerImages: images.slice(0, 4),
+    flyerImages: images.slice(0, 6),
     offers: existingOffers,
     status: existingOffers.length > 0 ? "ok" : "image_flyer_pending_transcription",
   };

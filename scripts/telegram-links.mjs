@@ -3,10 +3,20 @@
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { buildTelegramBotCopy, processTelegramUpdates } from "./domain/telegram-updates.mjs";
-import { getTelegramUpdates, sendTelegramMessage } from "./telegram-client.mjs";
+import { getTelegramUpdates, sendTelegramMessage, TelegramApiError } from "./telegram-client.mjs";
+
+const EMPTY_COUNTS = { updates: 0, linked: 0, expired: 0, help: 0, command: 0, ignored: 0 };
 
 export async function syncTelegramLinks({ supabase, token, siteUrl, botUsername, now = new Date() }) {
-  const updates = await getTelegramUpdates(token);
+  let updates;
+  try {
+    updates = await getTelegramUpdates(token);
+  } catch (error) {
+    if (error instanceof TelegramApiError && error.telegramStatus === 409) {
+      return { ...EMPTY_COUNTS, mode: "webhook_active" };
+    }
+    throw error;
+  }
   const copy = buildTelegramBotCopy(siteUrl, botUsername);
   const counts = await processTelegramUpdates(updates, {
     supabase,
@@ -37,6 +47,9 @@ async function main() {
     siteUrl,
     botUsername: process.env.TELEGRAM_BOT_USERNAME ?? "",
   });
+  if (counts.mode === "webhook_active") {
+    console.log("Webhook ativo no Telegram; getUpdates ignorado (backup desnecessário).");
+  }
   console.log(JSON.stringify(counts));
 }
 

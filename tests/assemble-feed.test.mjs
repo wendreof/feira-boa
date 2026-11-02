@@ -46,11 +46,19 @@ test("drops offers whose name is emptied by cleaning and reports them", () => {
   assert.deepEqual(warnings.droppedOffers, ["a-frag"]);
 });
 
-test("ignores snapshots without offers", () => {
-  const snapshots = [{ storeId: "alpha", store: store("Alpha"), fetchedAt: "2026-10-30T00:00:00.000Z", offers: [] }];
-  const { feed } = assembleFeed({
+test("metadata-only snapshots publish the store and skip fallback offers", () => {
+  const snapshots = [{
+    storeId: "alpha",
+    store: store("Alpha"),
+    fetchedAt: "2026-10-30T00:00:00.000Z",
+    offers: [],
+    flyerImages: ["https://alpha.test/flyer.png"],
+  }];
+  const { feed, warnings } = assembleFeed({
     fallbackStores, fallbackOffers, fallbackUpdatedAt: "2026-10-22T00:00:00.000Z", snapshots,
   });
-  assert.equal(feed.updatedAt, "2026-10-22T00:00:00.000Z");
-  assert.deepEqual(feed.offers.map((o) => o.id).sort(), ["a-1", "b-1"]);
+  assert.equal(feed.updatedAt, "2026-10-30T00:00:00.000Z");
+  assert.deepEqual(feed.offers.map((o) => o.id), []);
+  assert.deepEqual(warnings.missingSnapshotStores, ["Beta"]);
+  assert.deepEqual(feed.stores.find((entry) => entry.name === "Alpha")?.flyerImages, ["https://alpha.test/flyer.png"]);
 });

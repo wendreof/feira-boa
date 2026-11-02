@@ -30,6 +30,7 @@ const requiredFiles = [
   "alerts.js",
   "messages.js",
   "offers.json",
+  "snapshot-manifest.json",
   "build-info.json",
   "service-worker.js",
   "manifest.webmanifest",

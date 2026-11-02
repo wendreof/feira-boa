@@ -703,6 +703,13 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 .admin-stat-note{color:var(--muted);font-size:10.5px}
 .preferences-section h3{margin:16px 0 8px;font:800 13px 'Manrope',sans-serif;color:var(--ink)}
 :root[data-theme="dark"] .admin-stat{background:#1b241e}
+.admin-status-badge{display:inline-flex;align-items:center;width:fit-content;padding:3px 8px;border-radius:999px;font:800 10px 'DM Sans',sans-serif;letter-spacing:.3px;text-transform:uppercase}
+.admin-status-badge--ok{background:#e7f5ec;color:#155b3b}
+.admin-status-badge--review{background:#fff4df;color:#8a5a00}
+.admin-status-badge--error{background:#fdecec;color:#9b1c1c}
+.admin-status-badge--unknown{background:#eef1ed;color:#5f6d63}
+.admin-row-note{display:block;color:var(--muted);font-size:11px;line-height:1.4}
+.admin-source-row .source-copy,.admin-store-row .source-copy,.admin-snapshot-row .source-copy{gap:5px}
 
 .source-flag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#fff4e0;color:#8a6a2b;font-size:10px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
 :root[data-theme="dark"] .source-flag{background:#3a321e;color:#f0d89a}

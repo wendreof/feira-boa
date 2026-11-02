@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-02T15:30:12.503Z",
+  "current": [
+    {
+      "role": "current",
+      "storeId": "bigbom",
+      "storeName": "Big Bom",
+      "branch": "Vila Zanetti · São João",
+      "fetchedAt": "2026-11-02T15:28:36.828Z",
+      "supersededAt": null,
+      "offerCount": 80,
+      "status": "ok",
+      "validFrom": "2026-10-30",
+      "validTo": "2026-11-02",
+      "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf"
+    },
+    {
+      "role": "current",
+      "storeId": "corso",
+      "storeName": "Corso",
+      "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
+      "fetchedAt": "2026-11-02T15:28:36.977Z",
+      "supersededAt": null,
+      "offerCount": 121,
+      "status": "ok",
+      "validFrom": "2026-10-23",
+      "validTo": "2026-10-29",
+      "sourceUrl": "https://corso.com.br/jornalfrente.php"
+    },
+    {
+      "role": "current",
+      "storeId": "paguemenos",
+      "storeName": "Pague Menos",
+      "branch": "Loja 33 · Jardim Santo André",
+      "fetchedAt": "2026-11-02T15:29:20.897Z",
+      "supersededAt": null,
+      "offerCount": 1006,
+      "status": "ok",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-08",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "role": "current",
+      "storeId": "sempre",
+      "storeName": "Sempre Vale",
+      "branch": "Durval Nicolau",
+      "fetchedAt": "2026-11-02T15:28:36.078Z",
+      "supersededAt": null,
+      "offerCount": 72,
+      "status": "ok",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-04",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf"
+    },
+    {
+      "role": "current",
+      "storeId": "spasso",
+      "storeName": "Spasso Sabores",
+      "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
+      "fetchedAt": "2026-11-02T15:30:12.503Z",
+      "supersededAt": null,
+      "offerCount": 0,
+      "status": "image_flyer_pending_transcription",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-07",
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+    }
+  ],
+  "previous": [
+    {
+      "role": "previous",
+      "storeId": "sempre",
+      "storeName": "Sempre Vale",
+      "branch": "Durval Nicolau",
+      "fetchedAt": "2026-11-02T02:42:03.238Z",
+      "supersededAt": "2026-11-02T12:00:00.000Z",
+      "offerCount": 78,
+      "status": "ok",
+      "validFrom": "2026-10-29",
+      "validTo": "2026-11-01",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/00c3e7ff-26fb-41dd-a834-a9761e6c600f-campanha-577-crop-baixa(3).pdf"
+    }
+  ]
+}

@@ -43,6 +43,12 @@
       <p class="auth-description">Visão somente leitura do catálogo, das fontes oficiais e do resultado agregado dos alertas.</p>
       <p id="admin-status" class="account-status" role="status" aria-live="polite">Verificando acesso…</p>
 
+      <section class="preferences-section" aria-labelledby="admin-deploy-title" id="admin-deploy" hidden>
+        <h2 id="admin-deploy-title">Deploy publicado</h2>
+        <p class="preferences-help">Versão do site estática servida neste ambiente (build-info.json).</p>
+        <div class="admin-stat-grid" id="admin-deploy-stats"></div>
+      </section>
+
       <section class="preferences-section" aria-labelledby="admin-catalog-title" id="admin-catalog" hidden>
         <h2 id="admin-catalog-title">Catálogo de ofertas</h2>
         <div class="admin-stat-grid" id="admin-catalog-stats"></div>
@@ -50,9 +56,17 @@
         <div class="source-list" id="admin-stores"></div>
       </section>
 
+      <section class="preferences-section" aria-labelledby="admin-snapshots-title" id="admin-snapshots" hidden>
+        <h2 id="admin-snapshots-title">Ingestão (state/)</h2>
+        <p class="preferences-help">Resumo gerado a partir dos snapshots em <code>state/</code> e <code>state/previous/</code>.</p>
+        <div class="admin-stat-grid" id="admin-snapshot-stats"></div>
+        <div class="source-list" id="admin-snapshot-list"></div>
+      </section>
+
       <section class="preferences-section" aria-labelledby="admin-sources-title" id="admin-sources" hidden>
         <h2 id="admin-sources-title">Fontes oficiais</h2>
         <p class="preferences-help">Última verificação registrada pelo monitor de fontes.</p>
+        <div class="admin-stat-grid" id="admin-source-summary"></div>
         <div class="source-list" id="admin-source-list"></div>
       </section>
 

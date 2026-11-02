@@ -1,5 +1,12 @@
 import { supabase } from "./supabase-client";
 import type { OfferFeed } from "./types";
+import {
+  findSourceStatusForStore,
+  monitoredSourceUrlForStore,
+  sourceHealthLabel,
+  summarizeCatalog,
+  summarizeStoreCatalog,
+} from "../scripts/domain/admin-catalog-summary.mjs";
 
 interface AdminAccountStats {
   total_accounts: number;
@@ -22,11 +29,61 @@ interface AdminAlertStats {
   last_sent_at: string | null;
 }
 
+interface BuildInfo {
+  version: string;
+  build: number;
+  commit: string;
+  builtAt: string;
+  dirty: boolean;
+}
+
+interface SnapshotManifestEntry {
+  role: "current" | "previous";
+  storeId: string;
+  storeName: string;
+  branch: string;
+  fetchedAt: string | null;
+  supersededAt: string | null;
+  offerCount: number;
+  status: string;
+  validFrom: string;
+  validTo: string;
+  sourceUrl: string;
+}
+
+interface SnapshotManifest {
+  schemaVersion: number;
+  updatedAt: string;
+  current: SnapshotManifestEntry[];
+  previous: SnapshotManifestEntry[];
+}
+
+interface SourceStatus {
+  checkedAt?: string;
+  lastSuccessAt?: string;
+  error?: boolean;
+  needsReview?: boolean;
+  store?: string | null;
+  branch?: string | null;
+}
+
+declare global {
+  interface Window {
+    FEIRA_SOURCE_STATUS?: Record<string, SourceStatus>;
+  }
+}
+
 const status = document.querySelector<HTMLParagraphElement>("#admin-status")!;
+const deploySection = document.querySelector<HTMLElement>("#admin-deploy")!;
+const deployStats = document.querySelector<HTMLElement>("#admin-deploy-stats")!;
 const catalogSection = document.querySelector<HTMLElement>("#admin-catalog")!;
 const catalogStats = document.querySelector<HTMLElement>("#admin-catalog-stats")!;
 const storesList = document.querySelector<HTMLElement>("#admin-stores")!;
+const snapshotsSection = document.querySelector<HTMLElement>("#admin-snapshots")!;
+const snapshotStats = document.querySelector<HTMLElement>("#admin-snapshot-stats")!;
+const snapshotList = document.querySelector<HTMLElement>("#admin-snapshot-list")!;
 const sourcesSection = document.querySelector<HTMLElement>("#admin-sources")!;
+const sourceSummary = document.querySelector<HTMLElement>("#admin-source-summary")!;
 const sourceList = document.querySelector<HTMLElement>("#admin-source-list")!;
 const alertsSection = document.querySelector<HTMLElement>("#admin-alerts")!;
 const alertStats = document.querySelector<HTMLElement>("#admin-alert-stats")!;
@@ -66,14 +123,19 @@ function statCard(label: string, value: string, note?: string): HTMLElement {
   return card;
 }
 
-function sourceRow(store: string, branch: string, url: string, state: string, detail: string): HTMLElement {
-  const row = element("div", "store-source");
+function statusBadge(tone: string, label: string): HTMLElement {
+  return element("span", `admin-status-badge admin-status-badge--${tone}`, label);
+}
+
+function sourceRow(store: string, branch: string, url: string, tone: string, detail: string, badgeLabel: string): HTMLElement {
+  const row = element("div", "store-source admin-source-row");
   const copy = element("div", "source-copy");
   copy.append(
     element("span", "source-kicker", "FONTE OFICIAL"),
     element("strong", "", store),
     element("span", "", branch),
-    element("span", `source-freshness${state === "ok" ? "" : " source-freshness-warning"}`, detail),
+    statusBadge(tone, badgeLabel),
+    element("span", `source-freshness${tone === "ok" ? "" : " source-freshness-warning"}`, detail),
   );
   const link = document.createElement("a");
   link.className = "source-button";
@@ -85,61 +147,161 @@ function sourceRow(store: string, branch: string, url: string, state: string, de
   return row;
 }
 
+function storeCatalogRow(
+  storeName: string,
+  branch: string,
+  detail: string,
+  monitorTone: string,
+  monitorLabel: string,
+  url: string,
+  note?: string,
+): HTMLElement {
+  const row = element("div", "store-source admin-store-row");
+  const copy = element("div", "source-copy");
+  copy.append(
+    element("span", "source-kicker", "LOJA"),
+    element("strong", "", storeName),
+    element("span", "", branch),
+    statusBadge(monitorTone, monitorLabel),
+    element("span", "", detail),
+  );
+  if (note) copy.append(element("span", "admin-row-note", note));
+  const link = document.createElement("a");
+  link.className = "source-button";
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = "Abrir folheto ↗";
+  row.append(copy, link);
+  return row;
+}
+
+function snapshotRow(entry: SnapshotManifestEntry): HTMLElement {
+  const row = element("div", "store-source admin-snapshot-row");
+  const copy = element("div", "source-copy");
+  const roleLabel = entry.role === "previous" ? "Encarte anterior" : "Snapshot atual";
+  const timing = entry.role === "previous"
+    ? `Substituído em ${formatDateTime(entry.supersededAt)}`
+    : `Ingestão ${formatDateTime(entry.fetchedAt)}`;
+  copy.append(
+    element("span", "source-kicker", roleLabel.toUpperCase()),
+    element("strong", "", entry.storeName),
+    element("span", "", entry.branch),
+    statusBadge(entry.offerCount > 0 ? "ok" : "unknown", entry.status),
+    element("span", "", `${entry.offerCount} ofertas · válido ${formatDate(entry.validFrom)} – ${formatDate(entry.validTo)} · ${timing}`),
+  );
+  const link = document.createElement("a");
+  link.className = "source-button";
+  link.href = entry.sourceUrl;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = "Abrir fonte ↗";
+  row.append(copy, link);
+  return row;
+}
+
+async function loadDeploy(): Promise<void> {
+  const response = await fetch("build-info.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("build-info.json indisponível");
+  const info = await response.json() as BuildInfo;
+  deployStats.replaceChildren(
+    statCard("Versão", info.version, `Build #${info.build}`),
+    statCard("Commit", info.commit, info.dirty ? "Worktree sujo no build" : "Commit limpo"),
+    statCard("Gerado em", formatDateTime(info.builtAt), "Horário de São Paulo"),
+  );
+  deploySection.hidden = false;
+}
+
 async function loadCatalog(): Promise<void> {
   const response = await fetch("offers.json", { cache: "no-store" });
   if (!response.ok) throw new Error("Catálogo indisponível");
   const feed = await response.json() as OfferFeed;
   const today = todayInSaoPaulo();
-  const active = feed.offers.filter((offer) => today >= offer.validFrom && today <= offer.validTo);
+  const sourceStatus = window.FEIRA_SOURCE_STATUS ?? {};
+  const summary = summarizeCatalog(feed, today, sourceStatus);
 
   catalogStats.replaceChildren(
-    statCard("Ofertas no feed", String(feed.offers.length), `Atualizado em ${formatDateTime(feed.updatedAt)}`),
-    statCard("Ativas hoje", String(active.length), `Lojas monitoradas: ${feed.stores.length}`),
-    statCard("Fontes com alerta", String(Object.values(window.FEIRA_SOURCE_STATUS ?? {}).filter((source) => source.needsReview).length), "Precisam de conferência"),
+    statCard("Ofertas no feed", String(summary.totalOffers), `Feed atualizado ${formatDateTime(summary.updatedAt)}`),
+    statCard("Ativas hoje", String(summary.activeCount), `${summary.storeCount} lojas · ${summary.storesWithoutActive} sem oferta ativa`),
+    statCard("Encartes anteriores", String(summary.archivedOffers), `${summary.archivedCampaigns} loja(s) com histórico`),
+    statCard("Expiram hoje/amanhã", String(summary.expiringSoon), "Ofertas ainda ativas"),
+    statCard("Fontes em revisão", String(summary.sourcesNeedingReview), `${summary.sourcesWithErrors} com falha no monitor`),
   );
 
   const rows = feed.stores.map((store) => {
-    const storeOffers = active.filter((offer) => offer.store === store.name);
-    const window = storeOffers.length > 0
-      ? `${formatDate(storeOffers[0].validFrom)} – ${formatDate(storeOffers[0].validTo)}`
-      : "sem ofertas ativas";
-    const row = element("div", "store-source");
-    const copy = element("div", "source-copy");
-    copy.append(
-      element("span", "source-kicker", "LOJA"),
-      element("strong", "", store.name),
-      element("span", "", store.branch),
-      element("span", "", `${storeOffers.length} ofertas ativas · ${window}`),
-    );
-    const link = document.createElement("a");
-    link.className = "source-button";
-    link.href = store.sourceUrl;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = "Abrir folheto ↗";
-    row.append(copy, link);
-    return row;
+    const storeSummary = summarizeStoreCatalog(store, feed, today);
+    const monitor = findSourceStatusForStore(store.name, sourceStatus);
+    const health = sourceHealthLabel(monitor ?? {});
+    const monitoredUrl = monitoredSourceUrlForStore(store.name, sourceStatus);
+    const urlMismatch = monitoredUrl && monitoredUrl !== store.sourceUrl;
+    const window = storeSummary.activeCount > 0
+      ? `${formatDate(storeSummary.windowFrom)} – ${formatDate(storeSummary.windowTo)}`
+      : `sem ofertas ativas · folheto ${formatDate(storeSummary.windowFrom)} – ${formatDate(storeSummary.windowTo)}`;
+    const detail = `${storeSummary.activeCount} ativas · ${storeSummary.totalInFeed} no feed · ${storeSummary.archivedCount} no encarte anterior · ${window}`;
+    const note = urlMismatch
+      ? "URL do feed difere do monitor — rode ingest/monitor após conferir."
+      : storeSummary.archivedCount > 0
+        ? `Último encarte arquivado válido até ${storeSummary.archivedValidTo ? formatDate(storeSummary.archivedValidTo) : "—"}.`
+        : undefined;
+    return storeCatalogRow(store.name, store.branch, detail, health.tone, health.label, store.sourceUrl, note);
   });
   storesList.replaceChildren(...rows);
   catalogSection.hidden = false;
 }
 
+async function loadSnapshots(): Promise<void> {
+  const response = await fetch("snapshot-manifest.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("snapshot-manifest.json indisponível");
+  const manifest = await response.json() as SnapshotManifest;
+  const stale = manifest.current.filter((entry) => {
+    if (!entry.fetchedAt) return true;
+    return Date.now() - Date.parse(entry.fetchedAt) > 36 * 60 * 60 * 1000;
+  }).length;
+
+  snapshotStats.replaceChildren(
+    statCard("Snapshots atuais", String(manifest.current.length), `Manifesto ${formatDateTime(manifest.updatedAt)}`),
+    statCard("Encartes arquivados", String(manifest.previous.length), "Um por loja quando a campanha roda"),
+    statCard("Ingestão >36h", String(stale), "Snapshots sem refresh recente"),
+  );
+
+  const rows = [...manifest.current, ...manifest.previous]
+    .sort((left, right) => left.storeName.localeCompare(right.storeName, "pt-BR") || (left.role === "previous" ? 1 : -1))
+    .map((entry) => snapshotRow(entry));
+  snapshotList.replaceChildren(...rows);
+  snapshotsSection.hidden = false;
+}
+
 function loadSources(): void {
   const sources = Object.entries(window.FEIRA_SOURCE_STATUS ?? {});
   if (sources.length === 0) {
+    sourceSummary.replaceChildren(statCard("Monitor", "0", "Nenhuma verificação registrada"));
     sourceList.replaceChildren(element("p", "preferences-help", "Nenhuma verificação de fonte registrada."));
     sourcesSection.hidden = false;
     return;
   }
-  const rows = sources.map(([url, source]) => {
-    const state = source.needsReview ? "review" : source.error ? "error" : "ok";
-    const detail = source.needsReview
-      ? "Fonte mudou e aguarda conferência"
-      : source.error
-        ? "Falha na última verificação"
-        : `Verificada em ${formatDateTime(source.checkedAt)} · último sucesso ${formatDateTime(source.lastSuccessAt)}`;
-    return sourceRow(source.store ?? "Fonte", source.branch ?? "", url, state, detail);
-  });
+
+  const review = sources.filter(([, entry]) => entry.needsReview).length;
+  const errors = sources.filter(([, entry]) => entry.error).length;
+  const ok = sources.length - review - errors;
+  sourceSummary.replaceChildren(
+    statCard("Fontes monitoradas", String(sources.length), `${ok} OK · ${review} em revisão · ${errors} com falha`),
+  );
+
+  const rows = sources
+    .sort(([urlA, a], [urlB, b]) => {
+      const rank = (entry: SourceStatus) => (entry.needsReview ? 0 : entry.error ? 1 : 2);
+      const diff = rank(a) - rank(b);
+      return diff !== 0 ? diff : (a.store ?? urlA).localeCompare(b.store ?? urlB, "pt-BR");
+    })
+    .map(([url, source]) => {
+      const health = sourceHealthLabel(source);
+      const detail = source.needsReview
+        ? `Verificada em ${formatDateTime(source.checkedAt)} · aguarda conferência manual`
+        : source.error
+          ? `Falha em ${formatDateTime(source.checkedAt)} · último sucesso ${formatDateTime(source.lastSuccessAt)}`
+          : `Verificada em ${formatDateTime(source.checkedAt)} · último sucesso ${formatDateTime(source.lastSuccessAt)}`;
+      return sourceRow(source.store ?? "Fonte", source.branch ?? "", url, health.tone, detail, health.label);
+    });
   sourceList.replaceChildren(...rows);
   sourcesSection.hidden = false;
 }
@@ -201,11 +363,17 @@ async function start(): Promise<void> {
   }
 
   status.textContent = `Acesso confirmado para ${user.email ?? "conta administrativa"}.`;
-  const results = await Promise.allSettled([loadCatalog(), loadSources(), loadAlerts(), loadAccounts()]);
-  for (const result of results) {
-    if (result.status === "rejected") {
-      status.textContent = `Acesso confirmado, mas parte dos dados não carregou: ${(result.reason as Error)?.message ?? "erro"}`;
-    }
+  const results = await Promise.allSettled([
+    loadDeploy(),
+    loadCatalog(),
+    loadSnapshots(),
+    loadSources(),
+    loadAlerts(),
+    loadAccounts(),
+  ]);
+  const failures = results.filter((result): result is PromiseRejectedResult => result.status === "rejected");
+  if (failures.length > 0) {
+    status.textContent = `Acesso confirmado, mas ${failures.length} bloco(s) não carregaram: ${failures.map((result) => (result.reason as Error)?.message ?? "erro").join(" · ")}`;
   }
 }
 

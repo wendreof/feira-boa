@@ -1,16 +1,19 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { assembleFeed } from "./feed/assemble-feed.mjs";
+import { buildSnapshotManifest } from "./feed/snapshot-manifest.mjs";
 import { createBuildInfo } from "./feed/build-info.mjs";
 import { loadFallbackCatalog, loadPreviousSnapshots, loadSnapshots } from "./feed/load-sources.mjs";
 import { validateFeed } from "./feed/validate-feed.mjs";
 
 const fallback = await loadFallbackCatalog();
+const snapshots = await loadSnapshots();
+const previousSnapshots = await loadPreviousSnapshots();
 const { feed, warnings } = assembleFeed({
   fallbackStores: fallback.stores,
   fallbackOffers: fallback.offers,
   fallbackUpdatedAt: fallback.offersUpdatedAt,
-  snapshots: await loadSnapshots(),
-  previousSnapshots: await loadPreviousSnapshots(),
+  snapshots,
+  previousSnapshots,
 });
 
 if (warnings.missingSnapshotStores.length > 0) {
@@ -26,6 +29,14 @@ const feedUrl = new URL("../offers.json", import.meta.url);
 const temporaryFeedUrl = new URL("../offers.json.tmp", import.meta.url);
 await writeFile(temporaryFeedUrl, `${JSON.stringify(feed, null, 2)}\n`);
 await rename(temporaryFeedUrl, feedUrl);
+const manifest = buildSnapshotManifest({
+  snapshots,
+  previousSnapshots,
+  feedUpdatedAt: feed.updatedAt,
+});
+const manifestUrl = new URL("../snapshot-manifest.json", import.meta.url);
+await writeFile(manifestUrl, `${JSON.stringify(manifest, null, 2)}\n`);
+console.log(`Generated snapshot-manifest.json for ${manifest.current.length} current and ${manifest.previous.length} previous snapshot(s).`);
 console.log(`Generated offers.json with ${feed.offers.length} offers from ${feed.stores.length} stores.`);
 
 const packageInfo = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));

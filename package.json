@@ -18,12 +18,14 @@
     "review:source": "node scripts/review-source.mjs",
     "monitor:sources": "node scripts/monitor-sources.mjs",
     "monitor:status": "node scripts/write-source-status.mjs",
-    "test:logos": "node scripts/test-store-logos-playwright.mjs"
+    "test:logos": "node scripts/test-store-logos-playwright.mjs",
+    "telegram:setup": "node scripts/set-telegram-bot.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
     "pdf-parse": "^2.4.5",
     "playwright": "^1.64.1",
+    "supabase": "^2.122.0",
     "typescript": "^7.0.2",
     "web-push": "^3.6.7"
   },

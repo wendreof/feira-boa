@@ -101,16 +101,22 @@ export interface Database {
           user_id: string;
           chat_id: number;
           linked_at: string;
+          delivery_blocked: boolean;
+          delivery_blocked_at: string | null;
         };
         Insert: {
           user_id: string;
           chat_id: number;
           linked_at?: string;
+          delivery_blocked?: boolean;
+          delivery_blocked_at?: string | null;
         };
         Update: {
           user_id?: string;
           chat_id?: number;
           linked_at?: string;
+          delivery_blocked?: boolean;
+          delivery_blocked_at?: string | null;
         };
         Relationships: [];
       };
@@ -149,6 +155,7 @@ export interface Database {
           id: number;
           user_id: string;
           offer_id: string;
+          channel: string;
           sent_at: string;
           result: "sent" | "failed";
           error_code: string | null;
@@ -159,6 +166,7 @@ export interface Database {
           id?: number;
           user_id: string;
           offer_id: string;
+          channel?: string;
           sent_at?: string;
           result: "sent" | "failed";
           error_code?: string | null;
@@ -169,6 +177,7 @@ export interface Database {
           id?: number;
           user_id?: string;
           offer_id?: string;
+          channel?: string;
           sent_at?: string;
           result?: "sent" | "failed";
           error_code?: string | null;

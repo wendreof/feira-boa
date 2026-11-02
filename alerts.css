@@ -419,6 +419,12 @@
   color: #7a5200;
 }
 
+.channel-badge[data-state="blocked"] {
+  background: #fff1f1;
+  border-color: transparent;
+  color: #a43b40;
+}
+
 .channel-desc,
 .channel-hint {
   margin: 0;

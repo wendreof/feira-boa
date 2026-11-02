@@ -4,14 +4,19 @@ import { MAX_SOURCE_AGE_MS, getVerifiedActiveOffers, saoPauloDate } from "./offe
 import { sendTelegramMessage, TelegramApiError } from "./telegram-client.mjs";
 import {
   buildAlertMessage,
+  buildTelegramDigestText,
+  buildTelegramReplyMarkup,
   buildTelegramText,
   matchOffersToUsers,
+  partitionTelegramDelivery,
   pendingNotifications,
 } from "./alerts/plan.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
 const IN_CHUNK_SIZE = 100;
+const TELEGRAM_SEND_GAP_MS = 40;
+const NOTIFICATION_CHANNEL = "telegram";
 const REQUIRED_ENVIRONMENT = [
   "SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
@@ -32,6 +37,10 @@ function chunk(values, size) {
   const chunks = [];
   for (let index = 0; index < values.length; index += size) chunks.push(values.slice(index, index + size));
   return chunks;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /** Lê todas as páginas de uma consulta. `queryFactory` devolve uma consulta nova a cada chamada. */
@@ -67,44 +76,107 @@ function telegramErrorCode(error) {
   return "telegram_api_error";
 }
 
-async function sendAlerts({ supabase, pending, config, chatIdByUser, dryRun }) {
-  const counts = { notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoChannel: 0 };
+async function markTelegramBlocked(supabase, userId) {
+  const now = new Date().toISOString();
+  await supabase.from("telegram_links").update({ delivery_blocked: true, delivery_blocked_at: now }).eq("user_id", userId);
+}
+
+async function logNotification(supabase, { userId, offerId, delivered, safeErrorCode, title, body }) {
+  const { error } = await supabase.from("notification_log").upsert({
+    user_id: userId,
+    offer_id: offerId,
+    channel: NOTIFICATION_CHANNEL,
+    sent_at: new Date().toISOString(),
+    result: delivered ? "sent" : "failed",
+    error_code: delivered ? null : safeErrorCode,
+    title,
+    body,
+  }, { onConflict: "user_id,offer_id,channel" });
+  if (error) throw error;
+}
+
+async function sendOneAlert({ supabase, config, chatId, userId, offer, today, counts }) {
+  const { title, body } = buildAlertMessage(offer);
+  const text = buildTelegramText(offer, config.siteUrl, today);
+  const replyMarkup = buildTelegramReplyMarkup(offer, config.siteUrl);
+  let delivered = false;
+  let safeErrorCode = null;
+  try {
+    await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup, linkPreview: true });
+    delivered = true;
+  } catch (error) {
+    safeErrorCode = telegramErrorCode(error);
+    console.error(`Telegram send failed for user ${userId} offer ${offer.id}: ${error.message}`);
+    if (safeErrorCode === "telegram_blocked") await markTelegramBlocked(supabase, userId);
+  }
+  await logNotification(supabase, { userId, offerId: offer.id, delivered, safeErrorCode, title, body });
+  if (delivered) counts.notificationsSent += 1;
+  else counts.notificationsFailed += 1;
+  await sleep(TELEGRAM_SEND_GAP_MS);
+}
+
+async function sendAlerts({
+  supabase,
+  pending,
+  digests,
+  config,
+  chatIdByUser,
+  pausedUsers,
+  blockedUsers,
+  today,
+  dryRun,
+}) {
+  const counts = {
+    notificationsSent: 0,
+    notificationsWouldSend: 0,
+    notificationsFailed: 0,
+    skippedNoChannel: 0,
+    skippedPaused: 0,
+    skippedBlocked: 0,
+    digestsSent: 0,
+  };
+
   for (const { userId, offer } of pending) {
     if (dryRun) {
       counts.notificationsWouldSend += 1;
       continue;
     }
+    if (pausedUsers.has(userId)) {
+      counts.skippedPaused += 1;
+      continue;
+    }
+    if (blockedUsers.has(userId)) {
+      counts.skippedBlocked += 1;
+      continue;
+    }
     const chatId = chatIdByUser.get(userId);
-    // Sem vínculo de Telegram não há canal: não grava histórico, tenta de novo no próximo job.
     if (!chatId) {
       counts.skippedNoChannel += 1;
       continue;
     }
-    const { title, body } = buildAlertMessage(offer);
-    const text = buildTelegramText(offer, config.siteUrl);
-    let delivered = false;
-    let safeErrorCode = null;
-    try {
-      await sendTelegramMessage(config.telegramToken, chatId, text);
-      delivered = true;
-    } catch (error) {
-      safeErrorCode = telegramErrorCode(error);
-      console.error(`Telegram send failed for user ${userId} offer ${offer.id}: ${error.message}`);
-    }
-    // Guarda o texto exato enviado para a página de mensagens.
-    const { error } = await supabase.from("notification_log").upsert({
-      user_id: userId,
-      offer_id: offer.id,
-      sent_at: new Date().toISOString(),
-      result: delivered ? "sent" : "failed",
-      error_code: delivered ? null : safeErrorCode,
-      title,
-      body,
-    }, { onConflict: "user_id,offer_id" });
-    if (error) throw error;
-    if (delivered) counts.notificationsSent += 1;
-    else counts.notificationsFailed += 1;
+    await sendOneAlert({ supabase, config, chatId, userId, offer, today, counts });
   }
+
+  for (const { userId, offers } of digests) {
+    if (dryRun) {
+      counts.notificationsWouldSend += offers.length;
+      continue;
+    }
+    if (pausedUsers.has(userId) || blockedUsers.has(userId)) continue;
+    const chatId = chatIdByUser.get(userId);
+    if (!chatId) continue;
+    const text = buildTelegramDigestText(offers, config.siteUrl);
+    try {
+      await sendTelegramMessage(config.telegramToken, chatId, text, { linkPreview: false });
+      counts.digestsSent += 1;
+    } catch (error) {
+      const code = telegramErrorCode(error);
+      console.error(`Telegram digest failed for user ${userId}: ${error.message}`);
+      if (code === "telegram_blocked") await markTelegramBlocked(supabase, userId);
+    }
+    await sleep(TELEGRAM_SEND_GAP_MS);
+  }
+
   return counts;
 }
 
@@ -115,12 +187,27 @@ async function main() {
     auth: { persistSession: false, autoRefreshToken: false },
   });
   const today = saoPauloDate();
-  const emptySummary = { date: today, dryRun, notificationsSent: 0, notificationsWouldSend: 0, notificationsFailed: 0, skippedNoChannel: 0 };
+  const runStarted = new Date().toISOString();
+  const emptySummary = {
+    date: today,
+    dryRun,
+    notificationsSent: 0,
+    notificationsWouldSend: 0,
+    notificationsFailed: 0,
+    skippedNoChannel: 0,
+    skippedPaused: 0,
+    skippedBlocked: 0,
+    digestsSent: 0,
+  };
 
   const rules = await readRows(() => supabase.from("alert_rules")
     .select("id, user_id, store, product, product_type, target_price")
     .eq("enabled", true), ["id"]);
-  if (rules.length === 0) return { ...emptySummary, activeOffers: 0, activeVerifiedOffers: 0, usersMatched: 0 };
+  if (rules.length === 0) {
+    const summary = { ...emptySummary, activeOffers: 0, activeVerifiedOffers: 0, usersMatched: 0 };
+    await supabase.from("alert_runs").insert({ started_at: runStarted, finished_at: new Date().toISOString(), status: "ok", details: summary });
+    return summary;
+  }
 
   const { feed, feedUpdatedAt, sourceState } = await loadFeed();
   if (Date.now() - feedUpdatedAt > MAX_FEED_AGE_MS) {
@@ -134,34 +221,89 @@ async function main() {
   }
 
   const matchedByUser = matchOffersToUsers({ rules, offers });
-  const summaryBase = { ...emptySummary, feedUpdatedAt: feed.updatedAt, maxSourceAgeHours: MAX_SOURCE_AGE_MS / 3_600_000, activeOffers: activeOffers.length, activeVerifiedOffers: offers.length, usersMatched: matchedByUser.size };
+  const summaryBase = {
+    ...emptySummary,
+    feedUpdatedAt: feed.updatedAt,
+    maxSourceAgeHours: MAX_SOURCE_AGE_MS / 3_600_000,
+    activeOffers: activeOffers.length,
+    activeVerifiedOffers: offers.length,
+    usersMatched: matchedByUser.size,
+  };
 
   const matchedOfferIds = [...new Set([...matchedByUser.values()].flatMap((matches) => [...matches.keys()]))];
-  if (matchedOfferIds.length === 0) return summaryBase;
+  if (matchedOfferIds.length === 0) {
+    await supabase.from("alert_runs").insert({ started_at: runStarted, finished_at: new Date().toISOString(), status: "ok", details: summaryBase });
+    return summaryBase;
+  }
 
   const matchedUserIds = [...matchedByUser.keys()];
   const previousLogs = [];
   for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
     previousLogs.push(...await readRows(() => supabase.from("notification_log")
       .select("user_id, offer_id, result")
+      .eq("channel", NOTIFICATION_CHANNEL)
       .in("user_id", userGroup)
       .in("offer_id", matchedOfferIds), ["user_id", "offer_id"]));
   }
   const alreadySent = new Set(previousLogs.filter((entry) => entry.result === "sent").map((entry) => `${entry.user_id}:${entry.offer_id}`));
-  const pending = pendingNotifications(matchedByUser, alreadySent);
+  const allPending = pendingNotifications(matchedByUser, alreadySent);
+  const { immediate, digests } = partitionTelegramDelivery(allPending);
 
+  const pausedUsers = new Set();
+  const blockedUsers = new Set();
   const chatIdByUser = new Map();
-  if (!dryRun && pending.length > 0) {
+  if (!dryRun && (immediate.length > 0 || digests.length > 0)) {
     for (const userGroup of chunk(matchedUserIds, IN_CHUNK_SIZE)) {
-      const links = await readRows(() => supabase.from("telegram_links")
-        .select("user_id, chat_id")
+      const profiles = await readRows(() => supabase.from("profiles")
+        .select("user_id, notifications_paused")
         .in("user_id", userGroup), ["user_id"]);
-      for (const link of links) chatIdByUser.set(link.user_id, Number(link.chat_id));
+      for (const profile of profiles) {
+        if (profile.notifications_paused) pausedUsers.add(profile.user_id);
+      }
+      const links = await readRows(() => supabase.from("telegram_links")
+        .select("user_id, chat_id, delivery_blocked")
+        .in("user_id", userGroup), ["user_id"]);
+      for (const link of links) {
+        chatIdByUser.set(link.user_id, Number(link.chat_id));
+        if (link.delivery_blocked) blockedUsers.add(link.user_id);
+      }
     }
   }
 
-  const counts = await sendAlerts({ supabase, pending, config, chatIdByUser, dryRun });
-  return { ...summaryBase, ...counts };
+  let counts;
+  let status = "ok";
+  try {
+    counts = await sendAlerts({
+      supabase,
+      pending: immediate,
+      digests,
+      config,
+      chatIdByUser,
+      pausedUsers,
+      blockedUsers,
+      today,
+      dryRun,
+    });
+  } catch (error) {
+    status = "failed";
+    await supabase.from("alert_runs").insert({
+      started_at: runStarted,
+      finished_at: new Date().toISOString(),
+      status,
+      details: { error: error?.message ?? String(error) },
+    });
+    throw error;
+  }
+
+  const summary = { ...summaryBase, ...counts };
+  if (summary.notificationsFailed > 0 && summary.notificationsSent > 0) status = "partial";
+  await supabase.from("alert_runs").insert({
+    started_at: runStarted,
+    finished_at: new Date().toISOString(),
+    status,
+    details: summary,
+  });
+  return summary;
 }
 
 main()

@@ -2,8 +2,8 @@ name: Sync Telegram links
 
 on:
   schedule:
-    # A cada 5 minutos: confirma vínculos do Telegram logo após o usuário tocar em Iniciar.
-    - cron: "*/5 * * * *"
+    # Backup de vínculo quando o webhook falhar; com webhook ativo, getUpdates fica vazio.
+    - cron: "*/1 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 5
     env:
       SUPABASE_URL: https://muiuvmhzzbqflxznpnez.supabase.co
+      SITE_URL: ${{ vars.SITE_URL }}
+      TELEGRAM_BOT_USERNAME: feiraboapagesdev_bot
     steps:
       - name: Check out main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7

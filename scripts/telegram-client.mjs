@@ -27,9 +27,32 @@ export async function telegramCall(token, method, params = {}) {
 }
 
 /** Envia texto simples (sem parse_mode, para não quebrar com nomes de produto). */
-export function sendTelegramMessage(token, chatId, text) {
-  // Sem preview: o Telegram não puxa o banner do site; o ícone da oferta vai no texto.
-  return telegramCall(token, "sendMessage", { chat_id: chatId, text, disable_web_page_preview: true });
+export function sendTelegramMessage(token, chatId, text, options = {}) {
+  const { replyMarkup, linkPreview = false } = options;
+  const params = {
+    chat_id: chatId,
+    text,
+    disable_web_page_preview: !linkPreview,
+  };
+  if (replyMarkup) params.reply_markup = replyMarkup;
+  return telegramCall(token, "sendMessage", params);
+}
+
+export function setTelegramWebhook(token, url, secretToken) {
+  return telegramCall(token, "setWebhook", {
+    url,
+    secret_token: secretToken,
+    allowed_updates: ["message"],
+    drop_pending_updates: false,
+  });
+}
+
+export function deleteTelegramWebhook(token) {
+  return telegramCall(token, "deleteWebhook", { drop_pending_updates: false });
+}
+
+export function setTelegramCommands(token, commands) {
+  return telegramCall(token, "setMyCommands", { commands });
 }
 
 /** Lê atualizações pendentes. Passe `offset = último update_id + 1` para confirmá-las. */

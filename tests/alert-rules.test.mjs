@@ -78,6 +78,12 @@ test("failureHint maps Telegram error codes to readable text", () => {
   assert.match(failureHint("telegram_api_error"), /Telegram/);
 });
 
+test("failureHint maps push error codes to readable text", () => {
+  assert.match(failureHint("push_subscription_gone"), /Reconecte|Navegador/);
+  assert.match(failureHint("push_http_410"), /recusou/);
+  assert.match(failureHint("push_api_error"), /navegador/);
+});
+
 test("failureHint still maps legacy OneSignal error codes", () => {
   assert.match(failureHint("onesignal_http_400"), /recusou/);
   assert.match(failureHint("onesignal_api_error"), /conexão/);

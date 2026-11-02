@@ -1,13 +1,7 @@
 const CACHE_NAME = "feira-boa-shell-v16";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 
-// OneSignal (push) foi desativado e substituído pelas notificações do Telegram.
-// Para reativar, restaure o bloco abaixo e os arquivos em /onesignal/:
-// try {
-//   importScripts("/onesignal/OneSignalSDKWorker.js");
-// } catch (error) {
-//   console.warn("OneSignal worker script unavailable.", error);
-// }
+// Web Push (VAPID): alertas gratuitos pelo navegador; Telegram continua em paralelo.
 
 const SHELL = [
   "/",
@@ -113,4 +107,37 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(staleWhileRevalidate(request));
 });
 
-// Sem listeners de push: o canal atual é o Telegram, que não usa Web Push.
+self.addEventListener("push", (event) => {
+  event.waitUntil((async () => {
+    let payload = { title: "Feira Boa", body: "", url: "/", tag: "feira-alert" };
+    try {
+      if (event.data) payload = { ...payload, ...event.data.json() };
+    } catch (error) {
+      console.warn("Push payload could not be parsed.", error);
+    }
+    await self.registration.showNotification(payload.title, {
+      body: payload.body,
+      tag: payload.tag,
+      data: { url: payload.url },
+      icon: "/icons/icon-192.png",
+    });
+  })());
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = event.notification.data?.url || "/";
+  event.waitUntil((async () => {
+    const clientsList = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    for (const client of clientsList) {
+      if ("focus" in client) {
+        await client.focus();
+        if ("navigate" in client && typeof client.navigate === "function") {
+          await client.navigate(target);
+        }
+        return;
+      }
+    }
+    await self.clients.openWindow(target);
+  })());
+});

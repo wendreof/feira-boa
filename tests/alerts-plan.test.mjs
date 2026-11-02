@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   buildAlertMessage,
+  buildTelegramDigestReplyMarkup,
   buildTelegramDigestText,
   buildTelegramReplyMarkup,
   buildTelegramText,
@@ -92,8 +93,14 @@ test("partitionTelegramDelivery caps per user and builds digest list", () => {
   assert.equal(digests.length, 1);
   assert.equal(digests[0].offers.length, 1);
   assert.equal(digests[0].offers[0].name, "Arroz Tipo 1");
-  assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /alertas\.html/);
   assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /Arroz Tipo 1/);
+  assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /Preço do folheto\. Confirme na loja\./);
+  assert.doesNotMatch(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /https:\/\/feira\.test\/alertas\.html/);
+  assert.equal(
+    buildTelegramDigestReplyMarkup("https://feira.test/").inline_keyboard[0][0].url,
+    "https://feira.test/alertas.html",
+  );
+  assert.equal(buildTelegramDigestReplyMarkup("https://feira.test/").inline_keyboard[0][0].text, "Ver alertas no site");
 });
 
 test("expiryHighlightForAlerts flags tomorrow", () => {

@@ -19,6 +19,7 @@
     "monitor:sources": "node scripts/monitor-sources.mjs",
     "monitor:status": "node scripts/write-source-status.mjs",
     "test:logos": "node scripts/test-store-logos-playwright.mjs",
+    "test:expiry-ui": "node scripts/test-offer-expiry-playwright.mjs",
     "telegram:setup": "node scripts/set-telegram-bot.mjs"
   },
   "devDependencies": {

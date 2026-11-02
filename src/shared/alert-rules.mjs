@@ -131,6 +131,9 @@ export function failureHint(errorCode) {
   if (errorCode === "telegram_blocked") return "O Telegram não permite mensagens deste bot. Desbloqueie o bot no Telegram para voltar a receber avisos.";
   if (errorCode.startsWith("telegram_http_")) return "O Telegram recusou o envio.";
   if (errorCode === "telegram_api_error") return "Falha de conexão com o Telegram.";
+  if (errorCode === "push_subscription_gone") return "Este dispositivo não aceita mais notificações. Reconecte o canal Navegador.";
+  if (errorCode.startsWith("push_http_")) return "O navegador recusou o envio da notificação.";
+  if (errorCode === "push_api_error") return "Falha ao enviar notificação para o navegador.";
   // Envios antigos, feitos pelo canal de push anterior.
   if (errorCode.startsWith("onesignal_http_4")) return "O serviço de notificações recusou o envio.";
   if (errorCode === "onesignal_api_error") return "Falha de conexão com o serviço de notificações.";

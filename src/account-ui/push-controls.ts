@@ -1,7 +1,12 @@
 import { isDevicePushEnabled, pushFailureMessage, resolvePushUiState } from "../../push-state.js";
 import { hasPushSubscriptions, removePushSubscription, savePushSubscription } from "../account";
 import { errorMessage } from "../errors";
-import { requireOneSignal, type OneSignalNamespace } from "../push";
+import {
+  getPushSubscription,
+  isPushConfigured,
+  subscribeToPush,
+  unsubscribeFromPush,
+} from "../push";
 import { accountState } from "./state";
 import { setPushFeedback } from "./ui";
 import {
@@ -12,33 +17,15 @@ import {
   pushStatus,
 } from "./dom";
 
-const SERVICE_WORKER_TIMEOUT_MS = 4000;
-
-async function withTimeout<T>(promise: Promise<T>, fallback: T): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  try {
-    return await Promise.race([
-      promise,
-      new Promise<T>((resolve) => { timer = setTimeout(() => resolve(fallback), SERVICE_WORKER_TIMEOUT_MS); }),
-    ]);
-  } finally {
-    if (timer !== undefined) clearTimeout(timer);
-  }
-}
-
-async function browserPushSubscription(): Promise<PushSubscription | null> {
-  if (!("serviceWorker" in navigator)) return null;
-  const registration = await withTimeout<ServiceWorkerRegistration | null>(navigator.serviceWorker.ready, null);
-  if (!registration) return null;
-  return await registration.pushManager.getSubscription();
-}
-
 export async function refreshPushDeviceState(): Promise<void> {
   try {
-    const oneSignal = await requireOneSignal();
-    // Inscrito no SDK mas sem permissão do navegador não recebe push: não mostrar como ativo.
-    const browserAllows = "Notification" in window && Notification.permission === "granted";
-    accountState.devicePushEnabled = oneSignal.User.PushSubscription.optedIn === true && browserAllows;
+    if (!isPushConfigured()) {
+      accountState.devicePushEnabled = false;
+    } else {
+      const subscription = await getPushSubscription();
+      const browserAllows = "Notification" in window && Notification.permission === "granted";
+      accountState.devicePushEnabled = Boolean(subscription) && browserAllows;
+    }
   } catch {
     accountState.devicePushEnabled = false;
   }
@@ -63,26 +50,22 @@ export function updatePushControls(): void {
 }
 
 /** Desvincula o dispositivo da conta antes de sair ou excluir a conta. */
-export async function detachOneSignalFromAccount(): Promise<void> {
+export async function detachPushFromAccount(): Promise<void> {
   try {
-    const oneSignal = await requireOneSignal();
-    await oneSignal.logout();
+    const subscription = await getPushSubscription();
+    if (accountState.userId && subscription?.endpoint) {
+      await removePushSubscription(accountState.userId, subscription.endpoint);
+    }
+    await unsubscribeFromPush();
   } catch (error) {
-    console.warn("Could not detach OneSignal from the account.", error);
+    console.warn("Could not detach push from the account.", error);
   }
-}
-
-async function ensureBrowserPermission(oneSignal: OneSignalNamespace): Promise<boolean> {
-  if (Notification.permission === "default") {
-    return await oneSignal.Notifications.requestPermission();
-  }
-  return Notification.permission === "granted";
 }
 
 async function rememberPushSubscription(): Promise<void> {
   if (!accountState.userId) return;
   try {
-    const subscription = await browserPushSubscription();
+    const subscription = await getPushSubscription();
     if (subscription) await savePushSubscription(accountState.userId, subscription);
     accountState.accountPushEnabled = await hasPushSubscriptions(accountState.userId);
   } catch (error) {
@@ -101,7 +84,7 @@ async function forgetPushSubscription(subscription: PushSubscription | null): Pr
 }
 
 async function activatePush(button: HTMLButtonElement): Promise<void> {
-  if (!("serviceWorker" in navigator) || !("Notification" in window)) {
+  if (!isPushConfigured() || !("serviceWorker" in navigator) || !("Notification" in window)) {
     setPushFeedback("Este navegador não oferece suporte a notificações push.");
     return;
   }
@@ -112,18 +95,10 @@ async function activatePush(button: HTMLButtonElement): Promise<void> {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Solicitando permissão…";
   try {
-    const oneSignal = await requireOneSignal();
-    const permission = await ensureBrowserPermission(oneSignal);
-    if (!permission) {
-      throw new Error(Notification.permission === "denied" ? "Permissão bloqueada no navegador." : "Permissão não concedida.");
-    }
-    if (accountState.userId) await oneSignal.login(accountState.userId);
-    if (oneSignal.User.PushSubscription.optedIn !== true) {
-      await oneSignal.User.PushSubscription.optIn();
-    }
+    await subscribeToPush();
     accountState.devicePushEnabled = isDevicePushEnabled({
       permission: Notification.permission,
-      optedIn: oneSignal.User.PushSubscription.optedIn,
+      optedIn: true,
       activatedNow: true,
     });
     if (!accountState.devicePushEnabled) throw new Error("O navegador não ativou as notificações. Tente novamente.");
@@ -144,11 +119,8 @@ async function deactivatePush(button: HTMLButtonElement): Promise<void> {
   setPushFeedback();
   if (pushStatus) pushStatus.textContent = "Desativando neste dispositivo…";
   try {
-    const oneSignal = await requireOneSignal();
-    const subscription = await browserPushSubscription();
-    if (oneSignal.User.PushSubscription.optedIn === true) {
-      await oneSignal.User.PushSubscription.optOut();
-    }
+    const subscription = await getPushSubscription();
+    await unsubscribeFromPush();
     accountState.devicePushEnabled = false;
     await forgetPushSubscription(subscription);
     setPushFeedback("Notificações desativadas neste dispositivo.");

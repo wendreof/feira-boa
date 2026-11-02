@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T00:35:18.220Z",
+  "updatedAt": "2026-11-02T01:13:59.414Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -16432,7 +16432,7 @@
         "Doces e snacks"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Sobremesa Láctea",
-      "price": 19.79,
+      "price": 19.99,
       "previousPrice": null,
       "icon": "🍫",
       "tone": "#edf4e9",
@@ -27532,7 +27532,7 @@
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Caldos",
       "price": 3.39,
-      "previousPrice": 3.69,
+      "previousPrice": 3.79,
       "icon": "🍲",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

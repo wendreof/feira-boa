@@ -58,11 +58,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          if ! git diff --quiet -- state/ offers.json source-status.js .offer-monitor-state.json; then
+          tracked=(
+            state/
+            offers.json
+            snapshot-manifest.json
+            build-info.json
+            source-status.js
+            .offer-monitor-state.json
+          )
+          if ! git diff --quiet -- "${tracked[@]}"; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add state/ offers.json source-status.js .offer-monitor-state.json
+            git add "${tracked[@]}"
             git commit -m "Update automated store offers and source status"
+            if ! git diff --quiet; then
+              echo "Uncommitted changes remain (add them to the workflow commit list):" >&2
+              git status --short >&2
+              exit 1
+            fi
             remote="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             for attempt in 1 2 3; do
               git pull --rebase "$remote" main

@@ -1,6 +1,6 @@
-/** Logos for the five monitored groceries (self-hosted, optimized PNGs). */
+/** Logos for monitored groceries (self-hosted, optimized PNGs). */
 
-export const MAIN_STORE_IDS = ["semprevale", "bigbom", "paguemenos", "spasso", "corso"];
+export const MAIN_STORE_IDS = ["semprevale", "bigbom", "paguemenos", "spasso", "corso", "spani"];
 
 /** @type {Record<string, { src: string, fallback: string, presentation: string }>} */
 export const MAIN_STORE_LOGOS = {
@@ -9,6 +9,7 @@ export const MAIN_STORE_LOGOS = {
   paguemenos: { src: "logos/paguemenos.png", fallback: "PM", presentation: "paguemenos-logo" },
   spasso: { src: "logos/spasso.png", fallback: "SS", presentation: "" },
   corso: { src: "logos/corso.png", fallback: "CO", presentation: "" },
+  spani: { src: "logos/spani.png", fallback: "SP", presentation: "" },
 };
 
 /** @type {Record<string, string>} */
@@ -18,6 +19,7 @@ export const STORE_NAME_TO_ID = {
   "Pague Menos": "paguemenos",
   "Spasso Sabores": "spasso",
   "Corso": "corso",
+  "Spani Atacadista": "spani",
 };
 
 export function logoUrlForStoreId(storeId) {

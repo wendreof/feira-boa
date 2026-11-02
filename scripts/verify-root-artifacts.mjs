@@ -48,6 +48,7 @@ const requiredFiles = [
   "logos/paguemenos.png",
   "logos/spasso.png",
   "logos/corso.png",
+  "logos/spani.png",
 ];
 
 const failures = [];

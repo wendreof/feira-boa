@@ -45,6 +45,7 @@ export const appState: {
   favoriteOnly: boolean;
   sharedOfferId: string | null;
   enabledAlertRulesCount: number | null;
+  alertsInviteBootstrapped: boolean;
   viewMode: ViewMode;
   currentUserId: string | null;
   preferencesLoaded: boolean;
@@ -68,6 +69,7 @@ export const appState: {
   favoriteOnly: false,
   sharedOfferId: null,
   enabledAlertRulesCount: null,
+  alertsInviteBootstrapped: false,
   viewMode: "grid",
   currentUserId: null,
   preferencesLoaded: false,

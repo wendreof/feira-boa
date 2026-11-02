@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-01T17:33:23.428Z",
+  "updatedAt": "2026-11-02T00:24:14.720Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -6880,7 +6880,7 @@
       ],
       "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Salgadinhos",
       "price": 12.99,
-      "previousPrice": 15.89,
+      "previousPrice": 14.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14872,7 +14872,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 12.69,
+      "price": 12.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -16576,7 +16576,7 @@
         "Iogurtes"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Iogurte",
-      "price": 4.29,
+      "price": 5.49,
       "previousPrice": null,
       "icon": "🥛",
       "tone": "#edf4e9",
@@ -20138,8 +20138,8 @@
         "Congelados"
       ],
       "storeCategory": "Congelados/Pratos Prontos/Lasanha Congelada",
-      "price": 15.99,
-      "previousPrice": 18.99,
+      "price": 17.99,
+      "previousPrice": null,
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -22490,7 +22490,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Banheiro/Bloco Sanitário",
-      "price": 14.99,
+      "price": 23.16,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -27099,7 +27099,7 @@
       ],
       "storeCategory": "Mercearia/Molhos Frios/Maionese",
       "price": 14.99,
-      "previousPrice": 22.99,
+      "previousPrice": 24.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

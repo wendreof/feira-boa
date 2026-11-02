@@ -3,10 +3,11 @@ import { classifyProduct } from "../domain/taxonomy.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const SEMPREVALE_STORE = {
   name: "Sempre Vale",
-  logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
+  logo: logoUrlForStoreId("semprevale"),
   branch: "Durval Nicolau",
   source: "Folheto oficial · Durval Nicolau",
 };

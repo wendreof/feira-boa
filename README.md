@@ -13,7 +13,7 @@ Local supermarket offers for São João da Boa Vista.
 - Hide offers outside their printed validity dates.
 - Switch between light and dark themes; signed-in users sync the choice with their account.
 
-The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed contains 1,288 offers across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Supermercado Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
+The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed contains 1,288 offers across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow checks the official offer URLs, stores source snapshots under `state/`, and publishes new prices immediately. Source review gates price alerts only; it does not hide the public offer feed.
 
 ## Run locally
 
@@ -78,9 +78,9 @@ Because the source repository is private, GitHub Pages on the free plan cannot h
 - Sempre Vale official offers: https://www.semprevale.com.br/ofertas.php
 - Sempre Vale Durval Nicolau campaign: https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf
 - Big Bom São João flyer: https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf
-- Supermercados Pague Menos official offers: https://www.superpaguemenos.com.br/ofertas?productclusterids=161
+- Pague Menos official offers: https://www.superpaguemenos.com.br/ofertas?productclusterids=161
 - Spasso Sabores São João offers: https://spassosabores.com.br/ofertas-sao-joao/
-- Supermercado Corso flyer: https://corso.com.br/jornalfrente.php
+- Corso flyer: https://corso.com.br/jornalfrente.php
 
 ## Social card
 

@@ -1,5 +1,6 @@
 import { foldText, slugText } from "./shared/text.mjs";
 import { mergeBrandIntoName } from "./shared/offer-name.mjs";
+import { logoUrlForStoreId } from "./shared/store-logos.mjs";
 
 // Offer transcriptions from stores' public flyers and official offer pages.
 // Prices are in BRL. Dates are inclusive; source links point to the original offer source.
@@ -17,7 +18,7 @@ export const offerSources = {
   sempre: {
     name: "Sempre Vale",
     branch: "Durval Nicolau",
-    logo: "https://www.semprevale.com.br/images/logo-pequeno.png",
+    logo: logoUrlForStoreId("semprevale")!,
     source: "Folheto oficial · Durval Nicolau",
     sourceUrl: "https://www.semprevale.com.br/downloads/ofertas/6e99ae20-961c-4412-8d20-76ced1823ef2-campanha-576-crop-baixa%283%29.pdf",
     from: "2026-10-22",
@@ -26,7 +27,7 @@ export const offerSources = {
   bigbom: {
     name: "Big Bom",
     branch: "Vila Zanetti · São João",
-    logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+    logo: logoUrlForStoreId("bigbom")!,
     source: "Folheto oficial · São João da Boa Vista",
     sourceUrl: "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
     from: "2026-10-19",
@@ -35,7 +36,7 @@ export const offerSources = {
   paguemenos: {
     name: "Pague Menos",
     branch: "Loja 33 · Jardim Santo André",
-    logo: "https://yata-apix-ffbe8645-e2d3-4333-a3d7-a50dd75a9365.s3-object.locaweb.com.br/26b38c95de59446292057c272a15e0c2.png",
+    logo: logoUrlForStoreId("paguemenos")!,
     source: "Ofertas online oficiais · Loja 33",
     sourceUrl: "https://www.superpaguemenos.com.br/ofertas?productclusterids=161",
     from: "2026-10-19",
@@ -44,16 +45,16 @@ export const offerSources = {
   spasso: {
     name: "Spasso Sabores",
     branch: "Av. Dr. Durval Nicolau, 1572 · São João",
-    logo: "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-faction-icon-website-spasso-sabores-270x270.png",
+    logo: logoUrlForStoreId("spasso")!,
     source: "Folheto oficial · Loja São João",
     sourceUrl: "https://spassosabores.com.br/ofertas-sao-joao/",
     from: "2026-10-13",
     to: "2026-10-17"
   },
   corso: {
-    name: "Supermercado Corso",
+    name: "Corso",
     branch: "Rua Eduardo Lopes Castilho, 495 · São João",
-    logo: "https://corso.com.br/img/logo.png",
+    logo: logoUrlForStoreId("corso")!,
     source: "Folheto oficial · São João da Boa Vista",
     sourceUrl: "https://corso.com.br/jornalfrente.php",
     from: "2026-10-16",
@@ -236,7 +237,7 @@ export const offers: Offer[] = [
   makeOffer("bigbom", "Prato fundo Astral", "Marinex", "Unidade", "Casa", 4.99, null, "🍽️"),
   makeOffer("bigbom", "Conjunto de utensílios de plástico", "ABS", "6 peças · unidade", "Casa", 9.99, null, "🍴"),
   makeOffer("bigbom", "Água de coco", "Sococo", "1 L", "Bebidas", 9.90, null, "🥥"),
-  // Supermercados Pague Menos · offers shown for the São João da Boa Vista store.
+  // Pague Menos · offers shown for the São João da Boa Vista store.
   // The official site says online prices are valid for the e-store and may differ in physical stores.
   makeOffer("paguemenos", "Contrafilé bovino", "Leve Mais", "Peça inteira a vácuo · preço por kg", "Carnes", 47.99, 54.99, "🥩", "Preço online · Clube Leve Mais; confirme o valor na loja física"),
   makeOffer("paguemenos", "Entrecôte bovino", "Perdigão Na Brasa", "Preço por kg", "Carnes", 59.99, 69.99, "🥩", "Preço online · confirme o valor na loja física"),

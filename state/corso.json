@@ -1,7 +1,7 @@
 {
   "storeId": "corso",
   "store": {
-    "name": "Supermercado Corso",
+    "name": "Corso",
     "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
     "logo": "https://corso.com.br/img/logo.png",
     "source": "Folheto oficial · São João da Boa Vista",
@@ -15,7 +15,7 @@
   "offers": [
     {
       "id": "corso-alface-unidade-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Alface",
@@ -39,7 +39,7 @@
     },
     {
       "id": "corso-brocolis-japones-unidade-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Brócolis Japonês",
@@ -63,7 +63,7 @@
     },
     {
       "id": "corso-repolho-verde-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Repolho Verde",
@@ -87,7 +87,7 @@
     },
     {
       "id": "corso-alho-graudo-a-granel-100g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Alho Graúdo a Granel",
@@ -111,7 +111,7 @@
     },
     {
       "id": "corso-batata-escovada-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Batata Escovada",
@@ -135,7 +135,7 @@
     },
     {
       "id": "corso-batata-lavada-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Batata Lavada",
@@ -159,7 +159,7 @@
     },
     {
       "id": "corso-beterraba-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Beterraba",
@@ -183,7 +183,7 @@
     },
     {
       "id": "corso-cebola-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Cebola",
@@ -207,7 +207,7 @@
     },
     {
       "id": "corso-cenoura-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Cenoura",
@@ -231,7 +231,7 @@
     },
     {
       "id": "corso-chuchu-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Chuchu",
@@ -255,7 +255,7 @@
     },
     {
       "id": "corso-tomate-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Tomate",
@@ -279,7 +279,7 @@
     },
     {
       "id": "corso-tomate-grape-300g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Tomate Grape",
@@ -303,7 +303,7 @@
     },
     {
       "id": "corso-abacate-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Abacate",
@@ -327,7 +327,7 @@
     },
     {
       "id": "corso-abacaxi-unidade-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Abacaxi",
@@ -351,7 +351,7 @@
     },
     {
       "id": "corso-banana-nanica-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Banana Nanica",
@@ -375,7 +375,7 @@
     },
     {
       "id": "corso-banana-prata-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Banana Prata",
@@ -399,7 +399,7 @@
     },
     {
       "id": "corso-laranja-a-granel-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Laranja a Granel",
@@ -423,7 +423,7 @@
     },
     {
       "id": "corso-limao-taiti-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Limão Taiti",
@@ -447,7 +447,7 @@
     },
     {
       "id": "corso-maca-gala-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Maçã Gala",
@@ -471,7 +471,7 @@
     },
     {
       "id": "corso-mamao-formosa-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Mamão Formosa",
@@ -495,7 +495,7 @@
     },
     {
       "id": "corso-mamao-papaya-unidade-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Mamão Papaya",
@@ -519,7 +519,7 @@
     },
     {
       "id": "corso-manga-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Manga",
@@ -543,7 +543,7 @@
     },
     {
       "id": "corso-melancia-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Melancia",
@@ -567,7 +567,7 @@
     },
     {
       "id": "corso-morango-bandeja-250g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Morango Bandeja",
@@ -591,7 +591,7 @@
     },
     {
       "id": "corso-uva-bandeja-500g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Uva Bandeja",
@@ -615,7 +615,7 @@
     },
     {
       "id": "corso-bebida-lactea-com-polpa-argenzio-1l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Bebida Láctea com Polpa Argenzio",
@@ -639,7 +639,7 @@
     },
     {
       "id": "corso-cobertura-cremosa-sabor-requeijao-sul-minas-200g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Cobertura Cremosa Sabor Requeijão Sul Minas",
@@ -663,7 +663,7 @@
     },
     {
       "id": "corso-suan-suino-frinni-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Suan Suíno Frinni",
@@ -687,7 +687,7 @@
     },
     {
       "id": "corso-rabada-bovina-congelada-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Rabada Bovina Congelada",
@@ -711,7 +711,7 @@
     },
     {
       "id": "corso-carne-moida-congelada-brasa-500g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Carne Moída Congelada Brasa",
@@ -735,7 +735,7 @@
     },
     {
       "id": "corso-lagarto-bovino-fatiado-congelado-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Lagarto Bovino Fatiado Congelado",
@@ -759,7 +759,7 @@
     },
     {
       "id": "corso-cupim-bovino-peca-pedaco-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Cupim Bovino Peça/Pedaço",
@@ -783,7 +783,7 @@
     },
     {
       "id": "corso-lingua-bovina-congelada-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Língua Bovina Congelada",
@@ -807,7 +807,7 @@
     },
     {
       "id": "corso-coxa-e-sobrecoxa-de-frango-congelada-nutribem-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Coxa e Sobrecoxa de Frango Congelada Nutribem",
@@ -832,7 +832,7 @@
     },
     {
       "id": "corso-frango-congelado-nutribem-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Frango Congelado Nutribem",
@@ -856,7 +856,7 @@
     },
     {
       "id": "corso-frango-a-passarinho-temperado-congelado-nutribem-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Frango a Passarinho Temperado Congelado Nutribem",
@@ -880,7 +880,7 @@
     },
     {
       "id": "corso-peito-de-frango-com-osso-congelado-nutribem-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Peito de Frango com Osso Congelado Nutribem",
@@ -904,7 +904,7 @@
     },
     {
       "id": "corso-peito-de-frango-sem-osso-congelado-gonzalez-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Peito de Frango sem Osso Congelado Gonzalez",
@@ -928,7 +928,7 @@
     },
     {
       "id": "corso-filezinho-sassami-iqf-congelado-aurora-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Filézinho Sassami IQF Congelado Aurora",
@@ -952,7 +952,7 @@
     },
     {
       "id": "corso-sobrecoxa-de-frango-iqf-congelada-seara-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sobrecoxa de Frango IQF Congelada Seara",
@@ -977,7 +977,7 @@
     },
     {
       "id": "corso-coxinha-da-asa-de-frango-iqf-congelada-seara-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Coxinha da Asa de Frango IQF Congelada Seara",
@@ -1002,7 +1002,7 @@
     },
     {
       "id": "corso-steak-de-frango-congelado-seara-100g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Steak de Frango Congelado Seara",
@@ -1026,7 +1026,7 @@
     },
     {
       "id": "corso-hamburguer-misto-congelado-brasa-56g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Hambúrguer Misto Congelado Brasa",
@@ -1050,7 +1050,7 @@
     },
     {
       "id": "corso-linguica-calabresa-resfriada-brasa-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Linguiça Calabresa Resfriada Brasa",
@@ -1075,7 +1075,7 @@
     },
     {
       "id": "corso-linguica-de-pernil-fina-resfriada-suiba-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Linguiça de Pernil Fina Resfriada Suíba",
@@ -1100,7 +1100,7 @@
     },
     {
       "id": "corso-linguica-de-frango-congelada-gonzalez-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Linguiça de Frango Congelada Gonzalez",
@@ -1125,7 +1125,7 @@
     },
     {
       "id": "corso-linguica-toscana-congelada-aurora-700g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Linguiça Toscana Congelada Aurora",
@@ -1150,7 +1150,7 @@
     },
     {
       "id": "corso-ervilha-congelada-seara-300g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ervilha Congelada Seara",
@@ -1174,7 +1174,7 @@
     },
     {
       "id": "corso-lasanha-congelada-flip-600g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Lasanha Congelada Flip",
@@ -1198,7 +1198,7 @@
     },
     {
       "id": "corso-massa-para-pastel-disco-s-a-500g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Massa para Pastel Disco S&A",
@@ -1222,7 +1222,7 @@
     },
     {
       "id": "corso-arroz-tipo-1-albarus-5kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Arroz Tipo 1 Albarus",
@@ -1246,7 +1246,7 @@
     },
     {
       "id": "corso-arroz-tipo-1-du-de-5kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Arroz Tipo 1 Du Dé",
@@ -1270,7 +1270,7 @@
     },
     {
       "id": "corso-sabao-em-po-lavagem-perf-omo-800g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sabão em Pó Lavagem Perf. OMO",
@@ -1294,7 +1294,7 @@
     },
     {
       "id": "corso-sabao-em-po-triplacao-assim-800g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sabão em Pó Triplação Assim",
@@ -1318,7 +1318,7 @@
     },
     {
       "id": "corso-cafe-almofada-pacaembu-500g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Café Almofada Pacaembu",
@@ -1342,7 +1342,7 @@
     },
     {
       "id": "corso-leite-longa-vida-integral-tirol-1l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Leite Longa Vida Integral Tirol",
@@ -1366,7 +1366,7 @@
     },
     {
       "id": "corso-leite-condensado-tp-cemil-395g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Leite Condensado TP Cemil",
@@ -1390,7 +1390,7 @@
     },
     {
       "id": "corso-creme-de-leite-tp-quata-200g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Creme de Leite TP Quatá",
@@ -1414,7 +1414,7 @@
     },
     {
       "id": "corso-molho-de-tomate-tradicional-sache-predilecta-300g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Molho de Tomate Tradicional Sachê Predilecta",
@@ -1438,7 +1438,7 @@
     },
     {
       "id": "corso-oleo-de-soja-pet-vitaliv-900ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Óleo de Soja Pet Vitaliv",
@@ -1462,7 +1462,7 @@
     },
     {
       "id": "corso-feijao-carioca-du-de-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Feijão Carioca Du Dé",
@@ -1486,7 +1486,7 @@
     },
     {
       "id": "corso-acucar-cristal-purinha-2kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Açúcar Cristal Purinha",
@@ -1510,7 +1510,7 @@
     },
     {
       "id": "corso-biscoito-maizena-triunfo-345g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Biscoito Maizena Triunfo",
@@ -1534,7 +1534,7 @@
     },
     {
       "id": "corso-detergente-clear-ype-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Detergente Clear Ypê",
@@ -1558,7 +1558,7 @@
     },
     {
       "id": "corso-refrigerante-coca-cola-tradicional-pet-coca-cola-2-5l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Refrigerante Coca-Cola Tradicional Pet",
@@ -1582,7 +1582,7 @@
     },
     {
       "id": "corso-oleo-composto-pet-olinda-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Óleo Composto Pet Olinda",
@@ -1606,7 +1606,7 @@
     },
     {
       "id": "corso-massa-para-tapioca-amafil-500g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Massa para Tapioca Amafil",
@@ -1630,7 +1630,7 @@
     },
     {
       "id": "corso-farofa-mandioca-tradicional-yoki-400g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Farofa Mandioca Tradicional Yoki",
@@ -1654,7 +1654,7 @@
     },
     {
       "id": "corso-farinha-de-milho-jimbele-400g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Farinha de Milho Jimbelê",
@@ -1678,7 +1678,7 @@
     },
     {
       "id": "corso-pipoca-gold-kinino-400g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Pipoca Gold Kinino",
@@ -1702,7 +1702,7 @@
     },
     {
       "id": "corso-atum-ralado-gomes-da-costa-170g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Atum Ralado Gomes da Costa",
@@ -1726,7 +1726,7 @@
     },
     {
       "id": "corso-sardinha-em-oleo-gomes-da-costa-125g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sardinha em Óleo Gomes da Costa",
@@ -1750,7 +1750,7 @@
     },
     {
       "id": "corso-azeitona-verde-fatiada-sachet-diza-100g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Azeitona Verde Fatiada Sachet Diza",
@@ -1774,7 +1774,7 @@
     },
     {
       "id": "corso-ervilha-sachet-fugini-170g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ervilha Sachet Fugini",
@@ -1798,7 +1798,7 @@
     },
     {
       "id": "corso-milho-verde-sachet-fugini-170g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Milho Verde Sachet Fugini",
@@ -1822,7 +1822,7 @@
     },
     {
       "id": "corso-macarrao-instantaneo-renata-85g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Macarrão Instantâneo Renata",
@@ -1846,7 +1846,7 @@
     },
     {
       "id": "corso-lasanha-direto-ao-forno-petybon-200g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Lasanha Direto ao Forno Petybon",
@@ -1870,7 +1870,7 @@
     },
     {
       "id": "corso-salgadinho-doritos-cheetos-120g-160g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Salgadinho Doritos/Cheetos",
@@ -1894,7 +1894,7 @@
     },
     {
       "id": "corso-biscoito-recheado-bauducco-140g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Biscoito Recheado Bauducco",
@@ -1918,7 +1918,7 @@
     },
     {
       "id": "corso-biscoito-tuc-s-sabores-tuc-s-100g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Biscoito Tuc's Sabores",
@@ -1942,7 +1942,7 @@
     },
     {
       "id": "corso-gelatina-sabores-kinino-20g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Gelatina Sabores Kinino",
@@ -1966,7 +1966,7 @@
     },
     {
       "id": "corso-leite-de-coco-menina-200ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Leite de Coco Menina",
@@ -1990,7 +1990,7 @@
     },
     {
       "id": "corso-achocolatado-sachet-apti-300g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Achocolatado Sachet Apti",
@@ -2014,7 +2014,7 @@
     },
     {
       "id": "corso-bebida-lactea-chocolate-mocoquinha-200ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Bebida Láctea Chocolate Mocoquinha",
@@ -2038,7 +2038,7 @@
     },
     {
       "id": "corso-pao-frances-kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Pão Francês",
@@ -2062,7 +2062,7 @@
     },
     {
       "id": "corso-pao-de-forma-tradicional-visconti-400g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Pão de Forma Tradicional Visconti",
@@ -2086,7 +2086,7 @@
     },
     {
       "id": "corso-torrada-tradicional-adria-142g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Torrada Tradicional Adria",
@@ -2110,7 +2110,7 @@
     },
     {
       "id": "corso-manteiga-extra-argenzio-200g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Manteiga Extra Argenzio",
@@ -2134,7 +2134,7 @@
     },
     {
       "id": "corso-pao-de-queijo-tradicional-congelado-tati-minas-400g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Pão de Queijo Tradicional Congelado Tati Minas",
@@ -2158,7 +2158,7 @@
     },
     {
       "id": "corso-agua-mineral-com-gas-crystal-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Água Mineral com Gás Crystal",
@@ -2182,7 +2182,7 @@
     },
     {
       "id": "corso-suco-de-frutas-sabores-dafruta-1l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Suco de Frutas Sabores Dafruta",
@@ -2206,7 +2206,7 @@
     },
     {
       "id": "corso-suco-caju-maguary-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Suco Caju Maguary",
@@ -2230,7 +2230,7 @@
     },
     {
       "id": "corso-refrigerante-guarana-pet-cruzeiro-2l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Refrigerante Guaraná Pet Cruzeiro",
@@ -2254,7 +2254,7 @@
     },
     {
       "id": "corso-absorvente-total-protect-cobertura-suave-c-abas-sym-8-unidades-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Absorvente Total Protect Cobertura Suave c/ Abas Sym",
@@ -2278,7 +2278,7 @@
     },
     {
       "id": "corso-toalha-umedecida-tropolino-leve-120un-e-pague-100un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Toalha Umedecida Tropolino",
@@ -2302,7 +2302,7 @@
     },
     {
       "id": "corso-hastes-flexiveis-cottonbaby-75un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Hastes Flexíveis Cottonbaby",
@@ -2326,7 +2326,7 @@
     },
     {
       "id": "corso-escova-classic-clean-macia-colgate-leve-3un-pague-2un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Escova Classic Clean Macia Colgate",
@@ -2350,7 +2350,7 @@
     },
     {
       "id": "corso-sabonete-farnese-180g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sabonete Farnese",
@@ -2374,7 +2374,7 @@
     },
     {
       "id": "corso-sabonete-em-barra-albany-85g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Sabonete em Barra Albany",
@@ -2398,7 +2398,7 @@
     },
     {
       "id": "corso-shampoo-pantene-175ml-200ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Shampoo Pantene",
@@ -2422,7 +2422,7 @@
     },
     {
       "id": "corso-shampoo-elseve-200ml-exceto-zero-caspa-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Shampoo Elseve",
@@ -2446,7 +2446,7 @@
     },
     {
       "id": "corso-shampoo-botanhico-tok-400ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Shampoo Botanhico Tok",
@@ -2470,7 +2470,7 @@
     },
     {
       "id": "corso-desodorante-aero-bozzano-monange-150ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Desodorante Aero Bozzano / Monange",
@@ -2494,7 +2494,7 @@
     },
     {
       "id": "corso-papel-higienico-branco-paloma-c-8un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Papel Higiênico Branco Paloma",
@@ -2518,7 +2518,7 @@
     },
     {
       "id": "corso-papel-higienico-folha-dupla-absolute-30m-fofinho-leve-12un-pague-11un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Papel Higiênico Folha Dupla Absolute 30m Fofinho",
@@ -2542,7 +2542,7 @@
     },
     {
       "id": "corso-tira-manchas-gel-refil-vanish-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Tira Manchas Gel Refil Vanish",
@@ -2566,7 +2566,7 @@
     },
     {
       "id": "corso-amaciante-de-roupas-triex-2l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Amaciante de Roupas Triex",
@@ -2590,7 +2590,7 @@
     },
     {
       "id": "corso-agua-sanitaria-triex-2l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Água Sanitária Triex",
@@ -2614,7 +2614,7 @@
     },
     {
       "id": "corso-alvejante-multi-uso-triex-2l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Alvejante Multi-Uso Triex",
@@ -2638,7 +2638,7 @@
     },
     {
       "id": "corso-limpador-multi-uso-triex-500ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Limpador Multi-Uso Triex",
@@ -2662,7 +2662,7 @@
     },
     {
       "id": "corso-desinfetante-candura-2l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Desinfetante Candura",
@@ -2686,7 +2686,7 @@
     },
     {
       "id": "corso-inseticida-multi-aero-sbp-450ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Inseticida Multi Aero SBP",
@@ -2710,7 +2710,7 @@
     },
     {
       "id": "corso-la-de-aco-bombril-45g-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Lã de Aço Bombril",
@@ -2734,7 +2734,7 @@
     },
     {
       "id": "corso-saco-p-lixo-fortao-10x50l-5x100l-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Saco p/ Lixo Fortão",
@@ -2758,7 +2758,7 @@
     },
     {
       "id": "corso-toalha-de-papel-branca-maxim-2-unidades-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Toalha de Papel Branca Maxim",
@@ -2782,7 +2782,7 @@
     },
     {
       "id": "corso-guardanapo-branco-23x22cm-maxim-c-50un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Guardanapo Branco 23x22cm Maxim",
@@ -2806,7 +2806,7 @@
     },
     {
       "id": "corso-filtro-de-papel-103-pacaembu-c-30un-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Filtro de Papel 103 Pacaembu",
@@ -2830,7 +2830,7 @@
     },
     {
       "id": "corso-filme-de-pvc-wyda-28cm-x-15m-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Filme de PVC Wyda",
@@ -2854,7 +2854,7 @@
     },
     {
       "id": "corso-copo-americano-190ml-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Copo Americano",
@@ -2878,7 +2878,7 @@
     },
     {
       "id": "corso-racao-para-caes-original-adultos-yuppie-2kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ração para Cães Original Adultos Yuppie",
@@ -2902,7 +2902,7 @@
     },
     {
       "id": "corso-racao-para-gatos-peixe-adultos-yuppie-1kg-2026-10-23",
-      "store": "Supermercado Corso",
+      "store": "Corso",
       "storeLogo": "https://corso.com.br/img/logo.png",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ração para Gatos Peixe Adultos Yuppie",

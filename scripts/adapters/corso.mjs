@@ -4,11 +4,12 @@ import { mergeBrandIntoName } from "../domain/brands.mjs";
 import { createOffer } from "./offer-factory.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const CORSO_URL = "https://corso.com.br/jornalfrente.php";
 const CORSO_STORE = {
-  name: "Supermercado Corso",
-  logo: "https://corso.com.br/img/logo.png",
+  name: "Corso",
+  logo: logoUrlForStoreId("corso"),
   branch: "Rua Eduardo Lopes Castilho, 495 · São João",
   source: "Folheto oficial · São João da Boa Vista",
 };

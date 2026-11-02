@@ -6,10 +6,11 @@ import { fetchWithRetry } from "./http.mjs";
 import { parseDateRange } from "../domain/parsing.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const BIGBOM_STORE = {
   name: "Big Bom",
-  logo: "https://bigbom.com.br/wp-content/uploads/2024/11/Logo-Big-Bom-branca.png",
+  logo: logoUrlForStoreId("bigbom"),
   branch: "Vila Zanetti · São João",
   source: "Folheto oficial · São João da Boa Vista",
 };

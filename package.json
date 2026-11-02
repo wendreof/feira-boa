@@ -17,11 +17,13 @@
     "send:price-alerts:dry": "node scripts/send-price-alerts.mjs --dry-run",
     "review:source": "node scripts/review-source.mjs",
     "monitor:sources": "node scripts/monitor-sources.mjs",
-    "monitor:status": "node scripts/write-source-status.mjs"
+    "monitor:status": "node scripts/write-source-status.mjs",
+    "test:logos": "node scripts/test-store-logos-playwright.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
     "pdf-parse": "^2.4.5",
+    "playwright": "^1.64.1",
     "typescript": "^7.0.2",
     "web-push": "^3.6.7"
   },

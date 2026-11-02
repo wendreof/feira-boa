@@ -11,7 +11,7 @@ const STATE_URL = new URL("../.offer-monitor-state.json", import.meta.url);
 const STORES = [
   { id: "sempre", name: "Sempre Vale" },
   { id: "bigbom", name: "Big Bom" },
-  { id: "corso", name: "Supermercado Corso" },
+  { id: "corso", name: "Corso" },
   { id: "paguemenos", name: "Pague Menos" },
   { id: "spasso", name: "Spasso Sabores" },
 ];

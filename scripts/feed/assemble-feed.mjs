@@ -1,6 +1,7 @@
 import { assignIcon } from "../domain/icons.mjs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
 import { normalizeOfferPresentation } from "../domain/presentation.mjs";
+import { applyPublishedLogos } from "../domain/store-logos.mjs";
 
 /**
  * Snapshots válidos são os que trazem loja e ao menos uma oferta.
@@ -88,8 +89,14 @@ export function assembleFeed({ fallbackStores, fallbackOffers, fallbackUpdatedAt
     else droppedOffers.push(offer.id);
   }
 
+  const { stores: publishedStores, offers: publishedOffers } = applyPublishedLogos({
+    stores: [...storeMap.values()],
+    offers,
+    snapshotsByStore,
+  });
+
   return {
-    feed: { schemaVersion: 1, updatedAt, stores: [...storeMap.values()], offers },
+    feed: { schemaVersion: 1, updatedAt, stores: publishedStores, offers: publishedOffers },
     warnings: { missingSnapshotStores, droppedOffers },
   };
 }

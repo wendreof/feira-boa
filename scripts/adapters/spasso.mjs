@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { fetchWithRetry } from "./http.mjs";
+import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
@@ -44,7 +45,7 @@ export async function extractSpasso(customUrl = null) {
     store: {
       name: "Spasso Sabores",
       branch: "Av. Dr. Durval Nicolau, 1572 · São João",
-      logo: "https://spassosabores.com.br/wp-content/uploads/2020/12/cropped-faction-icon-website-spasso-sabores-270x270.png",
+      logo: logoUrlForStoreId("spasso"),
       source: "Folheto oficial · Loja São João",
       sourceUrl: pageUrl,
       from: validity.from,

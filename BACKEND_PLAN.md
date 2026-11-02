@@ -139,7 +139,5 @@ Free tiers are useful for a small pilot but can change. As checked on 2026-10-16
 
 ## Token-saving workflow preferences
 
-- Use Caveman Ultra style for concise assistant responses.
-- Caveman components and RTK v0.50.0 are installed. Configure RTK's global Codex hook after a refreshed shell can find `rtk`; until then, use RTK directly when available. RTK filters supported shell commands; it does not reduce built-in file reads or conversation text.
-- Keep searches and file reads scoped to relevant files and line ranges. Prefer summaries and failures-only output for long-running commands.
-- Avoid unrelated investigation and repeated context. Run only checks needed for the requested work.
+- Caveman Ultra is the default voice and workflow (`.cursor/rules/caveman-ultra.mdc`).
+- RTK v0.50.0 when the shell/hook exposes it; otherwise RTK directly when available.

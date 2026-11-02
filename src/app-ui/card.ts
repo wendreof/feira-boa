@@ -1,7 +1,8 @@
 import { appState, type CardRefs } from "./state";
 import { element, shareIcon, favoriteButton, reactionButton } from "./elements";
-import { money, dateLabel } from "../view/format";
+import { money, dateLabel, expiryHighlightLabel } from "../view/format";
 import { offerCategory, offerOrder } from "./offer-model";
+import { createOfferStoreLogo, updateOfferStoreLogo } from "./store-logo";
 import { type Offer } from "../types";
 
 export function createOfferCard(offer: Offer): CardRefs {
@@ -34,7 +35,9 @@ export function createOfferCard(offer: Offer): CardRefs {
   priceBlock.append(price, discount, oldPrice);
   const valid = element("span", "valid-until", "Válido");
   const validStrong = element("strong");
-  valid.append(validStrong);
+  const expiryFlag = element("span", "offer-expiry-flag");
+  expiryFlag.hidden = true;
+  valid.append(validStrong, expiryFlag);
   priceRow.append(priceBlock, valid);
 
   const reactionGroup = element("div", "offer-reactions");
@@ -46,7 +49,7 @@ export function createOfferCard(offer: Offer): CardRefs {
 
   const note = element("p", "offer-note");
   const source = element("div", "card-source");
-  const branch = element("span");
+  const { root: storeLogo, fallback: storeLogoFallback, img: storeLogoImg } = createOfferStoreLogo();
   const sourceLink = element("a");
   sourceLink.target = "_blank";
   sourceLink.rel = "noopener";
@@ -55,13 +58,14 @@ export function createOfferCard(offer: Offer): CardRefs {
   share.type = "button";
   share.dataset.shareId = offer.id;
   share.append(shareIcon());
-  source.append(branch, document.createTextNode(" · "), sourceLink, share);
+  source.append(storeLogo, document.createTextNode(" · "), sourceLink, share);
 
   body.append(notice, titleRow, meta, info, priceRow, reactionGroup, note, source);
   root.append(visual, body);
 
   const refs: CardRefs = {
-    root, art, name, spec, info, price, oldPrice, discount, valid: validStrong, notice, note, branch,
+    root, art, name, spec, info, price, oldPrice, discount, sticker, valid: validStrong, expiryFlag, notice, note,
+    storeLogo, storeLogoFallback, storeLogoImg,
     sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
     like: like.button, likeCount: like.count,
   };
@@ -93,12 +97,30 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
     refs.discount.removeAttribute("aria-label");
   }
   refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
+  const expiryLabel = expiryHighlightLabel(offer);
+  refs.expiryFlag.textContent = expiryLabel ?? "";
+  refs.expiryFlag.hidden = !expiryLabel;
+  refs.expiryFlag.parentElement?.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
+  refs.root.classList.toggle("is-expiring-soon", Boolean(expiryLabel));
+  refs.root.classList.toggle("is-expiring-today", expiryLabel === "Último dia");
+  if (expiryLabel) {
+    refs.sticker.textContent = expiryLabel;
+    refs.sticker.classList.add("offer-sticker-expiry");
+    refs.sticker.classList.toggle("offer-sticker-expiry-today", expiryLabel === "Último dia");
+  } else {
+    refs.sticker.textContent = "OFERTA";
+    refs.sticker.classList.remove("offer-sticker-expiry", "offer-sticker-expiry-today");
+  }
   refs.notice.textContent = offer.notice ?? "";
   refs.notice.hidden = !offer.notice;
   refs.note.textContent = offer.note;
   refs.note.hidden = !offer.note;
-  refs.branch.textContent = offer.branch;
+  updateOfferStoreLogo(
+    { root: refs.storeLogo, fallback: refs.storeLogoFallback, img: refs.storeLogoImg },
+    offer,
+  );
   refs.sourceLink.href = /^https:\/\//.test(offer.sourceUrl) ? offer.sourceUrl : "#";
+  refs.sourceLink.title = offer.branch ? `${offer.store} · ${offer.branch}` : offer.store;
   refs.share.setAttribute("aria-label", `Compartilhar ${offer.name}`);
   refs.share.title = `Compartilhar ${offer.name}`;
 

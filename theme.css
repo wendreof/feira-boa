@@ -112,6 +112,39 @@
 }
 
 :root[data-theme="dark"] .source-button,
+:root[data-theme="dark"] .valid-until.has-expiry-soon strong {
+  color: #ffc96a;
+}
+
+:root[data-theme="dark"] .offer-expiry-flag {
+  background: linear-gradient(180deg, #4a3818, #3d3018);
+  color: #ffdca8;
+  border-color: #c8842a;
+  box-shadow: 0 2px 12px #00000055;
+}
+
+:root[data-theme="dark"] .offer-card.is-expiring-soon {
+  border-color: #c8842a;
+  box-shadow: 0 0 0 1px #c8842a88, 0 14px 44px #00000040;
+}
+
+:root[data-theme="dark"] .offer-card.is-expiring-today {
+  border-color: #e85d2c;
+  box-shadow: 0 0 0 2px #e85d2c88, 0 14px 44px #00000040;
+}
+
+:root[data-theme="dark"] .offer-sticker-expiry {
+  background: linear-gradient(180deg, #5c4518, #4a3818);
+  color: #ffdca8;
+  border-color: #c8842a;
+}
+
+:root[data-theme="dark"] .offer-sticker-expiry-today {
+  background: linear-gradient(180deg, #6b2d20, #4a1810);
+  color: #ffb4a0;
+  border-color: #e85d2c;
+}
+
 :root[data-theme="dark"] .source-copy > span:last-child,
 :root[data-theme="dark"] .source-kicker,
 :root[data-theme="dark"] .category,

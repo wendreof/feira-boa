@@ -526,7 +526,20 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 .card-source{flex-wrap:wrap;row-gap:3px}
 .card-source .share-offer{margin-left:auto}
 .price{white-space:nowrap}
-.valid-until{flex:0 0 auto}
+.valid-until{flex:0 0 auto;text-align:right}
+.valid-until.has-expiry-soon strong{color:#b45309;font-weight:800}
+.offer-expiry-flag{display:block;margin-top:5px;padding:4px 10px;border-radius:999px;background:linear-gradient(180deg,#fff7e8,#ffe8c7);color:#9a4500;border:1px solid #e8a030;font:800 11px/1.3 'Manrope',sans-serif;letter-spacing:.03em;white-space:nowrap;box-shadow:0 2px 10px #e8a03045}
+.offer-expiry-flag[hidden]{display:none}
+.offer-card.is-expiring-soon{border-color:#e8a030;box-shadow:0 0 0 1px #e8a03055,0 14px 44px #203c270d}
+.offer-card.is-expiring-today{border-color:#e85d2c;box-shadow:0 0 0 2px #e85d2c66,0 14px 44px #203c270d}
+.offer-card.is-expiring-soon .visual{background:linear-gradient(180deg,var(--tone,#eaf2e7),#fff4e6)}
+.offer-card.is-expiring-today .visual{background:linear-gradient(180deg,var(--tone,#eaf2e7),#ffece6)}
+.offer-sticker-expiry{right:auto;left:12px;background:linear-gradient(180deg,#fff1dc,#ffd89a);color:#9a4500;border:1px solid #e8a030;font-size:9.5px;letter-spacing:.04em;box-shadow:0 4px 14px #e8a03050;max-width:calc(100% - 56px);text-align:center;line-height:1.2;padding:6px 8px}
+.offer-sticker-expiry-today{background:linear-gradient(180deg,#ffe8e0,#ffb4a0);color:#b42318;border-color:#e85d2c;box-shadow:0 4px 14px #e85d2c55}
+.list-view .offer-expiry-flag{display:inline-block;margin-top:2px;font-size:10.5px;padding:3px 9px}
+.list-view .offer-card.is-expiring-soon,.list-view .offer-card.is-expiring-today{border-left-width:4px;border-left-style:solid}
+.list-view .offer-card.is-expiring-soon{border-left-color:#e8a030}
+.list-view .offer-card.is-expiring-today{border-left-color:#e85d2c}
 @media(max-width:420px){.offer-grid,.offer-grid:not(.list-view){grid-template-columns:1fr}.visual{height:150px}.product-art{font-size:70px}}
 @media(max-width:360px){.card-source{font-size:9px}.share-offer{font-size:9px}.valid-until{font-size:9px}.valid-until strong{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.offer-card:hover{transform:none}}
@@ -535,8 +548,9 @@ body.sidebar-collapsed .sidebar-subnav{display:none}
 
 .card-body h3{margin-top:0}
 .spec{display:block;line-height:1.35}
-.card-source .offer-store-logo{flex:0 0 auto;width:22px;height:18px;border-radius:4px}
-.card-source .offer-store-logo.bigbom-mark{padding:2px}
+.card-source .offer-store-logo{flex:0 0 auto;width:34px;height:26px;border-radius:6px}
+.card-source .offer-store-logo.bigbom-mark{padding:3px}
+.card-source .offer-store-logo.paguemenos-logo{background:#fff0d9}
 
 .login-prompt{width:min(420px,calc(100vw - 32px));max-width:none;padding:0;border:0;border-radius:18px;background:transparent;color:var(--ink)}
 .login-prompt::backdrop{background:#122018a8;backdrop-filter:blur(3px)}

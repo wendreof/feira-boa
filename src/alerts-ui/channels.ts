@@ -273,9 +273,18 @@ async function runAction(action: string, channel: ChannelImpl, onChange: () => v
     if (action === "connect") {
       setFeedback("");
       await channel.connect(userId);
-      statuses.set(channel.id, { linked: false, pending: true, deliveryBlocked: false });
-      setFeedback(`Link gerado. Confirme a conexão no ${channel.name}.`);
-      startPendingPoll(onChange);
+      if (channel.id === "push") {
+        await refreshChannelStates(userId);
+        const status = statusFor(channel);
+        statuses.set(channel.id, { linked: status.linked, pending: false, deliveryBlocked: false });
+        setFeedback(status.linked
+          ? "Navegador conectado neste dispositivo. Os avisos chegam aqui e no celular se você conectar lá também."
+          : "Não foi possível confirmar a inscrição neste navegador. Tente Conectar de novo.", !status.linked);
+      } else {
+        statuses.set(channel.id, { linked: false, pending: true, deliveryBlocked: false });
+        setFeedback(`Link gerado. Confirme a conexão no ${channel.name}.`);
+        startPendingPoll(onChange);
+      }
     } else if (action === "check") {
       await refreshChannelStates(userId);
       const status = statusFor(channel);

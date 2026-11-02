@@ -118,6 +118,19 @@ export function alertsBanner({ activeCount, channelEnabled }) {
   return { tone: "ok", message: "Você receberá avisos pelos canais conectados quando houver ofertas dentro dos seus alertas." };
 }
 
+/** @param {Array<{ enabled?: boolean }>} rules */
+export function countEnabledAlertRules(rules) {
+  return (rules ?? []).filter((rule) => rule.enabled !== false).length;
+}
+
+/**
+ * @param {{ enabledRuleCount: number, sharedOfferView?: boolean, favoritesOnly?: boolean }} input
+ */
+export function shouldPromoteAlertsCreation({ enabledRuleCount, sharedOfferView = false, favoritesOnly = false }) {
+  if (sharedOfferView || favoritesOnly) return false;
+  return enabledRuleCount === 0;
+}
+
 /** Estado de um envio do histórico. */
 export function notificationStatus(entry) {
   return entry.result === "sent"

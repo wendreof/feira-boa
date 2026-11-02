@@ -639,6 +639,10 @@ button:disabled{cursor:not-allowed;opacity:.55}
 .account-panel .account-button{position:relative;background:#fff;color:#155b3b;border:0;border-radius:999px;padding:10px 16px;font:800 11.5px 'DM Sans',sans-serif;white-space:nowrap;box-shadow:0 6px 16px #0d3b2540}
 .account-panel .account-button:hover{filter:brightness(.97)}
 .account-panel .account-status{position:relative;flex:1 0 100%;margin:0;color:#cdeadb;font-size:10.5px;overflow:visible;white-space:normal}
+.alerts-invite-panel{background:linear-gradient(120deg,#6b4518,#b7791f 52%,#f1c75b);box-shadow:0 12px 30px #6b451833;margin-top:10px}
+.alerts-invite-panel .account-panel-text span{color:#fff4dc}
+.alerts-invite-panel .account-button{color:#6b4518}
+.alerts-invite-panel[hidden]{display:none}
 
 /* Mobile: card de conta, cabeçalho de resultados e cards mais compactos */
 @media(max-width:760px){

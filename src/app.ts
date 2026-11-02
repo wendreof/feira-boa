@@ -9,6 +9,7 @@ import { bindCompactTopbar, setAccountStatus, updateAccountControls } from "./ap
 import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
 import { connectAccount, loadAccountApi, loadReactionsApi, saveThemePreference } from "./app-ui/account-sync";
+import { refreshAlertsInvitePanel, syncAlertsInviteForUser } from "./app-ui/alerts-invite";
 import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
 import { renderOffers } from "./app-ui/render";
@@ -75,6 +76,7 @@ function restoreAccountSession(): void {
       }
       document.documentElement.dataset.authBootstrap = "guest";
       updateAccountControls();
+      void syncAlertsInviteForUser(null);
       setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
       if (appState.favoriteOnly) {
         askForLogin(favoritesToggle, "favorite", () => {
@@ -120,6 +122,7 @@ restoreAccountSession();
   renderPopularItems();
   renderFilters();
   renderOffers();
+  refreshAlertsInvitePanel();
   applySourceFreshness();
   updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
   updatedLabel.title = "Data da última atualização do catálogo de ofertas";

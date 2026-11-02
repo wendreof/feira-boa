@@ -10,6 +10,7 @@ import { getPriceBounds } from "./filters";
 import { money, isActive, todayInSaoPaulo, dateLabel } from "../view/format";
 import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./offer-model";
 import type { Offer } from "../types";
+import { refreshAlertsInvitePanel } from "./alerts-invite";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -149,4 +150,5 @@ export function renderOffers(): void {
     resultsAnnouncement.textContent = "";
     window.requestAnimationFrame(() => { resultsAnnouncement.textContent = announcement; });
   }
+  refreshAlertsInvitePanel();
 }

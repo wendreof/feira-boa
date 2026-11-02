@@ -44,6 +44,7 @@ export const appState: {
   favoriteIds: Set<string>;
   favoriteOnly: boolean;
   sharedOfferId: string | null;
+  enabledAlertRulesCount: number | null;
   viewMode: ViewMode;
   currentUserId: string | null;
   preferencesLoaded: boolean;
@@ -66,6 +67,7 @@ export const appState: {
   favoriteIds: new Set(),
   favoriteOnly: false,
   sharedOfferId: null,
+  enabledAlertRulesCount: null,
   viewMode: "grid",
   currentUserId: null,
   preferencesLoaded: false,

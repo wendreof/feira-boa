@@ -6,27 +6,60 @@ import { supabase } from "../supabase-client";
 import { TELEGRAM_BOT_USERNAME } from "../telegram-config";
 import { showToast } from "../shared/toast";
 
+interface ChannelLinkState {
+  linked: boolean;
+  deliveryBlocked: boolean;
+}
+
 interface ChannelImpl {
   id: string;
   name: string;
   description: string;
-  /** Falso enquanto o canal não estiver configurado; aparece como "Em breve". */
   available(): boolean;
-  /** Indica se a conta já tem este canal conectado. */
-  load(userId: string): Promise<boolean>;
-  /** Inicia a conexão. Pode deixar o canal aguardando confirmação do usuário. */
+  load(userId: string): Promise<ChannelLinkState>;
   connect(userId: string): Promise<void>;
   disconnect(userId: string): Promise<void>;
-  /** Texto de orientação exibido enquanto a conexão aguarda confirmação. */
   waitingHint?: string;
 }
 
 interface ChannelStatus {
   linked: boolean;
   pending: boolean;
+  deliveryBlocked: boolean;
 }
 
 const LINK_TTL_MS = 24 * 60 * 60 * 1000;
+const PENDING_POLL_MS = 3000;
+const PENDING_POLL_MAX_MS = 120_000;
+
+let pendingPollTimer: ReturnType<typeof setInterval> | null = null;
+let pendingPollUntil = 0;
+
+function stopPendingPoll(): void {
+  if (pendingPollTimer !== null) {
+    clearInterval(pendingPollTimer);
+    pendingPollTimer = null;
+  }
+}
+
+function startPendingPoll(onChange: () => void): void {
+  stopPendingPoll();
+  pendingPollUntil = Date.now() + PENDING_POLL_MAX_MS;
+  pendingPollTimer = setInterval(async () => {
+    if (!currentUserId || Date.now() > pendingPollUntil) {
+      stopPendingPoll();
+      return;
+    }
+    await refreshChannelStates(currentUserId);
+    renderChannels();
+    onChange();
+    const telegram = statuses.get("telegram");
+    if (telegram?.linked) {
+      stopPendingPoll();
+      setFeedback("Telegram conectado. Você receberá os avisos por lá.");
+    }
+  }, PENDING_POLL_MS);
+}
 
 function randomToken(): string {
   const bytes = new Uint8Array(24);
@@ -38,20 +71,23 @@ const telegram: ChannelImpl = {
   id: "telegram",
   name: "Telegram",
   description: "Receba os avisos de preço como mensagem no Telegram.",
-  waitingHint: "Abra o Telegram, toque em Iniciar no bot e depois em Verificar conexão.",
+  waitingHint: "Abra o Telegram e toque em Iniciar no bot. A confirmação costuma ser instantânea; esta página atualiza sozinha.",
   available: () => TELEGRAM_BOT_USERNAME.length > 0,
   async load(userId) {
-    const { data, error } = await supabase.from("telegram_links").select("user_id").eq("user_id", userId).maybeSingle();
+    const { data, error } = await supabase
+      .from("telegram_links")
+      .select("user_id, delivery_blocked")
+      .eq("user_id", userId)
+      .maybeSingle();
     if (error) throw error;
-    return data !== null;
+    if (!data) return { linked: false, deliveryBlocked: false };
+    return { linked: true, deliveryBlocked: Boolean(data.delivery_blocked) };
   },
   async connect(userId) {
     const token = randomToken();
-    // Abre a janela antes de qualquer await: depois de uma espera o navegador bloqueia como pop-up.
     window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=${token}`, "_blank", "noopener");
     const { error: clearError } = await supabase.from("telegram_link_tokens").delete().eq("user_id", userId);
     if (clearError) throw clearError;
-    // O job de sincronização roda a cada 5 min: o link (15 min) ainda dura bem mais que um ciclo.
     const expiresAt = new Date(Date.now() + LINK_TTL_MS).toISOString();
     const { error } = await supabase.from("telegram_link_tokens").insert({ token, user_id: userId, expires_at: expiresAt });
     if (error) throw error;
@@ -82,11 +118,29 @@ function setFeedback(message: string, isError = false): void {
 }
 
 function statusFor(channel: ChannelImpl): ChannelStatus {
-  return statuses.get(channel.id) ?? { linked: false, pending: false };
+  return statuses.get(channel.id) ?? { linked: false, pending: false, deliveryBlocked: false };
+}
+
+async function refreshChannelStates(userId: string): Promise<void> {
+  await Promise.all(CHANNELS.map(async (channel) => {
+    try {
+      const state = await channel.load(userId);
+      const previous = statusFor(channel);
+      statuses.set(channel.id, {
+        linked: state.linked,
+        deliveryBlocked: state.deliveryBlocked,
+        pending: state.linked ? false : previous.pending,
+      });
+    } catch (error) {
+      console.warn(`Could not load the ${channel.name} channel.`, error);
+      statuses.set(channel.id, { linked: false, pending: false, deliveryBlocked: false });
+    }
+  }));
 }
 
 function channelBadge(channel: ChannelImpl, status: ChannelStatus): string {
   if (!channel.available()) return "Em breve";
+  if (status.linked && status.deliveryBlocked) return "Bloqueado";
   if (status.linked) return "Conectado";
   if (status.pending) return "Aguardando";
   return "Desconectado";
@@ -113,7 +167,9 @@ function renderChannel(channel: ChannelImpl): HTMLLIElement {
   name.textContent = channel.name;
   const badge = document.createElement("span");
   badge.className = "channel-badge";
-  badge.dataset.state = channel.available() ? (status.linked ? "linked" : status.pending ? "pending" : "off") : "soon";
+  badge.dataset.state = channel.available()
+    ? (status.linked && status.deliveryBlocked ? "blocked" : status.linked ? "linked" : status.pending ? "pending" : "off")
+    : "soon";
   badge.textContent = channelBadge(channel, status);
   head.append(name, badge);
 
@@ -128,6 +184,12 @@ function renderChannel(channel: ChannelImpl): HTMLLIElement {
     soon.className = "channel-hint";
     soon.textContent = "Disponível em breve.";
     actions.append(soon);
+  } else if (status.linked && status.deliveryBlocked) {
+    const hint = document.createElement("p");
+    hint.className = "channel-hint";
+    hint.textContent = "O Telegram bloqueou mensagens deste bot. Desbloqueie o bot no app e toque em Reconectar.";
+    actions.append(hint, actionButton("Reconectar", "connect", channel.id));
+    actions.append(actionButton("Desconectar", "disconnect", channel.id, "account-button secondary danger-action"));
   } else if (status.linked) {
     actions.append(actionButton("Desconectar", "disconnect", channel.id, "account-button secondary danger-action"));
   } else if (status.pending) {
@@ -151,46 +213,46 @@ export function renderChannels(): void {
 /** Carrega o estado de todos os canais para a conta. Falhas viram "desconectado". */
 export async function loadChannels(userId: string): Promise<void> {
   currentUserId = userId;
-  await Promise.all(CHANNELS.map(async (channel) => {
-    try {
-      const linked = await channel.load(userId);
-      statuses.set(channel.id, { linked, pending: linked ? false : statusFor(channel).pending });
-    } catch (error) {
-      console.warn(`Could not load the ${channel.name} channel.`, error);
-      statuses.set(channel.id, { linked: false, pending: false });
-    }
-  }));
+  await refreshChannelStates(userId);
   renderChannels();
 }
 
-/** True quando ao menos um canal está conectado (usado no aviso do topo). */
+/** True quando ao menos um canal está conectado e pode receber envios. */
 export function anyChannelLinked(): boolean {
-  return [...statuses.values()].some((status) => status.linked);
+  return [...statuses.values()].some((status) => status.linked && !status.deliveryBlocked);
 }
 
-async function runAction(action: string, channel: ChannelImpl): Promise<void> {
+async function runAction(action: string, channel: ChannelImpl, onChange: () => void): Promise<void> {
   if (!currentUserId) return;
   const userId = currentUserId;
   try {
     if (action === "connect") {
       setFeedback("");
       await channel.connect(userId);
-      statuses.set(channel.id, { linked: false, pending: true });
+      statuses.set(channel.id, { linked: false, pending: true, deliveryBlocked: false });
       setFeedback(`Link gerado. Confirme a conexão no ${channel.name}.`);
+      startPendingPoll(onChange);
     } else if (action === "check") {
-      const linked = await channel.load(userId);
-      statuses.set(channel.id, { linked, pending: !linked });
-      setFeedback(linked ? `${channel.name} conectado. Você receberá os avisos por lá.` : `Ainda não recebemos a confirmação no ${channel.name}. Toque em Iniciar no bot e tente de novo.`);
+      await refreshChannelStates(userId);
+      const status = statusFor(channel);
+      statuses.set(channel.id, { ...status, pending: !status.linked });
+      if (status.linked && status.deliveryBlocked) {
+        setFeedback("Telegram vinculado, mas o bot está bloqueado. Desbloqueie no app e reconecte.", true);
+      } else {
+        setFeedback(status.linked ? `${channel.name} conectado. Você receberá os avisos por lá.` : `Ainda não recebemos a confirmação no ${channel.name}. Toque em Iniciar no bot e tente de novo.`);
+      }
     } else if (action === "disconnect") {
       if (!window.confirm(`Desconectar o ${channel.name}? Você deixará de receber os avisos por ele.`)) return;
       await channel.disconnect(userId);
-      statuses.set(channel.id, { linked: false, pending: false });
+      stopPendingPoll();
+      statuses.set(channel.id, { linked: false, pending: false, deliveryBlocked: false });
       setFeedback(`${channel.name} desconectado.`);
     }
   } catch (error) {
     setFeedback(`Não foi possível concluir: ${errorMessage(error)}`, true);
   }
   renderChannels();
+  onChange();
 }
 
 /** Liga os botões da lista. `onChange` roda depois de cada mudança de estado. */
@@ -201,7 +263,7 @@ export function bindChannels(onChange: () => void): void {
     const channel = CHANNELS.find((item) => item.id === button.dataset.channelId);
     if (!channel) return;
     button.disabled = true;
-    await runAction(button.dataset.channelAction ?? "", channel);
-    onChange();
+    await runAction(button.dataset.channelAction ?? "", channel, onChange);
+    button.disabled = false;
   });
 }

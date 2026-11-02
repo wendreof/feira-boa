@@ -2,15 +2,19 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   buildAlertMessage,
+  buildTelegramDigestText,
+  buildTelegramReplyMarkup,
   buildTelegramText,
+  expiryHighlightForAlerts,
   formatShortDate,
   matchOffersToUsers,
   offerUrl,
+  partitionTelegramDelivery,
   pendingNotifications,
 } from "../scripts/alerts/plan.mjs";
 
 const offer = (id, extra = {}) => ({
-  id, store: "Alpha", name: "Arroz Tipo 1", productTypes: ["Arroz"], price: 20, validTo: "2026-10-25", ...extra,
+  id, store: "Alpha", name: "Arroz Tipo 1", productTypes: ["Arroz"], price: 20, validFrom: "2026-10-20", validTo: "2026-10-25", ...extra,
 });
 
 test("matches an enabled rule to offers at or below the target price", () => {
@@ -42,22 +46,23 @@ test("short date drops the year and reorders to dd/mm", () => {
   assert.equal(formatShortDate("bogus"), "bogus");
 });
 
-test("telegram text shows product, branch, previous price with discount and short validity", () => {
+test("telegram text uses store name, expiry highlight and no raw link line", () => {
   const text = buildTelegramText(
     offer("sempre-x", { icon: "🥩", name: "Contrafilé Bovino", store: "Sempre Vale", branch: "Durval Nicolau", price: 49.9, previousPrice: 57.9, validTo: "2026-11-01" }),
     "https://feira.test/",
+    "2026-11-01",
   );
-  const [name, storeLine, priceLine, validity, link, , disclaimer] = text.split("\n");
-  assert.equal(name, "🥩 Contrafilé Bovino");
-  assert.equal(storeLine, "Sempre Vale · Durval Nicolau");
-  assert.match(priceLine, /^R\$\s?49,90 \(antes R\$\s?57,90, −14%\)$/);
-  assert.equal(validity, "Válida até 01/11");
-  assert.equal(link, "https://feira.test/index.html?offer=sempre-x");
-  assert.equal(disclaimer, "Preço do folheto. Confirme na loja.");
+  const lines = text.split("\n");
+  assert.equal(lines[0], "🥩 Contrafilé Bovino");
+  assert.equal(lines[1], "Sempre Vale");
+  assert.match(lines[2], /^R\$\s?49,90 \(antes R\$\s?57,90, −14%\)$/);
+  assert.equal(lines[3], "Válida até 01/11");
+  assert.equal(lines[4], "Último dia");
+  assert.doesNotMatch(text, /index\.html\?offer=/);
 });
 
 test("telegram text omits branch, discount and icon when they are absent", () => {
-  const text = buildTelegramText(offer("a", { price: 19.9, previousPrice: null, validTo: "2026-10-25" }), "https://feira.test/");
+  const text = buildTelegramText(offer("a", { price: 19.9, previousPrice: null, validTo: "2026-10-25" }), "https://feira.test/", "2026-10-22");
   const lines = text.split("\n");
   assert.equal(lines[0], "Arroz Tipo 1");
   assert.equal(lines[1], "Alpha");
@@ -66,6 +71,29 @@ test("telegram text omits branch, discount and icon when they are absent", () =>
 });
 
 test("telegram text ignores a previous price that is not higher than the current one", () => {
-  const text = buildTelegramText(offer("a", { price: 19.9, previousPrice: 19.9 }), "https://feira.test/");
+  const text = buildTelegramText(offer("a", { price: 19.9, previousPrice: 19.9 }), "https://feira.test/", "2026-10-22");
   assert.doesNotMatch(text, /antes/);
+});
+
+test("telegram reply markup opens the offer on the site", () => {
+  const markup = buildTelegramReplyMarkup(offer("a"), "https://feira.test/");
+  assert.equal(markup.inline_keyboard[0][0].url, "https://feira.test/index.html?offer=a");
+});
+
+test("partitionTelegramDelivery caps per user and builds digest list", () => {
+  const pending = [
+    { userId: "u1", offer: offer("1") },
+    { userId: "u1", offer: offer("2") },
+    { userId: "u1", offer: offer("3") },
+    { userId: "u2", offer: offer("4") },
+  ];
+  const { immediate, digests } = partitionTelegramDelivery(pending, 2);
+  assert.equal(immediate.length, 3);
+  assert.equal(digests.length, 1);
+  assert.equal(digests[0].offers.length, 1);
+  assert.match(buildTelegramDigestText(digests[0].offers, "https://feira.test/"), /alertas\.html/);
+});
+
+test("expiryHighlightForAlerts flags tomorrow", () => {
+  assert.equal(expiryHighlightForAlerts({ validFrom: "2026-11-01", validTo: "2026-11-02" }, "2026-11-01"), "Expira amanhã");
 });

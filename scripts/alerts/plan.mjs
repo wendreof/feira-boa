@@ -45,6 +45,21 @@ export function formatShortDate(value) {
   return match ? `${match[2]}/${match[1]}` : String(value ?? "");
 }
 
+function addCalendarDays(isoDate, days) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const anchor = new Date(Date.UTC(year, month - 1, day, 12));
+  anchor.setUTCDate(anchor.getUTCDate() + days);
+  return anchor.toISOString().slice(0, 10);
+}
+
+/** Destaque de validade (AAAA-MM-DD `today`, fuso São Paulo no job). */
+export function expiryHighlightForAlerts(offer, today) {
+  if (today < offer.validFrom || today > offer.validTo) return null;
+  if (offer.validTo === addCalendarDays(today, 1)) return "Expira amanhã";
+  if (offer.validTo === today) return "Último dia";
+  return null;
+}
+
 /** Título e corpo da notificação de uma oferta (guardados em notification_log). */
 export function buildAlertMessage(offer) {
   return {
@@ -54,14 +69,14 @@ export function buildAlertMessage(offer) {
 }
 
 export const TELEGRAM_DISCLAIMER = "Preço do folheto. Confirme na loja.";
+export const TELEGRAM_MAX_OFFERS_PER_USER = 5;
 
 /**
- * Texto da mensagem enviada no Telegram: produto, loja/unidade, preço (com preço
- * anterior e desconto quando existem), validade curta, link e aviso curto.
+ * Texto da mensagem enviada no Telegram: produto, loja, preço, validade e urgência.
+ * O link fica no botão inline (`buildTelegramReplyMarkup`).
  */
-export function buildTelegramText(offer, siteUrl) {
+export function buildTelegramText(offer, siteUrl, today) {
   const icon = offer.icon ? `${offer.icon} ` : "";
-  const storeLine = offer.branch ? `${offer.store} · ${offer.branch}` : offer.store;
   let priceLine = formatOfferPrice(offer.price);
   const previous = Number(offer.previousPrice);
   if (Number.isFinite(previous) && previous > offer.price) {
@@ -71,12 +86,51 @@ export function buildTelegramText(offer, siteUrl) {
   }
   const lines = [
     `${icon}${offer.name}`,
-    storeLine,
+    offer.store,
     priceLine,
     `Válida até ${formatShortDate(offer.validTo)}`,
-    offerUrl(siteUrl, offer),
   ];
+  if (today) {
+    const expiry = expiryHighlightForAlerts(offer, today);
+    if (expiry) lines.push(expiry);
+  }
+  void siteUrl;
   return `${lines.join("\n")}\n\n${TELEGRAM_DISCLAIMER}`;
+}
+
+export function buildTelegramReplyMarkup(offer, siteUrl) {
+  return {
+    inline_keyboard: [[{ text: "Ver oferta no site", url: offerUrl(siteUrl, offer) }]],
+  };
+}
+
+/**
+ * Limita mensagens por usuário; o restante vira um resumo único (não deduplicado no log).
+ */
+export function partitionTelegramDelivery(pending, maxPerUser = TELEGRAM_MAX_OFFERS_PER_USER) {
+  const byUser = new Map();
+  for (const item of pending) {
+    const list = byUser.get(item.userId) ?? [];
+    list.push(item);
+    byUser.set(item.userId, list);
+  }
+  const immediate = [];
+  const digests = [];
+  for (const [userId, items] of byUser) {
+    immediate.push(...items.slice(0, maxPerUser));
+    if (items.length > maxPerUser) digests.push({ userId, offers: items.slice(maxPerUser) });
+  }
+  return { immediate, digests };
+}
+
+export function buildTelegramDigestText(offers, siteUrl) {
+  const alertsUrl = new URL("alertas.html", siteUrl).href;
+  const preview = offers.slice(0, 8).map((offer) => {
+    const icon = offer.icon ? `${offer.icon} ` : "";
+    return `• ${icon}${offer.name} · ${formatOfferPrice(offer.price)} · ${offer.store}`;
+  });
+  const tail = offers.length > 8 ? `\n… e mais ${offers.length - 8}.` : "";
+  return `Mais ${offers.length} oferta(s) nos seus alertas:\n${preview.join("\n")}${tail}\n\nVer regras: ${alertsUrl}`;
 }
 
 /** Link da oferta no site, usado pela notificação. */

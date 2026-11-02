@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T01:13:59.414Z",
+  "updatedAt": "2026-11-02T02:42:11.436Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -10240,7 +10240,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Limpadores",
-      "price": 18.39,
+      "price": 16.79,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",

@@ -17,6 +17,7 @@ const MAIN_STORES = [
   { id: "paguemenos", src: "logos/paguemenos.png" },
   { id: "spassosabores", src: "logos/spasso.png" },
   { id: "corso", src: "logos/corso.png" },
+  { id: "spani", src: "logos/spani.png" },
 ];
 
 async function waitForServer(url, attempts = 40) {

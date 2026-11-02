@@ -1,5 +1,5 @@
 import { loadAlertRules } from "../alerts";
-import { shouldPromoteAlertsCreation } from "../shared/alert-rules.mjs";
+import { countEnabledAlertRules, shouldPromoteAlertsCreation } from "../shared/alert-rules.mjs";
 import { appState } from "./state";
 
 const panel = document.querySelector<HTMLAnchorElement>("#alerts-invite");
@@ -14,6 +14,11 @@ function loginHref(): string {
 
 export function refreshAlertsInvitePanel(): void {
   if (!panel || !copy || !action) return;
+
+  if (!appState.alertsInviteBootstrapped) {
+    panel.hidden = true;
+    return;
+  }
 
   const rulesKnown = appState.currentUserId ? appState.enabledAlertRulesCount !== null : true;
   const enabledRuleCount = appState.currentUserId
@@ -47,15 +52,17 @@ export function refreshAlertsInvitePanel(): void {
 export async function syncAlertsInviteForUser(userId: string | null): Promise<void> {
   if (!userId) {
     appState.enabledAlertRulesCount = 0;
+    appState.alertsInviteBootstrapped = true;
     refreshAlertsInvitePanel();
     return;
   }
   try {
     const rules = await loadAlertRules(userId);
-    appState.enabledAlertRulesCount = rules.filter((rule) => rule.enabled).length;
+    appState.enabledAlertRulesCount = countEnabledAlertRules(rules);
   } catch (error) {
     console.warn("Could not load alert rules for the home invite.", error);
     appState.enabledAlertRulesCount = null;
   }
+  appState.alertsInviteBootstrapped = true;
   refreshAlertsInvitePanel();
 }

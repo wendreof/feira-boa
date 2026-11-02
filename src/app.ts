@@ -9,11 +9,12 @@ import { bindCompactTopbar, setAccountStatus, updateAccountControls } from "./ap
 import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
 import { connectAccount, loadAccountApi, loadReactionsApi, saveThemePreference } from "./app-ui/account-sync";
-import { refreshAlertsInvitePanel, syncAlertsInviteForUser } from "./app-ui/alerts-invite";
+import { syncAlertsInviteForUser } from "./app-ui/alerts-invite";
 import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
 import { renderOffers } from "./app-ui/render";
 import { appState } from "./app-ui/state";
+import { supabase } from "./supabase-client";
 
 function showFeedError(): void {
   feedStatus.hidden = false;
@@ -65,34 +66,60 @@ function loadReactionTotals(): void {
   })();
 }
 
+async function becomeGuest(): Promise<void> {
+  appState.currentUserId = null;
+  appState.preferencesLoaded = false;
+  document.documentElement.dataset.authBootstrap = "guest";
+  updateAccountControls();
+  await syncAlertsInviteForUser(null);
+  setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
+  if (appState.favoriteOnly) {
+    askForLogin(favoritesToggle, "favorite", () => {
+      if (appState.currentUserId) return;
+      setFavoritesView(false);
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("view") === "favorites") {
+        url.searchParams.delete("view");
+        window.history.replaceState({}, "", url);
+      }
+    });
+  }
+}
+
+async function connectAccountIfNeeded(userId: string): Promise<void> {
+  if (appState.currentUserId === userId && appState.preferencesLoaded) {
+    await syncAlertsInviteForUser(userId);
+    return;
+  }
+  await connectAccount(userId);
+}
+
 function restoreAccountSession(): void {
-  void (async () => {
-    try {
-      const api = await loadAccountApi();
-      const user = await api.getCurrentUser();
-      if (user) {
-        await connectAccount(user.id);
-        return;
-      }
-      document.documentElement.dataset.authBootstrap = "guest";
-      updateAccountControls();
-      void syncAlertsInviteForUser(null);
-      setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
-      if (appState.favoriteOnly) {
-        askForLogin(favoritesToggle, "favorite", () => {
-          if (appState.currentUserId) return;
-          setFavoritesView(false);
-          const url = new URL(window.location.href);
-          if (url.searchParams.get("view") === "favorites") {
-            url.searchParams.delete("view");
-            window.history.replaceState({}, "", url);
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "INITIAL_SESSION") {
+      void (async () => {
+        try {
+          if (session?.user) {
+            await connectAccountIfNeeded(session.user.id);
+            return;
           }
-        });
-      }
-    } catch (error) {
-      setAccountStatus(`Conta temporariamente indisponível: ${errorMessage(error)}`);
+          await becomeGuest();
+        } catch (error) {
+          setAccountStatus(`Conta temporariamente indisponível: ${errorMessage(error)}`);
+        }
+      })();
+      return;
     }
-  })();
+    if (event === "SIGNED_IN" && session?.user) {
+      void connectAccountIfNeeded(session.user.id).catch((error: unknown) => {
+        setAccountStatus(`Conta temporariamente indisponível: ${errorMessage(error)}`);
+      });
+      return;
+    }
+    if (event === "SIGNED_OUT") {
+      void becomeGuest();
+    }
+  });
 }
 
 restoreAccountSession();
@@ -122,7 +149,6 @@ restoreAccountSession();
   renderPopularItems();
   renderFilters();
   renderOffers();
-  refreshAlertsInvitePanel();
   applySourceFreshness();
   updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
   updatedLabel.title = "Data da última atualização do catálogo de ofertas";

@@ -87,5 +87,6 @@ export async function connectAccount(userId: string): Promise<void> {
     setAccountStatus("Conta conectada. Seus favoritos estão sincronizados.");
   } catch (error) {
     setAccountStatus(`Conta conectada. Não foi possível sincronizar preferências: ${errorMessage(error)}`);
+    await syncAlertsInviteForUser(userId);
   }
 }

@@ -22,12 +22,8 @@
   }
 
   function setAccountLinkState() {
+    if (document.documentElement.dataset.authBootstrap !== "signed-in") return;
     try {
-      const storageKey = Object.keys(localStorage).find((key) => /^sb-.*-auth-token$/.test(key));
-      if (!storageKey) return;
-      let session = JSON.parse(localStorage.getItem(storageKey) || "null");
-      if (Array.isArray(session)) session = JSON.parse(session.join(""));
-      if (!session?.access_token || !session?.user) return;
       document.querySelectorAll("#nav-account, #mobile-nav-account").forEach((link) => {
         if (!(link instanceof HTMLAnchorElement)) return;
         link.href = "account.html";

@@ -6,9 +6,16 @@ import {
   alertsBanner,
   describeRule,
   failureHint,
+  formatCalendarDate,
+  formatDateTime,
   parseTargetPrice,
   validateAlertRule,
 } from "../src/shared/alert-rules.mjs";
+
+test("formatCalendarDate and formatDateTime use Brazilian patterns", () => {
+  assert.equal(formatCalendarDate("2026-11-01"), "01/11/2026");
+  assert.match(formatDateTime("2026-11-01T23:42:00.000Z"), /01\/11\/2026 · \d{2}:\d{2}/);
+});
 
 const productTypes = ["Carne bovina", "Hortifruti"];
 const stores = ["Corso", "Big Bom"];

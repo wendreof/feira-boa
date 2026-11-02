@@ -9,7 +9,7 @@ import {
 } from "./account";
 import type { OfferFeed } from "./types";
 import { applyTheme } from "./theme";
-import { refreshAvatar, bindAvatarControls } from "./account-ui/avatar-controls";
+import { bindAvatarControls, primeAvatarFromCache, applyAvatarPath } from "./account-ui/avatar-controls";
 import { renderCheckboxes } from "./account-ui/options";
 import { bindPreferenceControls, bindThemeControls, saveThemePreference } from "./account-ui/preference-controls";
 import { accountState } from "./account-ui/state";
@@ -47,9 +47,7 @@ function bindAccountActions(): void {
 async function loadAccount(user: { id: string; email?: string | null }): Promise<void> {
   accountState.userId = user.id;
   email.textContent = user.email ?? "E-mail não disponível";
-  await refreshAvatar().catch((error: unknown) => {
-    console.warn("Could not load the profile avatar.", error);
-  });
+  primeAvatarFromCache(user.id);
   const [settings, response, savedName] = await Promise.all([
     loadAccountSettings(user.id),
     fetch("offers.json").then(async (result) => {
@@ -58,6 +56,7 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
     }),
     loadDisplayName(user.id).catch(() => null),
   ]);
+  applyAvatarPath(user.id, settings.avatarPath);
   let displayName = settings.displayName ?? savedName;
   if (!displayName) {
     displayName = await importDisplayNameFromProvider(user.id).catch(() => null);

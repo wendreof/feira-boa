@@ -9,6 +9,12 @@ export interface AccountSettings {
   preferences: ProfilePreferences;
   displayName: string | null;
   pushEnabled: boolean;
+  avatarPath: string | null;
+}
+
+export interface UserProfile {
+  preferences: ProfilePreferences;
+  avatarPath: string | null;
 }
 
 const emptyPreferences: ProfilePreferences = {
@@ -145,14 +151,20 @@ export async function getCurrentUser(): Promise<User | null> {
   return data.user;
 }
 
-export async function loadPreferences(userId: string): Promise<ProfilePreferences> {
+export async function loadPreferences(userId: string): Promise<UserProfile> {
   const { data, error } = await supabase
     .from("profiles")
-    .select("preferences")
+    .select("preferences, avatar_path")
     .eq("user_id", userId)
     .maybeSingle();
   if (error) throw error;
-  return parsePreferences(data?.preferences);
+  const avatarPath = typeof data?.avatar_path === "string" && data.avatar_path.trim()
+    ? data.avatar_path.trim()
+    : null;
+  return {
+    preferences: parsePreferences(data?.preferences),
+    avatarPath,
+  };
 }
 
 export async function savePreferences(userId: string, preferences: ProfilePreferences): Promise<void> {
@@ -182,17 +194,21 @@ export async function hasPushSubscriptions(userId: string): Promise<boolean> {
 
 export async function loadAccountSettings(userId: string): Promise<AccountSettings> {
   const [{ data: profile, error: profileError }, pushEnabled] = await Promise.all([
-    supabase.from("profiles").select("preferences, display_name").eq("user_id", userId).maybeSingle(),
+    supabase.from("profiles").select("preferences, display_name, avatar_path").eq("user_id", userId).maybeSingle(),
     hasPushSubscriptions(userId),
   ]);
   if (profileError) throw profileError;
   const displayName = typeof profile?.display_name === "string" && profile.display_name.trim()
     ? profile.display_name.trim()
     : null;
+  const avatarPath = typeof profile?.avatar_path === "string" && profile.avatar_path.trim()
+    ? profile.avatar_path.trim()
+    : null;
   return {
     preferences: parsePreferences(profile?.preferences),
     displayName,
     pushEnabled,
+    avatarPath,
   };
 }
 

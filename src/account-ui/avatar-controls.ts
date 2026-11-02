@@ -1,5 +1,4 @@
-import { AVATAR_SIZE, loadAvatar, removeAvatar, setAvatarImage, uploadAvatar } from "../avatar";
-import { withSpinner } from "../loading";
+import { AVATAR_SIZE, loadAvatar, readCachedAvatarPath, removeAvatar, setAvatarImage, uploadAvatar, writeCachedAvatarPath } from "../avatar";
 import { errorMessage } from "../account";
 import { accountState } from "./state";
 import { setStatus } from "./ui";
@@ -11,10 +10,6 @@ import {
   avatarSaveButton,
   avatarStatus,
 } from "./dom";
-
-function avatarHost(): HTMLElement | null {
-  return avatarImage?.parentElement ?? null;
-}
 
 export function setAvatarStatus(message: string): void {
   if (avatarStatus) avatarStatus.textContent = message;
@@ -28,9 +23,26 @@ export function renderAvatar(): void {
   if (avatarRemoveButton) avatarRemoveButton.disabled = !path;
 }
 
-export async function refreshAvatar(): Promise<void> {
-  accountState.avatarPath = await withSpinner(avatarHost(), () => loadAvatar(accountState.userId));
+export function primeAvatarFromCache(userId: string): void {
+  const cached = readCachedAvatarPath(userId, sessionStorage);
+  if (cached === undefined) return;
+  accountState.avatarPath = cached;
   renderAvatar();
+}
+
+export function applyAvatarPath(userId: string, path: string | null): void {
+  accountState.avatarPath = path;
+  writeCachedAvatarPath(userId, path, sessionStorage);
+  renderAvatar();
+}
+
+export async function refreshAvatar(knownPath?: string | null): Promise<void> {
+  if (knownPath !== undefined) {
+    applyAvatarPath(accountState.userId, knownPath);
+    return;
+  }
+  const path = await loadAvatar(accountState.userId);
+  applyAvatarPath(accountState.userId, path);
 }
 
 async function saveAvatar(button: HTMLButtonElement): Promise<void> {
@@ -42,7 +54,7 @@ async function saveAvatar(button: HTMLButtonElement): Promise<void> {
   button.disabled = true;
   setAvatarStatus("Enviando a foto do perfil…");
   try {
-    accountState.avatarPath = await withSpinner(avatarHost(), () => uploadAvatar(accountState.userId, file, accountState.avatarPath));
+    accountState.avatarPath = await uploadAvatar(accountState.userId, file, accountState.avatarPath);
     if (avatarFile) avatarFile.value = "";
     renderAvatar();
     setAvatarStatus("Foto do perfil atualizada.");

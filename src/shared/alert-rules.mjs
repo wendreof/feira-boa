@@ -26,9 +26,16 @@ export function parseTargetPrice(raw) {
   return Number(normalized);
 }
 
+/** ISO date AAAA-MM-DD → dd/mm/aaaa */
+export function formatCalendarDate(isoDate) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(isoDate ?? "").trim());
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : String(isoDate ?? "");
+}
+
 export function formatDateTime(iso) {
   const date = new Date(iso);
-  return Number.isNaN(date.getTime()) ? "—" : DATE_TIME.format(date);
+  if (Number.isNaN(date.getTime())) return "—";
+  return DATE_TIME.format(date).replace(", ", " · ");
 }
 
 /** @returns {{ ok: false, error: string }} */

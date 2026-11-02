@@ -1,5 +1,7 @@
 import { appState } from "./state";
 import { topbar, accountAccess, accountPanel, navAccountLink, navAccountLabel, mobileNavAccountLink, mobileNavAccountLabel, accountDescription, accountStatus, topbarAccount, topbarAccountImage, topbarAccountFallback, topbarHello } from "./dom";
+import { AVATAR_SIZE, loadAvatar, readCachedAvatarPath, setAvatarImage, writeCachedAvatarPath } from "../avatar";
+import { loadDisplayName } from "../account";
 
 export function bindCompactTopbar(): void {
   // O cabeçalho encolhe ao rolar para liberar espaço na tela.
@@ -23,6 +25,7 @@ export function setAccountStatus(message: string): void {
 
 export function updateAccountControls(): void {
   const signedIn = appState.currentUserId !== null;
+  document.documentElement.dataset.authBootstrap = signedIn ? "signed-in" : "guest";
   const label = signedIn ? "Minha conta" : "Entrar";
   const href = signedIn ? "account.html" : "login.html";
   accountPanel.hidden = signedIn;
@@ -59,10 +62,21 @@ function clearTopbarAvatar(): void {
   if (topbarAccountFallback) topbarAccountFallback.hidden = false;
 }
 
-export async function refreshTopbarAvatar(userId: string): Promise<void> {
+export function primeTopbarAvatar(userId: string): void {
+  const cached = readCachedAvatarPath(userId, sessionStorage);
+  if (cached === undefined) return;
+  if (cached && topbarAccountImage) {
+    setAvatarImage(topbarAccountImage, cached, AVATAR_SIZE.topbar);
+    if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+  } else {
+    clearTopbarAvatar();
+  }
+}
+
+export async function refreshTopbarAvatar(userId: string, knownPath?: string | null): Promise<void> {
   try {
-    const { loadAvatar, setAvatarImage, AVATAR_SIZE } = await import("../avatar");
-    const path = await loadAvatar(userId);
+    const path = knownPath !== undefined ? knownPath : await loadAvatar(userId);
+    writeCachedAvatarPath(userId, path, sessionStorage);
     if (path && topbarAccountImage) {
       setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar);
       if (topbarAccountFallback) topbarAccountFallback.hidden = true;
@@ -71,10 +85,9 @@ export async function refreshTopbarAvatar(userId: string): Promise<void> {
     }
   } catch (error) {
     console.warn("Could not load the topbar avatar.", error);
-    clearTopbarAvatar();
+    if (knownPath === undefined) clearTopbarAvatar();
   }
   try {
-    const { loadDisplayName } = await import("../account");
     const name = await loadDisplayName(userId);
     if (topbarHello) {
       topbarHello.textContent = name ? `Olá, ${name}!` : "";

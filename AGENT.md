@@ -76,7 +76,7 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - `supabase-client.ts` — Supabase client setup
 - `supabase-config.ts` — public Supabase settings
 - `account.ts` — account, preferences, rules, and subscription logic
-- `src/account-page.ts`, `account-alerts.html` — account UI, including device/account push states
+- `src/account-page.ts`, `account.html` — account UI, including device/account push states
 - `push-state.js` — push UI state and failure-message mapping
 - `theme.ts` — theme persistence
 - `scripts/build-offer-feed.mjs` — feed generation
@@ -120,10 +120,48 @@ npm run send:price-alerts
 
 ## Token-saving workflow preferences
 
-This repo uses **Caveman Ultra** by default (see `.cursor/rules/caveman-ultra.mdc` — always applied in Cursor).
+This repo uses **Caveman Ultra** by default (see `.cursor/rules/caveman-ultra.mdc`). Context defaults: `.cursor/rules/agent-efficiency.mdc`.
 
 - Short, direct agent replies; minimal exploration; narrow validation.
 - Use RTK v0.50.0 when available and configured in the shell; if the global Codex hook is not available yet, use RTK directly when possible.
+
+### Do not load into context
+
+- **`offers.json`**, **`state/**/*.json`**, **`snapshot-manifest.json`** — use `node --test tests/offer-feed.test.mjs` or read only the first ~70 lines of `offers.json` for the store list.
+- **Root bundle `*.js`** (`app.js`, `stores.js`, …) — edit `src/` and rebuild; see `npm run build`.
+- **`node_modules/`**, **`.playwright-mcp/`**
+
+### `.cursorignore`
+
+Ship **`cursorignore.example`**; repo root **`.cursorignore`** should match it (keeps huge/generated paths out of indexing). If missing, create with:
+
+`Copy-Item cursorignore.example .cursorignore`
+
+### Validation (smallest check that fits)
+
+| Change | Run |
+|--------|-----|
+| Domain / adapters | `node --test tests/<relevant>.test.mjs` |
+| TypeScript UI | `npm run typecheck` + one relevant test file |
+| Shippable UI / workflow | `npm test`, `npm run typecheck`, `npm run test:ui` if layout changed |
+| Feed assembly only | `node scripts/build-offer-feed.mjs` (not `ingest:offers` unless adapters changed) |
+| Deploy artifacts | `npm run verify:artifacts` |
+
+Skip **`npm run ingest:offers`** in agent sessions unless live ingest adapters changed.
+
+### Task anchors
+
+- **Store logos:** `src/shared/store-logos.mjs`, `logos/*.png`, `lojas.html`, `scripts/test-store-logos-playwright.mjs`
+- **New store ingest:** `scripts/adapters/`, `scripts/ingest-offers.mjs`, `tests/adapters.test.mjs`
+- **Home / offers UI:** `src/app.ts`, `src/app-ui/`, `index.html`
+- **Alerts invite:** `src/shared/alert-rules.mjs`, `src/app-ui/alerts-invite.ts`
+- **CI ingest push:** `.github/workflows/monitor-offers.yml` — commit `state/`, `offers.json`, `snapshot-manifest.json`, `build-info.json`, `source-status.js`, `.offer-monitor-state.json`
+
+### Prompting
+
+- Name files and outcome in one line; `@`-attach the 1–3 files that matter.
+- One feature per chat when possible (long threads get summarized and re-scanned).
+- CI: paste failing **step name + last error lines**, not full logs.
 
 ### Practical RTK/Caveman workflow
 1. Define the exact task and the minimal file set.
@@ -132,6 +170,17 @@ This repo uses **Caveman Ultra** by default (see `.cursor/rules/caveman-ultra.md
 4. Make the minimal fix.
 5. Validate with the smallest relevant command.
 6. Report only the outcome, the verification, and any follow-up risk.
+
+### Layer map (Clean Architecture)
+
+| Layer | Path |
+|-------|------|
+| Domain | `scripts/domain/`, `src/shared/` |
+| Adapters | `scripts/adapters/`, `scripts/*.mjs` |
+| UI | `src/app-ui/`, `src/*.ts`, `*.html`, `styles.css` |
+| Tests | `tests/*.test.mjs` |
+
+Dependencies point inward: adapters → domain, never the reverse.
 
 ## Response expectations for future agents
 

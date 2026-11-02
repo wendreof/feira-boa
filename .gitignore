@@ -6,3 +6,4 @@ dist/
 tmp/
 /build-info.json
 /.playwright-mcp
+/supabase/.temp/

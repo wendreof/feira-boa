@@ -1,0 +1,15 @@
+---
+description: Token-saving context and validation defaults for Agent
+alwaysApply: true
+---
+
+# Agent efficiency
+
+- Do not read `offers.json` or `state/**/*.json` wholesale; use tests, `scripts/build-offer-feed.mjs`, or a small `Read` limit on feed headers.
+- Do not open root bundle `*.js` (from esbuild); edit `src/` and rebuild.
+- Search with `Grep`/`Glob` on paths, not repo-wide blind reads. Prefer `@`-scoped files from the user.
+- Run the **smallest** check that proves the change (`node --test tests/foo.test.mjs`, single Playwright script). Full `npm test` + `npm run test:ui` only when finishing shippable UI/workflow changes (see clean-code rule).
+- Skip `npm run ingest:offers` unless ingest adapters changed.
+- CI/debug: use step name + error snippet; avoid dumping entire Action logs unless stuck.
+
+- If **`.cursorignore`** is missing, run `Copy-Item cursorignore.example .cursorignore` from the repo root (Write tool may be blocked).

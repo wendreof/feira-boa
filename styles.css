@@ -639,9 +639,11 @@ button:disabled{cursor:not-allowed;opacity:.55}
 .account-panel .account-button{position:relative;background:#fff;color:#155b3b;border:0;border-radius:999px;padding:10px 16px;font:800 11.5px 'DM Sans',sans-serif;white-space:nowrap;box-shadow:0 6px 16px #0d3b2540}
 .account-panel .account-button:hover{filter:brightness(.97)}
 .account-panel .account-status{position:relative;flex:1 0 100%;margin:0;color:#cdeadb;font-size:10.5px;overflow:visible;white-space:normal}
-.alerts-invite-panel{background:linear-gradient(120deg,#6b4518,#b7791f 52%,#f1c75b);box-shadow:0 12px 30px #6b451833;margin-top:10px}
-.alerts-invite-panel .account-panel-text span{color:#fff4dc}
-.alerts-invite-panel .account-button{color:#6b4518}
+.alerts-invite-panel{background:linear-gradient(120deg,#0a2a66,#123d8f 52%,#1a4db3);box-shadow:0 12px 30px #0a2a6640;margin-top:10px}
+.alerts-invite-panel .account-panel-icon{background:#f5c51833}
+.alerts-invite-panel .account-panel-text span{color:#dce8ff}
+.alerts-invite-panel .account-button{background:#f5c518;color:#0a2a66;box-shadow:0 6px 16px #00000026}
+.alerts-invite-panel .account-button:hover{filter:brightness(1.03)}
 .alerts-invite-panel[hidden]{display:none}
 
 /* Mobile: card de conta, cabeçalho de resultados e cards mais compactos */

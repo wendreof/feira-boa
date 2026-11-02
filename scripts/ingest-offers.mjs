@@ -5,6 +5,7 @@ import { extractBigBom } from "./adapters/bigbom.mjs";
 import { extractSempreVale } from "./adapters/semprevale.mjs";
 import { extractPagueMenos } from "./adapters/paguemenos.mjs";
 import { extractSpasso } from "./adapters/spasso.mjs";
+import { extractSpani } from "./adapters/spani.mjs";
 import { extractCorso } from "./adapters/corso.mjs";
 import { snapshotCampaignChanged } from "./domain/snapshot-campaign.mjs";
 import { validateSnapshot } from "./domain/validation.mjs";
@@ -20,6 +21,7 @@ const ADAPTERS = [
   { id: "corso", name: "Corso", runner: extractCorso },
   { id: "paguemenos", name: "Pague Menos", runner: extractPagueMenos },
   { id: "spasso", name: "Spasso Sabores", runner: extractSpasso },
+  { id: "spani", name: "Spani Atacadista", runner: extractSpani },
 ];
 
 async function loadExistingSnapshot(storeId) {

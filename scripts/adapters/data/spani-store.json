@@ -1,0 +1,11 @@
+{
+  "apiBase": "https://services-beta.vipcommerce.com.br/api-admin/v1",
+  "domain": "spanionline.com.br",
+  "organizationId": "67",
+  "filialId": "1",
+  "centroDistribuicaoId": "6",
+  "login": {
+    "username": "loja",
+    "key": "df072f85df9bf7dd71b6811c34bdbaa4f219d98775b56cff9dfa5f8ca1bf8469"
+  }
+}

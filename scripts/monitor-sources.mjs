@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { getWeekValidity, probePagueMenosCatalog } from "./adapters/paguemenos.mjs";
+import { probeSpaniCatalog } from "./adapters/spani.mjs";
 
 const ROOT = new URL("../", import.meta.url);
 export const FEED = new URL("offers.json", ROOT);
@@ -131,8 +132,15 @@ async function probePagueMenos(fetchImpl) {
   return { catalog_total, week_window: `${from}/${to}` };
 }
 
+async function probeSpani(fetchImpl) {
+  const { catalog_total } = await probeSpaniCatalog(fetchImpl);
+  const { from, to } = getWeekValidity();
+  return { catalog_total, week_window: `${from}/${to}` };
+}
+
 const STRUCTURAL_PROBES = new Map([
   ["pague menos", probePagueMenos],
+  ["spani atacadista", probeSpani],
 ]);
 
 async function monitorStructuralSource(source, previous, probe, fetchImpl) {

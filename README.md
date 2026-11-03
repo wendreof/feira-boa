@@ -92,7 +92,7 @@ Because the source repository is private, GitHub Pages on the free plan cannot h
 
 - Sempre Vale official offers: https://www.semprevale.com.br/ofertas.php
 - Sempre Vale Durval Nicolau campaign: https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf
-- Big Bom São João flyer: https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf
+- Big Bom São João flyer: https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf
 - Pague Menos official offers: https://www.superpaguemenos.com.br/ofertas?productclusterids=161
 - Spasso Sabores São João offers: https://spassosabores.com.br/ofertas-sao-joao/
 - Corso flyer: https://corso.com.br/jornalfrente.php

@@ -62,7 +62,6 @@ jobs:
             state/
             offers.json
             snapshot-manifest.json
-            build-info.json
             source-status.js
             .offer-monitor-state.json
           )

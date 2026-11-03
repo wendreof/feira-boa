@@ -1,7 +1,7 @@
 import { matchesCarnesDepartment } from "./carnes-department.mjs";
 
 /**
- * @param {{ store?: string }} offer
+ * @param {{ store?: string, productType?: string, productTypes?: string[], detail?: string }} offer
  * @param {{ subcategory?: string }} category
  * @param {{ activeDepartment?: string }} context
  */

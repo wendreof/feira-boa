@@ -38,4 +38,5 @@ test("applyPublishedLogos rewrites store and offer logos for monitored groceries
   assert.equal(offers[0].storeLogo, "logos/semprevale.png");
   assert.equal(logoUrlForStoreName("Big Bom"), "logos/bigbom.png");
   assert.equal(logoUrlForStoreName("Spani Atacadista"), "logos/spani.png");
+  assert.equal(logoUrlForStoreName("Forte Mix"), "logos/fortemix.png");
 });

@@ -13,8 +13,9 @@ test("resolveOfferCardLogo prefers self-hosted logos and store initials", () => 
 
   const unknown = resolveOfferCardLogo({
     store: "Forte Mix",
-    storeLogo: "",
+    storeLogo: "logos/fortemix.png",
   });
-  assert.equal(unknown.src, null);
+  assert.equal(unknown.src, "logos/fortemix.png");
   assert.equal(unknown.fallback, "FM");
+  assert.equal(unknown.markClass, "fortemix-mark");
 });

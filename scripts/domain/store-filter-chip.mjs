@@ -19,7 +19,9 @@ export function describeStoreFilterChip(storeName, count) {
       ? "bigbom-mark"
       : meta?.presentation === "paguemenos-logo"
         ? "paguemenos-logo"
-        : "";
+        : meta?.presentation === "fortemix-logo"
+          ? "fortemix-mark"
+          : "";
   return {
     label: `${short} · ${total}`,
     ariaLabel: `${storeName}, ${total} ofertas`,

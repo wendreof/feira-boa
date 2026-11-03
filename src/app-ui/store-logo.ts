@@ -21,7 +21,7 @@ export function createOfferStoreLogo(): OfferStoreLogoRefs {
   return { root, fallback, img };
 }
 
-const MARK_CLASSES = ["bigbom-mark", "paguemenos-logo", "bigbom-logo"];
+const MARK_CLASSES = ["bigbom-mark", "paguemenos-logo", "bigbom-logo", "fortemix-mark"];
 
 export function updateOfferStoreLogo(refs: OfferStoreLogoRefs, offer: Offer): void {
   const { src, fallback, markClass } = resolveOfferCardLogo(offer);

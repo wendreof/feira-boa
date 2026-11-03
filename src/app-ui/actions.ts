@@ -1,7 +1,7 @@
 import { appState } from "./state";
 import { askForLogin } from "./login-prompt";
 import { errorMessage } from "../errors";
-import { grid, filters, storeFilters, popularItems, input, priceMin, priceMax, productTypeSelect, sortSelect, resultsTitle, showAllOffersButton, shareStatus, resetButton, viewToggle, favoritesToggle, navFavoritesLink, mobileNavOffersLink, mobileNavFavoritesLink } from "./dom";
+import { grid, filters, storeFilters, popularItems, input, priceMin, priceMax, productTypeSelect, sortSelect, resultsTitle, showAllOffersButton, shareStatus, resetButton, clearActiveFiltersButton, viewToggle, favoritesToggle, navFavoritesLink, mobileNavOffersLink, mobileNavFavoritesLink } from "./dom";
 import { loadReactionsApi, saveFavoriteChanges } from "./account-sync";
 import { mobileViewMedia, updateViewMode, persistViewMode } from "./view";
 import { money } from "../view/format";
@@ -9,6 +9,8 @@ import { renderOffers } from "./render";
 import { renderPopularItems, updateProductTypeOptions, updateFilterStates } from "./filters";
 import { resolveDefaultViewMode } from "../../view-mode.js";
 import { showTransientStatus } from "../../status-toast.js";
+import { clearBrowseFilters } from "./browse-filters";
+import { saveActiveDepartment } from "./session-filters";
 
 function shareUrlForOffer(offerId: string): string {
   const url = new URL(window.location.href);
@@ -155,6 +157,7 @@ export function bindAppEvents(): void {
       sortSelect.value = quickSort.dataset.quickSort ?? "recommended";
       appState.activeDepartment = "";
       appState.activeProductType = "";
+      saveActiveDepartment("");
       updateFilterStates(filters, "department", appState.activeDepartment);
       updateProductTypeOptions();
       renderPopularItems();
@@ -166,6 +169,7 @@ export function bindAppEvents(): void {
     appState.activeDepartment = group.dataset.group ?? "";
     appState.activeProductType = "";
     sortSelect.value = "recommended";
+    saveActiveDepartment(appState.activeDepartment);
     updateFilterStates(filters, "department", appState.activeDepartment);
     updateProductTypeOptions();
     renderPopularItems();
@@ -180,6 +184,7 @@ export function bindAppEvents(): void {
     if (!button || button.disabled) return;
     appState.activeDepartment = button.dataset.department ?? "";
     appState.activeProductType = "";
+    saveActiveDepartment(appState.activeDepartment);
     updateFilterStates(filters, "department", appState.activeDepartment);
     updateProductTypeOptions();
     renderOffers();
@@ -197,15 +202,25 @@ export function bindAppEvents(): void {
   productTypeSelect.addEventListener("change", () => { appState.activeProductType = productTypeSelect.value; renderOffers(); });
   sortSelect.addEventListener("change", () => { renderPopularItems(); renderOffers(); });
   resetButton.addEventListener("click", () => {
-    appState.activeStore = "Todas as lojas"; appState.activeDepartment = ""; appState.activeProductType = "";
-    input.value = ""; priceMin.value = ""; priceMax.value = ""; sortSelect.value = "recommended";
-    updateFilterStates(storeFilters, "store", appState.activeStore);
-    updateFilterStates(filters, "department", appState.activeDepartment);
-    updateProductTypeOptions();
-    renderPopularItems();
-    renderOffers();
+    clearBrowseFilters();
     input.focus();
   });
+  clearActiveFiltersButton.addEventListener("click", () => {
+    clearBrowseFilters();
+  });
+
+  grid.addEventListener("click", (event: MouseEvent) => {
+    if (!grid.classList.contains("list-view")) return;
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("button, a, [data-favorite-id], [data-reaction], [data-share-id]")) return;
+    const card = target.closest<HTMLElement>(".offer-card");
+    if (!card) return;
+    const link = card.querySelector<HTMLAnchorElement>(".card-source a");
+    if (!link || link.href === "#" || !/^https:\/\//.test(link.href)) return;
+    link.click();
+  });
+
   viewToggle.addEventListener("click", (event: MouseEvent) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
@@ -215,17 +230,20 @@ export function bindAppEvents(): void {
       appState.viewMode = "list";
       persistViewMode(appState.viewMode);
       updateViewMode();
+      renderOffers();
       return;
     }
     appState.viewMode = button.dataset.viewMode;
     persistViewMode(appState.viewMode);
     updateViewMode();
+    renderOffers();
   });
 
   mobileViewMedia.addEventListener?.("change", () => {
     appState.viewMode = resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
     persistViewMode(appState.viewMode);
     updateViewMode();
+    renderOffers();
   });
   for (const favoritesLink of [navFavoritesLink, mobileNavFavoritesLink]) {
     favoritesLink.addEventListener("click", (event: MouseEvent) => {

@@ -59,7 +59,15 @@ test("resolveCategory uses keywords for groups without a product type", () => {
 });
 
 test("resolveCategory sends barbecue products to the churrasco group", () => {
-  const picanha = resolveCategory({ name: "Picanha Friboi", productTypes: ["Carne bovina", "Churrasco"] });
+  const picanhaCounter = resolveCategory({
+    name: "Picanha Friboi",
+    productTypes: ["Carne bovina", "Churrasco"],
+    detail: "kg",
+  });
+  assert.equal(picanhaCounter.groupId, "frescos");
+  assert.equal(picanhaCounter.subcategory, "Açougue e carnes frescas");
+
+  const picanha = resolveCategory({ name: "Picanha Friboi", productTypes: ["Carne bovina", "Churrasco"], detail: "800g" });
   assert.equal(picanha.groupId, "churrasco");
   assert.equal(picanha.subcategory, "Carnes para churrasco");
 

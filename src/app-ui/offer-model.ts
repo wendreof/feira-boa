@@ -1,4 +1,6 @@
-import { TAXONOMY_GROUPS, categoryLabel, categoryOrder } from "../catalog-taxonomy.mjs";
+import { categoryLabel, categoryOrder } from "../catalog-taxonomy.mjs";
+import { matchesCarnesDepartment } from "../../scripts/domain/carnes-department.mjs";
+import { matchesFriosEmbutidosDepartment, FRIOS_EMBUTIDOS_DEPARTMENT_ID } from "../../scripts/domain/frios-department.mjs";
 import { appState } from "./state";
 import { normalizeSearch } from "../view/format";
 import { type Offer } from "../types";
@@ -26,8 +28,6 @@ export const CATEGORY_ICONS: Record<string, string> = {
   frescos: "🥬", mercearia: "🥫", bebidas: "🥤", bebidas_alcoolicas: "🍺", congelados: "🧊", saudaveis: "🥗", limpeza: "🧺",
   higiene: "🧴", infantil: "🍼", pet: "🐾", casa: "🏠", churrasco: "🔥", vestuario: "👕", outros: "🏷️",
 };
-const CARNES_SUBCATEGORIES = new Set(["Açougue e carnes frescas", "Aves", "Peixaria e frutos do mar", "Frios e embutidos"]);
-export const RANDOM_CATEGORY_ORDER = [...TAXONOMY_GROUPS].sort(() => Math.random() - 0.5).map((group) => group.id);
 
 export function matchesSearch(offer: Offer, query: string): boolean {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
@@ -41,8 +41,12 @@ export function matchesSearch(offer: Offer, query: string): boolean {
   });
 }
 
-export function matchesSector(category: { groupId: string; subcategory: string }): boolean {
+export function matchesSector(offer: Offer): boolean {
+  const category = offerCategory(offer);
   if (!appState.activeDepartment) return true;
-  if (appState.activeDepartment === "carnes") return CARNES_SUBCATEGORIES.has(category.subcategory);
+  if (appState.activeDepartment === "carnes") return matchesCarnesDepartment(offer);
+  if (appState.activeDepartment === FRIOS_EMBUTIDOS_DEPARTMENT_ID) {
+    return matchesFriosEmbutidosDepartment(category);
+  }
   return category.groupId === appState.activeDepartment;
 }

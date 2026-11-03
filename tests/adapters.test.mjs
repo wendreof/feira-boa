@@ -265,6 +265,7 @@ test("assignIcon separates beef from pork", () => {
   assert.equal(assignIcon("Pernil suíno resfriado com osso", "Carnes suínas", "Açougue e peixaria"), "🐖");
   assert.equal(assignIcon("Bisteca Suína", "Carnes suínas", "Açougue e peixaria"), "🐖");
   assert.equal(assignIcon("Costelinha suína congelada", "Carnes suínas", "Açougue e peixaria"), "🐖");
+  assert.equal(assignIcon("Picanha Suína Frinni Temperada", "Carnes suínas", "Açougue e peixaria"), "🐖");
   assert.equal(assignIcon("Filé de Peito de Frango", "Frango", "Açougue e peixaria"), "🍗");
 });
 

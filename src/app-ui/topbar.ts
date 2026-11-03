@@ -28,7 +28,7 @@ export function updateAccountControls(): void {
   document.documentElement.dataset.authBootstrap = signedIn ? "signed-in" : "guest";
   const label = signedIn ? "Minha conta" : "Entrar";
   const href = signedIn ? "account.html" : "login.html";
-  accountPanel.hidden = signedIn;
+  accountPanel.hidden = true;
   accountAccess.hidden = signedIn;
   navAccountLabel.textContent = label;
   navAccountLink.setAttribute("aria-label", label);

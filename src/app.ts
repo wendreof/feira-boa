@@ -9,7 +9,8 @@ import { bindCompactTopbar, setAccountStatus, updateAccountControls } from "./ap
 import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
 import { connectAccount, loadAccountApi, loadReactionsApi, saveThemePreference } from "./app-ui/account-sync";
-import { syncAlertsInviteForUser } from "./app-ui/alerts-invite";
+import { syncAlertsInviteForUser, bindAlertsInviteUi } from "./app-ui/alerts-invite";
+import { readSavedDepartment } from "./app-ui/session-filters";
 import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
 import { renderOffers } from "./app-ui/render";
@@ -41,6 +42,9 @@ function initializeState(feed: OfferFeed): void {
   appState.sharedOfferId = params.get("offer");
   if (appState.sharedOfferId && !feed.offers.some((offer) => offer.id === appState.sharedOfferId)) {
     appState.sharedOfferId = null;
+  }
+  if (!appState.sharedOfferId && !appState.favoriteOnly) {
+    appState.activeDepartment = readSavedDepartment();
   }
 }
 
@@ -143,6 +147,7 @@ restoreAccountSession();
     if (appState.currentUserId && appState.preferencesLoaded) void saveThemePreference();
   });
   bindAppEvents();
+  bindAlertsInviteUi();
 
   updateViewMode();
   renderStoreFilters();

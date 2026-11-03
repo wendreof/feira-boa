@@ -1,5 +1,6 @@
 import { foldText } from "./shared/text.mjs";
 import { expectedSectors } from "../scripts/offer-sector-guard.mjs";
+import { matchesCarnesDepartment } from "../scripts/domain/carnes-department.mjs";
 /**
  * Taxonomia de catálogo do Feira Boa.
  *
@@ -314,7 +315,13 @@ export function resolveCategory(offer) {
   const required = expectedSectors(text)[0];
 
   let resolved = null;
-  if (types.includes("Churrasco") && baseType !== "Doces e snacks" && CHURRASCO_KEYWORDS.test(text) && !NOT_CHURRASCO.test(text)) {
+  if (
+    types.includes("Churrasco")
+    && !matchesCarnesDepartment(offer)
+    && baseType !== "Doces e snacks"
+    && CHURRASCO_KEYWORDS.test(text)
+    && !NOT_CHURRASCO.test(text)
+  ) {
     resolved = { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };
   }
 

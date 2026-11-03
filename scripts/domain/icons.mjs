@@ -1,5 +1,13 @@
 import { foldText } from "../../src/shared/text.mjs";
 
+const COUNTER_MEAT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes"]);
+
+function isMarinatedCounterCut(name, productType) {
+  if (!COUNTER_MEAT_TYPES.has(productType)) return false;
+  const text = foldText(name);
+  return /picanha|costela|bisteca|contrafile|alcatra|maminha|fraldinha|acem|pernil|paleta|cupim|lombo|file mignon|bovin|suin|suino|tilapia|merluza|sardinha|atum|peito|figado|carre/.test(text);
+}
+
 export function assignIcon(name, productType = "", department = "") {
   const normalize = foldText;
   const nameText = normalize(name);
@@ -101,8 +109,14 @@ export function assignIcon(name, productType = "", department = "") {
     [/sandalia|sapato|tenis|chinelo/, "👟"],
     [/ferro de passar/, "♨️"],
   ];
-  // Primeiro tenta pelo nome (evita "Água de Coco" virando suco pelo tipo) e só depois pelo tipo.
-  return rules.find(([pattern]) => pattern.test(nameText))?.[1]
-    ?? rules.find(([pattern]) => pattern.test(fullText))?.[1]
-    ?? "🏷️";
+  const skipSpiceIcon = isMarinatedCounterCut(name, productType);
+  for (const [pattern, icon] of rules) {
+    if (skipSpiceIcon && pattern.source.includes("temper")) continue;
+    if (pattern.test(nameText)) return icon;
+  }
+  for (const [pattern, icon] of rules) {
+    if (skipSpiceIcon && pattern.source.includes("temper")) continue;
+    if (pattern.test(fullText)) return icon;
+  }
+  return "🏷️";
 }

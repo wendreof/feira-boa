@@ -1,16 +1,18 @@
+import { QUICK_DEPARTMENT_LABELS } from "./quick-departments";
 import { TAXONOMY_GROUPS, discountRatio } from "../catalog-taxonomy.mjs";
 import { appState } from "./state";
 import { createOfferCard, updateOfferCard } from "./card";
 import {
   feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink,
   resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount,
-  archiveSection, archiveSubtitle, archiveGrid,
+  archiveSection, archiveSubtitle, archiveGrid, clearActiveFiltersButton,
 } from "./dom";
 import { getPriceBounds } from "./filters";
 import { money, isActive, todayInSaoPaulo, dateLabel } from "../view/format";
 import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./offer-model";
 import type { Offer } from "../types";
 import { refreshAlertsInvitePanel } from "./alerts-invite";
+import { browseFiltersActive } from "./browse-filters";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -19,7 +21,7 @@ function likesByOffer(): Map<string, number> {
 function matchesArchivedFilters(offer: Offer, today: string, min: number | null, max: number | null): boolean {
   const category = offerCategory(offer);
   return (appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore)
-    && matchesSector(category)
+    && matchesSector(offer)
     && (!appState.activeProductType || category.subcategory === appState.activeProductType)
     && (min === null || offer.price >= min)
     && (max === null || offer.price <= max)
@@ -88,7 +90,7 @@ export function renderOffers(): void {
   const likes = likesByOffer();
   let matching = priceRangeReversed ? [] : appState.offers.filter((offer) => {
     const category = offerCategory(offer);
-    const matchesSectorFilter = matchesSector(category);
+    const matchesSectorFilter = matchesSector(offer);
     const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
     const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
     return (appState.sharedOfferId ? offer.id === appState.sharedOfferId : isActive(offer, today)) && (appState.sharedOfferId || appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore) &&
@@ -137,11 +139,16 @@ export function renderOffers(): void {
   resultsTitle.textContent = appState.sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
   showAllOffersButton.hidden = !appState.sharedOfferId;
   const storeLabel = appState.activeStore === "Todas as lojas" ? "todas as lojas" : appState.activeStore;
-  const sectorLabel = appState.activeDepartment ? TAXONOMY_GROUPS.find((group) => group.id === appState.activeDepartment)?.label ?? "" : "";
+  const sectorLabel = appState.activeDepartment
+    ? (QUICK_DEPARTMENT_LABELS[appState.activeDepartment]
+      ?? TAXONOMY_GROUPS.find((group) => group.id === appState.activeDepartment)?.label
+      ?? "")
+    : "";
   const sharedOffer = appState.sharedOfferId ? matching[0] : null;
   resultsSubtitle.textContent = sharedOffer
     ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer, today) ? "" : " · oferta encerrada"}`
     : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${sectorLabel ? ` · ${sectorLabel}` : ""}${appState.activeProductType ? ` · ${appState.activeProductType}` : ""}`;
+  clearActiveFiltersButton.hidden = Boolean(appState.sharedOfferId) || !browseFiltersActive();
   if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
   else if (appState.offers.some((offer) => isActive(offer, today))) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
   else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";

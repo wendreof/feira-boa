@@ -4,6 +4,8 @@ import { money, dateLabel, expiryHighlightLabel } from "../view/format";
 import { offerCategory, offerOrder } from "./offer-model";
 import { createOfferStoreLogo, updateOfferStoreLogo } from "./store-logo";
 import { type Offer } from "../types";
+import { displayOfferIcon, formatOfferSpec } from "../../scripts/domain/display-offer.mjs";
+import { offerCardCategoryLine } from "../../scripts/domain/card-category-line.mjs";
 
 export function createOfferCard(offer: Offer, options?: { archived?: boolean }): CardRefs {
   const root = element("article", "offer-card");
@@ -62,26 +64,31 @@ export function createOfferCard(offer: Offer, options?: { archived?: boolean }):
   source.append(storeLogo, document.createTextNode(" · "), sourceLink, expiryFlag, share);
 
   body.append(notice, titleRow, meta, info, priceRow, reactionGroup, note, source);
+  root.classList.add("offer-card--opens-source");
   root.append(visual, body);
 
   const refs: CardRefs = {
     root, art, name, spec, info, price, oldPrice, discount, sticker, valid: validStrong, expiryFlag, notice, note,
     storeLogo, storeLogoFallback, storeLogoImg,
     sourceLink, share, favoriteButtons: [favoriteArt, favoriteReaction],
-    like: like.button, likeCount: like.count,
+    like: like.button, likeCount: like.count, reactionGroup, validWrap: valid,
   };
   updateOfferCard(refs, offer);
   return refs;
 }
 
 export function updateOfferCard(refs: CardRefs, offer: Offer): void {
-  refs.art.textContent = offer.icon;
+  const icon = displayOfferIcon(offer);
+  refs.art.textContent = icon;
   refs.art.setAttribute("aria-label", `Ilustração de ${offer.name}`);
   refs.name.textContent = offer.name;
   const category = offerCategory(offer);
-  refs.info.textContent = [category.subcategory, offer.store].filter(Boolean).join(" · ");
-  refs.spec.textContent = offer.detail;
-  refs.spec.hidden = !offer.detail;
+  refs.info.textContent = offerCardCategoryLine(offer, category, {
+    activeDepartment: appState.activeDepartment,
+  });
+  const specText = formatOfferSpec(offer.detail);
+  refs.spec.textContent = specText;
+  refs.spec.hidden = !specText;
   refs.price.textContent = money(offer.price);
   const discountPercent = offer.previousPrice && offer.previousPrice > offer.price
     ? Math.round((1 - offer.price / offer.previousPrice) * 100)
@@ -102,7 +109,8 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
   const expiryLabel = archived ? null : expiryHighlightLabel(offer);
   refs.expiryFlag.textContent = expiryLabel ?? "";
   refs.expiryFlag.hidden = !expiryLabel;
-  refs.valid.parentElement?.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
+  refs.validWrap.hidden = Boolean(expiryLabel);
+  refs.validWrap.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-today", expiryLabel === "Último dia");
   if (archived) {

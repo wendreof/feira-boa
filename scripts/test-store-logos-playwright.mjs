@@ -119,10 +119,23 @@ try {
     if (fallbackVisible) failures.push(`${store.id}: initials fallback still visible`);
   }
 
-  // Secondary local store: initials only, no img
+  // Forte Mix (local list): self-hosted logo
   const forte = page.locator('.store-source[data-store-id="forte-mix"] .source-logo');
-  if (await forte.locator("img").count()) {
-    failures.push("forte-mix: should use initials only (no img)");
+  const forteImg = forte.locator("img");
+  await forte.waitFor({ state: "attached" });
+  if (!(await forteImg.count())) {
+    failures.push("forte-mix: expected logo img");
+  } else {
+    const forteOk = await page.waitForFunction(
+      (sel) => {
+        const el = document.querySelector(sel);
+        const image = el?.querySelector("img");
+        return Boolean(el?.classList.contains("has-logo") && image && image.naturalWidth > 0);
+      },
+      `.store-source[data-store-id="forte-mix"] .source-logo`,
+      { timeout: 8000 },
+    ).then(() => true).catch(() => false);
+    if (!forteOk) failures.push("forte-mix: logo did not load or has-logo missing");
   }
 
   await page.screenshot({ path: ".playwright-mcp/lojas-logos-mobile.png", fullPage: true });

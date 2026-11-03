@@ -1,4 +1,4 @@
-const CACHE_NAME = "feira-boa-shell-v18";
+const CACHE_NAME = "feira-boa-shell-v19";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 const NOTIFICATION_ICON = "/icons/notification-96.png";
 const NOTIFICATION_BADGE = "/icons/badge-72.png";
@@ -28,6 +28,7 @@ const SHELL = [
   "/favicon.svg",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
+  "/icons/maskable-512.png",
   "/icons/notification-96.png",
   "/icons/badge-72.png",
   "/offers.json",

@@ -7,6 +7,7 @@ import { extractPagueMenos } from "./adapters/paguemenos.mjs";
 import { extractSpasso } from "./adapters/spasso.mjs";
 import { extractSpani } from "./adapters/spani.mjs";
 import { extractCorso } from "./adapters/corso.mjs";
+import { extractForteMix } from "./adapters/fortemix.mjs";
 import { snapshotCampaignChanged } from "./domain/snapshot-campaign.mjs";
 import { validateSnapshot } from "./domain/validation.mjs";
 
@@ -22,6 +23,7 @@ const ADAPTERS = [
   { id: "paguemenos", name: "Pague Menos", runner: extractPagueMenos },
   { id: "spasso", name: "Spasso Sabores", runner: extractSpasso },
   { id: "spani", name: "Spani Atacadista", runner: extractSpani },
+  { id: "fortemix", name: "Forte Mix", runner: extractForteMix },
 ];
 
 async function loadExistingSnapshot(storeId) {

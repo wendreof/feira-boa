@@ -18,6 +18,7 @@ function initialsFromStoreName(name: string): string {
 
 function markClassForPresentation(presentation: string): string {
   if (presentation === "bigbom-logo") return "bigbom-mark";
+  if (presentation === "fortemix-logo") return "fortemix-mark";
   return presentation;
 }
 

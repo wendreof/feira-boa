@@ -50,6 +50,7 @@ const requiredFiles = [
   "logos/spasso.png",
   "logos/corso.png",
   "logos/spani.png",
+  "logos/fortemix.png",
 ];
 
 const failures = [];

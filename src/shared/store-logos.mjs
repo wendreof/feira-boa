@@ -1,6 +1,6 @@
 /** Logos for monitored groceries (self-hosted, optimized PNGs). */
 
-export const MAIN_STORE_IDS = ["semprevale", "bigbom", "paguemenos", "spasso", "corso", "spani"];
+export const MAIN_STORE_IDS = ["semprevale", "bigbom", "paguemenos", "spasso", "corso", "spani", "fortemix"];
 
 /** @type {Record<string, { src: string, fallback: string, presentation: string }>} */
 export const MAIN_STORE_LOGOS = {
@@ -10,6 +10,7 @@ export const MAIN_STORE_LOGOS = {
   spasso: { src: "logos/spasso.png", fallback: "SS", presentation: "" },
   corso: { src: "logos/corso.png", fallback: "CO", presentation: "" },
   spani: { src: "logos/spani.png", fallback: "SP", presentation: "" },
+  fortemix: { src: "logos/fortemix.png", fallback: "FM", presentation: "fortemix-logo" },
 };
 
 /** @type {Record<string, string>} */
@@ -20,6 +21,7 @@ export const STORE_NAME_TO_ID = {
   "Spasso Sabores": "spasso",
   "Corso": "corso",
   "Spani Atacadista": "spani",
+  "Forte Mix": "fortemix",
 };
 
 export function logoUrlForStoreId(storeId) {

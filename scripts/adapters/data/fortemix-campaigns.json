@@ -1,0 +1,49 @@
+{
+  "campaignId": "festival-felita-2026-11-03",
+  "sourceUrl": "https://smfortemix.com.br/",
+  "campaigns": [
+    {
+      "from": "2026-11-03",
+      "to": "2026-11-16",
+      "offerNote": "Preço exclusivo no app Forte Mix.",
+      "offers": [
+        { "name": "Café Chef", "brand": "Felitá", "detail": "500g", "cat": "Café", "price": 19.98, "oldPrice": 22.9 },
+        { "name": "Achocolatado Chef", "brand": "Felitá", "detail": "400g", "cat": "Achocolatado", "price": 6.99, "oldPrice": 8.99 },
+        { "name": "Cacau em pó 100%", "brand": "Felitá", "detail": "200g", "cat": "Cacau", "price": 14.98, "oldPrice": 19.98 },
+        { "name": "Chocolate em pó 50% cacau", "brand": "Felitá", "detail": "200g", "cat": "Achocolatado", "price": 8.99, "oldPrice": 9.98 },
+        { "name": "Amido de milho", "brand": "Felitá", "detail": "200g", "cat": "Mercearia", "price": 2.99, "oldPrice": 3.99 },
+        { "name": "Fermento em pó", "brand": "Felitá", "detail": "100g", "cat": "Mercearia", "price": 2.98, "oldPrice": 3.99 },
+        { "name": "Aveia ou farinha", "brand": "Felitá", "detail": "170g", "cat": "Cereais", "price": 2.99, "oldPrice": 3.99 },
+        { "name": "Goma tapioca", "brand": "Felitá", "detail": "500g", "cat": "Mercearia", "price": 4.98, "oldPrice": 6.99 },
+        { "name": "Barra de cereal", "brand": "Felitá", "detail": "3×66g", "cat": "Cereais", "price": 3.38, "oldPrice": 4.99 },
+        { "name": "Biscoito champagne", "brand": "Felitá", "detail": "150g", "cat": "Biscoitos", "price": 6.98, "oldPrice": 9.95 },
+        { "name": "Cookies", "brand": "Felitá", "detail": "60g", "cat": "Biscoitos", "price": 2.49, "oldPrice": 2.79 },
+        { "name": "Biscoito polvilho", "brand": "Felitá", "detail": "100g", "cat": "Biscoitos", "price": 4.98, "oldPrice": 6.99 },
+        { "name": "Rosquinha", "brand": "Felitá", "detail": "300g", "cat": "Biscoitos", "price": 4.49, "oldPrice": 5.99 },
+        { "name": "Panettone", "brand": "Felitá", "detail": "400g", "cat": "Panettones", "price": 11.98, "oldPrice": 14.9 },
+        { "name": "Goiabada", "brand": "Felitá", "detail": "250g", "cat": "Doces", "price": 3.99, "oldPrice": 6.99 },
+        { "name": "Gelatina", "brand": "Felitá", "detail": "20g", "cat": "Doces", "price": 1.28, "oldPrice": 1.89 },
+        { "name": "Feijão carioca", "brand": "Felitá", "detail": "1kg", "cat": "Feijão", "price": 7.99, "oldPrice": 8.49 },
+        { "name": "Torresmo pururuca", "brand": "Felitá", "detail": "120g", "cat": "Snacks", "price": 18.98, "oldPrice": 19.98 },
+        { "name": "Batata chips", "brand": "Felitá", "detail": "45g", "cat": "Snacks", "price": 3.99, "oldPrice": 4.99 },
+        { "name": "Batata palha", "brand": "Felitá", "detail": "100g", "cat": "Snacks", "price": 5.99, "oldPrice": 6.99 },
+        { "name": "Suco de uva integral", "brand": "Felitá", "detail": "1,35L", "cat": "Sucos", "price": 12.98, "oldPrice": 14.98 },
+        { "name": "Pão de queijo tradicional", "brand": "Felitá", "detail": "800g", "cat": "Congelados", "price": 9.98, "oldPrice": 14.98 },
+        { "name": "Mini salgado congelado", "brand": "Felitá", "detail": "300g", "cat": "Congelados", "price": 7.99, "oldPrice": 9.98 },
+        { "name": "Papel toalha", "brand": "Felitá", "detail": "100 folhas", "cat": "Limpeza", "price": 4.49, "oldPrice": 4.99 },
+        { "name": "Papel higiênico folha dupla", "brand": "Felitá", "detail": "20m · 12 un", "cat": "Higiene", "price": 11.95, "oldPrice": 13.98 },
+        { "name": "Toalha umedecida baby", "brand": "Felitá", "detail": "96 un", "cat": "Bebês", "price": 11.95, "oldPrice": 17.9 },
+        { "name": "Absorvente noturno", "brand": "Felitá", "detail": "16 un", "cat": "Higiene", "price": 7.98, "oldPrice": 14.98 },
+        { "name": "Absorvente noturno", "brand": "Felitá", "detail": "8 un", "cat": "Higiene", "price": 4.49, "oldPrice": 6.99 },
+        { "name": "Algodão baby quadrado", "brand": "Felitá", "detail": "100 un", "cat": "Higiene", "price": 13.98, "oldPrice": 18.95 },
+        { "name": "Algodão bola", "brand": "Felitá", "detail": "50g", "cat": "Higiene", "price": 3.69, "oldPrice": 6.99 },
+        { "name": "Algodão bola", "brand": "Felitá", "detail": "95g", "cat": "Higiene", "price": 6.89, "oldPrice": 9.98 },
+        { "name": "Algodão disco", "brand": "Felitá", "detail": "50 un", "cat": "Higiene", "price": 4.49, "oldPrice": 6.99 },
+        { "name": "Hastes flex", "brand": "Felitá", "detail": "150 un", "cat": "Higiene", "price": 3.98, "oldPrice": 5.99 },
+        { "name": "Hastes flex", "brand": "Felitá", "detail": "75 un", "cat": "Higiene", "price": 1.98, "oldPrice": 3.79 },
+        { "name": "Saco de lixo", "brand": "Felitá", "detail": "50L · 30 un", "cat": "Limpeza", "price": 7.99, "oldPrice": 9.95 },
+        { "name": "Saco de lixo", "brand": "Felitá", "detail": "100L · 15 un", "cat": "Limpeza", "price": 7.99, "oldPrice": 9.95 }
+      ]
+    }
+  ]
+}

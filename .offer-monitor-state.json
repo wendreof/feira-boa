@@ -9,7 +9,7 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-11-03T17:21:06.593Z",
+    "checked_at": "2026-11-03T17:44:36.320Z",
     "last_success_at": "2026-11-03T03:07:04.803Z",
     "last_error": "Error",
     "needs_review": false
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-03T17:21:11.959Z",
-    "last_success_at": "2026-11-03T17:21:11.959Z",
+    "checked_at": "2026-11-03T17:44:41.596Z",
+    "last_success_at": "2026-11-03T17:44:41.596Z",
     "last_error": null,
     "needs_review": true
   },
@@ -40,8 +40,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-03T17:21:13.201Z",
-    "last_success_at": "2026-11-03T17:21:13.201Z",
+    "checked_at": "2026-11-03T17:44:42.799Z",
+    "last_success_at": "2026-11-03T17:44:42.799Z",
     "last_error": null,
     "needs_review": false
   },
@@ -55,8 +55,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-03T17:21:13.693Z",
-    "last_success_at": "2026-11-03T17:21:13.693Z",
+    "checked_at": "2026-11-03T17:44:43.181Z",
+    "last_success_at": "2026-11-03T17:44:43.181Z",
     "last_error": null,
     "needs_review": false
   },
@@ -71,8 +71,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-03T17:21:15.811Z",
-    "last_success_at": "2026-11-03T17:21:15.811Z",
+    "checked_at": "2026-11-03T17:44:45.401Z",
+    "last_success_at": "2026-11-03T17:44:45.401Z",
     "last_error": null,
     "needs_review": true
   },
@@ -82,12 +82,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "3bd161698422dfe657be3458c2ab4f28c1d75252feeee62be9818fc39265b919",
+    "sha256": "003a183695937bf8ca0f54790f9affadbd53e7b78d2f97916cc7490ff5be0915",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-03T17:21:19.033Z",
-    "last_success_at": "2026-11-03T17:21:19.033Z",
+    "checked_at": "2026-11-03T17:44:47.840Z",
+    "last_success_at": "2026-11-03T17:44:47.840Z",
     "last_error": null,
     "needs_review": true
   }

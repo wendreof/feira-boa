@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-03T17:21:06.274Z",
+  "updatedAt": "2026-11-03T17:44:35.771Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -38,9 +38,12 @@
       "from": "2026-11-03",
       "to": "2026-11-07",
       "flyerImages": [
-        "https://spassosabores.com.br/wp-content/uploads/2026/10/FLV-SPASSO-1.png",
-        "https://spassosabores.com.br/wp-content/uploads/2026/10/ACOUGUE-SPASSO-1.png",
-        "https://spassosabores.com.br/wp-content/uploads/2026/10/SPASSO-1-5.png"
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-ACOGUE-4-A-6-11-2026.png",
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-1.png",
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-2.png",
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-3.png",
+        "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-4.png"
       ]
     },
     {

@@ -1,9 +1,15 @@
 import { ALL_SECTORS_LABEL, TAXONOMY_GROUPS } from "../catalog-taxonomy.mjs";
+import { describeStoreFilterChip } from "../../scripts/domain/store-filter-chip.mjs";
 import { appState } from "./state";
 import { element } from "./elements";
 import { filters, storeFilters, popularItems, priceMin, priceMax, productTypeSelect, sortSelect } from "./dom";
 import { isActive, todayInSaoPaulo } from "../view/format";
-import { offerCategory, offerOrder, CATEGORY_ICONS, RANDOM_CATEGORY_ORDER, matchesSector } from "./offer-model";
+import {
+  PINNED_POPULAR_DEPARTMENT_IDS,
+  RANDOM_POPULAR_DEPARTMENT_IDS,
+} from "../../scripts/domain/popular-category-order.mjs";
+import { QUICK_DEPARTMENT_CHIPS } from "./quick-departments";
+import { offerCategory, offerOrder, CATEGORY_ICONS, matchesSector } from "./offer-model";
 
 export function renderStoreFilters(): void {
   const today = todayInSaoPaulo();
@@ -22,12 +28,38 @@ export function renderStoreFilters(): void {
   storeFilters.replaceChildren(...ordered.map((store) => {
     const count = store === "Todas as lojas" ? total : (counts.get(store) ?? 0);
     const disabled = store !== "Todas as lojas" && count === 0;
-    const button = element("button", `filter${store === appState.activeStore ? " active" : ""}`, `${store} · ${count}`);
+    const chip = describeStoreFilterChip(store, count);
+    const button = element(
+      "button",
+      `filter store-filter-chip${store === appState.activeStore ? " active" : ""}${chip.logoSrc ? " has-store-logo" : ""}${chip.markClass ? ` ${chip.markClass}` : ""}`,
+    );
     button.type = "button";
     button.dataset.store = store;
     button.disabled = disabled;
     button.setAttribute("aria-pressed", String(store === appState.activeStore));
+    button.setAttribute("aria-label", chip.ariaLabel);
     if (disabled) button.title = "Sem ofertas ativas hoje";
+
+    if (chip.logoSrc) {
+      const logo = element("span", "store-filter-chip-logo");
+      const fallback = element("span", "store-filter-chip-fallback", chip.fallback);
+      fallback.setAttribute("aria-hidden", "true");
+      const img = document.createElement("img");
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.src = chip.logoSrc;
+      img.addEventListener("error", () => {
+        logo.classList.remove("has-logo");
+      }, { once: true });
+      img.addEventListener("load", () => {
+        if (img.naturalWidth > 0) logo.classList.add("has-logo");
+      }, { once: true });
+      logo.append(fallback, img);
+      button.append(logo, element("span", "store-filter-chip-label", chip.label));
+    } else {
+      button.textContent = chip.label;
+    }
     return button;
   }));
 }
@@ -46,17 +78,21 @@ export function renderPopularItems(): void {
     { id: "top-rated", label: "Mais curtidos", icon: "👍" },
     { id: "discount", label: "Maiores descontos", icon: "🏷️" },
   ];
-  const featured: Array<{ id: string; label: string; icon: string }> = [
-    { id: "carnes", label: "Carnes", icon: "🥩" },
-    { id: "bebidas_alcoolicas", label: "Bebidas alcoólicas", icon: "🍺" },
-    { id: "bebidas", label: "Bebidas", icon: "🥤" },
-  ];
-  const rest = RANDOM_CATEGORY_ORDER
-    .filter((groupId) => groupId !== "bebidas" && groupId !== "bebidas_alcoolicas" && groupId !== "outros" && (counts.get(groupId) ?? 0) > 0)
-    .map((groupId) => {
-      const group = TAXONOMY_GROUPS.find((item) => item.id === groupId)!;
-      return { id: group.id, label: group.label, icon: CATEGORY_ICONS[group.id] ?? "🛒" };
-    });
+  const departmentHasOffers = (id: string): boolean => {
+    const synthetic = QUICK_DEPARTMENT_CHIPS[id];
+    if (synthetic?.offerCountKey) return (counts.get(synthetic.offerCountKey) ?? 0) > 0;
+    return (counts.get(id) ?? 0) > 0;
+  };
+  const departmentChip = (id: string): { id: string; label: string; icon: string } => {
+    const synthetic = QUICK_DEPARTMENT_CHIPS[id];
+    if (synthetic) return { id, label: synthetic.label, icon: synthetic.icon };
+    const group = TAXONOMY_GROUPS.find((item) => item.id === id)!;
+    return { id, label: group.label, icon: CATEGORY_ICONS[id] ?? "🛒" };
+  };
+  const pinnedDepartments = PINNED_POPULAR_DEPARTMENT_IDS.map((id) => departmentChip(id));
+  const randomDepartments = RANDOM_POPULAR_DEPARTMENT_IDS
+    .filter((id) => departmentHasOffers(id))
+    .map((id) => departmentChip(id));
   popularItems.replaceChildren(...quickSorts.map(({ id, label, icon }) => {
     const button = element("button", `popular-item quick-sort${sortSelect.value === id ? " active" : ""}`);
     button.type = "button";
@@ -67,7 +103,7 @@ export function renderPopularItems(): void {
     iconNode.setAttribute("aria-hidden", "true");
     button.append(iconNode, element("small", "", label));
     return button;
-  }), ...[...featured, ...rest].map(({ id, label, icon }) => {
+  }), ...[...pinnedDepartments, ...randomDepartments].map(({ id, label, icon }) => {
     const button = element("button", `popular-item${appState.activeDepartment === id ? " active" : ""}`);
     button.type = "button";
     button.dataset.group = id;
@@ -89,7 +125,7 @@ export function updateProductTypeOptions(): void {
     if (!isActive(offer, today)) continue;
     if (appState.activeStore !== "Todas as lojas" && offer.store !== appState.activeStore) continue;
     const category = offerCategory(offer);
-    if (!matchesSector(category)) continue;
+    if (!matchesSector(offer)) continue;
     if (!options.has(category.subcategory)) options.set(category.subcategory, offerOrder(offer));
   }
   const types = [...options.entries()].sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0], "pt-BR")).map(([type]) => type);

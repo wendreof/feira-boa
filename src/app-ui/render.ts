@@ -1,3 +1,4 @@
+import { QUICK_DEPARTMENT_LABELS } from "./quick-departments";
 import { TAXONOMY_GROUPS, discountRatio } from "../catalog-taxonomy.mjs";
 import { appState } from "./state";
 import { createOfferCard, updateOfferCard } from "./card";
@@ -19,7 +20,7 @@ function likesByOffer(): Map<string, number> {
 function matchesArchivedFilters(offer: Offer, today: string, min: number | null, max: number | null): boolean {
   const category = offerCategory(offer);
   return (appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore)
-    && matchesSector(category)
+    && matchesSector(offer)
     && (!appState.activeProductType || category.subcategory === appState.activeProductType)
     && (min === null || offer.price >= min)
     && (max === null || offer.price <= max)
@@ -88,7 +89,7 @@ export function renderOffers(): void {
   const likes = likesByOffer();
   let matching = priceRangeReversed ? [] : appState.offers.filter((offer) => {
     const category = offerCategory(offer);
-    const matchesSectorFilter = matchesSector(category);
+    const matchesSectorFilter = matchesSector(offer);
     const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
     const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
     return (appState.sharedOfferId ? offer.id === appState.sharedOfferId : isActive(offer, today)) && (appState.sharedOfferId || appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore) &&
@@ -137,7 +138,11 @@ export function renderOffers(): void {
   resultsTitle.textContent = appState.sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
   showAllOffersButton.hidden = !appState.sharedOfferId;
   const storeLabel = appState.activeStore === "Todas as lojas" ? "todas as lojas" : appState.activeStore;
-  const sectorLabel = appState.activeDepartment ? TAXONOMY_GROUPS.find((group) => group.id === appState.activeDepartment)?.label ?? "" : "";
+  const sectorLabel = appState.activeDepartment
+    ? (QUICK_DEPARTMENT_LABELS[appState.activeDepartment]
+      ?? TAXONOMY_GROUPS.find((group) => group.id === appState.activeDepartment)?.label
+      ?? "")
+    : "";
   const sharedOffer = appState.sharedOfferId ? matching[0] : null;
   resultsSubtitle.textContent = sharedOffer
     ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer, today) ? "" : " · oferta encerrada"}`

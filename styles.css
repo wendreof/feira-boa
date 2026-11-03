@@ -295,6 +295,7 @@
 .store-filters .filter{padding:9px 14px;font-size:12px}
 @media(max-width:560px){.store-filter-section{margin-top:13px;padding:12px 12px 9px}.store-filter-heading>span{font-size:10px}}
 .account-panel[hidden]{display:none}
+#account-panel{display:none}
 html:not([data-auth-bootstrap="guest"]) #account-panel{display:none}
 
 /* Shared sidebar navigation */
@@ -1083,3 +1084,24 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 :root[data-theme="dark"] .offer-card.is-archived{opacity:.78}
 :root[data-theme="dark"] .offer-card.is-archived .offer-sticker-archived{background:#4a524c}
 .sidebar-link .nav-badge{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#b34747;color:#fff;font:800 11px/22px 'DM Sans',sans-serif;text-align:center;box-shadow:0 0 0 2px var(--topbar-bg,#fff)}
+@media(max-width:760px){
+  .sticky-filters{display:block;margin-top:8px;padding:0 0 10px;background:transparent;border:0;box-shadow:none}
+  .sticky-filters .filter-disclosure{display:none}
+  .sticky-filters .store-filter-section{margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+  .sticky-filters .store-filter-heading{margin:0 0 6px}
+  .sticky-filters .store-filter-heading h2{font-size:11px;font-weight:800;color:#718078;font-family:'DM Sans',sans-serif}
+  .sticky-filters .store-filter-heading>span{display:none}
+  .store-filters--chips{padding:2px 0 4px}
+  .store-filter-chip{align-items:center;gap:6px;padding:6px 12px 6px 6px}
+  .store-filter-chip-logo{position:relative;width:30px;height:30px;flex:0 0 auto;border-radius:8px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;overflow:hidden}
+  .store-filter-chip-logo img{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);object-fit:contain}
+  .store-filter-chip-logo.has-logo .store-filter-chip-fallback{display:none}
+  .store-filter-chip-fallback{font:800 10px 'Manrope',sans-serif;color:var(--green)}
+  .store-filter-chip-label{font:700 11px 'DM Sans',sans-serif;white-space:nowrap}
+  .store-filter-chip.bigbom-mark .store-filter-chip-logo{background:#174d37}
+  .store-filter-chip.bigbom-mark .store-filter-chip-fallback{color:#fff}
+  .store-filter-chip.paguemenos-logo .store-filter-chip-logo{background:#fff0d9}
+  .category-bar{margin-bottom:6px}
+}
+.store-filter-chip{display:inline-flex}
+.store-filter-chip.has-store-logo .store-filter-chip-logo+.store-filter-chip-label{display:inline}

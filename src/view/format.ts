@@ -1,4 +1,4 @@
-import { foldAccents } from "../shared/text.mjs";
+import { normalizeSearchText } from "../../scripts/domain/offer-search.mjs";
 
 const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
@@ -30,7 +30,7 @@ export function formatFeedUpdate(value: string): string {
 
 /** Texto de busca sem acentos, em minúsculas e com pontuação virando espaço. */
 export function normalizeSearch(value: string): string {
-  return foldAccents(value).toLocaleLowerCase("pt-BR").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  return normalizeSearchText(value);
 }
 
 /** Data de hoje no fuso de São Paulo, no formato AAAA-MM-DD. */

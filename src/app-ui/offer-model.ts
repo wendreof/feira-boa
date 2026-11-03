@@ -1,11 +1,9 @@
 import { categoryLabel, categoryOrder } from "../catalog-taxonomy.mjs";
 import { matchesCarnesDepartment } from "../../scripts/domain/carnes-department.mjs";
 import { matchesFriosEmbutidosDepartment, FRIOS_EMBUTIDOS_DEPARTMENT_ID } from "../../scripts/domain/frios-department.mjs";
+import { buildOfferSearchDocument, matchesOfferSearch } from "../../scripts/domain/offer-search.mjs";
 import { appState } from "./state";
-import { normalizeSearch } from "../view/format";
 import { type Offer } from "../types";
-
-const searchEquivalents: Record<string, string[]> = { iogurte: ["iog"], higienico: ["hig"], higienica: ["hig"] };
 export function offerCategory(offer: Offer): { groupId: string; subcategory: string } {
   return appState.categories.get(offer.id) ?? { groupId: "outros", subcategory: "Outros" };
 }
@@ -30,15 +28,12 @@ export const CATEGORY_ICONS: Record<string, string> = {
 };
 
 export function matchesSearch(offer: Offer, query: string): boolean {
-  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
-  if (!terms.length) return true;
   const category = offerCategory(offer);
-  const searchable = normalizeSearch([offer.name, offer.detail, offer.category, offer.department, ...offer.productTypes, category.subcategory, categoryLabel(category), offer.store, offer.branch, offer.note, offer.notice ?? ""].join(" "));
-  const words = searchable.split(" ");
-  return terms.every((term) => {
-    const variants = [term, ...(searchEquivalents[term] || [])];
-    return variants.some((variant) => searchable.includes(variant) || words.some((word) => word.startsWith(variant)));
+  const document = buildOfferSearchDocument(offer, {
+    subcategory: category.subcategory,
+    groupLabel: categoryLabel(category),
   });
+  return matchesOfferSearch(query, document);
 }
 
 export function matchesSector(offer: Offer): boolean {

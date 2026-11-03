@@ -29,7 +29,7 @@ export const offerSources = {
     branch: "Vila Zanetti · São João",
     logo: logoUrlForStoreId("bigbom")!,
     source: "Folheto oficial · São João da Boa Vista",
-    sourceUrl: "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
+    sourceUrl: "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
     from: "2026-10-19",
     to: "2026-10-22"
   },

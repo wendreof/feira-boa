@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-11-02T15:31:35.862Z",
-    "last_success_at": "2026-11-02T15:31:35.862Z",
+    "checked_at": "2026-11-03T03:07:04.803Z",
+    "last_success_at": "2026-11-03T03:07:04.803Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-02T15:31:37.532Z",
-    "last_success_at": "2026-11-02T15:31:37.532Z",
+    "checked_at": "2026-11-03T03:07:06.710Z",
+    "last_success_at": "2026-11-03T03:07:06.710Z",
     "last_error": null,
     "needs_review": true
   },
@@ -40,8 +40,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-02T15:31:38.468Z",
-    "last_success_at": "2026-11-02T15:31:38.468Z",
+    "checked_at": "2026-11-03T03:07:07.945Z",
+    "last_success_at": "2026-11-03T03:07:07.945Z",
     "last_error": null,
     "needs_review": false
   },
@@ -55,11 +55,20 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-02T15:31:38.549Z",
-    "last_success_at": "2026-11-02T15:31:38.549Z",
+    "checked_at": "2026-11-03T03:07:08.210Z",
+    "last_success_at": "2026-11-03T03:07:08.210Z",
     "last_error": null,
-    "needs_review": false,
-    "review_note": "Liberada pela verificação automática de plausibilidade."
+    "needs_review": false
+  },
+  "https://www.spanionline.com.br/ofertas": {
+    "url": "https://www.spanionline.com.br/ofertas",
+    "store": "Spani Atacadista",
+    "branch": "São João da Boa Vista · Jardim das Flores",
+    "store_id": "spani-atacadista",
+    "store_key": "spani-atacadista-sao-joao-da-boa-vista-jardim-das-flores",
+    "checked_at": "2026-11-03T03:07:10.933Z",
+    "last_error": "Error",
+    "needs_review": true
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
     "url": "https://spassosabores.com.br/ofertas-sao-joao/",
@@ -67,12 +76,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "4a2d99f0d6328078b56b6208ca8587a90921dd1a3724a60a0b1729a62d014915",
+    "sha256": "62c3e35af2fc202543d574f019eec1e95f5fd4a42d95099fc0bfc178cd6dce2f",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-02T15:31:40.012Z",
-    "last_success_at": "2026-11-02T15:31:40.012Z",
+    "checked_at": "2026-11-03T03:07:12.846Z",
+    "last_success_at": "2026-11-03T03:07:12.846Z",
     "last_error": null,
     "needs_review": true
   }

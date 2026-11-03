@@ -5,13 +5,14 @@ import { createOfferCard, updateOfferCard } from "./card";
 import {
   feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink,
   resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount,
-  archiveSection, archiveSubtitle, archiveGrid,
+  archiveSection, archiveSubtitle, archiveGrid, clearActiveFiltersButton,
 } from "./dom";
 import { getPriceBounds } from "./filters";
 import { money, isActive, todayInSaoPaulo, dateLabel } from "../view/format";
 import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./offer-model";
 import type { Offer } from "../types";
 import { refreshAlertsInvitePanel } from "./alerts-invite";
+import { browseFiltersActive } from "./browse-filters";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -147,6 +148,7 @@ export function renderOffers(): void {
   resultsSubtitle.textContent = sharedOffer
     ? `${sharedOffer.name} · ${money(sharedOffer.price)} · ${sharedOffer.store}${isActive(sharedOffer, today) ? "" : " · oferta encerrada"}`
     : `${matching.length} ${matching.length === 1 ? "oferta ativa" : "ofertas ativas"} · ${storeLabel}${sectorLabel ? ` · ${sectorLabel}` : ""}${appState.activeProductType ? ` · ${appState.activeProductType}` : ""}`;
+  clearActiveFiltersButton.hidden = Boolean(appState.sharedOfferId) || !browseFiltersActive();
   if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
   else if (appState.offers.some((offer) => isActive(offer, today))) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
   else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";

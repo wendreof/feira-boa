@@ -4,6 +4,7 @@ import { buildSnapshotManifest } from "./feed/snapshot-manifest.mjs";
 import { createBuildInfo } from "./feed/build-info.mjs";
 import { loadFallbackCatalog, loadPreviousSnapshots, loadSnapshots } from "./feed/load-sources.mjs";
 import { validateFeed } from "./feed/validate-feed.mjs";
+import { counterCutDetailHints } from "./domain/carnes-department.mjs";
 
 const fallback = await loadFallbackCatalog();
 const snapshots = await loadSnapshots();
@@ -24,6 +25,13 @@ if (warnings.droppedOffers.length > 0) {
 }
 
 validateFeed(feed);
+
+const counterCutHints = feed.offers.flatMap((offer) => counterCutDetailHints(offer));
+if (counterCutHints.length > 0) {
+  console.warn(
+    `Counter-cut offers missing kg detail (${counterCutHints.length} hidden from Açougue filter):\n- ${counterCutHints.slice(0, 20).join("\n- ")}`,
+  );
+}
 
 const feedUrl = new URL("../offers.json", import.meta.url);
 const temporaryFeedUrl = new URL("../offers.json.tmp", import.meta.url);

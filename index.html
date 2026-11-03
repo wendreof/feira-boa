@@ -36,7 +36,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7989265241424368" crossorigin="anonymous"></script>
   <script src="theme-bootstrap.js"></script>
   <script src="auth-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261103-mobile-store-chips">
+  <link rel="stylesheet" href="styles.css?v=20261103-mobile-ux">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body>
@@ -84,25 +84,32 @@
         <span class="account-button" id="account-access">Entrar ou criar conta</span>
         <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
       </a>
-      <a class="account-panel alerts-invite-panel" id="alerts-invite" href="login.html?returnTo=alerts.html" hidden>
-        <span class="account-panel-icon" aria-hidden="true">🔔</span>
-        <div class="account-panel-text">
-          <strong>Receba avisos quando o preço baixar</strong>
-          <span id="alerts-invite-copy">Crie alertas de preço grátis — Telegram ou navegador.</span>
-        </div>
-        <span class="account-button" id="alerts-invite-action">Criar meu alerta</span>
-      </a>
+      <div class="alerts-invite-shell" id="alerts-invite-shell" hidden>
+        <a class="account-panel alerts-invite-panel alerts-invite-panel--secondary" id="alerts-invite" href="login.html?returnTo=alerts.html">
+          <span class="account-panel-icon" aria-hidden="true">🔔</span>
+          <div class="account-panel-text">
+            <strong>Receba avisos quando o preço baixar</strong>
+            <span id="alerts-invite-copy">Crie alertas de preço grátis — Telegram ou navegador.</span>
+          </div>
+          <span class="account-button" id="alerts-invite-action">Criar meu alerta</span>
+        </a>
+        <button type="button" class="alerts-invite-dismiss" id="alerts-invite-dismiss" aria-label="Ocultar convite">×</button>
+      </div>
     </section>
 
     <section class="category-bar" aria-label="Explorar por categoria">
       <p class="filter-label popular-label">Explorar por categoria</p>
-      <div class="popular-items" id="popular-items" aria-label="Filtros rápidos por categoria e destaque"></div>
+      <div class="horizontal-scroll-strip">
+        <div class="popular-items" id="popular-items" aria-label="Filtros rápidos por categoria e destaque"></div>
+      </div>
     </section>
 
     <section class="sticky-filters" aria-label="Filtros de ofertas">
       <section class="store-filter-section" aria-labelledby="store-filter-heading">
         <div class="store-filter-heading"><h2 id="store-filter-heading">Lojas</h2><span>Filtrar por loja</span></div>
-        <div class="filters store-filters store-filters--chips" id="store-filters" aria-label="Filtrar por supermercado"></div>
+        <div class="horizontal-scroll-strip horizontal-scroll-strip--stores">
+          <div class="filters store-filters store-filters--chips" id="store-filters" aria-label="Filtrar por supermercado"></div>
+        </div>
       </section>
       <details class="filter-disclosure" id="filter-disclosure">
         <summary><span class="filter-summary-icon" aria-hidden="true">☷</span>Filtros<span class="active-filter-count" id="active-filter-count" hidden></span></summary>
@@ -119,7 +126,7 @@
     </section>
 
     <section class="results">
-      <div class="results-heading"><div><h2 id="results-title">Ofertas encontradas</h2><p id="results-subtitle"></p><button type="button" id="show-all-offers" class="show-all-offers" hidden>Explorar todas as ofertas</button></div><div class="results-actions"><span class="updated" id="updated-label"></span><div class="view-toggle" id="view-toggle" role="group" aria-label="Visualização das ofertas"><button type="button" data-view-mode="grid" aria-pressed="true">Grade</button><button type="button" data-view-mode="list" aria-pressed="false">Lista</button></div><button type="button" id="favorites-toggle" class="favorites-filter" aria-pressed="false">Favoritos (0)</button></div></div>
+      <div class="results-heading"><div class="results-heading-copy"><h2 id="results-title">Ofertas encontradas</h2><p id="results-subtitle"></p><button type="button" id="clear-active-filters" class="clear-active-filters" hidden>Limpar filtros</button><button type="button" id="show-all-offers" class="show-all-offers" hidden>Explorar todas as ofertas</button></div><div class="results-actions"><span class="updated" id="updated-label"></span><div class="view-toggle" id="view-toggle" role="group" aria-label="Visualização das ofertas"><button type="button" data-view-mode="grid" aria-pressed="true">Grade</button><button type="button" data-view-mode="list" aria-pressed="false">Lista</button></div><button type="button" id="favorites-toggle" class="favorites-filter" aria-pressed="false">Favoritos (0)</button></div></div>
       <p id="results-announcement" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
       <p id="feed-status" class="feed-status" role="status">Carregando ofertas…</p>
       <button id="feed-retry" class="feed-retry" type="button" hidden>Tentar novamente</button>

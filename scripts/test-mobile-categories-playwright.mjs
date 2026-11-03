@@ -1,5 +1,5 @@
 /**
- * Mobile: categories + logo store chips; Filtros panel hidden.
+ * Mobile: categories, store logos, scroll strips, clear filters, list view.
  */
 import { spawn } from "node:child_process";
 import { chromium } from "playwright";
@@ -50,35 +50,49 @@ try {
   await page.waitForSelector("#popular-items .popular-item", { timeout: 30_000 });
   await page.waitForSelector("#store-filters .store-filter-chip", { timeout: 30_000 });
 
-  const filtersHidden = await page.locator(".sticky-filters").evaluate((el) => getComputedStyle(el).display === "none");
-  if (filtersHidden) failures.push("store filter strip should be visible on mobile");
-
   const advancedHidden = await page.locator("#filter-disclosure").evaluate((el) => getComputedStyle(el).display === "none");
   if (!advancedHidden) failures.push("Filtros panel should be hidden on mobile");
+
+  if (!(await page.locator(".horizontal-scroll-strip").count())) {
+    failures.push("category/store rows should use horizontal scroll strips");
+  }
 
   const logoChip = page.locator('#store-filters button.has-store-logo img[src*="logos/"]').first();
   if (!(await logoChip.count())) failures.push("expected at least one store chip with logo");
 
-  const favoritesPanelHidden = await page.locator("#account-panel").evaluate((el) => {
-    const style = getComputedStyle(el);
-    return el.hidden || style.display === "none";
-  });
-  if (!favoritesPanelHidden) failures.push("favorites account panel should stay hidden for guests");
+  const acougueChip = page.locator('#popular-items button[data-group="carnes"]');
+  if (!(await acougueChip.count())) failures.push("Açougue (kg) category chip missing");
+  else {
+    const label = await acougueChip.locator("small").textContent();
+    if (!label?.includes("Açougue")) failures.push("carnes chip should show Açougue (kg) label");
+  }
 
   await page.waitForFunction(() => {
-    const invite = document.querySelector("#alerts-invite");
-    return invite && !invite.hidden;
+    const shell = document.querySelector("#alerts-invite-shell");
+    return shell && !shell.hidden;
   }, null, { timeout: 15_000 }).catch(() => {
-    failures.push("alerts invite panel should show for guests");
+    failures.push("alerts invite shell should show for guests");
   });
+
+  await acougueChip.first().click();
+  await page.waitForSelector("#clear-active-filters:not([hidden])", { timeout: 5000 }).catch(() => {
+    failures.push("Limpar filtros should appear when a category is active");
+  });
+
+  const listMode = await page.evaluate(() => document.querySelector("#offer-grid")?.classList.contains("list-view"));
+  if (!listMode) failures.push("mobile default should use list view on offer grid");
+
+  await page.locator("#clear-active-filters").click();
+  const cleared = await page.locator("#clear-active-filters").evaluate((el) => el.hidden);
+  if (!cleared) failures.push("Limpar filtros should hide after clearing");
 } finally {
   await browser.close();
 }
 
 if (failures.length) {
-  console.error("Mobile store chips layout failed:");
+  console.error("Mobile UX checks failed:");
   for (const line of failures) console.error(`- ${line}`);
   process.exit(1);
 }
 
-console.log(`OK: mobile categories + store logos at ${BASE}/index.html`);
+console.log(`OK: mobile UX at ${BASE}/index.html`);

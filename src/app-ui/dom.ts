@@ -29,6 +29,7 @@ export const showAllOffersButton = document.querySelector<HTMLButtonElement>("#s
 export const shareStatus = document.querySelector<HTMLParagraphElement>("#share-status")!;
 export const emptyHelp = document.querySelector<HTMLSpanElement>("#empty-help")!;
 export const resetButton = document.querySelector<HTMLButtonElement>("#reset-filters")!;
+export const clearActiveFiltersButton = document.querySelector<HTMLButtonElement>("#clear-active-filters")!;
 export const viewToggle = document.querySelector<HTMLDivElement>("#view-toggle")!;
 export const accountAccess = document.querySelector<HTMLElement>("#account-access")!;
 export const accountPanel = document.querySelector<HTMLElement>("#account-panel")!;

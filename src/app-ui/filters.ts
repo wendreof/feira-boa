@@ -8,8 +8,10 @@ import {
   PINNED_POPULAR_DEPARTMENT_IDS,
   RANDOM_POPULAR_DEPARTMENT_IDS,
 } from "../../scripts/domain/popular-category-order.mjs";
-import { QUICK_DEPARTMENT_CHIPS } from "./quick-departments";
+import { buildDepartmentOfferCounts } from "../../scripts/domain/department-offer-counts.mjs";
+import { QUICK_DEPARTMENT_CHIPS, PINNED_TAXONOMY_CHIP_LABELS } from "./quick-departments";
 import { offerCategory, offerOrder, CATEGORY_ICONS, matchesSector } from "./offer-model";
+import type { Offer } from "../types";
 
 export function renderStoreFilters(): void {
   const today = todayInSaoPaulo();
@@ -66,33 +68,39 @@ export function renderStoreFilters(): void {
 
 export function renderPopularItems(): void {
   const today = todayInSaoPaulo();
-  const counts = new Map<string, number>();
-  for (const offer of appState.offers) {
-    if (!isActive(offer, today)) continue;
-    const category = offerCategory(offer);
-    const key = category.subcategory;
-    counts.set(category.groupId, (counts.get(category.groupId) ?? 0) + 1);
-    counts.set(key, (counts.get(key) ?? 0) + 1);
-  }
+  const activeOffers = appState.offers.filter((offer) => isActive(offer, today));
+  const departmentCounts = buildDepartmentOfferCounts(activeOffers, (offer: Offer) => offerCategory(offer));
   const quickSorts = [
     { id: "top-rated", label: "Mais curtidos", icon: "👍" },
     { id: "discount", label: "Maiores descontos", icon: "🏷️" },
   ];
-  const departmentHasOffers = (id: string): boolean => {
-    const synthetic = QUICK_DEPARTMENT_CHIPS[id];
-    if (synthetic?.offerCountKey) return (counts.get(synthetic.offerCountKey) ?? 0) > 0;
-    return (counts.get(id) ?? 0) > 0;
+  const formatLabel = (base: string, id: string): string => {
+    const total = departmentCounts.get(id) ?? 0;
+    return total > 0 ? `${base} · ${total}` : base;
   };
-  const departmentChip = (id: string): { id: string; label: string; icon: string } => {
+  const departmentChip = (id: string, pinned: boolean): { id: string; label: string; icon: string; pinned: boolean } => {
     const synthetic = QUICK_DEPARTMENT_CHIPS[id];
-    if (synthetic) return { id, label: synthetic.label, icon: synthetic.icon };
+    if (synthetic) {
+      return {
+        id,
+        label: formatLabel(synthetic.label, id),
+        icon: synthetic.icon,
+        pinned,
+      };
+    }
     const group = TAXONOMY_GROUPS.find((item) => item.id === id)!;
-    return { id, label: group.label, icon: CATEGORY_ICONS[id] ?? "🛒" };
+    const base = pinned ? (PINNED_TAXONOMY_CHIP_LABELS[id] ?? group.label) : group.label;
+    return {
+      id,
+      label: formatLabel(base, id),
+      icon: CATEGORY_ICONS[id] ?? "🛒",
+      pinned,
+    };
   };
-  const pinnedDepartments = PINNED_POPULAR_DEPARTMENT_IDS.map((id) => departmentChip(id));
+  const pinnedDepartments = PINNED_POPULAR_DEPARTMENT_IDS.map((id) => departmentChip(id, true));
   const randomDepartments = RANDOM_POPULAR_DEPARTMENT_IDS
-    .filter((id) => departmentHasOffers(id))
-    .map((id) => departmentChip(id));
+    .filter((id) => (departmentCounts.get(id) ?? 0) > 0)
+    .map((id) => departmentChip(id, false));
   popularItems.replaceChildren(...quickSorts.map(({ id, label, icon }) => {
     const button = element("button", `popular-item quick-sort${sortSelect.value === id ? " active" : ""}`);
     button.type = "button";
@@ -103,11 +111,14 @@ export function renderPopularItems(): void {
     iconNode.setAttribute("aria-hidden", "true");
     button.append(iconNode, element("small", "", label));
     return button;
-  }), ...[...pinnedDepartments, ...randomDepartments].map(({ id, label, icon }) => {
-    const button = element("button", `popular-item${appState.activeDepartment === id ? " active" : ""}`);
+  }), ...[...pinnedDepartments, ...randomDepartments].map(({ id, label, icon, pinned }) => {
+    const button = element(
+      "button",
+      `popular-item${pinned ? " popular-item--pinned" : ""}${appState.activeDepartment === id ? " active" : ""}`,
+    );
     button.type = "button";
     button.dataset.group = id;
-    button.setAttribute("aria-label", `Ver ${label}`);
+    button.setAttribute("aria-label", `Ver ${label.replace(/\s·\s\d+$/, "")}`);
     button.setAttribute("aria-pressed", String(appState.activeDepartment === id));
     const iconNode = element("span", "", icon);
     iconNode.setAttribute("aria-hidden", "true");

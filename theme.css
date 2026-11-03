@@ -299,6 +299,29 @@
   color: #b6e5bf;
 }
 
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip:hover,
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip:focus-visible {
+  background: #28382d;
+  border-color: #456b4d;
+  color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active {
+  background: #28382d;
+  border-color: #3f5c46;
+  color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-label,
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-fallback {
+  color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip-logo {
+  background: #1b241e;
+  border-color: var(--line);
+}
+
 :root[data-theme="dark"] .build-version[open] summary {
   background: #2f8a5c;
   color: #fff;

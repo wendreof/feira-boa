@@ -60,6 +60,17 @@ try {
   const logoChip = page.locator('#store-filters button.has-store-logo img[src*="logos/"]').first();
   if (!(await logoChip.count())) failures.push("expected at least one store chip with logo");
 
+  const storeChipShape = await page.evaluate(() => {
+    const chip = document.querySelector("#store-filters .store-filter-chip");
+    if (!chip) return { ok: false, reason: "no store chip" };
+    const radius = parseFloat(getComputedStyle(chip).borderRadius);
+    if (!Number.isFinite(radius) || radius < 10) {
+      return { ok: false, reason: "store chips should use tile radius like categories", radius };
+    }
+    return { ok: true };
+  });
+  if (!storeChipShape.ok) failures.push(`store chips: ${storeChipShape.reason ?? JSON.stringify(storeChipShape)}`);
+
   const acougueChip = page.locator('#popular-items button[data-group="carnes"]');
   if (!(await acougueChip.count())) failures.push("Açougue (kg) category chip missing");
   else {
@@ -112,9 +123,23 @@ try {
     if (!favorite || favorite.closest(".offer-reactions")?.hidden) {
       return { ok: false, reason: "favorite button should show in list view" };
     }
+    const reactions = card.querySelector(".offer-reactions");
+    if (!reactions || getComputedStyle(reactions).display === "none") {
+      return { ok: false, reason: "offer-reactions must be visible on mobile list" };
+    }
     return { ok: true };
   });
   if (!listCardLayout.ok) failures.push(`list card layout: ${listCardLayout.reason ?? JSON.stringify(listCardLayout)}`);
+
+  const navChrome = await page.evaluate(() => {
+    const nav = document.querySelector(".mobile-bottom-nav");
+    if (!nav) return { ok: false, reason: "missing mobile bottom nav" };
+    const style = getComputedStyle(nav);
+    const radius = parseFloat(style.borderRadius);
+    if (!Number.isFinite(radius) || radius < 12) return { ok: false, reason: "expected rounded floating nav", radius: style.borderRadius };
+    return { ok: true };
+  });
+  if (!navChrome.ok) failures.push(`mobile nav: ${navChrome.reason ?? JSON.stringify(navChrome)}`);
 } finally {
   await browser.close();
 }

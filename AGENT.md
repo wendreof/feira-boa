@@ -155,7 +155,7 @@ Skip **`npm run ingest:offers`** in agent sessions unless live ingest adapters c
 - **New store ingest:** `scripts/adapters/`, `scripts/ingest-offers.mjs`, `tests/adapters.test.mjs`
 - **Home / offers UI:** `src/app.ts`, `src/app-ui/`, `index.html`
 - **Alerts invite:** `src/shared/alert-rules.mjs`, `src/app-ui/alerts-invite.ts`
-- **CI ingest push:** `.github/workflows/monitor-offers.yml` — commit `state/`, `offers.json`, `snapshot-manifest.json`, `build-info.json`, `source-status.js`, `.offer-monitor-state.json`
+- **CI ingest push:** `.github/workflows/monitor-offers.yml` — commit `state/`, `offers.json`, `snapshot-manifest.json`, `source-status.js`, `.offer-monitor-state.json` (`build-info.json` stays gitignored; Pages builds it via `npm run build`)
 
 ### Prompting
 

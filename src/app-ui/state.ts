@@ -30,6 +30,8 @@ export interface CardRefs {
   favoriteButtons: HTMLButtonElement[];
   like: HTMLButtonElement;
   likeCount: HTMLElement;
+  reactionGroup: HTMLElement;
+  validWrap: HTMLElement;
 }
 
 /** Estado da página de ofertas, compartilhado pelos módulos de app-ui. */

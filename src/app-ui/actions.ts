@@ -208,6 +208,19 @@ export function bindAppEvents(): void {
   clearActiveFiltersButton.addEventListener("click", () => {
     clearBrowseFilters();
   });
+
+  grid.addEventListener("click", (event: MouseEvent) => {
+    if (!grid.classList.contains("list-view")) return;
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("button, a, [data-favorite-id], [data-reaction], [data-share-id]")) return;
+    const card = target.closest<HTMLElement>(".offer-card");
+    if (!card) return;
+    const link = card.querySelector<HTMLAnchorElement>(".card-source a");
+    if (!link || link.href === "#" || !/^https:\/\//.test(link.href)) return;
+    link.click();
+  });
+
   viewToggle.addEventListener("click", (event: MouseEvent) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
@@ -217,17 +230,20 @@ export function bindAppEvents(): void {
       appState.viewMode = "list";
       persistViewMode(appState.viewMode);
       updateViewMode();
+      renderOffers();
       return;
     }
     appState.viewMode = button.dataset.viewMode;
     persistViewMode(appState.viewMode);
     updateViewMode();
+    renderOffers();
   });
 
   mobileViewMedia.addEventListener?.("change", () => {
     appState.viewMode = resolveDefaultViewMode(localStorage.getItem("feira-boa:view-mode:v1"), mobileViewMedia.matches);
     persistViewMode(appState.viewMode);
     updateViewMode();
+    renderOffers();
   });
   for (const favoritesLink of [navFavoritesLink, mobileNavFavoritesLink]) {
     favoritesLink.addEventListener("click", (event: MouseEvent) => {

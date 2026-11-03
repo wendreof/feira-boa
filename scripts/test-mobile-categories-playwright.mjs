@@ -85,6 +85,36 @@ try {
   await page.locator("#clear-active-filters").click();
   const cleared = await page.locator("#clear-active-filters").evaluate((el) => el.hidden);
   if (!cleared) failures.push("Limpar filtros should hide after clearing");
+
+  await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
+  const listCardLayout = await page.evaluate(() => {
+    const card = document.querySelector(".list-view .offer-card");
+    if (!card) return { ok: false, reason: "no list card" };
+    const hiddenNotice = card.querySelector(".offer-notice[hidden]");
+    if (!hiddenNotice) return { ok: false, reason: "expected hidden offer-notice slot" };
+    const noticeStyle = getComputedStyle(hiddenNotice);
+    const noticeBox = hiddenNotice.getBoundingClientRect();
+    if (noticeStyle.display !== "none" || noticeBox.height > 0.5) {
+      return { ok: false, reason: "hidden offer-notice must not paint in list view", display: noticeStyle.display, height: noticeBox.height };
+    }
+    const title = card.querySelector(".card-title h3");
+    const note = card.querySelector(".offer-note:not([hidden])");
+    if (title && note) {
+      const titleTop = title.getBoundingClientRect().top;
+      const noteTop = note.getBoundingClientRect().top;
+      if (noteTop < titleTop) return { ok: false, reason: "offer-note above title" };
+    }
+    const like = card.querySelector(".offer-reaction-button");
+    const favorite = card.querySelector(".offer-reactions .favorite-toggle-reaction");
+    if (!like || like.closest(".offer-reactions")?.hidden) {
+      return { ok: false, reason: "like button should show in list view" };
+    }
+    if (!favorite || favorite.closest(".offer-reactions")?.hidden) {
+      return { ok: false, reason: "favorite button should show in list view" };
+    }
+    return { ok: true };
+  });
+  if (!listCardLayout.ok) failures.push(`list card layout: ${listCardLayout.reason ?? JSON.stringify(listCardLayout)}`);
 } finally {
   await browser.close();
 }

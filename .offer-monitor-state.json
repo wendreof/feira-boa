@@ -1,18 +1,19 @@
 {
-  "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf": {
-    "url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
+  "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf": {
+    "url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
     "store": "Big Bom",
     "branch": "Vila Zanetti · São João",
     "store_id": "big-bom",
     "store_key": "big-bom-vila-zanetti-sao-joao",
-    "sha256": "189d5ef3353aff7710f8577b017ad62ebcae624b9966260f32ddd9907569e8e1",
+    "sha256": "d06fea2533bc3bacfa1c4cee22ab0764c1aa998a6f728ea2675cac5f09a713b2",
     "status": 200,
     "content_type": "application/pdf",
-    "final_url": "https://bigbom.com.br/wp-content/uploads/2026/10/Big-Ofertas.pdf",
-    "checked_at": "2026-11-03T21:13:31.363Z",
-    "last_success_at": "2026-11-03T03:07:04.803Z",
-    "last_error": "Error",
-    "needs_review": false
+    "final_url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
+    "checked_at": "2026-11-03T21:24:51.010Z",
+    "last_success_at": "2026-11-03T21:24:51.010Z",
+    "last_error": null,
+    "needs_review": false,
+    "review_note": "Liberada pela verificação automática de plausibilidade."
   },
   "https://corso.com.br/jornalfrente.php": {
     "url": "https://corso.com.br/jornalfrente.php",
@@ -24,8 +25,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-03T21:13:36.698Z",
-    "last_success_at": "2026-11-03T21:13:36.698Z",
+    "checked_at": "2026-11-03T21:24:52.318Z",
+    "last_success_at": "2026-11-03T21:24:52.318Z",
     "last_error": null,
     "needs_review": true
   },
@@ -35,12 +36,12 @@
     "branch": "Rede Forte · SJBV e região",
     "store_id": "forte-mix",
     "store_key": "forte-mix-rede-forte-sjbv-e-regiao",
-    "sha256": "7369bc0ad64d129fe5f6cbb0edb60e22652b64e85be83978bba07506c773306c",
+    "sha256": "f3ae82da9d8f107b005427d8dacf9f0cb8ac3d085be597edc4dad2615df4e940",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://smfortemix.com.br/",
-    "checked_at": "2026-11-03T21:13:37.907Z",
-    "last_success_at": "2026-11-03T21:13:37.907Z",
+    "checked_at": "2026-11-03T21:24:53.331Z",
+    "last_success_at": "2026-11-03T21:24:53.331Z",
     "last_error": null,
     "needs_review": true
   },
@@ -55,8 +56,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-03T21:13:39.392Z",
-    "last_success_at": "2026-11-03T21:13:39.392Z",
+    "checked_at": "2026-11-03T21:24:54.504Z",
+    "last_success_at": "2026-11-03T21:24:54.504Z",
     "last_error": null,
     "needs_review": false
   },
@@ -70,8 +71,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-03T21:13:40.119Z",
-    "last_success_at": "2026-11-03T21:13:40.119Z",
+    "checked_at": "2026-11-03T21:24:54.655Z",
+    "last_success_at": "2026-11-03T21:24:54.655Z",
     "last_error": null,
     "needs_review": false
   },
@@ -86,8 +87,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-03T21:13:42.422Z",
-    "last_success_at": "2026-11-03T21:13:42.422Z",
+    "checked_at": "2026-11-03T21:24:56.377Z",
+    "last_success_at": "2026-11-03T21:24:56.377Z",
     "last_error": null,
     "needs_review": true
   },
@@ -101,8 +102,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-03T21:13:45.605Z",
-    "last_success_at": "2026-11-03T21:13:45.605Z",
+    "checked_at": "2026-11-03T21:24:58.634Z",
+    "last_success_at": "2026-11-03T21:24:58.634Z",
     "last_error": null,
     "needs_review": true
   }

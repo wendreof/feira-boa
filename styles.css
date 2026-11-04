@@ -83,6 +83,17 @@
 .account-button.danger:hover{background:#fff4f4}
 .account-settings-actions .account-button{font-size:13px;padding:10px 14px}
 .account-settings-actions .account-button:disabled{opacity:.65;cursor:wait}
+.account-session{margin-top:22px;border-top:1px solid var(--line);padding-top:12px}
+.account-session summary{width:max-content;color:#8a978e;font:650 12px "DM Sans",sans-serif;cursor:pointer;list-style:none}
+.account-session summary::-webkit-details-marker{display:none}
+.account-session summary::after{content:" ›";}
+.account-session[open] summary::after{content:" ›";}
+.account-session .account-settings-actions{margin-top:12px}
+.account-session .account-button{font-size:12px;padding:7px 12px;min-height:0;background:transparent}
+@media(max-width:760px){
+  .account-session .account-settings-actions{grid-template-columns:1fr;max-width:220px}
+  .account-session .account-settings-actions .account-button{min-height:36px;width:auto}
+}
 .preferences-section{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .preferences-section h2{margin:0;font:750 17px 'Manrope',sans-serif}
 .preferences-help{margin:6px 0 14px;color:var(--muted);font-size:12px;line-height:1.5}
@@ -1244,7 +1255,7 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .sticky-filters .store-filter-heading{margin:0 0 6px}
   .sticky-filters .store-filter-section .popular-label{margin:0 0 6px}
   .store-filters--chips{padding:2px 0 4px}
-  .store-filters--chips .store-filter-chip{min-height:62px;min-width:68px;max-width:96px;border-radius:12px}
+  .store-filters--chips .store-filter-chip{min-height:62px;min-width:72px;max-width:118px;border-radius:12px}
   .store-filters--chips .store-filter-chip-logo{width:30px;height:30px;border-radius:9px}
   .category-bar{margin-bottom:6px}
 }
@@ -1265,7 +1276,7 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   align-items: center;
   justify-content: center;
   min-width: 72px;
-  max-width: 104px;
+  max-width: 118px;
   min-height: 64px;
   padding: 6px 8px;
   border-radius: 13px;
@@ -1386,4 +1397,42 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .list-view .offer-card--opens-source{cursor:pointer}
   .list-view .valid-until[hidden]{display:none!important}
   .list-view .card-source .store-filter-chip-logo,.list-view .card-source img[src*="logos/"]{width:26px;height:20px}
+}
+
+.search-shell{position:relative;flex:1 1 220px;min-width:0;max-width:460px}
+.topbar .search-shell .searchbox{width:100%;max-width:none;margin:0}
+.searchbox input[type="search"]::-webkit-search-cancel-button{display:none}
+.search-clear{display:grid;place-items:center;width:22px;height:22px;margin-left:4px;border:0;border-radius:999px;background:#e7eee8;color:#3f4c44;font:700 16px/1 "DM Sans",sans-serif;cursor:pointer;flex:0 0 auto}
+.search-clear[hidden]{display:none}
+.search-clear:hover{background:#d5e4d8}
+.search-suggestions{position:fixed;z-index:40;margin:0;padding:6px;list-style:none;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 16px 36px #203c2724}
+.search-suggestions[hidden]{display:none}
+.search-suggestion{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer}
+.search-suggestion small{flex:0 0 auto;color:#718078;font-size:11px}
+.search-suggestion.is-active,.search-suggestion:hover{background:#f2f7ef}
+:root[data-theme="dark"] .search-clear{background:#243028;color:#d7e2d8}
+:root[data-theme="dark"] .search-suggestions{background:#1b241e;border-color:#2f3a32;box-shadow:0 16px 36px #00000055}
+:root[data-theme="dark"] .search-suggestion small{color:#9aab9f}
+:root[data-theme="dark"] .search-suggestion.is-active,:root[data-theme="dark"] .search-suggestion:hover{background:#243028}
+@media(max-width:760px){
+  .search-shell{flex:1 1 0;max-width:none}
+  .search-suggestion{padding:10px}
+}
+
+.sidebar-profile{display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:56px}
+.sidebar-profile-avatar{position:relative;width:40px;height:40px;flex:0 0 auto;display:grid;place-items:center;border-radius:50%;overflow:hidden;background:#315444;color:#e7f3ea;border:1px solid #244033}
+.sidebar-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.sidebar-profile-fallback{display:grid;place-items:center;line-height:0}
+.sidebar-profile-fallback[hidden]{display:none}
+.sidebar-profile-fallback svg{display:block;fill:currentColor}
+.sidebar-profile-copy{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.sidebar-profile-copy strong{font:750 13px "DM Sans",sans-serif;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-profile-copy strong[hidden]{display:none}
+.sidebar-profile-copy [data-account-label]{font:650 11px "DM Sans",sans-serif;color:#718078}
+body.sidebar-collapsed .sidebar-profile{justify-content:center;padding-inline:0}
+body.sidebar-collapsed .sidebar-profile-copy{display:none}
+:root[data-theme="dark"] .sidebar-profile{background:#1b241e}
+@media(max-width:760px){
+  body.sidebar-collapsed .sidebar-profile{justify-content:flex-start;padding-inline:10px}
+  body.sidebar-collapsed .sidebar-profile-copy{display:flex}
 }

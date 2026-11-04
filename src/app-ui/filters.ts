@@ -74,28 +74,14 @@ export function renderPopularItems(): void {
     { id: "top-rated", label: "Mais curtidos", icon: "👍" },
     { id: "discount", label: "Maiores descontos", icon: "🏷️" },
   ];
-  const formatLabel = (base: string, id: string): string => {
-    const total = departmentCounts.get(id) ?? 0;
-    return total > 0 ? `${base} · ${total}` : base;
-  };
   const departmentChip = (id: string, pinned: boolean): { id: string; label: string; icon: string; pinned: boolean } => {
     const synthetic = QUICK_DEPARTMENT_CHIPS[id];
     if (synthetic) {
-      return {
-        id,
-        label: formatLabel(synthetic.label, id),
-        icon: synthetic.icon,
-        pinned,
-      };
+      return { id, label: synthetic.label, icon: synthetic.icon, pinned };
     }
     const group = TAXONOMY_GROUPS.find((item) => item.id === id)!;
-    const base = pinned ? (PINNED_TAXONOMY_CHIP_LABELS[id] ?? group.label) : group.label;
-    return {
-      id,
-      label: formatLabel(base, id),
-      icon: CATEGORY_ICONS[id] ?? "🛒",
-      pinned,
-    };
+    const label = pinned ? (PINNED_TAXONOMY_CHIP_LABELS[id] ?? group.label) : group.label;
+    return { id, label, icon: CATEGORY_ICONS[id] ?? "🛒", pinned };
   };
   const pinnedDepartments = PINNED_POPULAR_DEPARTMENT_IDS.map((id) => departmentChip(id, true));
   const randomDepartments = RANDOM_POPULAR_DEPARTMENT_IDS
@@ -118,7 +104,7 @@ export function renderPopularItems(): void {
     );
     button.type = "button";
     button.dataset.group = id;
-    button.setAttribute("aria-label", `Ver ${label.replace(/\s·\s\d+$/, "")}`);
+    button.setAttribute("aria-label", `Ver ${label}`);
     button.setAttribute("aria-pressed", String(appState.activeDepartment === id));
     const iconNode = element("span", "", icon);
     iconNode.setAttribute("aria-hidden", "true");
@@ -159,7 +145,7 @@ export function renderFilters(): void {
   const sectors = [{ id: "", label: ALL_SECTORS_LABEL, count: appState.offers.filter((offer) => isActive(offer, today)).length }, ...TAXONOMY_GROUPS.map((group) => ({ id: group.id, label: group.label, count: counts.get(group.id) ?? 0 }))];
   filters.replaceChildren(...sectors.map((sector) => {
     const disabled = sector.id !== "" && sector.count === 0;
-    const button = element("button", `filter${sector.id === appState.activeDepartment ? " active" : ""}`, `${sector.label} · ${sector.count}`);
+    const button = element("button", `filter${sector.id === appState.activeDepartment ? " active" : ""}`, sector.label);
     button.type = "button";
     button.dataset.department = sector.id;
     button.disabled = disabled;

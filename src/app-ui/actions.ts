@@ -7,6 +7,7 @@ import { mobileViewMedia, updateViewMode, persistViewMode } from "./view";
 import { money } from "../view/format";
 import { renderOffers } from "./render";
 import { renderPopularItems, updateProductTypeOptions, updateFilterStates } from "./filters";
+import { bindSearchSuggest } from "./search-suggest";
 import { resolveDefaultViewMode } from "../../view-mode.js";
 import { showTransientStatus } from "../../status-toast.js";
 import { clearBrowseFilters } from "./browse-filters";
@@ -35,6 +36,7 @@ export function setFavoritesView(active: boolean): void {
 }
 
 export function bindAppEvents(): void {
+  bindSearchSuggest();
   grid.addEventListener("click", async (event: MouseEvent) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
@@ -187,6 +189,7 @@ export function bindAppEvents(): void {
     saveActiveDepartment(appState.activeDepartment);
     updateFilterStates(filters, "department", appState.activeDepartment);
     updateProductTypeOptions();
+    renderPopularItems();
     renderOffers();
   });
 

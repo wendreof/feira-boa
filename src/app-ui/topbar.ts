@@ -36,18 +36,12 @@ export function updateAccountControls(): void {
   mobileNavAccountLabel.textContent = label;
   mobileNavAccountLink.setAttribute("aria-label", label);
   mobileNavAccountLink.setAttribute("href", href);
-  if (topbarAccount) {
-    topbarAccount.hidden = !signedIn;
-    topbarAccount.setAttribute("href", "account.html");
-    topbarAccount.setAttribute("aria-label", "Minha conta");
-    if (signedIn) {
-      // Ícone de pessoa até a foto chegar (ou se não houver).
-      if (!topbarAccountImage?.src) clearTopbarAvatar();
-    } else {
-      clearTopbarAvatar();
-    }
+  if (!signedIn) {
+    clearTopbarAvatar();
+    if (topbarHello) topbarHello.hidden = true;
+  } else if (topbarAccountImage && !topbarAccountImage.getAttribute("src")) {
+    clearTopbarAvatar();
   }
-  if (topbarHello && !signedIn) topbarHello.hidden = true;
   accountDescription.textContent = signedIn
     ? "Seus favoritos já estão sincronizados com a sua conta."
     : "Entre ou crie uma conta grátis para salvar seus favoritos.";
@@ -90,9 +84,10 @@ export async function refreshTopbarAvatar(userId: string, knownPath?: string | n
   try {
     const name = await loadDisplayName(userId);
     if (topbarHello) {
-      topbarHello.textContent = name ? `Olá, ${name}!` : "";
+      topbarHello.textContent = name ?? "";
       topbarHello.hidden = !name;
     }
+    if (name && topbarAccount) topbarAccount.setAttribute("aria-label", name);
   } catch (error) {
     console.warn("Could not load the display name.", error);
     if (topbarHello) topbarHello.hidden = true;

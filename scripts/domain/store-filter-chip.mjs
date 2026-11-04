@@ -5,7 +5,7 @@ export function describeStoreFilterChip(storeName, count) {
   const total = Number(count);
   if (storeName === "Todas as lojas") {
     return {
-      label: `Todas · ${total}`,
+      label: "Todas",
       ariaLabel: `Todas as lojas, ${total} ofertas`,
       logoSrc: null,
       fallback: "",
@@ -23,7 +23,7 @@ export function describeStoreFilterChip(storeName, count) {
           ? "fortemix-mark"
           : "";
   return {
-    label: `${short} · ${total}`,
+    label: storeName,
     ariaLabel: `${storeName}, ${total} ofertas`,
     logoSrc: meta?.src ?? null,
     fallback: meta?.fallback ?? short.slice(0, 2).toUpperCase(),

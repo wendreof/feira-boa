@@ -3,6 +3,7 @@ import { input, priceMin, priceMax, productTypeSelect, sortSelect, storeFilters,
 import { renderPopularItems, updateProductTypeOptions, updateFilterStates } from "./filters";
 import { renderOffers } from "./render";
 import { saveActiveDepartment } from "./session-filters";
+import { refreshSearchSuggest } from "./search-suggest";
 
 export function browseFiltersActive(): boolean {
   const { min, max } = (() => {
@@ -42,4 +43,5 @@ export function clearBrowseFilters(): void {
   updateProductTypeOptions();
   renderPopularItems();
   renderOffers();
+  refreshSearchSuggest();
 }

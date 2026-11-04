@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="icons/icon-192.png?v=20261103">
   <script src="theme-bootstrap.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261022-card2x">
+  <link rel="stylesheet" href="styles.css?v=20261104-account-session">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body class="auth-page">
@@ -75,10 +75,13 @@
       </nav>
 
       <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
-      <div class="account-settings-actions">
-        <button type="button" class="account-button secondary" id="sign-out">Sair</button>
-        <button type="button" class="account-button danger" id="delete-account">Excluir conta</button>
-      </div>
+      <details class="account-session">
+        <summary>Sessão e conta</summary>
+        <div class="account-settings-actions">
+          <button type="button" class="account-button secondary" id="sign-out">Sair</button>
+          <button type="button" class="account-button danger" id="delete-account">Excluir conta</button>
+        </div>
+      </details>
     </section>
   </main>
 

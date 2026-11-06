@@ -18,8 +18,29 @@ const BIGBOM_STORE = {
 const DEFAULT_FLYER_URL = "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
+export async function discoverBigBomFlyer(pageUrl = "https://bigbom.com.br/") {
+  try {
+    const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
+    if (!res.ok) return DEFAULT_FLYER_URL;
+    const html = await res.text();
+    const pdfs = [...html.matchAll(/href=["'](https?:\/\/bigbom\.com\.br\/wp-content\/uploads\/[^"']+\.pdf)["']/gi)].map((m) => m[1]);
+    const flyerPdfs = pdfs.filter((u) => /oferta/i.test(u));
+    return flyerPdfs[0] || pdfs[0] || DEFAULT_FLYER_URL;
+  } catch {
+    return DEFAULT_FLYER_URL;
+  }
+}
+
 export async function extractBigBom(customUrl = null) {
-  const flyerUrl = customUrl || DEFAULT_FLYER_URL;
+  let flyerUrl = customUrl?.trim();
+  if (!flyerUrl) {
+    flyerUrl = await discoverBigBomFlyer();
+  } else if (!flyerUrl.toLowerCase().endsWith(".pdf")) {
+    const target = flyerUrl.startsWith("http") ? flyerUrl : new URL(flyerUrl, "https://bigbom.com.br/").href;
+    flyerUrl = await discoverBigBomFlyer(target);
+  } else if (!flyerUrl.startsWith("http")) {
+    flyerUrl = new URL(flyerUrl, "https://bigbom.com.br/").href;
+  }
   const res = await fetchWithRetry(flyerUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Big Bom flyer (${res.status} ${res.statusText})`);
 

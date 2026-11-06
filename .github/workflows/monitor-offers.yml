@@ -8,10 +8,19 @@ on:
       - "**.md"
       - "docs/**"
   schedule:
-    # 10:07 and 21:07 UTC = 07:07 and 18:07 in São Paulo (UTC-3);
-    # nudge off the top of the hour to avoid Actions congestion.
-    - cron: "7 10,21 * * *"
+    # Twice a day: 07:25 and 18:25 in São Paulo (UTC-3) = 10:25 and 21:25 UTC;
+    # minute 25 avoids GitHub Actions peak queue congestion.
+    - cron: "25 10,21 * * *"
   workflow_dispatch:
+    inputs:
+      store:
+        description: "Store to ingest (all, sempre, paguemenos, bigbom, corso, spani, spasso, fortemix)"
+        required: false
+        default: "all"
+      path_or_url:
+        description: "Custom path or URL for the store (e.g. /acougue, /hortifruti, flyer URL, etc.)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -19,7 +28,7 @@ permissions:
 
 concurrency:
   group: feira-boa-pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   ingest-and-monitor:
@@ -42,7 +51,12 @@ jobs:
         run: npm ci
 
       - name: Ingest live offers
-        run: npm run ingest:offers
+        run: |
+          if [ -n "${{ github.event.inputs.store }}" ] && [ "${{ github.event.inputs.store }}" != "all" ]; then
+            node scripts/ingest-offers.mjs --store "${{ github.event.inputs.store }}" --path "${{ github.event.inputs.path_or_url }}"
+          else
+            npm run ingest:offers
+          fi
 
       - name: Check official flyer sources
         id: monitor
@@ -61,6 +75,7 @@ jobs:
           tracked=(
             state/
             offers.json
+            offers-jsonld.js
             snapshot-manifest.json
             source-status.js
             .offer-monitor-state.json

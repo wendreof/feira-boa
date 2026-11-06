@@ -7,13 +7,16 @@ const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 export async function extractSpasso(customUrl = null) {
-  const pageUrl = customUrl || SPASSO_URL;
+  let pageUrl = customUrl?.trim() || SPASSO_URL;
+  if (!pageUrl.startsWith("http")) {
+    pageUrl = new URL(pageUrl, "https://spassosabores.com.br/").href;
+  }
   const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
   if (!res.ok) throw new Error(`Could not fetch Spasso page (${res.status})`);
   const html = await res.text();
 
   const images = filterSpassoFlyerImages(
-    [...html.matchAll(/src=["'](https:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.png)["']/gi)].map((m) => m[1]),
+    [...html.matchAll(/src=["'](https?:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.(?:png|jpe?g|webp))["']/gi)].map((m) => m[1]),
   );
 
   // Read existing snapshot if available to retain still-valid curated items

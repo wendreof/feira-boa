@@ -135,12 +135,32 @@ function dedupeOffers(offers) {
   return [...unique.values()];
 }
 
-function collectionIdFromUrl(pageUrl) {
-  try {
-    return new URL(pageUrl).searchParams.get("productclusterids")?.trim() || PAGUE_MENOS_COLLECTION_ID;
-  } catch {
-    return PAGUE_MENOS_COLLECTION_ID;
+export function parsePagueMenosTarget(raw) {
+  const trimmed = String(raw ?? "").trim();
+  if (!trimmed) return { type: "cluster", id: PAGUE_MENOS_COLLECTION_ID, label: "cluster 161" };
+
+  if (/^\d+$/.test(trimmed)) {
+    return { type: "cluster", id: trimmed, label: `cluster ${trimmed}` };
   }
+
+  try {
+    const parsed = new URL(trimmed, "https://www.superpaguemenos.com.br/");
+    const clusterId = parsed.searchParams.get("productclusterids")?.trim();
+    if (clusterId) {
+      return { type: "cluster", id: clusterId, label: `cluster ${clusterId}` };
+    }
+    const cleanPath = parsed.pathname.replace(/^\/+|\/+$/g, "");
+    if (cleanPath && cleanPath !== "ofertas") {
+      return { type: "path", path: cleanPath, label: `caminho /${cleanPath}` };
+    }
+  } catch {
+    const cleanPath = trimmed.replace(/^\/+|\/+$/g, "");
+    if (cleanPath && cleanPath !== "ofertas") {
+      return { type: "path", path: cleanPath, label: `caminho /${cleanPath}` };
+    }
+  }
+
+  return { type: "cluster", id: PAGUE_MENOS_COLLECTION_ID, label: "cluster 161" };
 }
 
 function totalProducts(response) {
@@ -172,23 +192,27 @@ export async function probePagueMenosCatalog(fetchImpl = fetch) {
   return { catalog_total: total };
 }
 
-async function fetchCollection(pageUrl) {
-  const collectionId = collectionIdFromUrl(pageUrl);
+async function fetchProductsForTarget(target) {
   const products = [];
   let total = null;
 
   for (let page = 0, from = 0; page < MAX_PAGES; page += 1, from += PAGE_SIZE) {
-    const apiUrl = new URL(PAGUE_MENOS_API_URL);
-    apiUrl.searchParams.set("fq", `productClusterIds:${collectionId}`);
+    const apiUrl = target.type === "path"
+      ? new URL(`${PAGUE_MENOS_API_URL}/${target.path}`)
+      : new URL(PAGUE_MENOS_API_URL);
+
+    if (target.type === "cluster") {
+      apiUrl.searchParams.set("fq", `productClusterIds:${target.id}`);
+    }
     apiUrl.searchParams.set("_from", String(from));
     apiUrl.searchParams.set("_to", String(from + PAGE_SIZE - 1));
 
     const response = await fetchWithRetry(apiUrl, {
       headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
     });
-    if (!response.ok) throw new Error(`Could not fetch Pague Menos catalog page ${page + 1} (${response.status})`);
+    if (!response.ok) throw new Error(`Could not fetch Pague Menos catalog page ${page + 1} (${response.status}) for ${target.label}`);
     const batch = await response.json();
-    if (!Array.isArray(batch)) throw new Error("Pague Menos catalog returned an invalid response.");
+    if (!Array.isArray(batch)) throw new Error(`Pague Menos catalog returned an invalid response for ${target.label}.`);
 
     total ??= totalProducts(response);
     products.push(...batch);
@@ -196,9 +220,29 @@ async function fetchCollection(pageUrl) {
   }
 
   if (total !== null && products.length !== total) {
-    throw new Error(`Pague Menos catalog returned ${products.length} of ${total} products.`);
+    throw new Error(`Pague Menos catalog returned ${products.length} of ${total} products for ${target.label}.`);
   }
   return products;
+}
+
+async function fetchCollection(pageUrl) {
+  const rawTargets = String(pageUrl ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  const targets = (rawTargets.length > 0 ? rawTargets : [PAGUE_MENOS_URL]).map(parsePagueMenosTarget);
+
+  const seenIds = new Set();
+  const allProducts = [];
+
+  for (const target of targets) {
+    const products = await fetchProductsForTarget(target);
+    for (const prod of products) {
+      const pid = prod?.productId || prod?.itemId;
+      if (pid && seenIds.has(pid)) continue;
+      if (pid) seenIds.add(pid);
+      allProducts.push(prod);
+    }
+  }
+
+  return allProducts;
 }
 
 export async function extractPagueMenos(customUrl = null) {

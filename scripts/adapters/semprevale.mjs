@@ -22,9 +22,18 @@ const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 const TRANSCRIPTION = JSON.parse(readFileSync(new URL("./data/sempre-campaigns.json", import.meta.url), "utf8"));
 
 export async function extractSempreVale(customUrl = null) {
-  const flyerUrl = customUrl || TRANSCRIPTION.flyerUrl;
+  let flyerUrl = customUrl?.trim() || null;
+  let targetBairro = "Durval Nicolau";
 
-  if (!customUrl) {
+  if (flyerUrl && !flyerUrl.toLowerCase().includes(".pdf")) {
+    targetBairro = flyerUrl.replace(/^(?:bairro|loja)\s*/i, "").trim();
+    flyerUrl = null;
+  } else if (flyerUrl && !flyerUrl.startsWith("http")) {
+    flyerUrl = new URL(flyerUrl, "https://www.semprevale.com.br/").href;
+  }
+
+  if (!flyerUrl) {
+    flyerUrl = TRANSCRIPTION.flyerUrl;
     const prevTls = process.env.NODE_TLS_REJECT_UNAUTHORIZED;
     let html;
     try {
@@ -35,7 +44,7 @@ export async function extractSempreVale(customUrl = null) {
           "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
           "User-Agent": USER_AGENT,
         },
-        body: "id_cidade=4&bairro=Durval+Nicolau",
+        body: `id_cidade=4&bairro=${encodeURIComponent(targetBairro)}`,
       });
       if (!formRes.ok) throw new Error(`Could not query Sempre Vale store page (${formRes.status})`);
       html = await formRes.text();

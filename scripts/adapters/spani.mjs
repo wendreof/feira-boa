@@ -146,8 +146,11 @@ async function openClientSession(token, fetchImpl = fetch) {
   return payload?.data?.sessao_id ?? "";
 }
 
-async function fetchOfferPage(page, token, sessaoId, fetchImpl = fetch) {
-  const path = `/org/${storeConfig.organizationId}/filial/${storeConfig.filialId}/centro_distribuicao/${storeConfig.centroDistribuicaoId}/loja/produtos/em-oferta?page=${page}`;
+async function fetchOfferPage(page, token, sessaoId, fetchImpl = fetch, customPath = null) {
+  const defaultPath = `/org/${storeConfig.organizationId}/filial/${storeConfig.filialId}/centro_distribuicao/${storeConfig.centroDistribuicaoId}/loja/produtos/em-oferta`;
+  const basePath = customPath && customPath.startsWith("/") ? customPath : defaultPath;
+  const separator = basePath.includes("?") ? "&" : "?";
+  const path = `${basePath}${separator}page=${page}`;
   const response = await fetchWithRetry(apiUrl(path), { headers: vipHeaders(token, sessaoId) }, { fetchImpl });
   if (!response.ok) throw new Error(`Spani offers page ${page} failed (${response.status}).`);
   const payload = await response.json();
@@ -166,6 +169,7 @@ export async function probeSpaniCatalog(fetchImpl = fetch) {
 
 export async function extractSpani(customUrl = null) {
   const pageUrl = customUrl?.trim() || SPANI_OFFERS_URL;
+  const customPath = customUrl && customUrl.startsWith("/") ? customUrl : null;
   const validity = getWeekValidity();
   const token = await loginStore();
   const sessaoId = await openClientSession(token);
@@ -173,14 +177,16 @@ export async function extractSpani(customUrl = null) {
   const products = [];
   let totalPages = MAX_PAGES;
   for (let page = 1; page <= totalPages && page <= MAX_PAGES; page += 1) {
-    const payload = await fetchOfferPage(page, token, sessaoId);
+    const payload = await fetchOfferPage(page, token, sessaoId, fetch, customPath);
     products.push(...payload.data);
     totalPages = Math.min(Number(payload.paginator?.total_pages) || page, MAX_PAGES);
     if (page >= totalPages || payload.data.length < PAGE_SIZE) break;
   }
 
   const offers = dedupeOffers(products.map((product) => buildSpaniOffer(product, { pageUrl, validity })).filter(Boolean));
-  if (offers.length === 0) throw new Error("Spani catalog returned no available offers.");
+  if (offers.length === 0) {
+    console.warn("Spani catalog returned 0 live offers for current cycle.");
+  }
 
   return {
     storeId: "spani",
@@ -196,6 +202,6 @@ export async function extractSpani(customUrl = null) {
     fetchedAt: new Date().toISOString(),
     sourceUrl: pageUrl,
     offers,
-    status: "ok",
+    status: offers.length > 0 ? "ok" : "no_active_offers",
   };
 }

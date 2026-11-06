@@ -16,7 +16,7 @@ const PREVIOUS_DIR = new URL("../state/previous/", import.meta.url);
 await mkdir(STATE_DIR, { recursive: true });
 await mkdir(PREVIOUS_DIR, { recursive: true });
 
-const ADAPTERS = [
+const ALL_ADAPTERS = [
   { id: "sempre", name: "Sempre Vale", runner: extractSempreVale },
   { id: "bigbom", name: "Big Bom", runner: extractBigBom },
   { id: "corso", name: "Corso", runner: extractCorso },
@@ -25,6 +25,21 @@ const ADAPTERS = [
   { id: "spani", name: "Spani Atacadista", runner: extractSpani },
   { id: "fortemix", name: "Forte Mix", runner: extractForteMix },
 ];
+
+// CLI: node scripts/ingest-offers.mjs [--store <id>] [--path <url-or-path>]
+const argStoreIdx = process.argv.indexOf("--store");
+const argPathIdx = process.argv.indexOf("--path");
+const argStore = argStoreIdx >= 0 ? process.argv[argStoreIdx + 1]?.trim() : null;
+const argPath = argPathIdx >= 0 ? process.argv[argPathIdx + 1]?.trim() : null;
+
+const ADAPTERS =
+  argStore && argStore !== "all"
+    ? ALL_ADAPTERS.filter(
+        (a) =>
+          a.id === argStore ||
+          a.name.toLowerCase() === argStore.toLowerCase()
+      )
+    : ALL_ADAPTERS;
 
 async function loadExistingSnapshot(storeId) {
   try {
@@ -48,14 +63,16 @@ async function savePreviousSnapshot(storeId, snapshot) {
 }
 
 async function ingestAll() {
-  console.log("Starting automatic offer ingestion for all stores...");
+  console.log(
+    `Starting automatic offer ingestion for ${argStore || "all"} stores${argPath ? ` (path: ${argPath})` : ""}...`
+  );
   const results = [];
 
   for (const { id, name, runner } of ADAPTERS) {
     const existing = await loadExistingSnapshot(id);
     try {
       console.log(`[${name}] Extracting live offers...`);
-      const snapshot = await runner();
+      const snapshot = await runner(argPath || null);
 
       if (snapshot.offers.length > 0 && validateSnapshot(snapshot)) {
         if (existing?.offers?.length > 0 && snapshotCampaignChanged(existing, snapshot)) {

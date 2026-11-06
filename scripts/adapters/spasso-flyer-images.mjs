@@ -5,7 +5,7 @@ const NOISE_HINT = /(?:logo|icon|favicon|cropped|placeholder|spinner|avatar|bann
 export function isSpassoFlyerImage(url) {
   if (!url || NOISE_HINT.test(url)) return false;
   if (FLYER_HINT.test(url)) return true;
-  return /\/wp-content\/uploads\/20\d{2}\/\d{2}\/[^/]+\.png$/i.test(url);
+  return /\/wp-content\/uploads\/20\d{2}\/\d{2}\/[^/]+\.(?:png|jpe?g|webp)$/i.test(url);
 }
 
 /** @param {string} url */
@@ -20,7 +20,7 @@ function flyerFamily(url) {
   const file = url.split("/").pop()?.toLowerCase() ?? "";
   if (file.includes("flv")) return "flv";
   if (file.includes("acougue")) return "acougue";
-  return file.replace(/\.png$/i, "");
+  return file.replace(/\.(?:png|jpe?g|webp)$/i, "");
 }
 
 /** @param {string[]} urls */

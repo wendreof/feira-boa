@@ -1,44 +1,162 @@
 {
-  "flyerUrl": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
+  "flyerUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf",
   "campaigns": [
     {
-      "from": "2026-11-02",
-      "to": "2026-11-04",
+      "from": "2026-11-06",
+      "to": "2026-11-07",
       "offers": [
         {
-          "name": "Costela Bovina Manga Friboi Granel",
+          "name": "Leite Longa Vida Líder",
+          "detail": "1L",
+          "cat": "Mercearia",
+          "price": 3.99,
+          "oldPrice": 5.79,
+          "note": "Limite por cliente 24 un."
+        },
+        {
+          "name": "Arroz Tipo 1 Prato Fino",
+          "detail": "5kg",
+          "cat": "Mercearia",
+          "price": 24.9,
+          "oldPrice": 33.9,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Café Caboclo",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 18.9,
+          "oldPrice": 26.9,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Cerveja Lager Heineken",
+          "detail": "350ml",
+          "cat": "Bebidas",
+          "price": 4.29,
+          "oldPrice": 5.69,
+          "note": "Limite por cliente 36 un."
+        },
+        {
+          "name": "Refrigerante Coca-Cola",
+          "detail": "2L",
+          "cat": "Bebidas",
+          "price": 8.99,
+          "oldPrice": 10.49,
+          "note": "Limite por cliente 12 un."
+        },
+        {
+          "name": "Margarina Qualy c/ Sal",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": 10.98,
+          "note": "Limite por cliente 2 un."
+        },
+        {
+          "name": "Coxa c/ Sobrecoxa de Frango Avelícia Pacote",
+          "detail": "Kg",
+          "cat": "Açougue",
+          "price": 6.99,
+          "oldPrice": 8.99,
+          "note": "Limite por cliente 5 kg"
+        },
+        {
+          "name": "Linguiça Toscana Sadia",
+          "detail": "Kg",
+          "cat": "Açougue",
+          "price": 15.9,
+          "oldPrice": 24.9,
+          "note": "Limite por cliente 3 kg"
+        },
+        {
+          "name": "Queijo Mussarela Peça",
+          "detail": "Kg",
+          "cat": "Resfriados",
+          "price": 29.9,
+          "oldPrice": 54.9,
+          "note": "Limite por cliente 5 kg"
+        },
+        {
+          "name": "Papel Higiênico Folha Dupla Mili Dual",
+          "detail": "12 Rolos 30m",
+          "cat": "Limpeza & Perfumaria",
+          "price": 17.9,
+          "oldPrice": 21.9,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Lava Roupas em Pó Omo Todo Ciclo",
+          "detail": "2kg",
+          "cat": "Limpeza & Perfumaria",
+          "price": 22.9,
+          "oldPrice": 33.9,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Lava-Louças Líquido Ypê",
+          "detail": "500ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 2.29,
+          "oldPrice": 3.09,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "from": "2026-11-05",
+      "to": "2026-11-08",
+      "offers": [
+        {
+          "name": "Bisteca do Lombo / Copa Lombo Suína",
+          "detail": "Kg",
+          "cat": "Açougue",
+          "price": 14.98,
+          "oldPrice": 19.98,
+          "note": ""
+        },
+        {
+          "name": "Filé / Filézinho de Frango Ad'oro Soltinho",
+          "detail": "1kg",
+          "cat": "Açougue",
+          "price": 17.98,
+          "oldPrice": 23.9,
+          "note": ""
+        },
+        {
+          "name": "Costela Bovina Minga Friboi Granel",
           "detail": "Kg",
           "cat": "Açougue",
           "price": 27.9,
           "oldPrice": 32.9,
-          "note": "Limite por cliente 5 kg"
+          "note": "Limite por cliente 10 kg"
         },
         {
-          "name": "Acém / Peito Bovino Pedaço / Moído Kg a Granel",
+          "name": "Acém / Peito Bovino Pedaço / Moído Granel",
           "detail": "Kg",
           "cat": "Açougue",
           "price": 38.9,
           "oldPrice": 47.9,
-          "note": ""
+          "note": "Limite por cliente 5 kg"
         },
         {
-          "name": "Coxão Mole Bovino Friboi Bife / Moído",
+          "name": "Fraldinha Bovina Friboi / Picanha Bovina Fatiada",
           "detail": "Kg",
           "cat": "Açougue",
           "price": 47.9,
-          "oldPrice": 57.9,
-          "note": ""
+          "oldPrice": 54.9,
+          "note": "Limite por cliente 5 kg"
         },
         {
-          "name": "Linguiça Toscana Seara Granel",
+          "name": "Pernil Suíno com Osso Congelado Pururuca",
           "detail": "Kg",
           "cat": "Açougue",
-          "price": 23.9,
-          "oldPrice": null,
+          "price": 10.98,
+          "oldPrice": 14.98,
           "note": ""
         },
         {
-          "name": "Salsicha Hot Dog Seara",
+          "name": "Salsicha Hot Dog Seara Granel",
           "detail": "Kg",
           "cat": "Açougue",
           "price": 8.99,
@@ -46,12 +164,108 @@
           "note": ""
         },
         {
-          "name": "Hambúrguer Misto Aurora Faroeste",
-          "detail": "56g",
+          "name": "Linguiça Calabresa Cozida Ceratti",
+          "detail": "Kg",
           "cat": "Açougue",
-          "price": 1.59,
-          "oldPrice": 1.99,
+          "price": 22.9,
+          "oldPrice": 26.9,
           "note": ""
+        },
+        {
+          "name": "Filé de Tilápia Aurora",
+          "detail": "800g",
+          "cat": "Açougue",
+          "price": 42.9,
+          "oldPrice": 49.9,
+          "note": ""
+        },
+        {
+          "name": "Café Melitta",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 22.9,
+          "oldPrice": 29.9,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Feijão Carioca Nene",
+          "detail": "1kg",
+          "cat": "Mercearia",
+          "price": 6.99,
+          "oldPrice": 8.49,
+          "note": ""
+        },
+        {
+          "name": "Açúcar Cristal Maisdoce",
+          "detail": "5kg",
+          "cat": "Mercearia",
+          "price": 13.49,
+          "oldPrice": 16.59,
+          "note": "Limite por cliente 3 un."
+        },
+        {
+          "name": "Achocolatado em Pó Toddy",
+          "detail": "370g",
+          "cat": "Mercearia",
+          "price": 8.99,
+          "oldPrice": 11.98,
+          "note": ""
+        },
+        {
+          "name": "Creme de Leite Italac",
+          "detail": "200g",
+          "cat": "Mercearia",
+          "price": 2.99,
+          "oldPrice": 3.39,
+          "note": ""
+        },
+        {
+          "name": "Macarrão Sêmola Galo Parafuso / Ave Maria / Spaguetti",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 3.79,
+          "oldPrice": 4.99,
+          "note": ""
+        },
+        {
+          "name": "Molho de Tomate Fugini Sachê",
+          "detail": "300g",
+          "cat": "Mercearia",
+          "price": 1.49,
+          "oldPrice": 2.29,
+          "note": ""
+        },
+        {
+          "name": "Hellmann's Ketchup 380g / Maionese 500g",
+          "detail": "380g / 500g",
+          "cat": "Mercearia",
+          "price": 8.99,
+          "oldPrice": 11.98,
+          "note": ""
+        },
+        {
+          "name": "Bombom Lacta Favoritos",
+          "detail": "250,6g",
+          "cat": "Mercearia",
+          "price": 11.99,
+          "oldPrice": 15.98,
+          "note": ""
+        },
+        {
+          "name": "Leite Condensado Italac Semidesnatado",
+          "detail": "395g",
+          "cat": "Mercearia",
+          "price": 5.89,
+          "oldPrice": 6.98,
+          "note": "Limite por cliente 5 un."
+        },
+        {
+          "name": "Big Chicken Perdigão Queijo",
+          "detail": "1kg",
+          "cat": "Resfriados",
+          "price": 32.9,
+          "oldPrice": 39.9,
+          "note": "Exceto loja 15-34"
         },
         {
           "name": "Presunto Sadia s/ Capa Fatiado",
@@ -59,533 +273,359 @@
           "cat": "Resfriados",
           "price": 2.89,
           "oldPrice": 3.99,
-          "note": "Oferta da capa"
+          "note": ""
         },
         {
-          "name": "Batata Congelada Bem Brasil Tradicional",
-          "detail": "1,5kg",
-          "cat": "Mercearia",
-          "price": 19.9,
-          "oldPrice": 28.9,
-          "note": "Oferta da capa"
+          "name": "Requeijão Vigor",
+          "detail": "200g",
+          "cat": "Resfriados",
+          "price": 6.99,
+          "oldPrice": 9.98,
+          "note": "Limite por cliente 3 un."
         },
         {
-          "name": "Iogurte Líquido Vigor",
+          "name": "Iogurte Líquido Frutap Sabores",
           "detail": "1150g",
           "cat": "Resfriados",
-          "price": 12.9,
-          "oldPrice": 18.9,
-          "note": "Oferta da capa"
-        },
-        {
-          "name": "Margarina Vigor",
-          "detail": "500g",
-          "cat": "Mercearia",
-          "price": 6.99,
-          "oldPrice": 10.98,
-          "note": "Oferta da capa"
-        },
-        {
-          "name": "Leite Fermentado UHT Patati Patata Sabores",
-          "detail": "450g",
-          "cat": "Resfriados",
-          "price": 5.59,
-          "oldPrice": 6.99,
-          "note": "Oferta da capa"
-        },
-        {
-          "name": "Bebida Láctea Polpa Frutilac",
-          "detail": "480g",
-          "cat": "Resfriados",
-          "price": 4.99,
-          "oldPrice": 6.89,
-          "note": "Oferta da capa"
-        },
-        {
-          "name": "Maçã Fuji Grauda",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 7.89,
-          "oldPrice": 11.98,
-          "note": "Limite por cliente 5 kg"
-        },
-        {
-          "name": "Laranja Pera",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.79,
-          "oldPrice": 5.99,
+          "price": 11.9,
+          "oldPrice": 15.98,
           "note": ""
         },
         {
-          "name": "Ovos Brancos Casagrande",
-          "detail": "20 un.",
-          "cat": "Hortifruti",
-          "price": 10.98,
-          "oldPrice": null,
-          "note": ""
-        },
-        {
-          "name": "Ovos Vermelhos São Caipira",
-          "detail": "10 un.",
-          "cat": "Hortifruti",
-          "price": 9.98,
-          "oldPrice": 13.98,
-          "note": ""
-        },
-        {
-          "name": "Abobrinha Itália",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 5.99,
-          "oldPrice": 7.99,
-          "note": ""
-        },
-        {
-          "name": "Tomate Grape",
-          "detail": "Bdj 180g",
-          "cat": "Hortifruti",
-          "price": 4.99,
-          "oldPrice": 6.99,
-          "note": ""
-        },
-        {
-          "name": "Repolho Verde",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.99,
-          "oldPrice": 4.99,
-          "note": ""
-        },
-        {
-          "name": "Chuchu",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 3.99,
-          "oldPrice": 5.99,
-          "note": ""
-        },
-        {
-          "name": "Cenoura",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.99,
-          "oldPrice": 3.59,
-          "note": ""
-        },
-        {
-          "name": "Alho Granel",
-          "detail": "Cada 100g",
-          "cat": "Hortifruti",
-          "price": 2.99,
-          "oldPrice": 4.99,
-          "note": ""
-        },
-        {
-          "name": "Mandioca",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.99,
-          "oldPrice": 3.99,
-          "note": ""
-        },
-        {
-          "name": "Melancia",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 4.99,
-          "oldPrice": 7.99,
-          "note": ""
-        },
-        {
-          "name": "Banana Nanica",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 4.99,
-          "oldPrice": 7.99,
-          "note": ""
-        },
-        {
-          "name": "Manga Tomy",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 4.99,
-          "oldPrice": 6.99,
-          "note": ""
-        },
-        {
-          "name": "Manga Palmer",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 6.99,
-          "oldPrice": 8.99,
-          "note": ""
-        },
-        {
-          "name": "Melão Amarelo",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 8.99,
-          "oldPrice": 10.98,
-          "note": ""
-        },
-        {
-          "name": "Abacaxi Pérola Graúdo",
-          "detail": "Un.",
-          "cat": "Hortifruti",
-          "price": 8.99,
-          "oldPrice": 10.98,
-          "note": ""
-        },
-        {
-          "name": "Uva Preta Vitória",
-          "detail": "500g",
-          "cat": "Hortifruti",
-          "price": 8.99,
-          "oldPrice": 13.98,
-          "note": ""
-        },
-        {
-          "name": "Mamão Papaya",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 12.98,
-          "oldPrice": 13.98,
-          "note": ""
-        },
-        {
-          "name": "Uva Verde s/ Semente",
-          "detail": "500g",
-          "cat": "Hortifruti",
-          "price": 9.98,
-          "oldPrice": 11.98,
-          "note": ""
-        },
-        {
-          "name": "Banana Prata",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 14.98,
-          "oldPrice": 19.98,
-          "note": ""
-        },
-        {
-          "name": "Bisteca do Lombo / Copa Lombo Suína",
-          "detail": "Kg",
-          "cat": "Açougue",
-          "price": 23.9,
-          "oldPrice": 28.9,
-          "note": "Limite por cliente 5 kg"
-        },
-        {
-          "name": "Pepino Caipira",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 3.99,
-          "oldPrice": 9.98,
-          "note": ""
-        },
-        {
-          "name": "Beterraba",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.99,
-          "oldPrice": 3.59,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "from": "2026-11-03",
-      "to": "2026-11-04",
-      "offers": [
-        {
-          "name": "Esponja Scotch-Brite Multi Uso / Extrema LV 4 PG 3",
-          "detail": "Un.",
-          "cat": "Bazar",
-          "price": 9.99,
-          "oldPrice": 14.99,
-          "note": ""
-        },
-        {
-          "name": "Ração Energy Dog Pequenas/Médias",
-          "detail": "1kg",
-          "cat": "Bazar",
-          "price": 12.99,
-          "oldPrice": 16.99,
-          "note": ""
-        },
-        {
-          "name": "Vassoura Condor Madri",
-          "detail": "Un.",
-          "cat": "Bazar",
-          "price": 9.99,
-          "oldPrice": 12.9,
-          "note": ""
-        },
-        {
-          "name": "Feirinha Fort Lar Assadeira",
-          "detail": "Un.",
-          "cat": "Bazar",
-          "price": 29.99,
-          "oldPrice": 34.99,
-          "note": ""
-        },
-        {
-          "name": "Amaciante Ypê",
-          "detail": "2L",
-          "cat": "Limpeza & Perfumaria",
-          "price": 9.9,
-          "oldPrice": 12.9,
-          "note": ""
-        },
-        {
-          "name": "Lava Roupas Líquido Omo Lavagem Perfeita",
+          "name": "Sorvete Variatta Special",
           "detail": "1,8L",
-          "cat": "Limpeza & Perfumaria",
-          "price": 23.9,
-          "oldPrice": 31.9,
+          "cat": "Resfriados",
+          "price": 26.9,
+          "oldPrice": 35.9,
           "note": ""
         },
         {
-          "name": "Desinfetante Sanol",
-          "detail": "2L",
-          "cat": "Limpeza & Perfumaria",
-          "price": 6.9,
-          "oldPrice": 9.79,
+          "name": "Bolo Confeitado Morango Sempre Vale",
+          "detail": "Kg",
+          "cat": "Padaria",
+          "price": 48.9,
+          "oldPrice": 59.9,
           "note": ""
         },
         {
-          "name": "Absorvente Mili Noturno Suave c/ Abas",
-          "detail": "32un",
-          "cat": "Limpeza & Perfumaria",
-          "price": 19.9,
-          "oldPrice": 25.9,
+          "name": "Pão de Forma Wickbold Integral",
+          "detail": "450g",
+          "cat": "Padaria",
+          "price": 7.99,
+          "oldPrice": 10.9,
           "note": ""
         },
         {
-          "name": "Antisséptico Bucal Listerine",
-          "detail": "500ml",
-          "cat": "Limpeza & Perfumaria",
-          "price": 17.9,
+          "name": "Pudim Leite Condensado Sempre Vale",
+          "detail": "Kg",
+          "cat": "Padaria",
+          "price": 36.9,
+          "oldPrice": 42.9,
+          "note": ""
+        },
+        {
+          "name": "Panetone Artesanal Sempre Vale",
+          "detail": "400g",
+          "cat": "Padaria",
+          "price": 11.9,
+          "oldPrice": 13.98,
+          "note": ""
+        },
+        {
+          "name": "Maionese Frango Sempre Vale",
+          "detail": "Kg",
+          "cat": "Padaria",
+          "price": 36.9,
+          "oldPrice": 42.9,
+          "note": ""
+        },
+        {
+          "name": "Batata Pringles Sabores",
+          "detail": "100g a 109g",
+          "cat": "Mercearia",
+          "price": 11.99,
+          "oldPrice": 15.98,
+          "note": ""
+        },
+        {
+          "name": "Leite em Pó Ninho",
+          "detail": "380g",
+          "cat": "Mercearia",
+          "price": 17.99,
+          "oldPrice": 21.58,
+          "note": "+10% grátis"
+        },
+        {
+          "name": "Creme de Avelã Nutella",
+          "detail": "350g",
+          "cat": "Mercearia",
+          "price": 25.99,
+          "oldPrice": 38.99,
+          "note": ""
+        },
+        {
+          "name": "Chocolate Wafer Lacta Bis",
+          "detail": "100,8g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": 7.98,
+          "note": ""
+        },
+        {
+          "name": "Biscoito Wafer Bauducco",
+          "detail": "140g",
+          "cat": "Mercearia",
+          "price": 3.69,
+          "oldPrice": 4.59,
+          "note": ""
+        },
+        {
+          "name": "Tempero Sazón",
+          "detail": "60g",
+          "cat": "Mercearia",
+          "price": 4.99,
+          "oldPrice": 6.39,
+          "note": ""
+        },
+        {
+          "name": "Macarrão Instantâneo Nissin",
+          "detail": "85g",
+          "cat": "Mercearia",
+          "price": 2.89,
+          "oldPrice": 3.39,
+          "note": ""
+        },
+        {
+          "name": "Milho Verde Fugini",
+          "detail": "170g",
+          "cat": "Mercearia",
+          "price": 2.99,
+          "oldPrice": 3.98,
+          "note": ""
+        },
+        {
+          "name": "Biscoito Marilan Maizena",
+          "detail": "300g",
+          "cat": "Mercearia",
+          "price": 4.99,
+          "oldPrice": 6.39,
+          "note": ""
+        },
+        {
+          "name": "Energético Monster Energy",
+          "detail": "473ml",
+          "cat": "Bebidas",
+          "price": 7.99,
+          "oldPrice": 9.99,
+          "note": ""
+        },
+        {
+          "name": "Água Mineral Lindoya Verão c/ Gás Speciali",
+          "detail": "1,25L",
+          "cat": "Bebidas",
+          "price": 2.29,
+          "oldPrice": 3.39,
+          "note": ""
+        },
+        {
+          "name": "Refrigerante Bioleve Zero",
+          "detail": "1,5L",
+          "cat": "Bebidas",
+          "price": 5.99,
+          "oldPrice": 6.99,
+          "note": ""
+        },
+        {
+          "name": "Suco Integral Hugo Pietro",
+          "detail": "1,35L",
+          "cat": "Bebidas",
+          "price": 14.9,
+          "oldPrice": 19.99,
+          "note": ""
+        },
+        {
+          "name": "Cerveja Pilsen Crystal",
+          "detail": "350ml",
+          "cat": "Bebidas",
+          "price": 1.99,
+          "oldPrice": 2.89,
+          "note": "Limite por cliente 48 un."
+        },
+        {
+          "name": "Vinho Nacional Pérgola",
+          "detail": "1L",
+          "cat": "Bebidas",
+          "price": 24.9,
+          "oldPrice": 32.9,
+          "note": ""
+        },
+        {
+          "name": "Vinho Chileno Casillero del Diablo",
+          "detail": "750ml",
+          "cat": "Bebidas",
+          "price": 44.9,
+          "oldPrice": 59.9,
+          "note": ""
+        },
+        {
+          "name": "Aperitivo Aperol",
+          "detail": "750ml",
+          "cat": "Bebidas",
+          "price": 39.9,
+          "oldPrice": 59.9,
+          "note": ""
+        },
+        {
+          "name": "Whisky White Horse Escocês",
+          "detail": "1L",
+          "cat": "Bebidas",
+          "price": 79.9,
+          "oldPrice": 99.9,
+          "note": ""
+        },
+        {
+          "name": "Carvão Jacaré",
+          "detail": "2,5kg",
+          "cat": "Bazar",
+          "price": 23.99,
           "oldPrice": 26.9,
           "note": ""
         },
         {
-          "name": "Desodorante Aero Nivea",
-          "detail": "150ml",
-          "cat": "Limpeza & Perfumaria",
-          "price": 13.99,
-          "oldPrice": 17.9,
-          "note": ""
-        },
-        {
-          "name": "Creme Dental Closeup Tripla",
-          "detail": "70g",
-          "cat": "Limpeza & Perfumaria",
-          "price": 2.99,
-          "oldPrice": 4.29,
-          "note": ""
-        },
-        {
-          "name": "Kit Shampoo Seda + Condicionador",
-          "detail": "300ml + 190ml",
-          "cat": "Limpeza & Perfumaria",
-          "price": 18.9,
-          "oldPrice": 23.9,
-          "note": ""
-        },
-        {
-          "name": "Suco Integral Aurora TP Uva",
-          "detail": "1,5L",
-          "cat": "Bebidas",
-          "price": 16.9,
-          "oldPrice": 21.9,
-          "note": ""
-        },
-        {
-          "name": "Refrigerante Poty",
-          "detail": "2L",
-          "cat": "Bebidas",
+          "name": "Filtro de Papel Melitta 103",
+          "detail": "30 Unidades",
+          "cat": "Bazar",
           "price": 4.99,
-          "oldPrice": 5.99,
-          "note": ""
-        },
-        {
-          "name": "Refresco em Pó Tang",
-          "detail": "18g",
-          "cat": "Bebidas",
-          "price": 0.99,
-          "oldPrice": 1.69,
-          "note": ""
-        },
-        {
-          "name": "Água Mineral Bioleve s/ Gás",
-          "detail": "510ml",
-          "cat": "Bebidas",
-          "price": 1.89,
-          "oldPrice": 2.29,
-          "note": ""
-        },
-        {
-          "name": "Bombom Garoto Sortidos",
-          "detail": "220g",
-          "cat": "Mercearia",
-          "price": 11.99,
-          "oldPrice": 14.98,
-          "note": ""
-        },
-        {
-          "name": "Biscoito Recheado Oreo",
-          "detail": "90g",
-          "cat": "Mercearia",
-          "price": 3.99,
-          "oldPrice": 4.99,
-          "note": ""
-        },
-        {
-          "name": "Leite Condensado Moça Semi Desnatado",
-          "detail": "340g",
-          "cat": "Mercearia",
-          "price": 5.79,
           "oldPrice": 6.99,
           "note": ""
         },
         {
-          "name": "Milho Verde Predilecta Lata / Sachê",
-          "detail": "170g",
-          "cat": "Mercearia",
+          "name": "Pilha Rayovac Alcalina Palito AAA / Pequena AA",
+          "detail": "Cartela c/ 4 Unidades",
+          "cat": "Bazar",
+          "price": 15.99,
+          "oldPrice": 23.9,
+          "note": "Leve 4 e pague 3"
+        },
+        {
+          "name": "Alimento Pedigree / Whiskas Sabores",
+          "detail": "Sachê",
+          "cat": "Bazar",
           "price": 2.99,
-          "oldPrice": 3.99,
-          "note": ""
+          "oldPrice": 4.99,
+          "note": "A partir de 3 unidades"
         },
         {
-          "name": "Molho de Tomate Quero Sachê Tradicional",
-          "detail": "240g",
-          "cat": "Mercearia",
-          "price": 1.49,
-          "oldPrice": 2.29,
-          "note": ""
-        },
-        {
-          "name": "Palmito Açaí Piriquito Inteiro",
-          "detail": "300g",
-          "cat": "Mercearia",
-          "price": 20.99,
-          "oldPrice": 26.99,
-          "note": ""
-        },
-        {
-          "name": "Achocolatado em Pó Toddy Original",
-          "detail": "750g",
-          "cat": "Mercearia",
-          "price": 17.99,
-          "oldPrice": 21.99,
-          "note": ""
-        },
-        {
-          "name": "Bebida Láctea Italakinho Chocolate",
-          "detail": "200ml",
-          "cat": "Mercearia",
-          "price": 1.49,
-          "oldPrice": 1.99,
-          "note": ""
-        },
-        {
-          "name": "Macarrão Sêmola Todeschini",
-          "detail": "500g",
-          "cat": "Mercearia",
-          "price": 2.79,
-          "oldPrice": 3.59,
-          "note": ""
-        },
-        {
-          "name": "Feijão Carioca Empório São João",
+          "name": "Ração Energy Dog Adulto",
           "detail": "1kg",
-          "cat": "Básico",
-          "price": 7.49,
-          "oldPrice": 9.89,
+          "cat": "Bazar",
+          "price": 9.99,
+          "oldPrice": null,
           "note": ""
         },
         {
-          "name": "Arroz Tipo 1 Empório São João",
-          "detail": "5kg",
-          "cat": "Básico",
-          "price": 25.9,
-          "oldPrice": 32.9,
-          "note": "Limite por cliente 3 un."
+          "name": "Sabonete Dove",
+          "detail": "90g",
+          "cat": "Limpeza & Perfumaria",
+          "price": 4.9,
+          "oldPrice": 6.9,
+          "note": ""
         },
         {
-          "name": "Café União",
-          "detail": "500g",
-          "cat": "Básico",
-          "price": 18.9,
-          "oldPrice": 25.9,
-          "note": "Limite por cliente 4 un."
+          "name": "Kit Shampoo + Condicionador Dove",
+          "detail": "350ml + 150ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 29.9,
+          "oldPrice": 38.9,
+          "note": ""
         },
         {
-          "name": "Leite Longa Vida Italac Edge",
-          "detail": "1L",
-          "cat": "Básico",
+          "name": "Desodorante Aerosol Dove",
+          "detail": "150ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 17.9,
+          "oldPrice": 22.9,
+          "note": ""
+        },
+        {
+          "name": "Creme Dental Colgate Máxima Proteção Anticáries",
+          "detail": "90g",
+          "cat": "Limpeza & Perfumaria",
           "price": 4.79,
           "oldPrice": 5.99,
           "note": ""
         },
         {
-          "name": "Açúcar Cristal Purinha",
-          "detail": "5kg",
-          "cat": "Básico",
-          "price": 13.9,
-          "oldPrice": 15.59,
-          "note": ""
-        },
-        {
-          "name": "Biscoito Colonial Amanteigado",
-          "detail": "400g",
-          "cat": "Padaria",
+          "name": "Amaciante Concentrado Comfort",
+          "detail": "500ml",
+          "cat": "Limpeza & Perfumaria",
           "price": 10.9,
-          "oldPrice": 12.98,
-          "note": ""
+          "oldPrice": 14.99,
+          "note": "Leve 500ml e pague 400ml"
         },
         {
-          "name": "Bolo Sempre Vale",
-          "detail": "Kg",
-          "cat": "Padaria",
-          "price": 23.9,
-          "oldPrice": 26.9,
-          "note": ""
-        },
-        {
-          "name": "Suspiro Artesanal Sempre Vale",
-          "detail": "180g",
-          "cat": "Padaria",
-          "price": 16.9,
-          "oldPrice": 19.98,
-          "note": ""
-        },
-        {
-          "name": "Papel Higiênico Folha Dupla Mimmo LV12 PG11",
-          "detail": "30m",
+          "name": "Lava Roupas Líquido Omo Lavagem Perfeita",
+          "detail": "900ml",
           "cat": "Limpeza & Perfumaria",
           "price": 15.9,
-          "oldPrice": 21.9,
+          "oldPrice": 19.9,
           "note": ""
         },
         {
-          "name": "Lava Roupas em Pó Omo Todo Ciclo",
-          "detail": "700g",
+          "name": "Limpador Multiuso Casa & Limpeza",
+          "detail": "500ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 3.99,
+          "oldPrice": 5.39,
+          "note": ""
+        },
+        {
+          "name": "Limpador Perfumado Casa e Perfume",
+          "detail": "1L",
           "cat": "Limpeza & Perfumaria",
           "price": 9.9,
-          "oldPrice": 14.9,
+          "oldPrice": 13.99,
           "note": ""
         },
         {
-          "name": "Pão de Forma Visconti Tradicional",
-          "detail": "400g",
-          "cat": "Padaria",
-          "price": 4.99,
-          "oldPrice": 6.99,
+          "name": "Limpador CIF Cremoso Original",
+          "detail": "250ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 9.9,
+          "oldPrice": 12.79,
+          "note": "+20% grátis"
+        },
+        {
+          "name": "Papel Higiênico Folha Dupla Dalia",
+          "detail": "12 Rolos 20m",
+          "cat": "Limpeza & Perfumaria",
+          "price": 11.9,
+          "oldPrice": 13.9,
           "note": ""
+        },
+        {
+          "name": "Desinfetante Triex",
+          "detail": "2L",
+          "cat": "Limpeza & Perfumaria",
+          "price": 5.99,
+          "oldPrice": 7.59,
+          "note": ""
+        },
+        {
+          "name": "Fralda Huggies Roupinha Absorção Meguinha",
+          "detail": "Tamanhos P ao XXG",
+          "cat": "Limpeza & Perfumaria",
+          "price": 29.9,
+          "oldPrice": 42.9,
+          "note": ""
+        },
+        {
+          "name": "Inseticida Raid Aerosol",
+          "detail": "420ml",
+          "cat": "Limpeza & Perfumaria",
+          "price": 21.9,
+          "oldPrice": 25.9,
+          "note": "Leve mais e pague menos"
         }
       ]
     }

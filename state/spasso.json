@@ -9,9 +9,16 @@
     "from": "2026-11-07",
     "to": "2026-11-14"
   },
-  "fetchedAt": "2026-11-07T16:34:07.874Z",
+  "fetchedAt": "2026-11-08T00:48:53.008Z",
   "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
-  "flyerImages": [],
+  "flyerImages": [
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-ACOGUE-4-A-6-11-2026.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-1.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-2.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-3.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-4.png"
+  ],
   "offers": [],
   "status": "image_flyer_pending_transcription"
 }

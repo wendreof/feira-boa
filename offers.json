@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-08T00:49:23.157Z",
+  "updatedAt": "2026-11-08T16:45:21.228Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -35,7 +35,7 @@
       "logo": "logos/spasso.png",
       "source": "Folheto oficial · Loja São João",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
-      "from": "2026-11-07",
+      "from": "2026-11-08",
       "to": "2026-11-14",
       "flyerImages": [
         "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
@@ -20567,30 +20567,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-900-2026-11-02",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Vela Prata 7 Dias e 7 Noites Votiva Grande",
-      "detail": "un",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "21",
-      "price": 16.29,
-      "previousPrice": 17.49,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 4 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-02",
-      "validTo": "2026-11-08",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-901-2026-11-02",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -22613,30 +22589,6 @@
       "storeLogo": "logos/spani.png",
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Macarrão Renata Caseiro Talharim 2",
-      "detail": "500g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "179",
-      "price": 6.99,
-      "previousPrice": 7.59,
-      "icon": "🍝",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-02",
-      "validTo": "2026-11-08",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-1503-2026-11-02",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Macarrão Renata Caseiro Talharim 3",
       "detail": "500g",
       "category": "Mercearia",
       "department": "Mercearia",
@@ -38873,6 +38825,54 @@
       "storeCategory": "116",
       "price": 16.39,
       "previousPrice": 17.7,
+      "icon": "🧂",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-08",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5505-2026-11-02",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Manteiga Aviação Pote com Sal",
+      "detail": "500g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Manteiga",
+      "productTypes": [
+        "Manteiga"
+      ],
+      "storeCategory": "116",
+      "price": 38.9,
+      "previousPrice": 42.01,
+      "icon": "🧂",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-08",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5511-2026-11-02",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Manteiga Leco com Sal",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Manteiga",
+      "productTypes": [
+        "Manteiga"
+      ],
+      "storeCategory": "116",
+      "price": 12.79,
+      "previousPrice": 13.89,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",

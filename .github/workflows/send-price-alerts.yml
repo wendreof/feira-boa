@@ -1,7 +1,7 @@
 name: Send price alerts
 
 on:
-  # After scheduled ingest only (08:00 / 18:00 America/Sao_Paulo). Push-to-main
+  # After scheduled ingest only (06:00, 09:00, 15:00, 18:00 America/Sao_Paulo). Push-to-main
   # ingest still updates offers.json but does not trigger alert sends.
   workflow_run:
     workflows: ["Ingest and monitor official offer sources"]

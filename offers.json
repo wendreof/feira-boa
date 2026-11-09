@@ -224,8 +224,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "price": 6.99,
       "previousPrice": 8.99,
@@ -1863,8 +1862,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "price": 8.99,
       "previousPrice": null,
@@ -12094,7 +12092,8 @@
       "department": "Açougue e peixaria",
       "productType": "Carne bovina",
       "productTypes": [
-        "Carne bovina"
+        "Carne bovina",
+        "Churrasco"
       ],
       "storeCategory": "Carnes",
       "price": 17.98,
@@ -12190,8 +12189,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "storeCategory": "Carnes",
       "price": 9.28,
@@ -12335,8 +12333,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "storeCategory": "Congelados",
       "price": 15.28,
@@ -12360,8 +12357,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "storeCategory": "Congelados",
       "price": 15.68,
@@ -12483,8 +12479,7 @@
       "department": "Frios e laticínios",
       "productType": "Frios",
       "productTypes": [
-        "Frios",
-        "Churrasco"
+        "Frios"
       ],
       "storeCategory": "Carnes",
       "price": 13.3,
@@ -22640,8 +22635,7 @@
       "department": "Açougue e peixaria",
       "productType": "Carne bovina",
       "productTypes": [
-        "Carne bovina",
-        "Churrasco"
+        "Carne bovina"
       ],
       "storeCategory": "158",
       "price": 4.69,

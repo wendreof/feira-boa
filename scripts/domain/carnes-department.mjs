@@ -1,5 +1,5 @@
 /** Counter meat/fish types under the home "Carnes" quick filter (kg-priced only). */
-export const CARNES_COUNTER_PRODUCT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes"]);
+export const CARNES_COUNTER_PRODUCT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes", "Frango"]);
 
 /**
  * True when the offer unit is kilogram pricing (açougue), not fixed grams/units.

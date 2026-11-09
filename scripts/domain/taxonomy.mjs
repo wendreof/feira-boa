@@ -1,4 +1,5 @@
 import { foldText } from "../../src/shared/text.mjs";
+import { isBarbecueProductName } from "./churrasco-classification.mjs";
 
 /** @type {Array<[RegExp, string]>} */
 const PRODUCT_TYPE_RULES = [
@@ -171,9 +172,7 @@ export function classifyProduct(name, category, storeCategory = "") {
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados",
     "Pet": "Pet", "Casa": "Casa e limpeza", "Padaria": "Mercearia", "Hortifruti": "Hortifruti", "Vestuário": "Vestuário e calçados", "Outros": "Outros",
   };
-  const isBarbecueProduct = /\bpicanha\b|\bfraldinha\b|\bmaminha\b|\bcostela\b|\bcontrafile\b|\bentrecote\b|\bancho\b|\blinguica\b|\bpao de alho\b|\bqueijo coalho\b|\bcarvao (para|de churrasco)\b|\bespeto\b|\bgrelha\b|\bacendedor\b|\bcoxa\b|\bsobrecoxa\b|\basa de frango\b|\bbisteca\b|\bpanceta\b/.test(text);
-  // Produto pronto e congelado ("Hot Pocket X-picanha") não é corte para churrasco.
-  const isChurrasco = isBarbecueProduct && productType !== "Congelados";
+  const isChurrasco = isBarbecueProductName(text) && productType !== "Congelados";
   return {
     department: departments[productType] ?? categoryDepartments[normalizedCategory] ?? normalizedCategory,
     productType,

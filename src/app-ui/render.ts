@@ -4,7 +4,8 @@ import { appState } from "./state";
 import { createOfferCard, updateOfferCard } from "./card";
 import {
   feedStatus, feedRetry, resultsAnnouncement, grid, input, sortSelect, emptyState, storesDirectoryLink,
-  resultsSubtitle, resultsTitle, showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount,
+  resultsSubtitle, resultsTitle, resultsScopeBar, resultsScopeCount, resultsScopeFlash, resultsScopeStore,
+  showAllOffersButton, emptyHelp, favoritesToggle, activeFilterCount,
   archiveSection, archiveSubtitle, archiveGrid, clearActiveFiltersButton,
 } from "./dom";
 import { getPriceBounds } from "./filters";
@@ -13,6 +14,7 @@ import { offerCategory, randomOfferRank, matchesSearch, matchesSector } from "./
 import type { Offer } from "../types";
 import { refreshAlertsInvitePanel } from "./alerts-invite";
 import { browseFiltersActive } from "./browse-filters";
+import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -136,9 +138,17 @@ export function renderOffers(): void {
   const activeFavoriteCount = appState.offers.filter((offer) => isActive(offer, today) && appState.favoriteIds.has(offer.id)).length;
   favoritesToggle.textContent = appState.favoriteOnly ? `Ver todas (${activeFavoriteCount})` : `Favoritos (${activeFavoriteCount})`;
   favoritesToggle.setAttribute("aria-pressed", String(appState.favoriteOnly));
-  resultsTitle.textContent = appState.sharedOfferId ? "Oferta compartilhada" : "Ofertas encontradas";
+  const searchStore = storeNameFromSearch(appState.storeNames, input.value);
+  const filteredStore = appState.activeStore !== "Todas as lojas"
+    ? appState.activeStore
+    : searchStore;
+  resultsTitle.textContent = appState.sharedOfferId
+    ? "Oferta compartilhada"
+    : filteredStore
+      ? `Ofertas em ${filteredStore}`
+      : "Ofertas encontradas";
   showAllOffersButton.hidden = !appState.sharedOfferId;
-  const storeLabel = appState.activeStore === "Todas as lojas" ? "todas as lojas" : appState.activeStore;
+  const storeLabel = filteredStore ?? "todas as lojas";
   const sectorLabel = appState.activeDepartment
     ? (QUICK_DEPARTMENT_LABELS[appState.activeDepartment]
       ?? TAXONOMY_GROUPS.find((group) => group.id === appState.activeDepartment)?.label
@@ -152,10 +162,21 @@ export function renderOffers(): void {
   if (priceRangeReversed) emptyHelp.textContent = "O preço mínimo precisa ser menor ou igual ao preço máximo.";
   else if (appState.offers.some((offer) => isActive(offer, today))) emptyHelp.textContent = "Não encontramos ofertas com essa busca e esses filtros. Tente outra palavra ou limpe os filtros.";
   else emptyHelp.textContent = "Não há ofertas ativas hoje. Consulte os folhetos abaixo para ver as promoções mais recentes.";
-  const announcement = `${matching.length} ${matching.length === 1 ? "oferta encontrada" : "ofertas encontradas"}`;
+  const announcement = filteredStore
+    ? `${matching.length} ${matching.length === 1 ? "oferta" : "ofertas"} em ${filteredStore}`
+    : `${matching.length} ${matching.length === 1 ? "oferta encontrada" : "ofertas encontradas"}`;
   if (resultsAnnouncement.textContent !== announcement) {
     resultsAnnouncement.textContent = "";
     window.requestAnimationFrame(() => { resultsAnnouncement.textContent = announcement; });
+  }
+  if (filteredStore && !appState.sharedOfferId) {
+    resultsScopeBar.hidden = false;
+    resultsScopeStore.textContent = filteredStore;
+    resultsScopeCount.textContent = matching.length === 1 ? "1 oferta" : `${matching.length} ofertas`;
+  } else {
+    resultsScopeBar.hidden = true;
+    resultsScopeFlash.hidden = true;
+    resultsScopeBar.classList.remove("results-scope-bar--fresh");
   }
   refreshAlertsInvitePanel();
 }

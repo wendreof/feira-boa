@@ -1,6 +1,7 @@
 import { foldText } from "./shared/text.mjs";
 import { expectedSectors } from "../scripts/offer-sector-guard.mjs";
 import { matchesCarnesDepartment } from "../scripts/domain/carnes-department.mjs";
+import { isPoultryCounterOffer } from "../scripts/domain/churrasco-classification.mjs";
 /**
  * Taxonomia de catálogo do Feira Boa.
  *
@@ -267,7 +268,7 @@ const SUBCATEGORY_RULES = {
   churrasco: [
     [/carvao|carvão|acendedor|lenha/, "Carvão e acendedores"],
     [/molho|tempero|alho|barbecue|pasta de churrasco/, "Temperos para churrasco"],
-    [/carne|picanha|costela|linguica|bacon|presunto|frango|file mignon|alcatra|bisteca|asa/, "Carnes para churrasco"],
+    [/carne|picanha|costela|linguica|bacon|presunto|file mignon|alcatra|bisteca/, "Carnes para churrasco"],
     [/festa|vela|champanhe|taça|decoracao/, "Produtos para festas"],
   ],
   vestuario: [[/calcado|calçato|sapato|tênis|tenis|chinelo|sandalia/, "Calçados"]],
@@ -321,6 +322,7 @@ export function resolveCategory(offer) {
     && baseType !== "Doces e snacks"
     && CHURRASCO_KEYWORDS.test(text)
     && !NOT_CHURRASCO.test(text)
+    && !isPoultryCounterOffer(text)
   ) {
     resolved = { groupId: "churrasco", subcategory: pickSubcategory("churrasco", text) ?? "Carnes para churrasco" };
   }

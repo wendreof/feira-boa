@@ -8,7 +8,9 @@ import { matchesCarnesDepartment } from "./carnes-department.mjs";
 export function offerCardCategoryLine(offer, category, context = {}) {
   const store = String(offer.store ?? "").trim();
   if (
-    (context.activeDepartment === "carnes" || category.subcategory === "Carnes para churrasco")
+    (context.activeDepartment === "carnes"
+      || category.subcategory === "Carnes para churrasco"
+      || category.subcategory === "Aves")
     && matchesCarnesDepartment(offer)
   ) {
     return store ? `Açougue · kg · ${store}` : "Açougue · kg";

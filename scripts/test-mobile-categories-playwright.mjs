@@ -71,6 +71,33 @@ try {
   });
   if (!storeChipShape.ok) failures.push(`store chips: ${storeChipShape.reason ?? JSON.stringify(storeChipShape)}`);
 
+  const storeChip = page.locator("#store-filters button.store-filter-chip[data-store]").nth(1);
+  const storeName = await storeChip.getAttribute("data-store");
+  if (!storeName || storeName === "Todas as lojas") {
+    failures.push("expected a named store chip for filter feedback");
+  } else {
+    await storeChip.click();
+    const feedback = await page.evaluate(() => {
+      const badge = document.querySelector("#results-updated-badge");
+      const title = document.querySelector("#results-title")?.textContent ?? "";
+      return {
+        badgeVisible: badge && !badge.hidden,
+        badgeText: badge?.textContent?.trim() ?? "",
+        title,
+      };
+    });
+    if (!feedback.badgeVisible) failures.push("results updated badge should show after store filter");
+    if (!feedback.badgeText.includes("atualiz")) failures.push(`badge copy should mention update (${feedback.badgeText})`);
+    if (!feedback.title.includes(storeName)) failures.push(`results title should name store (${feedback.title})`);
+    const scope = await page.evaluate(() => {
+      const bar = document.querySelector("#results-scope-bar");
+      const store = document.querySelector("#results-scope-store")?.textContent ?? "";
+      return { visible: bar && !bar.hidden, store };
+    });
+    if (!scope.visible) failures.push("results scope bar should stay visible when a store is filtered");
+    if (!scope.store.includes(storeName.split(" ")[0])) failures.push(`scope bar should name store (${scope.store})`);
+  }
+
   const acougueChip = page.locator('#popular-items button[data-group="carnes"]');
   if (!(await acougueChip.count())) failures.push("Açougue (kg) category chip missing");
   else {

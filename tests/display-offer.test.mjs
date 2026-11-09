@@ -25,3 +25,12 @@ test("offerCardCategoryLine shows açougue for kg counter cuts", () => {
   );
   assert.equal(line, "Açougue · kg · Big Bom");
 });
+
+test("offerCardCategoryLine labels kg chicken as açougue, not churrasco", () => {
+  const line = offerCardCategoryLine(
+    { store: "Big Bom", productType: "Frango", productTypes: ["Frango"], detail: "kg" },
+    { groupId: "frescos", subcategory: "Aves" },
+    { activeDepartment: "" },
+  );
+  assert.equal(line, "Açougue · kg · Big Bom");
+});

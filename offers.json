@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-09T13:05:08.975Z",
+  "updatedAt": "2026-11-09T13:07:47.485Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -7083,6 +7083,30 @@
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Sabonete Infantil",
       "price": 22.19,
       "previousPrice": 39.99,
+      "icon": "🧴",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "id": "paguemenos-sabonete-liquido-protex-baby-lavanda-refil-protex-180ml-2026-11-09",
+      "store": "Pague Menos",
+      "storeLogo": "logos/paguemenos.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Sabonete Líquido Protex Baby Lavanda Refil",
+      "detail": "180ml",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "storeCategory": "Mamãe e Bebê/Banho Infantil/Sabonete Infantil",
+      "price": 10.99,
+      "previousPrice": 18.59,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

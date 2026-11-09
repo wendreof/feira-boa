@@ -19,7 +19,6 @@ export async function extractSpasso(customUrl = null) {
     [...html.matchAll(/src=["'](https?:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.(?:png|jpe?g|webp))["']/gi)].map((m) => m[1]),
   );
 
-  // Read existing snapshot if available to retain still-valid curated items
   let existingOffers = [];
   try {
     const existingText = await readFile(new URL("../../state/spasso.json", import.meta.url), "utf8");
@@ -29,7 +28,6 @@ export async function extractSpasso(customUrl = null) {
     // No previous snapshot yet
   }
 
-  // Calculate current week cycle
   const now = new Date();
   const spDate = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Sao_Paulo",

@@ -155,9 +155,10 @@ Skip **`npm run ingest:offers`** in agent sessions unless live ingest adapters c
 
 - **Store logos:** `src/shared/store-logos.mjs`, `logos/*.png`, `lojas.html`, `scripts/test-store-logos-playwright.mjs`
 - **New store ingest:** `scripts/adapters/`, `scripts/ingest-offers.mjs`, `tests/adapters.test.mjs`
+- **Agent-operated ingest (Antigravity, Cursor, etc.):** `.agents/skills/offer-ingestion/SKILL.md` — transcribe flyers into `scripts/adapters/data/*-campaigns.json`, then `node scripts/agent-ingest.mjs [--store <id>]`. This is **not** a Gemini API integration inside CI.
 - **Home / offers UI:** `src/app.ts`, `src/app-ui/`, `index.html`
 - **Alerts invite:** `src/shared/alert-rules.mjs`, `src/app-ui/alerts-invite.ts`
-- **CI ingest push:** `.github/workflows/monitor-offers.yml` — commit `state/`, `offers.json`, `snapshot-manifest.json`, `source-status.js`, `.offer-monitor-state.json` (`build-info.json` stays gitignored; Pages builds it via `npm run build`)
+- **CI ingest push:** `.github/workflows/monitor-offers.yml` — cron `0 11,21 * * *` (08:00 and 18:00 America/Sao_Paulo); commit `state/`, `offers.json`, `snapshot-manifest.json`, `source-status.js`, `.offer-monitor-state.json` (`build-info.json` stays gitignored; Pages builds it via `npm run build`).
 
 ### Prompting
 

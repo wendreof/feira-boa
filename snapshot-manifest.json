@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-09T01:03:41.687Z",
+  "updatedAt": "2026-11-09T12:43:47.731Z",
   "current": [
     {
       "role": "current",
@@ -33,7 +33,7 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-09T01:03:41.687Z",
+      "fetchedAt": "2026-11-09T12:43:47.731Z",
       "supersededAt": null,
       "offerCount": 36,
       "status": "ok",

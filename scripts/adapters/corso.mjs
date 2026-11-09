@@ -28,7 +28,6 @@ export async function extractCorso(customUrl = null) {
   if (!res.ok) throw new Error(`Could not fetch Corso flyer page (${res.status})`);
   const html = await res.text();
 
-  // Extract hash timestamp to detect image flyer updates
   const hashMatch = html.match(/jornal-frente\.jpg\?hash=(\d+)/);
   const hash = hashMatch ? hashMatch[1] : "default";
 

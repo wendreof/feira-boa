@@ -1,5 +1,6 @@
 import { VAPID_PUBLIC_KEY } from "./vapid-config";
 import { savePushSubscription } from "./account";
+import { registerAnonymousCatalogPush, unregisterAnonymousCatalogPush } from "./catalog-push-register";
 
 function urlBase64ToUint8Array(base64: string): Uint8Array {
   const padding = "=".repeat((4 - (base64.length % 4)) % 4);
@@ -116,8 +117,16 @@ export async function linkPushDeviceToUser(userId: string): Promise<void> {
     if (!isPushConfigured() || Notification.permission !== "granted") return;
     const subscription = await getPushSubscription();
     if (!subscription) return;
+    await unregisterAnonymousCatalogPush(subscription);
     await savePushSubscription(userId, subscription);
   } catch (error) {
     console.warn("Could not sync push subscription with the account.", error);
   }
+}
+
+/** Permissão no navegador + inscrição local; conta opcional (catálogo diário). */
+export async function activateCatalogPushOnDevice(): Promise<PushSubscription> {
+  const subscription = await subscribeToPush();
+  await registerAnonymousCatalogPush(subscription);
+  return subscription;
 }

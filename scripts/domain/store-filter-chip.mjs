@@ -1,5 +1,9 @@
 import { resolveMainStoreLogo } from "../../src/shared/store-logos.mjs";
 
+const DISPLAY_LABELS = {
+  "Spani Atacadista": "Spani",
+};
+
 /** Plain data for a store filter chip (no DOM). */
 export function describeStoreFilterChip(storeName, count) {
   const total = Number(count);
@@ -23,7 +27,7 @@ export function describeStoreFilterChip(storeName, count) {
           ? "fortemix-mark"
           : "";
   return {
-    label: storeName,
+    label: DISPLAY_LABELS[storeName] ?? storeName,
     ariaLabel: `${storeName}, ${total} ofertas`,
     logoSrc: meta?.src ?? null,
     fallback: meta?.fallback ?? short.slice(0, 2).toUpperCase(),

@@ -1255,69 +1255,112 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
   .sticky-filters .store-filter-heading{margin:0 0 6px}
   .sticky-filters .store-filter-section .popular-label{margin:0 0 6px}
   .store-filters--chips{padding:2px 0 4px}
-  .store-filters--chips .store-filter-chip{min-height:62px;min-width:72px;max-width:118px;border-radius:12px}
-  .store-filters--chips .store-filter-chip-logo{width:30px;height:30px;border-radius:9px}
+  .store-filters--chips .store-filter-chip{min-height:76px;min-width:78px;max-width:104px;border-radius:14px}
+  .store-filters--chips .store-filter-chip-logo{width:38px;height:38px;border-radius:11px}
   .category-bar{margin-bottom:6px}
 }
 .store-filter-chip{display:inline-flex}
 .store-filter-chip.has-store-logo .store-filter-chip-logo+.store-filter-chip-label{display:inline}
 
-/* Lojas: mesmo “tile” das categorias, não pílula genérica .filter */
+/* Lojas: tiles de categoria com logo grande e selo de quantidade */
+.store-filter-section--rail .horizontal-scroll-strip--stores {
+  margin: 0 -2px;
+  padding: 2px 2px 6px;
+}
+
 .store-filters--chips {
   display: flex;
-  gap: 7px;
-  padding: 6px 0 2px;
+  gap: 9px;
+  padding: 8px 2px 4px;
   align-items: stretch;
 }
 
 .store-filters--chips .store-filter-chip {
+  position: relative;
   flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 72px;
-  max-width: 118px;
-  min-height: 64px;
-  padding: 6px 8px;
-  border-radius: 13px;
-  gap: 4px;
+  min-width: 78px;
+  max-width: 104px;
+  min-height: 78px;
+  padding: 8px 7px 7px;
+  border-radius: 14px;
+  gap: 5px;
   scroll-snap-align: start;
   font: 650 10px "DM Sans", sans-serif;
   line-height: 1.15;
   text-align: center;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, #fff 0%, #f6f9f4 100%);
+  box-shadow: 0 2px 10px #203c270c, inset 0 1px 0 #ffffffa8;
+  color: var(--ink);
+  white-space: normal;
   transition: var(--button-motion);
 }
 
 .store-filters--chips .store-filter-chip:hover,
 .store-filters--chips .store-filter-chip:focus-visible {
   border-color: #84a98c;
-  background: #f2f7ef;
+  background: linear-gradient(165deg, #f8fbf6 0%, #eef5ea 100%);
+  box-shadow: 0 6px 18px #203c2714;
   transform: translateY(-2px);
   outline: none;
 }
 
 .store-filters--chips .store-filter-chip.active {
+  border-color: #5a9a6a;
+  background: linear-gradient(165deg, #f0f9f2 0%, #e2f0e5 100%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--green) 38%, transparent), 0 8px 22px #155b3b1f;
+  color: var(--ink);
+}
+
+.store-filters--chips .store-filter-chip.active .store-filter-chip-label {
+  color: #1f5c39;
+  font-weight: 750;
+}
+
+.store-filters--chips .store-filter-chip.active .store-filter-chip-fallback {
+  color: var(--green);
+}
+
+.store-filters--chips .store-filter-chip-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 18px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--pill-ink);
+  font: 800 9px/1.2 "DM Sans", sans-serif;
+  box-shadow: 0 1px 4px #203c2714;
+}
+
+.store-filters--chips .store-filter-chip.active .store-filter-chip-count {
   background: var(--green);
-  border-color: var(--green);
   color: #fff;
 }
 
-.store-filters--chips .store-filter-chip.active .store-filter-chip-label,
-.store-filters--chips .store-filter-chip.active .store-filter-chip-fallback {
-  color: #fff;
+.store-filters--chips .store-filter-chip--all .store-filter-chip-all-icon {
+  display: block;
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px #203c2720);
 }
 
 .store-filters--chips .store-filter-chip-logo {
   position: relative;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   flex: 0 0 auto;
-  border-radius: 10px;
+  border-radius: 11px;
   border: 1px solid var(--line);
   background: #fff;
   display: grid;
   place-items: center;
   overflow: hidden;
+  box-shadow: 0 3px 10px #203c2712;
 }
 
 .store-filters--chips .store-filter-chip-logo img {
@@ -1352,10 +1395,14 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 .store-filters--chips .store-filter-chip-label {
   display: block;
   font: 650 9.5px "DM Sans", sans-serif;
-  line-height: 1.15;
+  line-height: 1.2;
   text-align: center;
   white-space: normal;
-  max-width: 9em;
+  max-width: 8.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .horizontal-scroll-strip{position:relative;overflow:hidden}
@@ -1372,8 +1419,12 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 .clear-active-filters{border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff;color:var(--green);font:700 11px 'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
 .clear-active-filters:hover{background:#f2f7ef}
 .clear-active-filters[hidden]{display:none}
-.alerts-invite-shell{position:relative;width:min(100%,640px);margin:10px 0 2px}
-.alerts-invite-shell[hidden]{display:none}
+.alerts-invite-shell,.catalog-push-invite-shell{position:relative;width:min(100%,640px);margin:10px 0 2px}
+.alerts-invite-shell[hidden],.catalog-push-invite-shell[hidden]{display:none}
+.catalog-push-invite-panel{margin:0;background:linear-gradient(120deg,#123a54,#1a4f6e 58%,#246b8f)}
+.catalog-push-invite-panel .account-panel-text strong,.catalog-push-invite-panel .account-panel-text span{color:#e8f4ff}
+.catalog-push-status{margin:6px 0 0;font-size:11px;color:#ffdca8}
+.catalog-push-status[hidden]{display:none}
 .alerts-invite-dismiss{position:absolute;top:8px;right:8px;z-index:2;width:28px;height:28px;border:0;border-radius:999px;background:#ffffff40;color:inherit;font:700 18px/1 'DM Sans',sans-serif;cursor:pointer}
 .alerts-invite-dismiss:hover{background:#ffffff59}
 .alerts-invite-panel--secondary{background:linear-gradient(120deg,#1a3352,#234a72 55%,#2d5f8f);box-shadow:0 8px 22px #0a2a6626;margin-top:8px;padding:11px 14px}

@@ -10,6 +10,7 @@ import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
 import { connectAccount, loadAccountApi, loadReactionsApi, saveThemePreference } from "./app-ui/account-sync";
 import { syncAlertsInviteForUser, bindAlertsInviteUi } from "./app-ui/alerts-invite";
+import { bindCatalogPushInvite, refreshCatalogPushInvite } from "./app-ui/catalog-push-invite";
 import { readSavedDepartment } from "./app-ui/session-filters";
 import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
@@ -76,6 +77,7 @@ async function becomeGuest(): Promise<void> {
   document.documentElement.dataset.authBootstrap = "guest";
   updateAccountControls();
   await syncAlertsInviteForUser(null);
+  void refreshCatalogPushInvite();
   setAccountStatus("Entre na sua conta para salvar seus favoritos e tê-los em qualquer dispositivo.");
   if (appState.favoriteOnly) {
     askForLogin(favoritesToggle, "favorite", () => {
@@ -148,6 +150,8 @@ restoreAccountSession();
   });
   bindAppEvents();
   bindAlertsInviteUi();
+  bindCatalogPushInvite();
+  void refreshCatalogPushInvite();
 
   updateViewMode();
   renderStoreFilters();

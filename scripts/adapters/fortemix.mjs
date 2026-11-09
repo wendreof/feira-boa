@@ -10,7 +10,7 @@ const FORTE_MIX_STORE = {
   name: "Forte Mix",
   logo: logoUrlForStoreId("fortemix"),
   branch: "Rede Forte · SJBV e região",
-  source: "Festival Felitá · folheto WhatsApp / app",
+  source: "Folheto Forte Mix · app e Dezcontão",
 };
 
 // Manual transcription of the Festival Felitá images shared on WhatsApp.

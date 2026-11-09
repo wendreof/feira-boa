@@ -8,9 +8,9 @@ on:
       - "**.md"
       - "docs/**"
   schedule:
-    # Twice a day: 07:25 and 18:25 in São Paulo (UTC-3) = 10:25 and 21:25 UTC;
-    # minute 25 avoids GitHub Actions peak queue congestion.
-    - cron: "25 10,21 * * *"
+    # Four times a day: 06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo (UTC-3) = 09:00, 12:00, 18:00, and 21:00 UTC.
+    # GitHub may start scheduled jobs late; workflow_dispatch still allows a manual run.
+    - cron: "0 9,12,18,21 * * *"
   workflow_dispatch:
     inputs:
       store:
@@ -35,6 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
+      - name: Log scheduled time (São Paulo)
+        run: |
+          echo "Workflow event: ${{ github.event_name }}"
+          TZ=America/Sao_Paulo date +"Local time: %Y-%m-%d %H:%M %Z"
+
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -65,6 +70,9 @@ jobs:
 
       - name: Clear source review when new snapshots pass plausibility checks
         run: node scripts/apply-plausibility-review.mjs
+
+      - name: Verify ingest freshness
+        run: node scripts/post-ingest-health.mjs
 
       - name: Save updated offers and source status
         id: changes

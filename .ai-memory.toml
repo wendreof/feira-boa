@@ -1,0 +1,4 @@
+# Pins Feira Boa to a stable ai-memory scope (hooks + MCP tools).
+# See https://github.com/akitaonrails/ai-memory/blob/main/docs/marker-file.md
+workspace = "default"
+project = "wendreof-feira-boa"

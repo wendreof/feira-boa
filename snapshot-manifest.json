@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-09T01:03:41.687Z",
+  "updatedAt": "2026-11-09T13:05:08.975Z",
   "current": [
     {
       "role": "current",
       "storeId": "bigbom",
       "storeName": "Big Bom",
       "branch": "Vila Zanetti · São João",
-      "fetchedAt": "2026-11-09T01:02:54.744Z",
+      "fetchedAt": "2026-11-09T13:04:16.844Z",
       "supersededAt": null,
-      "offerCount": 67,
+      "offerCount": 20,
       "status": "ok",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-12",
       "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
     },
     {
@@ -20,7 +20,7 @@
       "storeId": "corso",
       "storeName": "Corso",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
-      "fetchedAt": "2026-11-09T01:02:56.011Z",
+      "fetchedAt": "2026-11-09T13:04:18.088Z",
       "supersededAt": null,
       "offerCount": 121,
       "status": "ok",
@@ -33,12 +33,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-09T01:03:41.687Z",
+      "fetchedAt": "2026-11-09T13:05:08.975Z",
       "supersededAt": null,
-      "offerCount": 36,
+      "offerCount": 30,
       "status": "ok",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-16",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-09",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {
@@ -46,12 +46,12 @@
       "storeId": "paguemenos",
       "storeName": "Pague Menos",
       "branch": "Loja 33 · Jardim Santo André",
-      "fetchedAt": "2026-11-09T01:03:00.209Z",
+      "fetchedAt": "2026-11-09T13:04:21.153Z",
       "supersededAt": null,
-      "offerCount": 381,
+      "offerCount": 379,
       "status": "ok",
-      "validFrom": "2026-11-02",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
@@ -72,12 +72,12 @@
       "storeId": "spani",
       "storeName": "Spani Atacadista",
       "branch": "São João da Boa Vista · Jardim das Flores",
-      "fetchedAt": "2026-11-09T01:03:41.679Z",
+      "fetchedAt": "2026-11-09T13:05:08.968Z",
       "supersededAt": null,
-      "offerCount": 940,
+      "offerCount": 939,
       "status": "ok",
-      "validFrom": "2026-11-02",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
@@ -85,11 +85,11 @@
       "storeId": "spasso",
       "storeName": "Spasso Sabores",
       "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-      "fetchedAt": "2026-11-09T01:03:01.367Z",
+      "fetchedAt": "2026-11-09T13:04:22.463Z",
       "supersededAt": null,
       "offerCount": 0,
       "status": "image_flyer_pending_transcription",
-      "validFrom": "2026-11-08",
+      "validFrom": "2026-11-09",
       "validTo": "2026-11-14",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
     }
@@ -100,13 +100,39 @@
       "storeId": "bigbom",
       "storeName": "Big Bom",
       "branch": "Vila Zanetti · São João",
-      "fetchedAt": "2026-11-06T04:01:48.133Z",
-      "supersededAt": "2026-11-06T17:35:56.889Z",
-      "offerCount": 24,
+      "fetchedAt": "2026-11-09T01:02:54.744Z",
+      "supersededAt": "2026-11-09T12:30:30.067Z",
+      "offerCount": 67,
+      "status": "ok",
+      "validFrom": "2026-11-06",
+      "validTo": "2026-11-08",
+      "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
+    },
+    {
+      "role": "previous",
+      "storeId": "fortemix",
+      "storeName": "Forte Mix",
+      "branch": "Rede Forte · SJBV e região",
+      "fetchedAt": "2026-11-09T13:01:25.263Z",
+      "supersededAt": "2026-11-09T13:03:00.455Z",
+      "offerCount": 36,
       "status": "ok",
       "validFrom": "2026-11-03",
-      "validTo": "2026-11-05",
-      "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
+      "validTo": "2026-11-16",
+      "sourceUrl": "https://smfortemix.com.br/"
+    },
+    {
+      "role": "previous",
+      "storeId": "paguemenos",
+      "storeName": "Pague Menos",
+      "branch": "Loja 33 · Jardim Santo André",
+      "fetchedAt": "2026-11-09T01:03:00.209Z",
+      "supersededAt": "2026-11-09T12:30:34.775Z",
+      "offerCount": 381,
+      "status": "ok",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-08",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
       "role": "previous",
@@ -120,6 +146,19 @@
       "validFrom": "2026-11-02",
       "validTo": "2026-11-04",
       "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf"
+    },
+    {
+      "role": "previous",
+      "storeId": "spani",
+      "storeName": "Spani Atacadista",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "fetchedAt": "2026-11-09T01:03:41.679Z",
+      "supersededAt": "2026-11-09T12:31:04.112Z",
+      "offerCount": 940,
+      "status": "ok",
+      "validFrom": "2026-11-02",
+      "validTo": "2026-11-08",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
     }
   ]
 }

@@ -299,27 +299,49 @@
   color: #b6e5bf;
 }
 
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip {
+  background: linear-gradient(165deg, #1f2a24 0%, #182019 100%);
+  border-color: #334036;
+  box-shadow: 0 2px 12px #00000040, inset 0 1px 0 #ffffff08;
+  color: var(--ink);
+}
+
 :root[data-theme="dark"] .store-filters--chips .store-filter-chip:hover,
 :root[data-theme="dark"] .store-filters--chips .store-filter-chip:focus-visible {
-  background: #28382d;
+  background: linear-gradient(165deg, #27332b 0%, #1f2a24 100%);
   border-color: #456b4d;
-  color: #b6e5bf;
+  box-shadow: 0 8px 22px #00000055;
 }
 
 :root[data-theme="dark"] .store-filters--chips .store-filter-chip.active {
-  background: #28382d;
-  border-color: #3f5c46;
+  background: linear-gradient(165deg, #2a3b30 0%, #223228 100%);
+  border-color: #5a9a6a;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--green) 45%, transparent), 0 10px 26px #00000066;
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-label {
   color: #b6e5bf;
 }
 
-:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-label,
 :root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-fallback {
+  color: #91d39f;
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip-count {
+  background: #23392b;
   color: #b6e5bf;
+}
+
+:root[data-theme="dark"] .store-filters--chips .store-filter-chip.active .store-filter-chip-count {
+  background: #246b43;
+  color: #fff;
 }
 
 :root[data-theme="dark"] .store-filters--chips .store-filter-chip-logo {
   background: #1b241e;
-  border-color: var(--line);
+  border-color: #3a4540;
+  box-shadow: 0 3px 10px #00000040;
 }
 
 :root[data-theme="dark"] .build-version[open] summary {

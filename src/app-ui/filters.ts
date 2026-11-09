@@ -33,7 +33,7 @@ export function renderStoreFilters(): void {
     const chip = describeStoreFilterChip(store, count);
     const button = element(
       "button",
-      `filter store-filter-chip${store === appState.activeStore ? " active" : ""}${chip.logoSrc ? " has-store-logo" : ""}${chip.markClass ? ` ${chip.markClass}` : ""}`,
+      `filter store-filter-chip${store === "Todas as lojas" ? " store-filter-chip--all" : ""}${store === appState.activeStore ? " active" : ""}${chip.logoSrc ? " has-store-logo" : ""}${chip.markClass ? ` ${chip.markClass}` : ""}`,
     );
     button.type = "button";
     button.dataset.store = store;
@@ -41,6 +41,9 @@ export function renderStoreFilters(): void {
     button.setAttribute("aria-pressed", String(store === appState.activeStore));
     button.setAttribute("aria-label", chip.ariaLabel);
     if (disabled) button.title = "Sem ofertas ativas hoje";
+
+    const countBadge = element("span", "store-filter-chip-count", String(count));
+    countBadge.setAttribute("aria-hidden", "true");
 
     if (chip.logoSrc) {
       const logo = element("span", "store-filter-chip-logo");
@@ -58,9 +61,11 @@ export function renderStoreFilters(): void {
         if (img.naturalWidth > 0) logo.classList.add("has-logo");
       }, { once: true });
       logo.append(fallback, img);
-      button.append(logo, element("span", "store-filter-chip-label", chip.label));
+      button.append(logo, element("span", "store-filter-chip-label", chip.label), countBadge);
     } else {
-      button.textContent = chip.label;
+      const icon = element("span", "store-filter-chip-all-icon", "🏬");
+      icon.setAttribute("aria-hidden", "true");
+      button.append(icon, element("span", "store-filter-chip-label", chip.label), countBadge);
     }
     return button;
   }));

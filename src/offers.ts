@@ -10,6 +10,7 @@ import { logoUrlForStoreId } from "./shared/store-logos.mjs";
 // data with fresh snapshots. Keep the dates here roughly current for local
 // work, and refresh the flyer URLs when a campaign rotates.
 import type { Offer, OfferSource } from "./types";
+import { isBarbecueProductName } from "../scripts/domain/churrasco-classification.mjs";
 
 // Update when the manually curated offer data below changes.
 export const offersUpdatedAt = "2026-10-23T00:00:00.000Z";
@@ -93,12 +94,11 @@ function classifyProduct(name: string, category: string): { department: string; 
     "Carnes": "Açougue e peixaria", "Peixes": "Açougue e peixaria", "Frios": "Frios e laticínios", "Laticínios": "Frios e laticínios",
     "Limpeza": "Casa e limpeza", "Higiene": "Higiene e cuidados", "Mercearia": "Mercearia", "Bebidas": "Bebidas", "Congelados": "Congelados"
   };
-  const isBarbecueProduct = /picanha|fraldinha|maminha|costela|contrafile|entrecote|ancho|linguica|pao de alho|queijo coalho|carvao para|carvao de churrasco|espeto|grelha|acendedor|coxa|sobrecoxa|asa de frango/.test(text);
   const primaryProductType = productType === category ? (categoryDepartments[category] ?? category) : productType;
   return {
     department: departments[productType] ?? categoryDepartments[category] ?? category,
     productType: primaryProductType,
-    productTypes: isBarbecueProduct ? [primaryProductType, "Churrasco"] : [primaryProductType],
+    productTypes: isBarbecueProductName(text) ? [primaryProductType, "Churrasco"] : [primaryProductType],
   };
 }
 

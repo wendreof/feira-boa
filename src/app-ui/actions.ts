@@ -11,6 +11,8 @@ import { bindSearchSuggest } from "./search-suggest";
 import { resolveDefaultViewMode } from "../../view-mode.js";
 import { showTransientStatus } from "../../status-toast.js";
 import { clearBrowseFilters } from "./browse-filters";
+import { markResultsUpdated } from "./results-feedback";
+import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
 import { saveActiveDepartment } from "./session-filters";
 
 function shareUrlForOffer(offerId: string): string {
@@ -149,6 +151,7 @@ export function bindAppEvents(): void {
     updateProductTypeOptions();
     renderPopularItems();
     renderOffers();
+    markResultsUpdated("store");
   });
 
   popularItems.addEventListener("click", (event: MouseEvent) => {
@@ -196,7 +199,16 @@ export function bindAppEvents(): void {
   let renderTimer: number | undefined;
   function scheduleRender(): void {
     window.clearTimeout(renderTimer);
-    renderTimer = window.setTimeout(renderOffers, 150);
+    renderTimer = window.setTimeout(() => {
+      renderOffers();
+      const query = input.value.trim();
+      if (query.length < 2) return;
+      if (appState.activeStore !== "Todas as lojas" || storeNameFromSearch(appState.storeNames, query)) {
+        markResultsUpdated(appState.activeStore !== "Todas as lojas" ? "store" : "search");
+      } else if (query.length >= 2) {
+        markResultsUpdated("search");
+      }
+    }, 150);
   }
 
   input.addEventListener("input", scheduleRender);

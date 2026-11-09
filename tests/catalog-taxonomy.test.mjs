@@ -77,6 +77,15 @@ test("resolveCategory sends barbecue products to the churrasco group", () => {
 
   const snack = resolveCategory({ name: "Salgadinho de Batata Picanha Brasileira", productTypes: ["Doces e snacks", "Churrasco"] });
   assert.notEqual(snack.groupId, "churrasco");
+
+  const chicken = resolveCategory({
+    name: "Coxa c/ Sobrecoxa de Frango",
+    productTypes: ["Frango", "Churrasco"],
+    productType: "Frango",
+    detail: "kg",
+  });
+  assert.equal(chicken.groupId, "frescos");
+  assert.equal(chicken.subcategory, "Aves");
 });
 
 test("resolveCategory obeys the sector the name requires when the flyer merged two products", () => {

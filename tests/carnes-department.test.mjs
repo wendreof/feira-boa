@@ -12,7 +12,7 @@ test("isSoldByKilogram accepts kg and Nkg details", () => {
   assert.equal(isSoldByKilogram("Unidade"), false);
 });
 
-test("matchesCarnesDepartment requires beef, pork, or fish sold by kg", () => {
+test("matchesCarnesDepartment requires counter meat and fish sold by kg", () => {
   assert.equal(matchesCarnesDepartment({
     productType: "Carne bovina",
     productTypes: ["Carne bovina"],
@@ -42,6 +42,11 @@ test("matchesCarnesDepartment requires beef, pork, or fish sold by kg", () => {
     productType: "Frango",
     productTypes: ["Frango"],
     detail: "kg",
+  }), true);
+  assert.equal(matchesCarnesDepartment({
+    productType: "Frango",
+    productTypes: ["Frango"],
+    detail: "800g",
   }), false);
   assert.equal(matchesCarnesDepartment({
     productType: "Presunto",

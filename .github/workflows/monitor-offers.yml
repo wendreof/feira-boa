@@ -27,8 +27,9 @@ permissions:
   issues: write
 
 concurrency:
-  group: feira-boa-pages
-  cancel-in-progress: false
+  # Serialize feed commits; cancel stale runs when main gets several pushes in a row.
+  group: feira-boa-ingest-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ingest-and-monitor:
@@ -99,8 +100,15 @@ jobs:
               exit 1
             fi
             remote="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            for attempt in 1 2 3; do
-              git pull --rebase "$remote" main
+            commit_msg="Update automated store offers and source status"
+            for attempt in 1 2 3 4 5; do
+              git fetch "$remote" main
+              if ! git pull --rebase "$remote" main; then
+                git rebase --abort 2>/dev/null || true
+                git fetch "$remote" main
+                git reset --soft FETCH_HEAD
+                git commit -m "$commit_msg"
+              fi
               if git push "$remote" HEAD:main; then
                 echo "changed=true" >> "$GITHUB_OUTPUT"
                 exit 0

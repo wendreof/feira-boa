@@ -4,7 +4,9 @@ import { foldAccents } from "../../src/shared/text.mjs";
 export function normalizeSearchText(value) {
   const folded = foldAccents(String(value ?? ""))
     .toLocaleLowerCase("pt-BR")
-    .replace(/(\d),(\d)/g, "$1.$2");
+    .replace(/(\d),(\d)/g, "$1.$2")
+    // Folhetos usam "c/" como "com" (ex.: Coxa c/ Sobrecoxa).
+    .replace(/\bc\s*\/\s*/g, " com ");
   return folded.replace(/[^\p{L}\p{N}.]+/gu, " ").replace(/\s+/g, " ").trim();
 }
 
@@ -107,7 +109,7 @@ export function parseSearchTerms(query) {
   const normalized = normalizeSearchText(query);
   if (!normalized) return [];
   const raw = normalized.split(/\s+/).filter(Boolean);
-  const terms = raw.filter((term) => !STOP_WORDS.has(term));
+  const terms = raw.filter((term) => !STOP_WORDS.has(term) && term.length >= 2);
   if (raw.length && !terms.length) return [];
   return terms;
 }

@@ -28,6 +28,26 @@ test("normalizeSearchText folds accents and punctuation", () => {
   assert.equal(normalizeSearchText("  Iogurte, Líquido! "), "iogurte liquido");
   assert.equal(normalizeSearchText("CAFÉ-500g"), "cafe 500g");
   assert.equal(normalizeSearchText("1,5 Litros"), "1.5 litros");
+  assert.equal(normalizeSearchText("Coxa c/ Sobrecoxa"), "coxa com sobrecoxa");
+});
+
+test("matchesOfferSearch handles c/ abbreviation in meat product names", () => {
+  const doc = buildOfferSearchDocument(
+    {
+      name: "Coxa c/ Sobrecoxa de Frango Avelícia Pacote",
+      detail: "1 kg",
+      category: "Carnes",
+      department: "Carnes",
+      productTypes: ["Frango"],
+      store: "Sempre Vale",
+      branch: "",
+      note: "",
+      notice: "",
+    },
+    { subcategory: "Aves", groupLabel: "Frescos" },
+  );
+  assert.ok(matchesOfferSearch("Coxa c/ Sobrecoxa de Frango", doc));
+  assert.ok(matchesOfferSearch("sobrecoxa frango", doc));
 });
 
 test("parseSearchTerms drops stop words but keeps product words", () => {

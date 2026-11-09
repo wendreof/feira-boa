@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-12"
   },
-  "fetchedAt": "2026-11-09T14:32:30.983Z",
+  "fetchedAt": "2026-11-09T17:43:08.068Z",
   "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
   "offers": [
     {
@@ -23,8 +23,7 @@
       "department": "Açougue e peixaria",
       "productType": "Frango",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Frango"
       ],
       "price": 8.99,
       "previousPrice": null,

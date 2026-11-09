@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-09T13:27:00.333Z",
+  "updatedAt": "2026-11-09T14:33:07.392Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -3610,30 +3610,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-cookies-toddy-original-toddy-133g-2026-11-09",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Cookies Toddy Original",
-      "detail": "133g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "storeCategory": "Mercearia/Biscoitos e Salgadinhos/Biscoitos",
-      "price": 5.99,
-      "previousPrice": 7.49,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-cookies-toddy-malhado-toddy-133g-2026-11-09",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
@@ -7203,30 +7179,6 @@
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Sabonete Infantil",
       "price": 16.59,
       "previousPrice": 27.99,
-      "icon": "🧴",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-shampoo-infantil-palmolive-kids-trolls-3-palmolive-350ml-2026-11-09",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Shampoo Infantil Palmolive Kids Trolls 3",
-      "detail": "350ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 19.99,
-      "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

@@ -1,6 +1,7 @@
 import type { User } from "@supabase/supabase-js";
 import type { ProfilePreferences } from "./types";
 import { errorMessage } from "./errors";
+import { unregisterAnonymousCatalogPush } from "./catalog-push-register";
 import { supabase } from "./supabase-client";
 
 export { errorMessage };
@@ -224,6 +225,7 @@ export async function savePushSubscription(userId: string, subscription: PushSub
     auth_key: payload.keys.auth,
   }, { onConflict: "endpoint" });
   if (error) throw error;
+  await unregisterAnonymousCatalogPush(subscription);
 }
 
 export async function removePushSubscription(userId: string, endpoint: string): Promise<void> {

@@ -129,6 +129,7 @@ export interface Database {
           auth_key: string;
           created_at: string;
           last_used_at: string | null;
+          last_catalog_push_at: string | null;
         };
         Insert: {
           id?: string;
@@ -138,6 +139,7 @@ export interface Database {
           auth_key: string;
           created_at?: string;
           last_used_at?: string | null;
+          last_catalog_push_at?: string | null;
         };
         Update: {
           id?: string;
@@ -147,6 +149,52 @@ export interface Database {
           auth_key?: string;
           created_at?: string;
           last_used_at?: string | null;
+          last_catalog_push_at?: string | null;
+        };
+        Relationships: [];
+      };
+      anonymous_push_subscriptions: {
+        Row: {
+          id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          created_at: string;
+          last_catalog_push_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          created_at?: string;
+          last_catalog_push_at?: string | null;
+        };
+        Update: {
+          endpoint?: string;
+          p256dh?: string;
+          auth_key?: string;
+          last_catalog_push_at?: string | null;
+        };
+        Relationships: [];
+      };
+      catalog_push_state: {
+        Row: {
+          id: number;
+          feed_fingerprint: string;
+          feed_updated_at: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          feed_fingerprint?: string;
+          feed_updated_at?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          feed_fingerprint?: string;
+          feed_updated_at?: string | null;
+          updated_at?: string;
         };
         Relationships: [];
       };
@@ -266,6 +314,14 @@ export interface Database {
       store_rating_summary: {
         Args: Record<string, never>;
         Returns: { store_id: string; average: number; total: number }[];
+      };
+      register_anonymous_push_subscription: {
+        Args: { p_endpoint: string; p_p256dh: string; p_auth_key: string };
+        Returns: undefined;
+      };
+      unregister_anonymous_push_subscription: {
+        Args: { p_endpoint: string };
+        Returns: undefined;
       };
       is_admin: {
         Args: Record<string, never>;

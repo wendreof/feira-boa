@@ -92,6 +92,18 @@
         <span class="account-button" id="account-access">Entrar ou criar conta</span>
         <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
       </a>
+      <div class="catalog-push-invite-shell" id="catalog-push-invite-shell" hidden>
+        <section class="account-panel catalog-push-invite-panel" aria-labelledby="catalog-push-heading">
+          <span class="account-panel-icon" aria-hidden="true">📬</span>
+          <div class="account-panel-text">
+            <strong id="catalog-push-heading">Aviso diário de ofertas</strong>
+            <span>Uma notificação por dia quando o catálogo mudar. Sem conta. Preço de folheto — confira na loja.</span>
+            <p id="catalog-push-status" class="catalog-push-status" role="status" hidden></p>
+          </div>
+          <button type="button" class="account-button" id="catalog-push-activate">Ativar no navegador</button>
+        </section>
+        <button type="button" class="alerts-invite-dismiss" id="catalog-push-dismiss" aria-label="Ocultar convite de ofertas">×</button>
+      </div>
       <div class="alerts-invite-shell" id="alerts-invite-shell" hidden>
         <a class="account-panel alerts-invite-panel alerts-invite-panel--secondary" id="alerts-invite" href="login.html?returnTo=alerts.html">
           <span class="account-panel-icon" aria-hidden="true">🔔</span>

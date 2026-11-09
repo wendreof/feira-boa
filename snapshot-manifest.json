@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-09T13:01:25.263Z",
+  "updatedAt": "2026-11-09T13:03:00.454Z",
   "current": [
     {
       "role": "current",
@@ -33,12 +33,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-09T13:01:25.263Z",
+      "fetchedAt": "2026-11-09T13:03:00.454Z",
       "supersededAt": null,
-      "offerCount": 36,
+      "offerCount": 30,
       "status": "ok",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-16",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-09",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {
@@ -107,6 +107,19 @@
       "validFrom": "2026-11-06",
       "validTo": "2026-11-08",
       "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
+    },
+    {
+      "role": "previous",
+      "storeId": "fortemix",
+      "storeName": "Forte Mix",
+      "branch": "Rede Forte · SJBV e região",
+      "fetchedAt": "2026-11-09T13:01:25.263Z",
+      "supersededAt": "2026-11-09T13:03:00.455Z",
+      "offerCount": 36,
+      "status": "ok",
+      "validFrom": "2026-11-03",
+      "validTo": "2026-11-16",
+      "sourceUrl": "https://smfortemix.com.br/"
     },
     {
       "role": "previous",

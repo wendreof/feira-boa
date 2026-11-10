@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-10T16:49:12.908Z",
+  "fetchedAt": "2026-11-10T22:54:21.512Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -1874,7 +1874,7 @@
         "Queijos e requeijão"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
-      "price": 8.79,
+      "price": 9.49,
       "previousPrice": null,
       "icon": "🧀",
       "tone": "#edf4e9",
@@ -5164,7 +5164,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 9.99,
+      "price": 8.89,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -5236,7 +5236,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 14.99,
+      "price": 13.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -5692,7 +5692,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 14.49,
+      "price": 13.49,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-10T16:55:47.960Z",
+  "updatedAt": "2026-11-10T22:54:54.303Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -4173,7 +4173,7 @@
         "Queijos e requeijão"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
-      "price": 8.79,
+      "price": 9.49,
       "previousPrice": null,
       "icon": "🧀",
       "tone": "#edf4e9",
@@ -7463,7 +7463,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 9.99,
+      "price": 8.89,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7535,7 +7535,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 14.99,
+      "price": 13.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7991,7 +7991,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 14.49,
+      "price": 13.49,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -15847,30 +15847,6 @@
       "price": 4.39,
       "previousPrice": 4.79,
       "icon": "🧀",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-234-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Sardinha Coqueiro Óleo",
-      "detail": "125g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
-      "productTypes": [
-        "Peixes"
-      ],
-      "storeCategory": "167",
-      "price": 5.29,
-      "previousPrice": 5.49,
-      "icon": "🐟",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
@@ -25744,30 +25720,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-2293-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Absorvente Suave Diana Active com Abas com 16 unidades",
-      "detail": "un",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "194",
-      "price": 5.89,
-      "previousPrice": 6.89,
-      "icon": "🧻",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-2296-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -33713,6 +33665,30 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
+      "id": "spani-4109-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Biscoito Club Social Pizza",
+      "detail": "141g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "storeCategory": "66",
+      "price": 4.99,
+      "previousPrice": 5.49,
+      "icon": "🍪",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
       "id": "spani-4110-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -37525,6 +37501,30 @@
       "price": 5.89,
       "previousPrice": 6.99,
       "icon": "🍔",
+      "tone": "#edf4e9",
+      "note": "Oferta · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5604-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Pão Wickbold do Forno 100% Integral",
+      "detail": "500g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "storeCategory": "181",
+      "price": 13.98,
+      "previousPrice": 14.98,
+      "icon": "🍞",
       "tone": "#edf4e9",
       "note": "Oferta · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",

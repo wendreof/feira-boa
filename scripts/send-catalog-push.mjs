@@ -102,7 +102,10 @@ async function main() {
   const [anonymousRows, accountRows, pausedProfiles] = await Promise.all([
     readRows(() => supabase.from("anonymous_push_subscriptions").select("endpoint, p256dh, auth_key, last_catalog_push_at")),
     readRows(() => supabase.from("push_subscriptions").select("user_id, endpoint, p256dh, auth_key, last_catalog_push_at")),
-    readRows(() => supabase.from("profiles").select("user_id, notifications_paused").eq("notifications_paused", true)),
+    readRows(
+      () => supabase.from("profiles").select("user_id, notifications_paused").eq("notifications_paused", true),
+      ["user_id"],
+    ),
   ]);
   const pausedUsers = new Set(pausedProfiles.map((row) => row.user_id));
   const endpoints = new Map();

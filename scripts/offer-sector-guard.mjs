@@ -6,6 +6,8 @@
  * As regras usam limite de palavra: "Reparação" não pode casar com /racao/.
  */
 
+const CASA_PAPER_WORDS = /\b(papel higienico|papel toalha|guardanapo)\b/;
+
 const SECTOR_INVARIANTS = [
   { label: "pet", words: /\b(racao|racoes|petisco|petiscos|coleira|comedouro|areia sanit|antipulgas|higiene animal)\b/, sectors: ["pet"] },
   { label: "bebidas_alcoolicas", words: /\b(cerveja|chopp|lager|pilsen|ipa|vinho|espumante|champanhe|whisky|vodka|aperitivo)\b/, sectors: ["bebidas_alcoolicas"] },
@@ -25,6 +27,10 @@ export function expectedSectors(text) {
   for (const rule of SECTOR_INVARIANTS) {
     if (!rule.words.test(text)) continue;
     for (const sector of rule.sectors) expected.push({ label: rule.label, sector });
+  }
+  // "Papel toalha multiuso" bate limpeza e casa; o produto é de casa, não detergente.
+  if (CASA_PAPER_WORDS.test(text)) {
+    return expected.filter(({ label }) => label !== "limpeza");
   }
   return expected;
 }

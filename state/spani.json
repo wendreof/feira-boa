@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-10T22:54:54.297Z",
+  "fetchedAt": "2026-11-11T18:25:33.087Z",
   "sourceUrl": "https://www.spanionline.com.br/ofertas",
   "offers": [
     {
@@ -4910,6 +4910,30 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
+      "id": "spani-1277-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Protetor Diário Carefree Sem Abas Com 80 Un Proteção Com Fragrância",
+      "detail": "UN",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "storeCategory": "194",
+      "price": 28.49,
+      "previousPrice": 30.49,
+      "icon": "🏷️",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 2 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
       "id": "spani-1278-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -5971,30 +5995,6 @@
       "storeLogo": "logos/spani.png",
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Macarrão Instantâneo Nissin Turma Da Monica Carne 85g",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "158",
-      "price": 2.29,
-      "previousPrice": 2.59,
-      "icon": "🍝",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-1484-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Macarrão Instantâneo Nissin Turma Da Monica Galinha 85g",
       "detail": "UN",
       "category": "Mercearia",
       "department": "Mercearia",
@@ -10688,6 +10688,30 @@
       "icon": "🧻",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-2295-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Absorvente Sempre Livre Adapt Com 8 Unidades Suave Sem Abas",
+      "detail": "UN",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "storeCategory": "194",
+      "price": 3.99,
+      "previousPrice": 4.39,
+      "icon": "🧻",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
       "validTo": "2026-11-15",
       "source": "Ofertas online oficiais · retirada na loja",
@@ -17095,30 +17119,6 @@
       "price": 12.9,
       "previousPrice": 13.49,
       "icon": "🥤",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 4 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-3650-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Bebida Energética Red Bull 250ml Sugar Free",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "47",
-      "price": 8.99,
-      "previousPrice": 9.49,
-      "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 4 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",

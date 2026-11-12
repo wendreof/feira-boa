@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-11T18:25:33.087Z",
+  "fetchedAt": "2026-11-12T00:08:38.851Z",
   "sourceUrl": "https://www.spanionline.com.br/ofertas",
   "offers": [
     {
@@ -821,30 +821,6 @@
       "price": 4.39,
       "previousPrice": 4.79,
       "icon": "🧀",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-235-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Sardinha Coqueiro Tomate 125g",
-      "detail": "UN",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
-      "productTypes": [
-        "Peixes"
-      ],
-      "storeCategory": "167",
-      "price": 5.29,
-      "previousPrice": 5.49,
-      "icon": "🐟",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
@@ -8552,6 +8528,30 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 8 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-1919-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Complemento Alimentar Kids Sustagem 380g Chocolate",
+      "detail": "UN",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "storeCategory": "142",
+      "price": 29.9,
+      "previousPrice": 31.9,
+      "icon": "🍫",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
       "validTo": "2026-11-15",
       "source": "Ofertas online oficiais · retirada na loja",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T15:21:39.683Z",
+  "updatedAt": "2026-11-13T16:59:21.043Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5115,8 +5115,8 @@
         "Queijos e requeijão"
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
-      "price": 6.79,
-      "previousPrice": 9.49,
+      "price": 6.99,
+      "previousPrice": 8.79,
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12126,7 +12126,7 @@
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Sal",
       "price": 5.99,
-      "previousPrice": 7.99,
+      "previousPrice": 8.19,
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -18055,8 +18055,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 169.99,
-      "previousPrice": 189.9,
+      "price": 189.9,
+      "previousPrice": null,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -18296,7 +18296,7 @@
       ],
       "storeCategory": "Perfumaria/Cabelos/Kit Shampoo e Condicionador",
       "price": 14.89,
-      "previousPrice": 23.99,
+      "previousPrice": 24.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

@@ -1,6 +1,7 @@
 import { fetchWithRetry } from "./http.mjs";
 
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
+const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
 
 const CAMPAIGN_SCHEMA = `{
   "campaigns": [
@@ -54,7 +55,8 @@ export async function extractCorsoCampaignsViaGemini({ frenteUrl, versoUrl }) {
     CAMPAIGN_SCHEMA,
   ].join("\n");
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(key)}`;
+  const model = process.env.CORSO_GEMINI_MODEL?.trim() || DEFAULT_GEMINI_MODEL;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
   const body = {
     contents: [
       {

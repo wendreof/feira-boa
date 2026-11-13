@@ -1,12 +1,25 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
 import { mergeBrandIntoName } from "../domain/brands.mjs";
 import { createOffer } from "./offer-factory.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
+import {
+  discoverCorsoFlyerFromHtml,
+  latestValidityEnd,
+  loadCorsoCampaignFile,
+  parseCorsoFlyerText,
+  parseCorsoValidityHints,
+} from "../domain/corso-flyer.mjs";
+import { ocrCorsoFlyerImages, ocrCorsoImageUrl } from "./corso-ocr.mjs";
+import { extractCorsoCampaignsViaGemini, geminiExtractionEnabled } from "./corso-gemini.mjs";
 
 const CORSO_URL = "https://corso.com.br/jornalfrente.php";
+const CACHE_PATH = new URL("./data/corso-campaigns.json", import.meta.url);
+const MIN_OFFERS_OCR = 35;
+const MIN_OFFERS_GEMINI = 25;
+
 const CORSO_STORE = {
   name: "Corso",
   logo: logoUrlForStoreId("corso"),
@@ -15,27 +28,46 @@ const CORSO_STORE = {
 };
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
-// Manual transcription of the official flyer images (img/jornal-frente.jpg and
-// img/jornal-verso.jpg). The page supplies only the change-detection hash; when
-// it rotates, re-read both images and update the campaigns below. Sections keep
-// their own validity because the flyer mixes windows (weekend, week, and
-// long-running promo blocks).
-const CAMPAIGNS = JSON.parse(readFileSync(new URL("./data/corso-campaigns.json", import.meta.url), "utf8"));
+function readCache() {
+  return loadCorsoCampaignFile(JSON.parse(readFileSync(CACHE_PATH, "utf8")));
+}
 
-export async function extractCorso(customUrl = null) {
-  const pageUrl = customUrl || CORSO_URL;
-  const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
-  if (!res.ok) throw new Error(`Could not fetch Corso flyer page (${res.status})`);
-  const html = await res.text();
+function writeCache({ flyerHash, campaigns, extractionMethod }) {
+  writeFileSync(
+    CACHE_PATH,
+    `${JSON.stringify(
+      {
+        flyerHash,
+        updatedAt: new Date().toISOString(),
+        extractionMethod,
+        campaigns,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+}
 
-  const hashMatch = html.match(/jornal-frente\.jpg\?hash=(\d+)/);
-  const hash = hashMatch ? hashMatch[1] : "default";
+function countOffers(campaigns) {
+  return campaigns.reduce((sum, campaign) => sum + campaign.offers.length, 0);
+}
 
+function ocrValidityIsNewerThanCache(ocrText, cache) {
+  const hints = parseCorsoValidityHints(ocrText);
+  if (hints.length === 0) return false;
+  const ocrEnd = hints.reduce((max, range) => (range.to > max ? range.to : max), hints[0].to);
+  const cacheEnd = latestValidityEnd(cache.campaigns);
+  if (!cacheEnd) return true;
+  return ocrEnd > cacheEnd;
+}
+
+function campaignsToOffers(campaigns, pageUrl) {
   const offers = [];
   let validFrom = null;
   let validTo = null;
 
-  for (const campaign of CAMPAIGNS) {
+  for (const campaign of campaigns) {
     validFrom = validFrom === null || campaign.from < validFrom ? campaign.from : validFrom;
     validTo = validTo === null || campaign.to > validTo ? campaign.to : validTo;
 
@@ -64,6 +96,74 @@ export async function extractCorso(customUrl = null) {
     }
   }
 
+  return { offers, validFrom, validTo };
+}
+
+async function resolveCampaigns(flyer, cache) {
+  const frenteOcr = await ocrCorsoImageUrl(flyer.frenteUrl);
+  const cacheIsCurrent =
+    cache.flyerHash === flyer.hash &&
+    cache.campaigns.length > 0 &&
+    !ocrValidityIsNewerThanCache(frenteOcr, cache);
+
+  if (cacheIsCurrent) {
+    return { campaigns: cache.campaigns, extractionMethod: "cache" };
+  }
+
+  let campaigns = [];
+  let extractionMethod = "ocr";
+
+  if (geminiExtractionEnabled()) {
+    campaigns = await extractCorsoCampaignsViaGemini(flyer);
+    extractionMethod = "gemini";
+  }
+
+  const geminiCount = countOffers(campaigns);
+  if (geminiCount < MIN_OFFERS_GEMINI) {
+    const ocrText = await ocrCorsoFlyerImages({
+      frenteUrl: flyer.frenteUrl,
+      versoUrl: flyer.versoUrl,
+      frenteText: frenteOcr,
+    });
+    const parsed = parseCorsoFlyerText(ocrText);
+    if (countOffers(parsed) > geminiCount) {
+      campaigns = parsed;
+      extractionMethod = "ocr";
+    }
+  }
+
+  const total = countOffers(campaigns);
+  const minRequired = extractionMethod === "gemini" ? MIN_OFFERS_GEMINI : MIN_OFFERS_OCR;
+  if (total < minRequired) {
+    const hint = geminiExtractionEnabled()
+      ? "Extraction quality was too low."
+      : "Set GEMINI_API_KEY (GitHub secret) for Corso vision extraction on image flyers.";
+    throw new Error(
+      `Corso flyer extraction incomplete (${total} offers, need at least ${minRequired}). ${hint}`,
+    );
+  }
+
+  writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
+  return { campaigns, extractionMethod };
+}
+
+export async function extractCorso(customUrl = null) {
+  const pageUrl = customUrl || CORSO_URL;
+  const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
+  if (!res.ok) throw new Error(`Could not fetch Corso flyer page (${res.status})`);
+  const html = await res.text();
+
+  const flyer = discoverCorsoFlyerFromHtml(html);
+  if (!flyer) throw new Error("Could not discover Corso flyer image URLs in the official page.");
+
+  const cache = readCache();
+  const { campaigns, extractionMethod } = await resolveCampaigns(flyer, cache);
+  const { offers, validFrom, validTo } = campaignsToOffers(campaigns, pageUrl);
+
+  if (offers.length === 0) {
+    throw new Error("Corso adapter produced zero valid offers after extraction.");
+  }
+
   return {
     storeId: "corso",
     store: {
@@ -77,7 +177,8 @@ export async function extractCorso(customUrl = null) {
     },
     fetchedAt: new Date().toISOString(),
     sourceUrl: pageUrl,
-    flyerHash: hash,
+    flyerHash: flyer.hash,
+    extractionMethod,
     offers,
     status: "ok",
   };

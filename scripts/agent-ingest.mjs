@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const STORE_TESTS = {
   sempre: ["tests/adapters.test.mjs"],
   bigbom: ["tests/adapters.test.mjs"],
-  corso: ["tests/adapters.test.mjs"],
+  corso: ["tests/corso-adapter.test.mjs", "tests/adapters.test.mjs"],
   paguemenos: ["tests/adapters.test.mjs"],
   spasso: ["tests/spasso-flyer-images.test.mjs"],
   spani: ["tests/adapters.test.mjs"],

@@ -2,6 +2,7 @@
 Thumbs.db
 .env
 node_modules/
+*.traineddata
 dist/
 tmp/
 /build-info.json

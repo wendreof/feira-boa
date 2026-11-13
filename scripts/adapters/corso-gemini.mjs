@@ -1,7 +1,7 @@
 import { fetchWithRetry } from "./http.mjs";
 
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
-const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
+const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
 
 const CAMPAIGN_SCHEMA = `{
   "campaigns": [

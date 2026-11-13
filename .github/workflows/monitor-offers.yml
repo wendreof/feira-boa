@@ -93,6 +93,7 @@ jobs:
             snapshot-manifest.json
             source-status.js
             .offer-monitor-state.json
+            scripts/adapters/data/corso-campaigns.json
           )
           if ! git diff --quiet -- "${tracked[@]}"; then
             git config user.name "github-actions[bot]"

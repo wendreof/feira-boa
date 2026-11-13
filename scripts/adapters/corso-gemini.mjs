@@ -74,11 +74,15 @@ export async function extractCorsoCampaignsViaGemini({ frenteUrl, versoUrl }) {
     },
   };
 
-  const res = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  const res = await fetchWithRetry(
+    endpoint,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+    { attempts: 5, delayMs: 2_000, timeoutMs: 120_000 },
+  );
   if (!res.ok) {
     const detail = await res.text();
     throw new Error(`Gemini Corso extraction failed (${res.status}): ${detail.slice(0, 300)}`);

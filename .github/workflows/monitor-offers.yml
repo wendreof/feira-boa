@@ -60,6 +60,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y tesseract-ocr tesseract-ocr-por
 
       - name: Ingest live offers
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           if [ -n "${{ github.event.inputs.store }}" ] && [ "${{ github.event.inputs.store }}" != "all" ]; then
             node scripts/ingest-offers.mjs --store "${{ github.event.inputs.store }}" --path "${{ github.event.inputs.path_or_url }}"

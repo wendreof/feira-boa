@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-14T15:37:32.745Z",
+  "fetchedAt": "2026-11-14T19:16:11.513Z",
   "sourceUrl": "https://www.spanionline.com.br/ofertas",
   "offers": [
     {
@@ -19479,30 +19479,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-4332-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Biscoito Wafer Tub - In 48g Chocolate",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "storeCategory": "62",
-      "price": 2.29,
-      "previousPrice": 2.49,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-4333-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -22477,6 +22453,30 @@
       "icon": "🍞",
       "tone": "#edf4e9",
       "note": "Oferta · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5638-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Petit Suísse Chambinho 320g Morango",
+      "detail": "UN",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "storeCategory": "107",
+      "price": 9.98,
+      "previousPrice": 10.78,
+      "icon": "🍓",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
       "validTo": "2026-11-15",
       "source": "Ofertas online oficiais · retirada na loja",

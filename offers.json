@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-14T15:37:32.756Z",
+  "updatedAt": "2026-11-14T19:16:11.531Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -5142,7 +5142,7 @@
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
       "price": 6.99,
-      "previousPrice": 9.49,
+      "previousPrice": 8.79,
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -17961,8 +17961,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 189.9,
-      "previousPrice": null,
+      "price": 169.99,
+      "previousPrice": 189.9,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -18105,7 +18105,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Água",
-      "price": 17.99,
+      "price": 19.49,
       "previousPrice": null,
       "icon": "💧",
       "tone": "#edf4e9",
@@ -21250,7 +21250,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.69,
+      "price": 8.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -47582,30 +47582,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-4332-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Biscoito Wafer Tub - In Chocolate",
-      "detail": "48g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "storeCategory": "62",
-      "price": 2.29,
-      "previousPrice": 2.49,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-4333-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -50580,6 +50556,30 @@
       "icon": "🍞",
       "tone": "#edf4e9",
       "note": "Oferta · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5638-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Petit Suísse Chambinho Morango",
+      "detail": "320g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "storeCategory": "107",
+      "price": 9.98,
+      "previousPrice": 10.78,
+      "icon": "🍓",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",
       "validTo": "2026-11-15",
       "source": "Ofertas online oficiais · retirada na loja",

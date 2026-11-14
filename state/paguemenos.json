@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-14T15:37:03.486Z",
+  "fetchedAt": "2026-11-14T19:15:26.091Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -1779,7 +1779,7 @@
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
       "price": 6.99,
-      "previousPrice": 9.49,
+      "previousPrice": 8.79,
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14598,8 +14598,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 189.9,
-      "previousPrice": null,
+      "price": 169.99,
+      "previousPrice": 189.9,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14742,7 +14742,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Água",
-      "price": 17.99,
+      "price": 19.49,
       "previousPrice": null,
       "icon": "💧",
       "tone": "#edf4e9",
@@ -17887,7 +17887,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.69,
+      "price": 8.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",

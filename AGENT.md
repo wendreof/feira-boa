@@ -71,7 +71,6 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 ## Important files
 
 - `README.md` — project setup and operational notes
-- `BACKEND_PLAN.md` — architecture notes, pricing, and deployment constraints
 - `offers.ts` — curated fallback catalog
 - `catalog-taxonomy.mjs` — sectors, subcategories, and highlight tabs used by filters and ordering
 - `app.ts` — main UI behavior and client-side state

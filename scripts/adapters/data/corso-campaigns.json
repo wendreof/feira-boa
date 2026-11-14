@@ -1,12 +1,20 @@
 {
   "flyerHash": "1794507762",
-  "updatedAt": "2026-10-23T00:00:00.000Z",
-  "extractionMethod": "legacy-manual",
+  "updatedAt": "2026-11-13T23:28:33.002Z",
+  "extractionMethod": "gemini",
   "campaigns": [
     {
-      "from": "2026-10-23",
-      "to": "2026-10-24",
+      "from": "2026-11-13",
+      "to": "2026-11-14",
       "offers": [
+        {
+          "name": "Creme Dental 4 em 1",
+          "brand": "Oral-B",
+          "detail": "70g",
+          "cat": "Geral",
+          "price": 0.01,
+          "oldPrice": null
+        },
         {
           "name": "Alface",
           "brand": "",
@@ -20,13 +28,13 @@
           "brand": "",
           "detail": "Unidade",
           "cat": "Hortifruti",
-          "price": 5.28,
-          "oldPrice": 6.38
+          "price": 5.98,
+          "oldPrice": 6.98
         },
         {
           "name": "Repolho Verde",
           "brand": "",
-          "detail": "Kg",
+          "detail": "Unidade",
           "cat": "Hortifruti",
           "price": 1.48,
           "oldPrice": 1.98
@@ -36,43 +44,27 @@
           "brand": "",
           "detail": "100g",
           "cat": "Hortifruti",
-          "price": 2.39,
-          "oldPrice": 2.59
+          "price": 2.19,
+          "oldPrice": 2.39
         },
         {
           "name": "Batata Escovada",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 3.78,
-          "oldPrice": 4.68
+          "price": 4.28,
+          "oldPrice": 5.28
         },
         {
           "name": "Batata Lavada",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 3.98,
-          "oldPrice": 4.88
+          "price": 4.98,
+          "oldPrice": 6.18
         },
         {
           "name": "Beterraba",
-          "brand": "",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 2.38,
-          "oldPrice": 2.88
-        },
-        {
-          "name": "Cebola",
-          "brand": "",
-          "detail": "Kg",
-          "cat": "Hortifruti",
-          "price": 5.48,
-          "oldPrice": 6.58
-        },
-        {
-          "name": "Cenoura",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
@@ -80,52 +72,68 @@
           "oldPrice": 4.28
         },
         {
-          "name": "Chuchu",
+          "name": "Cebola",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 7.68,
+          "oldPrice": 8.98
+        },
+        {
+          "name": "Cenoura",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
           "price": 2.98,
-          "oldPrice": 3.58
+          "oldPrice": 3.68
+        },
+        {
+          "name": "Chuchu",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 1.88,
+          "oldPrice": 2.48
         },
         {
           "name": "Tomate",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 9.98,
-          "oldPrice": 11.98
+          "price": 16.48,
+          "oldPrice": 19.98
         },
         {
           "name": "Tomate Grape",
           "brand": "",
           "detail": "300g",
           "cat": "Hortifruti",
-          "price": 3.78,
-          "oldPrice": 4.78
+          "price": 3.98,
+          "oldPrice": 4.98
         },
         {
           "name": "Abacate",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 4.88,
-          "oldPrice": 5.68
+          "price": 4.18,
+          "oldPrice": 5.18
         },
         {
           "name": "Abacaxi",
           "brand": "",
           "detail": "Unidade",
           "cat": "Hortifruti",
-          "price": 7.98,
-          "oldPrice": 9.98
+          "price": 7.28,
+          "oldPrice": 9.28
         },
         {
           "name": "Banana Nanica",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 3.48,
-          "oldPrice": 4.58
+          "price": 1.98,
+          "oldPrice": 2.98
         },
         {
           "name": "Banana Prata",
@@ -140,16 +148,16 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 2.38,
-          "oldPrice": 2.88
+          "price": 2.48,
+          "oldPrice": 2.98
         },
         {
           "name": "Limão Taiti",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 10.78,
-          "oldPrice": 12.98
+          "price": 9.88,
+          "oldPrice": 11.88
         },
         {
           "name": "Maçã Gala",
@@ -164,24 +172,24 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 4.18,
-          "oldPrice": 5.18
+          "price": 4.48,
+          "oldPrice": 5.38
         },
         {
           "name": "Mamão Papaya",
           "brand": "",
           "detail": "Unidade",
           "cat": "Hortifruti",
-          "price": 4.78,
-          "oldPrice": 5.78
+          "price": 3.48,
+          "oldPrice": 4.38
         },
         {
           "name": "Manga",
           "brand": "",
           "detail": "Kg",
           "cat": "Hortifruti",
-          "price": 4.98,
-          "oldPrice": 6.38
+          "price": 5.38,
+          "oldPrice": 6.78
         },
         {
           "name": "Melancia",
@@ -196,16 +204,16 @@
           "brand": "",
           "detail": "250g",
           "cat": "Hortifruti",
-          "price": 7.98,
-          "oldPrice": 9.98
+          "price": 6.98,
+          "oldPrice": 8.58
         },
         {
           "name": "Uva Bandeja",
-          "brand": "",
+          "brand": "Duvale",
           "detail": "500g",
           "cat": "Hortifruti",
-          "price": 8.78,
-          "oldPrice": 10.58
+          "price": 7.88,
+          "oldPrice": 9.28
         },
         {
           "name": "Bebida Láctea com Polpa",
@@ -224,11 +232,11 @@
           "oldPrice": null
         },
         {
-          "name": "Suan Suíno",
+          "name": "Pernil sem Osso Congelado Peça/Pedaço",
           "brand": "Frinni",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 9.98,
+          "price": 19.5,
           "oldPrice": null
         },
         {
@@ -236,7 +244,7 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 42.9,
+          "price": 43.9,
           "oldPrice": null
         },
         {
@@ -252,7 +260,7 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 40.9,
+          "price": 42.9,
           "oldPrice": null
         },
         {
@@ -260,7 +268,7 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 42.9,
+          "price": 41.9,
           "oldPrice": null
         },
         {
@@ -268,7 +276,7 @@
           "brand": "",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 17.9,
+          "price": 19.9,
           "oldPrice": null
         },
         {
@@ -312,7 +320,7 @@
           "oldPrice": null
         },
         {
-          "name": "Filézinho Sassami IQF Congelado",
+          "name": "Filézinho Sassami Congelado IQF",
           "brand": "Aurora",
           "detail": "1Kg",
           "cat": "Congelados",
@@ -320,7 +328,7 @@
           "oldPrice": null
         },
         {
-          "name": "Sobrecoxa de Frango IQF Congelada",
+          "name": "Sobrecoxa de Frango Congelada IQF",
           "brand": "Seara",
           "detail": "1Kg",
           "cat": "Congelados",
@@ -328,7 +336,7 @@
           "oldPrice": null
         },
         {
-          "name": "Coxinha da Asa de Frango IQF Congelada",
+          "name": "Coxinha da Asa de Frango Congelada IQF",
           "brand": "Seara",
           "detail": "1Kg",
           "cat": "Congelados",
@@ -353,25 +361,17 @@
         },
         {
           "name": "Linguiça Calabresa Resfriada",
-          "brand": "Brasa",
+          "brand": "Seara",
           "detail": "Kg",
           "cat": "Carnes",
-          "price": 24.4,
-          "oldPrice": null
-        },
-        {
-          "name": "Linguiça de Pernil Fina Resfriada",
-          "brand": "Suíba",
-          "detail": "Kg",
-          "cat": "Carnes",
-          "price": 25.8,
+          "price": 23.9,
           "oldPrice": null
         },
         {
           "name": "Linguiça de Frango Congelada",
           "brand": "Gonzalez",
           "detail": "1Kg",
-          "cat": "Carnes",
+          "cat": "Congelados",
           "price": 13.3,
           "oldPrice": null
         },
@@ -379,7 +379,7 @@
           "name": "Linguiça Toscana Congelada",
           "brand": "Aurora",
           "detail": "700g",
-          "cat": "Carnes",
+          "cat": "Congelados",
           "price": 17.5,
           "oldPrice": null
         },
@@ -392,30 +392,38 @@
           "oldPrice": null
         },
         {
-          "name": "Lasanha Congelada",
+          "name": "Lasanha Sabores Congelada",
           "brand": "Flip",
           "detail": "600g",
           "cat": "Congelados",
-          "price": 9.38,
+          "price": 9.28,
+          "oldPrice": null
+        },
+        {
+          "name": "Massa para Pizza c/ 2un",
+          "brand": "S&A",
+          "detail": "320g",
+          "cat": "Mercearia",
+          "price": 7.58,
           "oldPrice": null
         },
         {
           "name": "Massa para Pastel Disco",
           "brand": "S&A",
           "detail": "500g",
-          "cat": "Congelados",
+          "cat": "Mercearia",
           "price": 8.58,
           "oldPrice": null
         }
       ]
     },
     {
-      "from": "2026-10-23",
-      "to": "2026-10-29",
+      "from": "2026-11-13",
+      "to": "2026-11-19",
       "offers": [
         {
           "name": "Arroz Tipo 1",
-          "brand": "Albarus",
+          "brand": "Albaruska",
           "detail": "5kg",
           "cat": "Mercearia",
           "price": 26.88,
@@ -426,19 +434,19 @@
           "brand": "Du Dé",
           "detail": "5kg",
           "cat": "Mercearia",
-          "price": 18.98,
+          "price": 19.98,
           "oldPrice": null
         },
         {
-          "name": "Sabão em Pó Lavagem Perf.",
-          "brand": "OMO",
+          "name": "Sabão em Pó Lavagem Perfeita",
+          "brand": "Omo",
           "detail": "800g",
           "cat": "Limpeza",
           "price": 10.98,
           "oldPrice": null
         },
         {
-          "name": "Sabão em Pó Triplação",
+          "name": "Sabão em Pó Tripla Ação",
           "brand": "Assim",
           "detail": "800g",
           "cat": "Limpeza",
@@ -458,7 +466,7 @@
           "brand": "Tirol",
           "detail": "1L",
           "cat": "Laticínios",
-          "price": 4.88,
+          "price": 4.68,
           "oldPrice": null
         },
         {
@@ -496,7 +504,7 @@
         {
           "name": "Feijão Carioca",
           "brand": "Du Dé",
-          "detail": "1Kg",
+          "detail": "1kg",
           "cat": "Mercearia",
           "price": 6.78,
           "oldPrice": null
@@ -504,7 +512,7 @@
         {
           "name": "Açúcar Cristal",
           "brand": "Purinha",
-          "detail": "2Kg",
+          "detail": "2kg",
           "cat": "Mercearia",
           "price": 5.58,
           "oldPrice": null
@@ -526,18 +534,26 @@
           "oldPrice": null
         },
         {
-          "name": "Refrigerante Coca-Cola Tradicional Pet",
+          "name": "Refrigerante Menos Açúcar Pet",
           "brand": "Coca-Cola",
-          "detail": "2,5L",
+          "detail": "2.5L",
           "cat": "Bebidas",
           "price": 8.68,
+          "oldPrice": null
+        },
+        {
+          "name": "Combo: 1 Pizza Semi-Pronta Mussarela aprox. 600g + 1 Guaraná 2L",
+          "brand": "Cruzeiro",
+          "detail": "Combo",
+          "cat": "Geral",
+          "price": 24.99,
           "oldPrice": null
         }
       ]
     },
     {
-      "from": "2026-10-23",
-      "to": "2026-10-26",
+      "from": "2026-11-13",
+      "to": "2026-11-16",
       "offers": [
         {
           "name": "Óleo Composto Pet",
@@ -545,14 +561,6 @@
           "detail": "500ml",
           "cat": "Mercearia",
           "price": 11.78,
-          "oldPrice": null
-        },
-        {
-          "name": "Massa para Tapioca",
-          "brand": "Amafil",
-          "detail": "500g",
-          "cat": "Mercearia",
-          "price": 4.78,
           "oldPrice": null
         },
         {
@@ -572,11 +580,35 @@
           "oldPrice": null
         },
         {
+          "name": "Massa para Tapioca",
+          "brand": "Amafil",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 4.98,
+          "oldPrice": null
+        },
+        {
           "name": "Pipoca Gold",
           "brand": "Kinino",
           "detail": "400g",
           "cat": "Mercearia",
           "price": 4.18,
+          "oldPrice": null
+        },
+        {
+          "name": "Creme Cebola",
+          "brand": "Kinino",
+          "detail": "65g",
+          "cat": "Mercearia",
+          "price": 3.1,
+          "oldPrice": null
+        },
+        {
+          "name": "Vinagre Álcool/Colorido",
+          "brand": "Toscano",
+          "detail": "750ml",
+          "cat": "Mercearia",
+          "price": 2.68,
           "oldPrice": null
         },
         {
@@ -588,11 +620,11 @@
           "oldPrice": null
         },
         {
-          "name": "Sardinha em Óleo",
-          "brand": "Gomes da Costa",
+          "name": "Sardinha",
+          "brand": "Coqueiro",
           "detail": "125g",
           "cat": "Mercearia",
-          "price": 6.24,
+          "price": 6.18,
           "oldPrice": null
         },
         {
@@ -604,11 +636,11 @@
           "oldPrice": null
         },
         {
-          "name": "Ervilha Sachet",
-          "brand": "Fugini",
-          "detail": "170g",
+          "name": "Palmito Palmeira Real Rodela",
+          "brand": "Martendal",
+          "detail": "300g",
           "cat": "Mercearia",
-          "price": 3.1,
+          "price": 17.98,
           "oldPrice": null
         },
         {
@@ -616,7 +648,15 @@
           "brand": "Fugini",
           "detail": "170g",
           "cat": "Mercearia",
-          "price": 3.28,
+          "price": 3.18,
+          "oldPrice": null
+        },
+        {
+          "name": "Seleta de Legumes Lata",
+          "brand": "Predilecta",
+          "detail": "170g",
+          "cat": "Mercearia",
+          "price": 3.88,
           "oldPrice": null
         },
         {
@@ -628,39 +668,23 @@
           "oldPrice": null
         },
         {
-          "name": "Lasanha Direto ao Forno",
-          "brand": "Petybon",
-          "detail": "200g",
-          "cat": "Congelados",
-          "price": 3.68,
-          "oldPrice": null
-        },
-        {
-          "name": "Salgadinho Doritos/Cheetos",
-          "brand": "",
-          "detail": "120g/160g",
+          "name": "Biscoito Wafer",
+          "brand": "Itamaraty",
+          "detail": "80g",
           "cat": "Mercearia",
-          "price": 10.68,
+          "price": 2.24,
           "oldPrice": null
         },
         {
-          "name": "Biscoito Recheado",
-          "brand": "Bauducco",
-          "detail": "140g",
+          "name": "Aveia Flocos/Flocos Finos",
+          "brand": "K-life",
+          "detail": "170g",
           "cat": "Mercearia",
-          "price": 2.78,
+          "price": 3.59,
           "oldPrice": null
         },
         {
-          "name": "Biscoito Tuc's Sabores",
-          "brand": "Tuc's",
-          "detail": "100g",
-          "cat": "Mercearia",
-          "price": 1.88,
-          "oldPrice": null
-        },
-        {
-          "name": "Gelatina Sabores",
+          "name": "Gelatina",
           "brand": "Kinino",
           "detail": "20g",
           "cat": "Mercearia",
@@ -668,50 +692,26 @@
           "oldPrice": null
         },
         {
-          "name": "Leite de Coco",
-          "brand": "Menina",
-          "detail": "200ml",
-          "cat": "Mercearia",
-          "price": 3.78,
-          "oldPrice": null
-        },
-        {
-          "name": "Achocolatado Sachet",
-          "brand": "Apti",
-          "detail": "300g",
-          "cat": "Mercearia",
-          "price": 5.15,
-          "oldPrice": null
-        },
-        {
           "name": "Bebida Láctea Chocolate",
           "brand": "Mocoquinha",
           "detail": "200ml",
           "cat": "Laticínios",
-          "price": 1.24,
+          "price": 1.38,
           "oldPrice": null
         },
         {
           "name": "Pão Francês",
           "brand": "",
           "detail": "Kg",
-          "cat": "Padaria",
+          "cat": "Mercearia",
           "price": 14.98,
           "oldPrice": null
         },
         {
-          "name": "Pão de Forma Tradicional",
-          "brand": "Visconti",
-          "detail": "400g",
-          "cat": "Padaria",
-          "price": 5.18,
-          "oldPrice": null
-        },
-        {
-          "name": "Torrada Tradicional",
+          "name": "Torrada",
           "brand": "Adria",
           "detail": "142g",
-          "cat": "Padaria",
+          "cat": "Mercearia",
           "price": 4.18,
           "oldPrice": null
         },
@@ -728,7 +728,7 @@
           "brand": "Tati Minas",
           "detail": "400g",
           "cat": "Congelados",
-          "price": 7.78,
+          "price": 7.98,
           "oldPrice": null
         },
         {
@@ -740,7 +740,7 @@
           "oldPrice": null
         },
         {
-          "name": "Suco de Frutas Sabores",
+          "name": "Suco Sabores",
           "brand": "Dafruta",
           "detail": "1L",
           "cat": "Bebidas",
@@ -752,7 +752,7 @@
           "brand": "Maguary",
           "detail": "500ml",
           "cat": "Bebidas",
-          "price": 4.38,
+          "price": 4.48,
           "oldPrice": null
         },
         {
@@ -764,107 +764,115 @@
           "oldPrice": null
         },
         {
+          "name": "Cerveja Zero Álcool Lata",
+          "brand": "Brahma",
+          "detail": "350ml",
+          "cat": "Bebidas",
+          "price": 3.68,
+          "oldPrice": null
+        },
+        {
           "name": "Absorvente Total Protect Cobertura Suave c/ Abas",
           "brand": "Sym",
-          "detail": "8 unidades",
-          "cat": "Higiene",
+          "detail": "8un",
+          "cat": "Geral",
           "price": 3.98,
           "oldPrice": null
         },
         {
           "name": "Toalha Umedecida",
-          "brand": "Tropolino",
-          "detail": "Leve 120un e Pague 100un",
-          "cat": "Higiene",
-          "price": 9.98,
+          "brand": "Bebe Sekinho",
+          "detail": "140un",
+          "cat": "Geral",
+          "price": 8.98,
           "oldPrice": null
         },
         {
           "name": "Hastes Flexíveis",
           "brand": "Cottonbaby",
           "detail": "75un",
-          "cat": "Higiene",
+          "cat": "Geral",
           "price": 2.48,
           "oldPrice": null
         },
         {
-          "name": "Escova Classic Clean Macia",
+          "name": "Escova Classic Clean Macia Leve 3un Pague 2un",
           "brand": "Colgate",
-          "detail": "Leve 3un Pague 2un",
-          "cat": "Higiene",
+          "detail": "3un",
+          "cat": "Geral",
           "price": 11.9,
           "oldPrice": null
         },
         {
-          "name": "Sabonete",
-          "brand": "Farnese",
-          "detail": "180g",
-          "cat": "Higiene",
-          "price": 4.1,
+          "name": "Antisséptico Bucal Leve 500ml Pague 350ml",
+          "brand": "Cepacol",
+          "detail": "500ml",
+          "cat": "Geral",
+          "price": 13.38,
           "oldPrice": null
         },
         {
-          "name": "Sabonete em Barra",
+          "name": "Sabonete",
+          "brand": "Phebo",
+          "detail": "90g",
+          "cat": "Geral",
+          "price": 5.38,
+          "oldPrice": null
+        },
+        {
+          "name": "Sabonete",
           "brand": "Albany",
           "detail": "85g",
-          "cat": "Higiene",
+          "cat": "Geral",
           "price": 1.78,
           "oldPrice": null
         },
         {
-          "name": "Shampoo",
-          "brand": "Pantene",
-          "detail": "175ml / 200ml",
-          "cat": "Higiene",
-          "price": 14.98,
+          "name": "Shampoo Exceto Anticaspa",
+          "brand": "Seda",
+          "detail": "300/325ml",
+          "cat": "Geral",
+          "price": 10.78,
           "oldPrice": null
         },
         {
           "name": "Shampoo",
-          "brand": "Elseve",
-          "detail": "200ml · Exceto Zero-Caspa",
-          "cat": "Higiene",
-          "price": 16.98,
-          "oldPrice": null
-        },
-        {
-          "name": "Shampoo Botanhico",
-          "brand": "Tok",
+          "brand": "Tok Bothânico",
           "detail": "400ml",
-          "cat": "Higiene",
-          "price": 6.18,
+          "cat": "Geral",
+          "price": 6.58,
           "oldPrice": null
         },
         {
           "name": "Desodorante Aero",
           "brand": "Bozzano / Monange",
           "detail": "150ml",
-          "cat": "Higiene",
+          "cat": "Geral",
           "price": 8.9,
           "oldPrice": null
         },
         {
           "name": "Papel Higiênico Branco",
           "brand": "Paloma",
-          "detail": "c/ 8un",
+          "detail": "8un",
           "cat": "Limpeza",
           "price": 7.96,
           "oldPrice": null
         },
         {
-          "name": "Papel Higiênico Folha Dupla Absolute 30m",
+          "name": "Papel Higiênico Folha Dupla Absolute 30m Leve 12un Pague 11un",
           "brand": "Fofinho",
-          "detail": "Leve 12un Pague 11un",
+          "detail": "12un",
           "cat": "Limpeza",
           "price": 18.9,
           "oldPrice": null
         },
         {
-          "name": "Tira Manchas Gel Refil",
-          "brand": "Vanish",
+          "name": "Amaciante Frescor Concentrado",
+          "brand": "Comfort",
           "detail": "500ml",
           "cat": "Limpeza",
-          "price": 9.98,
+          "price": 11.58,
           "oldPrice": null
         },
         {
@@ -872,7 +880,7 @@
           "brand": "Triex",
           "detail": "2L",
           "cat": "Limpeza",
-          "price": 6.28,
+          "price": 6.38,
           "oldPrice": null
         },
         {
@@ -884,11 +892,11 @@
           "oldPrice": null
         },
         {
-          "name": "Alvejante Multi-Uso",
+          "name": "Desinfetante",
           "brand": "Triex",
           "detail": "2L",
           "cat": "Limpeza",
-          "price": 11.68,
+          "price": 5.38,
           "oldPrice": null
         },
         {
@@ -900,15 +908,23 @@
           "oldPrice": null
         },
         {
-          "name": "Desinfetante",
-          "brand": "Candura",
-          "detail": "2L",
+          "name": "Limpador Perfumado",
+          "brand": "Triex",
+          "detail": "500ml",
           "cat": "Limpeza",
-          "price": 5.48,
+          "price": 4.58,
           "oldPrice": null
         },
         {
-          "name": "Inseticida Multi Aero",
+          "name": "Removedor Lavanda",
+          "brand": "Kin Limp",
+          "detail": "1L",
+          "cat": "Limpeza",
+          "price": 14.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Inseticida Multi Aero Leve + e Pague -",
           "brand": "SBP",
           "detail": "450ml",
           "cat": "Limpeza",
@@ -920,13 +936,21 @@
           "brand": "Bombril",
           "detail": "45g",
           "cat": "Limpeza",
-          "price": 2.68,
+          "price": 2.38,
           "oldPrice": null
         },
         {
-          "name": "Saco p/ Lixo",
+          "name": "Esponja Multi Uso Emb. Econômica",
+          "brand": "Bettanin Brilhus",
+          "detail": "4un",
+          "cat": "Limpeza",
+          "price": 5.78,
+          "oldPrice": null
+        },
+        {
+          "name": "Saco p/ Lixo (10X50L/5X100L)",
           "brand": "Fortão",
-          "detail": "10x50L / 5x100L",
+          "detail": "Unidade",
           "cat": "Limpeza",
           "price": 6.58,
           "oldPrice": null
@@ -934,7 +958,7 @@
         {
           "name": "Toalha de Papel Branca",
           "brand": "Maxim",
-          "detail": "2 unidades",
+          "detail": "2un",
           "cat": "Limpeza",
           "price": 5.28,
           "oldPrice": null
@@ -942,7 +966,7 @@
         {
           "name": "Guardanapo Branco 23x22cm",
           "brand": "Maxim",
-          "detail": "c/ 50un",
+          "detail": "50un",
           "cat": "Limpeza",
           "price": 1.98,
           "oldPrice": null
@@ -950,40 +974,32 @@
         {
           "name": "Filtro de Papel 103",
           "brand": "Pacaembu",
-          "detail": "c/ 30un",
-          "cat": "Casa",
+          "detail": "30un",
+          "cat": "Mercearia",
           "price": 4.18,
           "oldPrice": null
         },
         {
-          "name": "Filme de PVC",
+          "name": "Filme de PVC 28cmx15m",
           "brand": "Wyda",
-          "detail": "28cm x 15m",
-          "cat": "Casa",
-          "price": 6.58,
+          "detail": "Unidade",
+          "cat": "Geral",
+          "price": 6.28,
           "oldPrice": null
         },
         {
-          "name": "Copo Americano",
-          "brand": "",
-          "detail": "190ml",
-          "cat": "Casa",
-          "price": 1.38,
-          "oldPrice": null
-        },
-        {
-          "name": "Ração para Cães Original Adultos",
+          "name": "Ração Cães Original Adultos",
           "brand": "Yuppie",
           "detail": "2Kg",
-          "cat": "Pet",
+          "cat": "Geral",
           "price": 18.9,
           "oldPrice": null
         },
         {
-          "name": "Ração para Gatos Peixe Adultos",
+          "name": "Ração Gatos Peixe Adultos",
           "brand": "Yuppie",
           "detail": "1Kg",
-          "cat": "Pet",
+          "cat": "Geral",
           "price": 12.9,
           "oldPrice": null
         }

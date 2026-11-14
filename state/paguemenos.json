@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-14T02:26:12.965Z",
+  "fetchedAt": "2026-11-14T19:15:26.091Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -1154,7 +1154,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Lava Roupas",
-      "price": 12.99,
+      "price": 14.99,
       "previousPrice": 17.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -1755,7 +1755,7 @@
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
       "price": 6.79,
-      "previousPrice": 9.49,
+      "previousPrice": 8.99,
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -1779,7 +1779,7 @@
       ],
       "storeCategory": "Frios e Laticínios/Lácteos/Requeijão",
       "price": 6.99,
-      "previousPrice": 9.49,
+      "previousPrice": 8.79,
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -2620,7 +2620,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Cabelos/Coloração",
-      "price": 19.99,
+      "price": 20.79,
       "previousPrice": null,
       "icon": "🏷️",
       "tone": "#edf4e9",
@@ -5884,7 +5884,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 5.19,
+      "price": 5.39,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7396,7 +7396,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Fio Dental",
-      "price": 20.89,
+      "price": 21.69,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -11863,7 +11863,7 @@
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
       "price": 23.99,
-      "previousPrice": 34.99,
+      "previousPrice": 33.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12678,7 +12678,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Bomboniere/Chocolate",
-      "price": 4.79,
+      "price": 4.99,
       "previousPrice": null,
       "icon": "🍫",
       "tone": "#edf4e9",
@@ -13591,7 +13591,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 17.99,
-      "previousPrice": 25.99,
+      "previousPrice": 24.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -13638,7 +13638,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 15.99,
+      "price": 17.99,
       "previousPrice": 25.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -13878,7 +13878,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 15.99,
+      "price": 17.99,
       "previousPrice": 25.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -13974,7 +13974,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 15.99,
+      "price": 17.99,
       "previousPrice": 25.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -14598,8 +14598,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 189.9,
-      "previousPrice": null,
+      "price": 169.99,
+      "previousPrice": 189.9,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14742,7 +14742,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Água",
-      "price": 17.99,
+      "price": 19.49,
       "previousPrice": null,
       "icon": "💧",
       "tone": "#edf4e9",
@@ -14839,7 +14839,7 @@
       ],
       "storeCategory": "Perfumaria/Cabelos/Kit Shampoo e Condicionador",
       "price": 14.89,
-      "previousPrice": 23.99,
+      "previousPrice": 24.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -17647,7 +17647,7 @@
         "Mercearia"
       ],
       "storeCategory": "Café da Manhã/Padaria/Pão",
-      "price": 11.59,
+      "price": 11.99,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -17887,7 +17887,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.69,
+      "price": 8.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",

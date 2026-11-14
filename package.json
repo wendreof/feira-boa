@@ -27,7 +27,7 @@
     "test:archive-ui": "node scripts/test-offer-archive-playwright.mjs",
     "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs && node scripts/test-terms-playwright.mjs && node scripts/test-catalog-push-invite-playwright.mjs && node scripts/test-mobile-categories-playwright.mjs",
     "telegram:setup": "node scripts/set-telegram-bot.mjs",
-    "pr:create": "gh pr create --base develop --body-file .github/pull_request_template.md"
+    "pr:create": "node scripts/create-pr.mjs"
   },
   "devDependencies": {
     "c8": "^12.0.0",

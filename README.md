@@ -207,7 +207,7 @@ Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 
 1. Fork / branch from `main` or `develop`.
 2. `npm ci` → typecheck → build → tests (and `test:ui` if you change UI).
-3. Open a PR; CI must pass.
+3. Open a PR; CI must pass. From the CLI, `npm run pr:create` runs `gh pr create` with `.github/pull_request_template.md` (pass `--title`, `--base main`, etc. after `--`).
 
 **MIT** license — see [`LICENSE`](LICENSE).
 

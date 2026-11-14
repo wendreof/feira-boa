@@ -9,7 +9,7 @@
     "from": "2026-11-13",
     "to": "2026-11-19"
   },
-  "fetchedAt": "2026-11-14T02:13:26.586Z",
+  "fetchedAt": "2026-11-14T02:26:01.496Z",
   "sourceUrl": "https://corso.com.br/jornalfrente.php",
   "flyerHash": "1794507762",
   "extractionMethod": "cache",
@@ -2952,11 +2952,11 @@
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ração Gatos Peixe Adultos Yuppie",
       "detail": "1Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Peixes"
+        "Pet"
       ],
       "storeCategory": "Geral",
       "price": 12.9,

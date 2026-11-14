@@ -42,6 +42,7 @@ jobs:
         run: npm run test:coverage
 
       # Repository secret CODECOV_TOKEN from https://app.codecov.io (repo upload token).
+      # Coverage gates run in npm run test:coverage; upload is best-effort when Codecov is active.
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@2320916714171c258d01dbd81040d64d798c6f8e # v7.1.1
         with:
@@ -49,4 +50,4 @@ jobs:
           files: coverage/lcov.info
           # CLI gpg keyring often missing on runners; uploads still fail CI on error.
           skip_validation: true
-          fail_ci_if_error: true
+          fail_ci_if_error: false

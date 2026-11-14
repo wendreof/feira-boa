@@ -1,5 +1,6 @@
 import { parseDateRange, parsePrice } from "./parsing.mjs";
 import { foldText } from "../../src/shared/text.mjs";
+import { loadFlyerCampaignFile } from "./flyer-campaign-cache.mjs";
 
 const CORSO_ORIGIN = "https://corso.com.br/";
 
@@ -270,16 +271,5 @@ export function latestValidityEnd(campaigns) {
 }
 
 export function loadCorsoCampaignFile(raw) {
-  if (Array.isArray(raw)) {
-    return { flyerHash: null, extractionMethod: "legacy", campaigns: raw };
-  }
-  if (raw && Array.isArray(raw.campaigns)) {
-    return {
-      flyerHash: raw.flyerHash ?? null,
-      updatedAt: raw.updatedAt ?? null,
-      extractionMethod: raw.extractionMethod ?? "cache",
-      campaigns: raw.campaigns,
-    };
-  }
-  return { flyerHash: null, extractionMethod: "unknown", campaigns: [] };
+  return loadFlyerCampaignFile(raw);
 }

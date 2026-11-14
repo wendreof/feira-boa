@@ -6,7 +6,7 @@ const STORE_TESTS = {
   bigbom: ["tests/adapters.test.mjs"],
   corso: ["tests/corso-adapter.test.mjs", "tests/adapters.test.mjs"],
   paguemenos: ["tests/adapters.test.mjs"],
-  spasso: ["tests/spasso-flyer-images.test.mjs"],
+  spasso: ["tests/spasso-flyer-images.test.mjs", "tests/spasso-adapter.test.mjs"],
   spani: ["tests/adapters.test.mjs"],
   fortemix: ["tests/fortemix-adapter.test.mjs"],
 };
@@ -34,6 +34,8 @@ if (store && store !== "all") {
   tests.add("tests/fortemix-adapter.test.mjs");
   tests.add("tests/adapters.test.mjs");
   tests.add("tests/spasso-flyer-images.test.mjs");
+  tests.add("tests/spasso-adapter.test.mjs");
+  tests.add("tests/corso-adapter.test.mjs");
 }
 
 runNode(["--test", ...tests], `node --test ${[...tests].join(" ")}`);

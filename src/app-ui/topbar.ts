@@ -51,17 +51,36 @@ export function updateAccountControls(): void {
 function clearTopbarAvatar(): void {
   if (topbarAccountImage) {
     topbarAccountImage.removeAttribute("src");
+    topbarAccountImage.style.opacity = "";
     topbarAccountImage.hidden = true;
   }
   if (topbarAccountFallback) topbarAccountFallback.hidden = false;
 }
 
+function settleTopbarAvatarFallback(visible: boolean): void {
+  if (visible) {
+    if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+    return;
+  }
+  clearTopbarAvatar();
+}
+
+function setTopbarAvatarPath(path: string | null): void {
+  if (!topbarAccountImage) return;
+  if (!path) {
+    clearTopbarAvatar();
+    return;
+  }
+  setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar, {
+    onSettled: settleTopbarAvatarFallback,
+  });
+}
+
 export function primeTopbarAvatar(userId: string): void {
   const cached = readCachedAvatarPath(userId, sessionStorage);
   if (cached === undefined) return;
-  if (cached && topbarAccountImage) {
-    setAvatarImage(topbarAccountImage, cached, AVATAR_SIZE.topbar);
-    if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+  if (cached) {
+    setTopbarAvatarPath(cached);
   } else {
     clearTopbarAvatar();
   }
@@ -71,9 +90,8 @@ export async function refreshTopbarAvatar(userId: string, knownPath?: string | n
   try {
     const path = knownPath !== undefined ? knownPath : await loadAvatar(userId);
     writeCachedAvatarPath(userId, path, sessionStorage);
-    if (path && topbarAccountImage) {
-      setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar);
-      if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+    if (path) {
+      setTopbarAvatarPath(path);
     } else {
       clearTopbarAvatar();
     }

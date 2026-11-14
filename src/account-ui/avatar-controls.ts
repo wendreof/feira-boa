@@ -18,8 +18,15 @@ export function setAvatarStatus(message: string): void {
 
 export function renderAvatar(): void {
   const path = accountState.avatarPath;
-  if (avatarImage) setAvatarImage(avatarImage, path, AVATAR_SIZE.preview);
-  if (avatarPlaceholder) avatarPlaceholder.hidden = Boolean(path);
+  if (avatarImage) {
+    setAvatarImage(avatarImage, path, AVATAR_SIZE.preview, {
+      onSettled: (visible) => {
+        if (avatarPlaceholder) avatarPlaceholder.hidden = visible;
+      },
+    });
+  } else if (avatarPlaceholder) {
+    avatarPlaceholder.hidden = Boolean(path);
+  }
   if (avatarRemoveButton) avatarRemoveButton.disabled = !path;
 }
 

@@ -20,7 +20,7 @@ Use this skill when the operator wants to **refresh store offers** on Feira Boa.
 | `sempre` | `semprevale.mjs` | `data/sempre-campaigns.json` | Ingest **throws** when discovered PDF URL ≠ `flyerUrl` in JSON |
 | `corso` | `corso.mjs` | Auto: `jornal-frente` / `jornal-verso` JPG + hash; cache in `data/corso-campaigns.json` | Re-run ingest after hash/validity change; set `GEMINI_API_KEY` in CI for reliable vision OCR fallback |
 | `fortemix` | `fortemix.mjs` | **Manual** `data/fortemix-campaigns.json` | New WhatsApp / app festival flyer — user attaches images (only store kept manual for now) |
-| `spasso` | `spasso.mjs` | Image flyers on official page | Still **no auto transcription** in repo — retain `flyerImages` + optional manual JSON later |
+| `spasso` | `spasso.mjs` | Auto: WordPress encarte JPG/PNG + hash; cache in `data/spasso-campaigns.json` | Re-run ingest after flyer hash change; set `GEMINI_API_KEY` in CI (same secret as Corso) |
 | `spani` | `spani.mjs` | Live promos API | Usually automatic |
 
 ## Transcription rules (image / PDF flyers)
@@ -29,7 +29,7 @@ Use this skill when the operator wants to **refresh store offers** on Feira Boa.
 2. **Edit the campaign JSON** (not `state/*.json` by hand):
    - Forte Mix: `scripts/adapters/data/fortemix-campaigns.json` — bump `campaignId`, set `from`/`to`, `offers[]` with `{ name, brand, detail, cat, price, oldPrice, note? }`.
    - Sempre Vale: `scripts/adapters/data/sempre-campaigns.json` — update `flyerUrl` to match discovery error URL.
-   - Corso: do **not** hand-edit unless fixing a bad automated cache — adapter writes `corso-campaigns.json` after successful extraction.
+   - Corso / Spasso: do **not** hand-edit unless fixing a bad automated cache — adapters write `corso-campaigns.json` / `spasso-campaigns.json` after successful extraction.
 3. **Product names**: brand stays inside `name` after ingest (`mergeBrandIntoName` / feed build). Avoid flyer junk in `name` — validity banners and “Pague/Leve” codes belong in `note` when the adapter supports it.
 4. **Taxonomy**: use realistic `cat` strings; `classifyProduct` maps to site sectors.
 5. Do **not** add Gemini/OpenAI vision calls to adapters or CI unless the operator explicitly asks for that architecture change (`BACKEND_PLAN.md` default is no paid API in the scheduled ingest).

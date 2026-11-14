@@ -10,7 +10,7 @@ const REGISTERED_KEY = "feira-boa-catalog-push-registered";
 const DISMISS_MS = 14 * 24 * 60 * 60 * 1000;
 
 const shell = document.querySelector<HTMLElement>("#catalog-push-invite-shell");
-const activateButton = document.querySelector<HTMLButtonElement>("#catalog-push-activate");
+const panel = document.querySelector<HTMLButtonElement>("#catalog-push-invite");
 const dismissButton = document.querySelector<HTMLButtonElement>("#catalog-push-dismiss");
 const status = document.querySelector<HTMLElement>("#catalog-push-status");
 
@@ -56,7 +56,7 @@ async function deviceAlreadyRegistered(): Promise<boolean> {
 }
 
 export async function refreshCatalogPushInvite(): Promise<void> {
-  if (!shell || !activateButton) return;
+  if (!shell || !panel) return;
   if (!isPushConfigured() || !("Notification" in window) || !("serviceWorker" in navigator)) {
     shell.hidden = true;
     return;
@@ -72,36 +72,39 @@ export async function refreshCatalogPushInvite(): Promise<void> {
   shell.hidden = false;
 }
 
+async function runCatalogPushActivation(): Promise<void> {
+  if (!panel || panel.disabled) return;
+  panel.disabled = true;
+  if (status) {
+    status.hidden = false;
+    status.textContent = "Solicitando permissão…";
+  }
+  try {
+    const subscription = await activateCatalogPushOnDevice();
+    if (appState.currentUserId) {
+      await unregisterAnonymousCatalogPush(subscription);
+      await savePushSubscription(appState.currentUserId, subscription);
+    }
+    markRegistered();
+    if (shell) shell.hidden = true;
+  } catch (error) {
+    if (status) {
+      status.textContent = pushFailureMessage(error) || errorMessage(error);
+    }
+    await refreshCatalogPushInvite();
+  } finally {
+    panel.disabled = Notification.permission === "denied";
+  }
+}
+
 export function bindCatalogPushInvite(): void {
-  dismissButton?.addEventListener("click", () => {
+  dismissButton?.addEventListener("click", (event) => {
+    event.stopPropagation();
     markDismissed();
     if (shell) shell.hidden = true;
   });
 
-  activateButton?.addEventListener("click", () => {
-    void (async () => {
-      if (!activateButton) return;
-      activateButton.disabled = true;
-      if (status) {
-        status.hidden = false;
-        status.textContent = "Solicitando permissão…";
-      }
-      try {
-        const subscription = await activateCatalogPushOnDevice();
-        if (appState.currentUserId) {
-          await unregisterAnonymousCatalogPush(subscription);
-          await savePushSubscription(appState.currentUserId, subscription);
-        }
-        markRegistered();
-        if (shell) shell.hidden = true;
-      } catch (error) {
-        if (status) {
-          status.textContent = pushFailureMessage(error) || errorMessage(error);
-        }
-        await refreshCatalogPushInvite();
-      } finally {
-        activateButton.disabled = Notification.permission === "denied";
-      }
-    })();
+  panel?.addEventListener("click", () => {
+    void runCatalogPushActivation();
   });
 }

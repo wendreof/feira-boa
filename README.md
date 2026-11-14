@@ -1,67 +1,71 @@
 # Feira Boa
 
-**Ofertas de supermercados em São João da Boa Vista** — catálogo estático, busca e filtros, tema claro/escuro, favoritos e alertas opcionais com conta.
+**Supermarket deals in São João da Boa Vista** — static catalog, search and filters, light/dark theme, favorites, and optional alerts with an account.
 
 [![Site](https://img.shields.io/badge/site-feira--boa.pages.dev-2ea44f)](https://feira-boa.pages.dev)
 [![CI](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml/badge.svg)](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml)
+[![codecov](https://codecov.io/gh/wendreof/feira-boa/graph/badge.svg)](https://codecov.io/gh/wendreof/feira-boa)
 ![Node](https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![npm](https://img.shields.io/badge/npm-1.0.0-CB3837?logo=npm&logoColor=white)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white)](https://feira-boa.pages.dev)
 
 ---
 
-## O que é
+## What it is
 
-Feira Boa reúne encartes e catálogos oficiais das redes da região em uma **PWA** rápida (HTML/CSS/TypeScript, sem framework de UI). Cada oferta aponta para o material-fonte; ofertas fora da validade impressa somem do feed público.
+Feira Boa aggregates official flyers and catalogs from regional chains in a **fast PWA** (HTML/CSS/TypeScript, no UI framework). Each offer links back to its source material; offers past their printed validity drop out of the public feed.
 
-| Recurso | Descrição |
-|--------|-----------|
-| Busca e filtros | Produto, loja, setor, tipo, faixa de preço, ordenação |
-| Cards | Preço atual, desconto, validade, condições, link para o encarte |
-| Tema | Claro/escuro; sincroniza com a conta quando logado |
-| Conta (opcional) | Favoritos, curtidas, alertas — [Supabase](https://supabase.com) + RLS |
-| Alertas | Regras de preço via Telegram e/ou push (OneSignal / VAPID) |
-| Monitoramento | Ingestão agendada, revisão de fonte e saúde das origens |
+| Feature | Description |
+|--------|-------------|
+| Search and filters | Product, store, aisle, type, price range, sort order |
+| Cards | Current price, discount, validity, conditions, link to the flyer |
+| Theme | Light/dark; syncs with the account when signed in |
+| Account (optional) | Favorites, likes, alerts — [Supabase](https://supabase.com) + RLS |
+| Alerts | Price rules via Telegram and/or push (OneSignal / VAPID) |
+| Monitoring | Scheduled ingest, source review, and origin health checks |
 
-Detalhes de arquitetura, taxonomia e convenções: [`AGENT.md`](AGENT.md) e [`BACKEND_PLAN.md`](BACKEND_PLAN.md).
+Architecture, taxonomy, and conventions: [`AGENT.md`](AGENT.md) and [`BACKEND_PLAN.md`](BACKEND_PLAN.md).
 
 ## Stack
 
-- **Frontend:** TypeScript → `esbuild` → bundles na raiz (`app.js`, páginas dedicadas)
-- **Dados:** adaptadores em `scripts/adapters/` → snapshots em `state/` → `offers.json`
-- **Testes:** `node --test` + Playwright (UI)
-- **Hospedagem:** [Cloudflare Pages](https://pages.cloudflare.com) — build `npm run build`, diretório de saída `.`
-- **Auth / sync:** Supabase (chave publicável no cliente; segredos só em Actions ou Edge Functions)
+- **Frontend:** TypeScript → `esbuild` → root bundles (`app.js`, dedicated pages)
+- **Data:** adapters in `scripts/adapters/` → snapshots in `state/` → `offers.json`
+- **Tests:** `node --test` + Playwright (UI)
+- **Hosting:** [Cloudflare Pages](https://pages.cloudflare.com) — build `npm run build`, output directory `.`
+- **Auth / sync:** Supabase (publishable key in the client; secrets only in Actions or Edge Functions)
 
-O fluxo abaixo liga **fontes oficiais** → **adaptadores** → **snapshots e feed** → **build estático** → **Cloudflare Pages** → **PWA** no navegador. Ingestão local: `npm run ingest:offers`; em produção o mesmo caminho roda no workflow agendado.
+The flow below connects **official sources** → **adapters** → **snapshots and feed** → **static build** → **Cloudflare Pages** → **PWA** in the browser. Local ingest: `npm run ingest:offers`; production runs the same path on a scheduled workflow.
 
 ```mermaid
 flowchart TB
-  subgraph fontes [Fontes oficiais]
-    apis[API e HTML - Sempre Vale Pague Menos]
-    pdf[PDF e scrape - Big Bom Spani]
-    corso[Corso jornal JPG]
-    spasso[Spasso imagens no site]
+  subgraph sources [Official sources]
+    apis[API and HTML - Sempre Vale Pague Menos]
+    pdf[PDF and scrape - Big Bom Spani]
+    corso[Corso flyer JPG]
+    spasso[Spasso images on site]
     manual[fortemix-campaigns.json manual]
   end
 
-  subgraph ingest [Ingestao no repo]
+  subgraph ingest [Ingest in repo]
     io[ingest-offers.mjs]
-    adp[scripts/adapters por loja]
-    gem[corso-gemini.mjs opcional GEMINI_API_KEY]
+    adp[scripts/adapters per store]
+    gem[corso-gemini.mjs optional GEMINI_API_KEY]
   end
 
-  subgraph persist [Estado versionado]
-    st[state por loja .json]
+  subgraph persist [Versioned state]
+    st[state per store .json]
     prev[state/previous]
     cache[corso-campaigns.json]
   end
 
-  subgraph feed [Feed publico]
+  subgraph feed [Public feed]
     bof[build-offer-feed.mjs]
     off[offers.json]
     man[snapshot-manifest.json]
   end
 
-  subgraph site [Build e hospedagem]
+  subgraph site [Build and hosting]
     nb[npm run build - tsc esbuild structured data]
     cf[Cloudflare Pages]
   end
@@ -87,8 +91,8 @@ flowchart TB
   nb --> cf
 
   subgraph ci [GitHub Actions monitor-offers.yml]
-    sched[4x dia ou workflow_dispatch]
-    mon[monitor:sources e health]
+    sched[4x daily or workflow_dispatch]
+    mon[monitor:sources and health]
     git[commit push main]
   end
 
@@ -100,20 +104,20 @@ flowchart TB
   pwa[PWA index.html app.js offers.json]
   cf --> pwa
 
-  subgraph conta [Opcional conta e alertas]
-    sb[Supabase login favoritos tema]
-    push[Telegram OneSignal workflows separados]
+  subgraph account [Optional account and alerts]
+    sb[Supabase login favorites theme]
+    push[Telegram OneSignal separate workflows]
   end
 
   pwa --> sb
   pwa -.-> push
 ```
 
-**Leitura rápida:** cada adaptador grava ou preserva `state/<loja>.json`; o ingest chama `build-offer-feed.mjs` ao terminar. O deploy na Cloudflare executa `npm run build` (regera o feed a partir de `state/` e empacota JS). Conta e alertas são camada opcional no cliente — não entram no `offers.json`.
+**At a glance:** each adapter writes or preserves `state/<store>.json`; ingest calls `build-offer-feed.mjs` when finished. Cloudflare deploy runs `npm run build` (rebuilds the feed from `state/` and bundles JS). Account and alerts are an optional client layer — they are not part of `offers.json`.
 
-## Início rápido
+## Quick start
 
-Requisito: **Node.js 24** (mesma versão do CI em `.github/workflows/pull-request-checks.yml`).
+Requires **Node.js 24** (same version as CI in `.github/workflows/pull-request-checks.yml`).
 
 ```bash
 git clone https://github.com/wendreof/feira-boa.git
@@ -124,91 +128,91 @@ npm run typecheck
 npm test
 ```
 
-Servir localmente para checagens de UI:
+Serve locally for UI checks:
 
 ```bash
 npm run build
 node scripts/dev-static-server.mjs   # http://127.0.0.1:8790
 ```
 
-O feed publicado vem dos snapshots em `state/`; `src/offers.ts` é apenas fallback de desenvolvimento quando não há snapshot.
+The published feed comes from snapshots in `state/`; `src/offers.ts` is a development fallback when no snapshot is present.
 
-## Scripts principais
+## Main scripts
 
-| Comando | Uso |
-|---------|-----|
-| `npm run build` | Typecheck parcial, gera `offers.json`, structured data, bundles `esbuild`, verifica artefatos |
-| `npm run typecheck` | `tsc` em modo verificação |
-| `npm test` | Testes unitários e de domínio (`tests/**/*.test.mjs`) |
-| `npm run test:ui` | Suite Playwright (expiração, arquivo, logos, termos, etc.) |
-| `npm run test:expiry-ui` / `test:archive-ui` / `test:logos` | Checagens Playwright individuais |
-| `npm run ingest:offers` | Busca fontes oficiais e atualiza `state/` |
-| `npm run agent:ingest` | Validação pós-ingestão manual (encartes curados) |
-| `npm run monitor:sources` | Registra saúde das fontes |
-| `npm run review:source` | Fluxo de revisão após mudança de fonte |
-| `npm run check:site` | Saúde do site em produção (`SITE_URL`) |
-| `npm run build:social-card` | Gera `social-card.png` (requer Chrome ou Edge local) |
-| `npm run build:icons` | Ícones PWA |
-| `npm run send:price-alerts` / `:dry` | Disparo de alertas (CI / operação) |
-| `npm run send:catalog-push` / `:dry` | Push de catálogo |
-| `npm run telegram:setup` | Configuração do bot Telegram |
+| Command | Purpose |
+|---------|---------|
+| `npm run build` | Partial typecheck, generates `offers.json`, structured data, `esbuild` bundles, verifies artifacts |
+| `npm run typecheck` | `tsc` in check mode |
+| `npm test` | Unit and domain tests (`tests/**/*.test.mjs`) |
+| `npm run test:ui` | Playwright suite (expiry, archive, logos, terms, etc.) |
+| `npm run test:expiry-ui` / `test:archive-ui` / `test:logos` | Individual Playwright checks |
+| `npm run ingest:offers` | Fetch official sources and update `state/` |
+| `npm run agent:ingest` | Post-ingest validation for manual flyers |
+| `npm run monitor:sources` | Record source health |
+| `npm run review:source` | Review flow after a source change |
+| `npm run check:site` | Production site health (`SITE_URL`) |
+| `npm run build:social-card` | Generate `social-card.png` (needs local Chrome or Edge) |
+| `npm run build:icons` | PWA icons |
+| `npm run send:price-alerts` / `:dry` | Price alert dispatch (CI / ops) |
+| `npm run send:catalog-push` / `:dry` | Catalog push |
+| `npm run telegram:setup` | Telegram bot setup |
 
-Playwright: instale o Chromium uma vez com `npx playwright install chromium`. Testes de logo opcionais: `FEIRA_E2E_EMAIL` e `FEIRA_E2E_PASSWORD` no ambiente (nunca commitar).
+Playwright: install Chromium once with `npx playwright install chromium`. Optional logo tests: set `FEIRA_E2E_EMAIL` and `FEIRA_E2E_PASSWORD` in the environment (never commit them).
 
-## Dados e ingestão
+## Data and ingest
 
-Adaptadores em `scripts/adapters/` montam o catálogo a partir de fontes oficiais. Lojas monitoradas incluem **Sempre Vale**, **Big Bom**, **Pague Menos**, **Spasso Sabores**, **Corso**, **Spani** e **Forte Mix** (lista e URLs em [`docs/OFFER_SOURCE_INVENTORY.md`](docs/OFFER_SOURCE_INVENTORY.md) quando aplicável).
+Adapters in `scripts/adapters/` build the catalog from official sources. Monitored chains include **Sempre Vale**, **Big Bom**, **Pague Menos**, **Spasso Sabores**, **Corso**, **Spani**, and **Forte Mix** (list and URLs in [`docs/OFFER_SOURCE_INVENTORY.md`](docs/OFFER_SOURCE_INVENTORY.md) when applicable).
 
-| Tipo de fonte | Atualização |
+| Source type | Update path |
 |---------------|-------------|
-| API / página estruturada | Automática no `ingest:offers` (ex.: Pague Menos VTEX) |
-| PDF / site scrape | Adaptadores dedicados (ex.: Big Bom, Spani) |
-| Encarte em imagem | **Corso** e **Spasso**: pipeline com Gemini (`*-gemini.mjs`) e dados curados |
-| Campanhas WhatsApp / app | **Forte Mix**: JSON manual em `scripts/adapters/data/fortemix-campaigns.json` |
+| API / structured page | Automatic in `ingest:offers` (e.g. Pague Menos VTEX) |
+| PDF / site scrape | Dedicated adapters (e.g. Big Bom, Spani) |
+| Image flyers | **Corso** and **Spasso**: Gemini pipeline (`*-gemini.mjs`) plus curated data |
+| WhatsApp / app campaigns | **Forte Mix**: manual JSON in `scripts/adapters/data/fortemix-campaigns.json` |
 
-Encartes curados (imagem/PDF): fluxo documentado em [`.agents/skills/offer-ingestion/SKILL.md`](.agents/skills/offer-ingestion/SKILL.md).
+Curated flyers (image/PDF): workflow in [`.agents/skills/offer-ingestion/SKILL.md`](.agents/skills/offer-ingestion/SKILL.md).
 
-**Agendamento (GitHub Actions):** o workflow `monitor-offers.yml` roda **quatro vezes ao dia** (06:00, 09:00, 15:00 e 18:00, America/Sao_Paulo), ingere, commita `offers.json` + `state/` e dispara deploy na Cloudflare. `needs_review` em uma fonte bloqueia **alertas de preço**, não o feed público.
+**Schedule (GitHub Actions):** workflow `monitor-offers.yml` runs **four times per day** (06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo), ingests, commits `offers.json` + `state/`, and triggers Cloudflare deploy. `needs_review` on a source blocks **price alerts**, not the public feed.
 
-Ofertas do Pague Menos vêm do catálogo online e podem divergir da loja física — o site exibe esse aviso.
+Pague Menos offers come from the online catalog and may differ from the physical store — the site shows that notice.
 
-## Testes e qualidade
+## Tests and quality
 
-Antes de abrir PR ou publicar:
+Before opening a PR or shipping:
 
 ```bash
 npm run typecheck
 npm run build
 npm test
-npm run test:ui    # após npx playwright install chromium
+npm run test:ui    # after npx playwright install chromium
 ```
 
-O workflow **Pull request checks** executa typecheck, build e `npm test` em cada PR para `main` e `develop`.
+The **Pull request checks** workflow runs typecheck, build, and `npm test` on every PR to `main` and `develop`.
 
 ## Deploy
 
-- **Produção:** https://feira-boa.pages.dev — [Cloudflare Pages](https://pages.cloudflare.com) com `npm run build` e pasta `.` como diretório de saída.
-- `build-info.json` é gerado no build e não vai para o Git; confira `/build-info.json` no deploy após mudanças de pipeline.
-- Outros workflows: `send-price-alerts.yml`, `send-catalog-push.yml`, `check-site-health.yml`, `telegram-link-sync.yml`.
+- **Production:** https://feira-boa.pages.dev — [Cloudflare Pages](https://pages.cloudflare.com) with `npm run build` and output directory `.`.
+- `build-info.json` is generated at build time and is not committed; check `/build-info.json` on deploy after pipeline changes.
+- Other workflows: `send-price-alerts.yml`, `send-catalog-push.yml`, `check-site-health.yml`, `telegram-link-sync.yml`.
 
-## Contas, alertas e admin
+## Accounts, alerts, and admin
 
-Resumo; passo a passo completo permanece nas migrações `supabase/migrations/` e em `AGENT.md`.
+Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 
-- **Login:** `login.html` — e-mail/senha e Google OAuth (configuração no console Supabase, não no código).
-- **Páginas:** `account.html`, `alertas.html`, `admin.html` (painel somente leitura para usuários em `admin_users`).
-- **Alertas:** Telegram (`telegram-webhook`) e push; segredos (`SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `ONESIGNAL_REST_API_KEY`, chaves VAPID) apenas em GitHub Actions ou secrets do Supabase — nunca no bundle do navegador.
+- **Login:** `login.html` — email/password and Google OAuth (configured in the Supabase console, not in code).
+- **Pages:** `account.html`, `alertas.html`, `admin.html` (read-only panel for users in `admin_users`).
+- **Alerts:** Telegram (`telegram-webhook`) and push; secrets (`SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `ONESIGNAL_REST_API_KEY`, VAPID keys) only in GitHub Actions or Supabase secrets — never in the browser bundle.
 
-## Contribuir
+## Contributing
 
-1. Fork / branch a partir de `main` ou `develop`.
-2. `npm ci` → typecheck → build → testes (e `test:ui` se alterar UI).
-3. Abra PR; o CI deve passar.
+1. Fork / branch from `main` or `develop`.
+2. `npm ci` → typecheck → build → tests (and `test:ui` if you change UI).
+3. Open a PR; CI must pass. From the CLI, `npm run pr:create` runs `gh pr create` with `.github/pull_request_template.md` (pass `--title`, `--base main`, etc. after `--`).
 
-Licença **MIT** — veja [`LICENSE`](LICENSE).
+**MIT** license — see [`LICENSE`](LICENSE).
 
-## Links úteis
+## Useful links
 
-- [AGENT.md](AGENT.md) — guia para agentes e mantenedores
-- [BACKEND_PLAN.md](BACKEND_PLAN.md) — decisões de backend e deploy
-- Fontes citadas no README anterior: [Sempre Vale](https://www.semprevale.com.br/ofertas.php), [Big Bom](https://bigbom.com.br), [Pague Menos SJDV](https://www.superpaguemenos.com.br/ofertas?productclusterids=161), [Spasso Sabores](https://spassosabores.com.br/ofertas-sao-joao/), [Corso](https://corso.com.br/jornalfrente.php)
+- [AGENT.md](AGENT.md) — guide for agents and maintainers
+- [BACKEND_PLAN.md](BACKEND_PLAN.md) — backend and deploy decisions
+- Official offer sources: [Sempre Vale](https://www.semprevale.com.br/ofertas.php), [Big Bom](https://bigbom.com.br), [Pague Menos SJDV](https://www.superpaguemenos.com.br/ofertas?productclusterids=161), [Spasso Sabores](https://spassosabores.com.br/ofertas-sao-joao/), [Corso](https://corso.com.br/jornalfrente.php)

@@ -135,6 +135,63 @@
   align-items: center;
 }
 
+/* Desktop: logo + copy on row 1; actions and ratings full width (avoids flex squeeze). */
+@media (min-width: 761px) {
+  .store-source {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 12px 14px;
+    align-items: start;
+  }
+
+  .store-source > .source-logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .store-source > .source-copy {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .store-source > .source-copy strong,
+  .store-source > .source-copy > span {
+    overflow-wrap: anywhere;
+  }
+
+  .store-source > .source-actions {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .store-source > .source-actions > .source-button {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .store-source > .source-button {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    white-space: normal;
+  }
+
+  .store-source > .store-rating {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 0;
+  }
+}
+
 .store-source .source-button--flyer {
   background: rgba(21, 91, 59, 0.08);
 }

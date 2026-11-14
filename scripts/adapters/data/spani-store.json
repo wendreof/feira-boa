@@ -4,6 +4,8 @@
   "organizationId": "67",
   "filialId": "1",
   "centroDistribuicaoId": "6",
+  "lojaSlug": "sao-joao-boa-vista",
+  "lojasPageDataUrl": "https://lojas.spani.com.br/page-data/lojas/sao-joao-boa-vista/page-data.json",
   "login": {
     "username": "loja",
     "key": "df072f85df9bf7dd71b6811c34bdbaa4f219d98775b56cff9dfa5f8ca1bf8469"

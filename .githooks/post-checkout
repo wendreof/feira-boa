@@ -1,0 +1,26 @@
+#!/bin/sh
+# Git post-checkout: after switching TO develop, prompt a main sync (non-blocking on failure).
+# Enable: git config core.hooksPath .githooks  (see AGENT.md)
+
+prev_head="$1"
+new_head="$2"
+branch_checkout="$3"
+
+if [ "$branch_checkout" != "1" ]; then
+  exit 0
+fi
+
+branch=$(git branch --show-current 2>/dev/null) || exit 0
+if [ "$branch" != "develop" ]; then
+  exit 0
+fi
+
+if command -v node >/dev/null 2>&1; then
+  node scripts/sync-develop-from-main.mjs || {
+    echo "post-checkout: sync-develop-from-main failed (checkout kept). Run: npm run sync:develop" >&2
+  }
+else
+  echo "post-checkout: node not found; run npm run sync:develop on develop before new work." >&2
+fi
+
+exit 0

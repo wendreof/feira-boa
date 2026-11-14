@@ -105,6 +105,24 @@ test("classifyProduct maps products to departments and product types", () => {
   assert.equal(unknown.productType, "Outros");
 });
 
+test("classifyProduct keeps pet food out of peixaria when the flavor says peixe", () => {
+  const yuppie = classifyProduct("Ração Gatos Peixe Adultos Yuppie", "Pet", "Pet");
+  assert.equal(yuppie.productType, "Pet");
+  assert.equal(yuppie.department, "Pet");
+
+  const corso = classifyProduct("Ração para Gatos Peixe Adultos Yuppie", "Pet", "Pet");
+  assert.equal(corso.productType, "Pet");
+  assert.equal(corso.department, "Pet");
+
+  const misfiled = classifyProduct(
+    "Ração Gatos Peixe Adultos Yuppie 1kg",
+    "Açougue e peixaria",
+    "acougue/peixes",
+  );
+  assert.equal(misfiled.productType, "Pet");
+  assert.equal(misfiled.department, "Pet");
+});
+
 test("classifyProduct keeps embutidos out of the meat categories", () => {
   const sausage = classifyProduct("Linguiça Calabresa Sadia Defumada Cozida", "Carnes");
   assert.equal(sausage.department, "Frios e laticínios");

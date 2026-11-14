@@ -34,3 +34,27 @@ test("offerCardCategoryLine labels kg chicken as açougue, not churrasco", () =>
   );
   assert.equal(line, "Açougue · kg · Big Bom");
 });
+
+test("offerCardCategoryLine keeps kg pet food out of açougue", () => {
+  const line = offerCardCategoryLine(
+    { store: "Corso", productType: "Pet", productTypes: ["Pet"], detail: "1kg" },
+    { groupId: "pet", subcategory: "Ração para gatos" },
+    { activeDepartment: "carnes" },
+  );
+  assert.equal(line, "Ração para gatos · Corso");
+});
+
+test("offerCardCategoryLine keeps misclassified peixe pet ration out of açougue", () => {
+  const line = offerCardCategoryLine(
+    {
+      store: "Corso",
+      name: "Ração Gatos Peixe Adultos Yuppie 1kg",
+      productType: "Peixes",
+      productTypes: ["Peixes"],
+      detail: "1kg",
+    },
+    { groupId: "frescos", subcategory: "Açougue e carnes frescas" },
+    { activeDepartment: "carnes" },
+  );
+  assert.equal(line, "Açougue e carnes frescas · Corso");
+});

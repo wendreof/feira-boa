@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-14T02:16:52.230Z",
+  "updatedAt": "2026-11-14T02:26:57.848Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -19907,7 +19907,7 @@
       ],
       "storeCategory": "Café da Manhã/Aveias e Mingaus/Aveia",
       "price": 13.99,
-      "previousPrice": 16.99,
+      "previousPrice": 15.99,
       "icon": "🥣",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -27328,11 +27328,11 @@
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
       "name": "Ração Gatos Peixe Adultos Yuppie",
       "detail": "1kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Peixes"
+        "Pet"
       ],
       "storeCategory": "Geral",
       "price": 12.9,
@@ -48500,11 +48500,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Petisco Baw Waw Bifinho para Cães Adultos Raças Pequenas Sabor Frango",
       "detail": "50g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "15",
       "price": 3.29,
@@ -48596,11 +48596,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Petisco Dreamies para Gatos Adultos Sabor Frango",
       "detail": "40g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 5.89,
@@ -48620,11 +48620,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Friskies para Gatos Adultos Sachê Sabor Atum ao Molho",
       "detail": "85g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Peixes"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.89,
@@ -48644,11 +48644,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Friskies para Gatos Adultos Sachê Sabor Carne ao Molho",
       "detail": "85g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Mercearia"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.89,
@@ -48668,11 +48668,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Friskies para Gatos Adultos Sachê Sabor Frango ao Molho",
       "detail": "85g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.89,
@@ -48740,11 +48740,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Pedigree para Cães Adultos Raças Pequenas Sachê Sabor Frango",
       "detail": "100g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "15",
       "price": 2.59,
@@ -48788,11 +48788,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Pedigree para Cães Adultos Sachê Sabor Frango",
       "detail": "100g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "15",
       "price": 2.59,
@@ -48836,11 +48836,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Pedigree para Cães Filhotes Sachê Sabor Frango",
       "detail": "100g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "15",
       "price": 2.59,
@@ -48860,11 +48860,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Whiskas para Gatos Adultos Sachê Sabor Atum",
       "detail": "85g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Peixes"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.59,
@@ -48932,11 +48932,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Whiskas para Gatos Adultos Sachê Sabor Frango",
       "detail": "85g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.59,
@@ -48980,11 +48980,11 @@
       "branch": "São João da Boa Vista · Jardim das Flores",
       "name": "Ração Úmida Whiskas para Gatos Filhotes Sachê Sabor Frango",
       "detail": "85g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
       "productTypes": [
-        "Frango"
+        "Pet"
       ],
       "storeCategory": "16",
       "price": 2.59,
@@ -53990,11 +53990,11 @@
           "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
           "name": "Ração para Gatos Peixe Adultos Yuppie",
           "detail": "1kg",
-          "category": "Açougue e peixaria",
-          "department": "Açougue e peixaria",
-          "productType": "Peixes",
+          "category": "Pet",
+          "department": "Pet",
+          "productType": "Pet",
           "productTypes": [
-            "Peixes"
+            "Pet"
           ],
           "storeCategory": "Pet",
           "price": 12.9,

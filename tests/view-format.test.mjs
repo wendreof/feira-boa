@@ -1,6 +1,19 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatFeedUpdate, isActive, normalizeSearch, addCalendarDays, expiryHighlightLabel } from "../src/view/format.ts";
+import {
+  dateLabel,
+  formatFeedUpdate,
+  isActive,
+  money,
+  normalizeSearch,
+  addCalendarDays,
+  expiryHighlightLabel,
+} from "../src/view/format.ts";
+
+test("money and dateLabel use Brazilian formatting", () => {
+  assert.match(money(4.18), /^R\$\s*4,18$/);
+  assert.match(dateLabel("2026-10-22"), /^22\s+\w{3}$/i);
+});
 
 test("feed update line falls back when the timestamp is invalid", () => {
   assert.equal(formatFeedUpdate("not a date"), "Atualização das ofertas indisponível");

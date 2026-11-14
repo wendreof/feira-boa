@@ -9,10 +9,10 @@
     "from": "2026-11-13",
     "to": "2026-11-19"
   },
-  "fetchedAt": "2026-11-13T23:28:33.008Z",
+  "fetchedAt": "2026-11-14T01:07:56.225Z",
   "sourceUrl": "https://corso.com.br/jornalfrente.php",
   "flyerHash": "1794507762",
-  "extractionMethod": "gemini",
+  "extractionMethod": "cache",
   "offers": [
     {
       "id": "corso-creme-dental-4-em-1-oral-b-70g-2026-11-13",

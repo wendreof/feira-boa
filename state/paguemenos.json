@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-13T23:28:39.898Z",
+  "fetchedAt": "2026-11-14T01:08:08.932Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -12678,7 +12678,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Bomboniere/Chocolate",
-      "price": 4.59,
+      "price": 4.79,
       "previousPrice": null,
       "icon": "🍫",
       "tone": "#edf4e9",
@@ -16544,7 +16544,7 @@
       ],
       "storeCategory": "Café da Manhã/Aveias e Mingaus/Aveia",
       "price": 13.99,
-      "previousPrice": 18.59,
+      "previousPrice": 16.99,
       "icon": "🥣",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

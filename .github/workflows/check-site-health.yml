@@ -34,10 +34,10 @@ jobs:
           node-version: 24
 
       # Skip quietly when the variable is missing so an unset SITE_URL does not
-      # open/update an ops issue every hour; the annotation shows in the run.
-      - name: Warn when SITE_URL is not configured
+      # open/update an ops issue every hour.
+      - name: Note when SITE_URL is not configured
         if: env.SITE_URL == ''
-        run: echo "::warning::SITE_URL Actions variable is not set; health check skipped."
+        run: echo "SITE_URL Actions variable is not set; health check skipped."
 
       - name: Check site and public data files
         if: env.SITE_URL != ''

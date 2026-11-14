@@ -1,10 +1,17 @@
 import { foldText } from "../../src/shared/text.mjs";
 
-const COUNTER_MEAT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes"]);
+const MARINATED_MEAT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes", "Frango"]);
 
+/** Names like "… Temperado" are marinated cuts, not tempero/condimento SKUs. */
 function isMarinatedCounterCut(name, productType) {
-  if (!COUNTER_MEAT_TYPES.has(productType)) return false;
+  if (!MARINATED_MEAT_TYPES.has(productType)) return false;
   const text = foldText(name);
+  if (/tempero\s*(para|de|completo)|sache\s+de\s+tempero|\btempero\b/.test(text) && !/temperad[oa]/.test(text)) {
+    return false;
+  }
+  if (productType === "Frango") {
+    return /frango|passarinho|asa de|coxa|sobrecoxa|sassami|filezinho|peito de frango|coracao de frango|tulipa|moela/.test(text);
+  }
   return /picanha|costela|bisteca|contrafile|alcatra|maminha|fraldinha|acem|pernil|paleta|cupim|lombo|file mignon|bovin|suin|suino|tilapia|merluza|sardinha|atum|peito|figado|carre/.test(text);
 }
 

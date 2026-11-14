@@ -1,6 +1,7 @@
 import { appState } from "./state";
 import { topbar, accountAccess, accountPanel, navAccountLink, navAccountLabel, mobileNavAccountLink, mobileNavAccountLabel, accountDescription, accountStatus, topbarAccount, topbarAccountImage, topbarAccountFallback, topbarHello } from "./dom";
-import { AVATAR_SIZE, loadAvatar, readCachedAvatarPath, setAvatarImage, writeCachedAvatarPath } from "../avatar";
+import { AVATAR_LOAD_TIMEOUT_MS, AVATAR_SIZE, isStorageAvatarPath, loadAvatar, readCachedAvatarPath, setAvatarImage, writeCachedAvatarPath } from "../avatar";
+import { hideSpinner, showSpinner } from "../loading";
 import { loadDisplayName } from "../account";
 
 export function bindCompactTopbar(): void {
@@ -71,9 +72,44 @@ function setTopbarAvatarPath(path: string | null): void {
     clearTopbarAvatar();
     return;
   }
+  if (!isStorageAvatarPath(path)) {
+    setTopbarRemoteAvatar(path);
+    return;
+  }
   setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar, {
     onSettled: settleTopbarAvatarFallback,
   });
+}
+
+function setTopbarRemoteAvatar(url: string): void {
+  const image = topbarAccountImage;
+  if (!image) return;
+  const host = image.parentElement;
+  image.removeAttribute("src");
+  image.hidden = false;
+  image.style.opacity = "0";
+  showSpinner(host);
+  let settled = false;
+  const settle = (visible: boolean): void => {
+    if (settled) return;
+    settled = true;
+    window.clearTimeout(loadTimeout);
+    image.onload = null;
+    image.onerror = null;
+    hideSpinner(host);
+    image.style.opacity = "";
+    if (visible) {
+      image.hidden = false;
+      if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+      return;
+    }
+    clearTopbarAvatar();
+  };
+  const loadTimeout = window.setTimeout(() => settle(false), AVATAR_LOAD_TIMEOUT_MS);
+  image.onload = () => settle(true);
+  image.onerror = () => settle(false);
+  image.src = url;
+  if (image.complete && image.naturalWidth > 0) settle(true);
 }
 
 export function primeTopbarAvatar(userId: string): void {
@@ -86,18 +122,25 @@ export function primeTopbarAvatar(userId: string): void {
   }
 }
 
-export async function refreshTopbarAvatar(userId: string, knownPath?: string | null): Promise<void> {
+export async function refreshTopbarAvatar(
+  userId: string,
+  knownPath?: string | null,
+  providerAvatarUrl?: string | null,
+): Promise<void> {
   try {
     const path = knownPath !== undefined ? knownPath : await loadAvatar(userId);
     writeCachedAvatarPath(userId, path, sessionStorage);
     if (path) {
       setTopbarAvatarPath(path);
+    } else if (providerAvatarUrl) {
+      setTopbarRemoteAvatar(providerAvatarUrl);
     } else {
       clearTopbarAvatar();
     }
   } catch (error) {
     console.warn("Could not load the topbar avatar.", error);
-    if (knownPath === undefined) clearTopbarAvatar();
+    if (providerAvatarUrl) setTopbarRemoteAvatar(providerAvatarUrl);
+    else if (knownPath === undefined) clearTopbarAvatar();
   }
   try {
     const name = await loadDisplayName(userId);

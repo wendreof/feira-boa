@@ -17,6 +17,15 @@ test("displayOfferIcon fixes spice icon on marinated pork", () => {
   }), "🐖");
 });
 
+test("displayOfferIcon fixes spice icon on marinated poultry", () => {
+  assert.equal(displayOfferIcon({
+    name: "Frango A Passarinho Temperado Congelado Nutribem",
+    icon: "🧂",
+    productType: "Frango",
+    department: "Açougue e peixaria",
+  }), "🍗");
+});
+
 test("offerCardCategoryLine shows açougue for kg counter cuts", () => {
   const line = offerCardCategoryLine(
     { store: "Big Bom", productType: "Carne bovina", productTypes: ["Carne bovina"], detail: "kg" },

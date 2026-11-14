@@ -6,6 +6,9 @@ import {
   writeCachedAvatarPath,
 } from "../scripts/domain/avatar-cache.mjs";
 import { avatarPublicUrl } from "../scripts/domain/avatar-public-url.mjs";
+import { isStorageAvatarPath } from "./shared/provider-profile";
+
+export { isStorageAvatarPath };
 
 export { readCachedAvatarPath, writeCachedAvatarPath, clearCachedAvatarPath };
 
@@ -14,6 +17,9 @@ export const AVATAR_MAX_BYTES = 2 * 1024 * 1024;
 export const AVATAR_MIME_TYPES = ["image/png", "image/jpeg", "image/webp"];
 /** Tamanho pedido à CDN para cada lugar de exibição (2x para telas densas). */
 export const AVATAR_SIZE = { topbar: 64, preview: 144 } as const;
+/** Evita spinner infinito quando a CDN ou rede não devolve load/error. */
+export const AVATAR_LOAD_TIMEOUT_MS = 12_000;
+
 const AVATAR_MAX_EDGE = 512;
 const AVATAR_RESIZED_MIME = "image/webp";
 const AVATAR_RESIZE_QUALITY = 0.85;
@@ -106,6 +112,7 @@ export function setAvatarImage(
 
   const hadVisibleImage = !image.hidden && avatarImageIsLoaded(image);
   let retriedFullSize = false;
+  let settled = false;
   if (!hadVisibleImage) {
     // Browsers defer or skip fetches for display:none images; stay in layout while loading.
     image.hidden = false;
@@ -113,6 +120,9 @@ export function setAvatarImage(
     showSpinner(host);
   }
   const settle = (visible: boolean): void => {
+    if (settled) return;
+    settled = true;
+    window.clearTimeout(loadTimeout);
     image.onload = null;
     image.onerror = null;
     hideSpinner(host);
@@ -120,6 +130,7 @@ export function setAvatarImage(
     image.hidden = !visible;
     options?.onSettled?.(visible);
   };
+  const loadTimeout = window.setTimeout(() => settle(hadVisibleImage), AVATAR_LOAD_TIMEOUT_MS);
   image.onload = () => settle(true);
   image.onerror = () => {
     if (!retriedFullSize) {

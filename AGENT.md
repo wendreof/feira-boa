@@ -54,7 +54,10 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 
 ### Auth and persistence
 - Supabase handles optional account auth and account-scoped sync.
-- The login page supports e-mail/password and Google OAuth (`signInWithGoogle` in `account.ts`); the Google provider itself must be enabled in the Supabase console, and the Google client ID/secret never live in the frontend.
+- The login page supports e-mail/password, Google OAuth, and X OAuth 2.0 (`signInWithOAuth`, `signInWithGoogle`, `signInWithX` with provider `x` in `account.ts`). Enable each provider in the Supabase console; client IDs and secrets never live in the frontend.
+- **OAuth console setup:** Supabase → Authentication → Providers. Callback URL for all providers is `https://muiuvmhzzbqflxznpnez.supabase.co/auth/v1/callback`. Add `https://feira-boa.pages.dev/login.html` and `http://127.0.0.1:8790/login.html` under Supabase **URL configuration → Redirect URLs**.
+- **X (OAuth 2.0):** [X Developer Portal](https://developer.x.com) → create a project/app → User authentication **Web App** → callback URL = Supabase callback above → turn on **Request email from users** → copy **OAuth 2.0 Client ID** and **Client Secret** (Keys and tokens, not legacy API key/secret) into Supabase **Authentication → X / Twitter (OAuth 2.0)**. Prefer this over the legacy Twitter (OAuth 1.0a) provider.
+- **Facebook (optional, not on login UI):** `signInWithFacebook` remains in code; Meta must grant `email` + `public_profile` on the Login use case before re-enabling the button.
 - Favorites and reactions require a signed-in account; the login prompt opens from favorite/reaction controls and the Favoritos nav.
 - Guest localStorage favorites are a one-time migration source merged into the account on first sign-in, not a signed-out UI feature.
 - Signed-in data is stored in Supabase tables with RLS protection.

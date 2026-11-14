@@ -42,6 +42,7 @@ const requiredFiles = [
   "social-card.png",
   "icons/icon-192.png",
   "icons/icon-512.png",
+  "icons/icon-1024.png",
   "icons/maskable-512.png",
   "icons/notification-96.png",
   "icons/badge-72.png",

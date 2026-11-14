@@ -2,6 +2,7 @@ import type { User } from "@supabase/supabase-js";
 import type { ProfilePreferences } from "./types";
 import { errorMessage } from "./errors";
 import { unregisterAnonymousCatalogPush } from "./catalog-push-register";
+import { buildOAuthLoginRedirect, OAUTH_PROVIDER_SCOPES, type OAuthLoginProvider } from "./shared/oauth-login";
 import { supabase } from "./supabase-client";
 
 export { errorMessage };
@@ -50,17 +51,31 @@ export async function signIn(email: string, password: string): Promise<User> {
 }
 
 /**
- * Inicia o login com Google. O navegador é redirecionado para o provedor e
+ * Inicia login social (Google, X, …). O navegador vai ao provedor e
  * volta para `login.html`, que conclui a sessão e segue para o destino salvo.
  */
-export async function signInWithGoogle(returnTo: string): Promise<void> {
-  const redirectTo = new URL("login.html", window.location.origin);
-  redirectTo.searchParams.set("returnTo", returnTo);
+export async function signInWithOAuth(provider: OAuthLoginProvider, returnTo: string): Promise<void> {
+  const redirectTo = buildOAuthLoginRedirect(window.location.origin, returnTo);
+  const options: { redirectTo: string; scopes?: string } = { redirectTo };
+  const scopes = OAUTH_PROVIDER_SCOPES[provider];
+  if (scopes) options.scopes = scopes;
   const { error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: { redirectTo: redirectTo.toString() },
+    provider,
+    options,
   });
   if (error) throw error;
+}
+
+export async function signInWithGoogle(returnTo: string): Promise<void> {
+  return signInWithOAuth("google", returnTo);
+}
+
+export async function signInWithFacebook(returnTo: string): Promise<void> {
+  return signInWithOAuth("facebook", returnTo);
+}
+
+export async function signInWithX(returnTo: string): Promise<void> {
+  return signInWithOAuth("x", returnTo);
 }
 
 export async function signUp(email: string, password: string, displayName: string): Promise<{ user: User | null; confirmationRequired: boolean }> {
@@ -105,14 +120,16 @@ export async function saveDisplayName(userId: string, displayName: string): Prom
   return name;
 }
 
-/** Preenche o nome a partir do Google quando a conta ainda não tem um. */
+export { providerAvatarUrlFromMetadata } from "./shared/provider-profile";
+
+/** Preenche o nome a partir do provedor OAuth quando a conta ainda não tem um. */
 export async function importDisplayNameFromProvider(userId: string): Promise<string | null> {
   const existing = await loadDisplayName(userId);
   if (existing) return existing;
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user) return null;
   const metadata = data.user.user_metadata;
-  const candidate = [metadata?.full_name, metadata?.name, metadata?.given_name]
+  const candidate = [metadata?.full_name, metadata?.name, metadata?.given_name, metadata?.user_name, metadata?.preferred_username]
     .find((value): value is string => typeof value === "string" && value.trim().length >= 2);
   if (!candidate) return null;
   return saveDisplayName(userId, candidate);

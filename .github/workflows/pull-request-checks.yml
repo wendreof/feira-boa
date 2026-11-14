@@ -45,4 +45,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/lcov.info
+          # Skip CLI binary GPG check only; upload failures still fail CI (fail_ci_if_error).
+          skip_validation: true
           fail_ci_if_error: true

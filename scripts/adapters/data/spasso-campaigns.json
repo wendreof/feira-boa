@@ -1,6 +1,1047 @@
 {
-  "flyerHash": null,
-  "updatedAt": null,
-  "extractionMethod": "none",
-  "campaigns": []
+  "flyerHash": "cc1a947fbc34d0fd",
+  "updatedAt": "2026-11-14T02:16:09.083Z",
+  "extractionMethod": "gemini",
+  "campaigns": [
+    {
+      "from": "2026-11-03",
+      "to": "2026-11-04",
+      "offers": [
+        {
+          "name": "Pêssego Nacional",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Hortifruti",
+          "price": 1.79,
+          "oldPrice": null
+        },
+        {
+          "name": "Repolho Verde",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 1.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Melancia",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 2.69,
+          "oldPrice": null
+        },
+        {
+          "name": "Laranja Pera",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 2.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Chuchu",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 2.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Alho Roxo Granel",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Hortifruti",
+          "price": 2.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Beterraba",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 3.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Banana Prata",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Batata Monalisa ou Pepino Conserva",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Manga Tommy",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 6.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Abacaxi Pérola ou Havaí",
+          "brand": "",
+          "detail": "Médio Unidade",
+          "cat": "Hortifruti",
+          "price": 6.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Uva Verde, Vermelha ou Vitória",
+          "brand": "Duvale",
+          "detail": "Bandeja 500g",
+          "cat": "Hortifruti",
+          "price": 8.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Maçã Gala ou Pera Packhams",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Hortifruti",
+          "price": 10.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Ovos Grandes Brancos",
+          "brand": "Sabor Ovo",
+          "detail": "Com 20 Unidades",
+          "cat": "Hortifruti",
+          "price": 10.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Ameixa Importada ou Kiwi Verde",
+          "brand": "",
+          "detail": "Bandeja 500g/600g",
+          "cat": "Hortifruti",
+          "price": 11.98,
+          "oldPrice": null
+        }
+      ]
+    },
+    {
+      "from": "2026-11-04",
+      "to": "2026-11-06",
+      "offers": [
+        {
+          "name": "Coxa com Sobrecoxa de Frango",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 8.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Linguiça Toscana",
+          "brand": "Seara",
+          "detail": "Pacote 600g",
+          "cat": "Carnes",
+          "price": 12.98,
+          "oldPrice": 17.98
+        },
+        {
+          "name": "Moela de Frango",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 15.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Asa de Frango",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 16.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Fígado Bovino",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 18.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Filé de Tilápia",
+          "brand": "Ecofish",
+          "detail": "Pacote 400g",
+          "cat": "Peixes",
+          "price": 22.9,
+          "oldPrice": 25.9
+        },
+        {
+          "name": "Filé Mignon Suíno",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 25.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Paleta Bovina",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 41.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Patinho Bovino",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 47.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Miolo da Alcatra Bovina",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 54.9,
+          "oldPrice": null
+        }
+      ]
+    },
+    {
+      "from": "2026-11-03",
+      "to": "2026-11-07",
+      "offers": [
+        {
+          "name": "Doces Sortidos",
+          "brand": "Sabores do Mercadão",
+          "detail": "Cada 100g",
+          "cat": "Mercearia",
+          "price": 5.49,
+          "oldPrice": 5.99
+        },
+        {
+          "name": "Lemon Pepper",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Mercearia",
+          "price": 7.99,
+          "oldPrice": 8.99
+        },
+        {
+          "name": "Azeitonas Pretas Azapa",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Mercearia",
+          "price": 8.99,
+          "oldPrice": 9.99
+        },
+        {
+          "name": "Amendoim",
+          "brand": "Sabores",
+          "detail": "Pacote 200g",
+          "cat": "Mercearia",
+          "price": 7.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Cerveja Puro Malte",
+          "brand": "Spaten",
+          "detail": "Lata 350ml",
+          "cat": "Bebidas",
+          "price": 3.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Cerveja",
+          "brand": "Heineken",
+          "detail": "Lata 350ml",
+          "cat": "Bebidas",
+          "price": 4.89,
+          "oldPrice": 5.79
+        },
+        {
+          "name": "Cerveja",
+          "brand": "Michelob Ultra",
+          "detail": "Lata 350ml",
+          "cat": "Bebidas",
+          "price": 4.89,
+          "oldPrice": null
+        },
+        {
+          "name": "Refrigerante Tradicional ou Black",
+          "brand": "Pepsi",
+          "detail": "Pet 2 Litros",
+          "cat": "Bebidas",
+          "price": 7.49,
+          "oldPrice": null
+        },
+        {
+          "name": "Salsicha",
+          "brand": "Perdigão",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 10.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Peito de Frango com Osso e Pele",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 12.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Linguiça Toscana Granel",
+          "brand": "Sadia",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 17.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Contrafilé Porcionado",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 49.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Requeijão Cremoso Tradicional",
+          "brand": "Danone",
+          "detail": "200g",
+          "cat": "Laticínios",
+          "price": 7.99,
+          "oldPrice": 9.39
+        },
+        {
+          "name": "Batata Palito + Fininhas Congeladas",
+          "brand": "McCain",
+          "detail": "1,05Kg",
+          "cat": "Congelados",
+          "price": 22.9,
+          "oldPrice": 29.9
+        },
+        {
+          "name": "Arroz Tipo 1",
+          "brand": "Albaruska",
+          "detail": "5Kg",
+          "cat": "Mercearia",
+          "price": 26.98,
+          "oldPrice": 29.99
+        },
+        {
+          "name": "Feijão Carioca",
+          "brand": "Broto Legal",
+          "detail": "1Kg",
+          "cat": "Mercearia",
+          "price": 7.99,
+          "oldPrice": 10.98
+        },
+        {
+          "name": "Macarrão com Ovos Exceto Ninho",
+          "brand": "Dona Benta",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 3.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Café",
+          "brand": "Evolutto",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 22.9,
+          "oldPrice": 26.9
+        },
+        {
+          "name": "Maionese Tradicional",
+          "brand": "Hellmann's",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 8.99,
+          "oldPrice": 10.99
+        },
+        {
+          "name": "Achocolatado em Pó Chocolatto",
+          "brand": "3 Corações",
+          "detail": "Sachê 560g",
+          "cat": "Mercearia",
+          "price": 13.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Leite Condensado",
+          "brand": "Piracanjuba",
+          "detail": "TP 395g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": 6.99
+        },
+        {
+          "name": "Papel Higiênico Folha Dupla 30 Metros",
+          "brand": "Fofinho",
+          "detail": "Com 12 Rolos",
+          "cat": "Limpeza",
+          "price": 18.98,
+          "oldPrice": 22.98
+        },
+        {
+          "name": "Lava-Roupas em Pó Todo Ciclo",
+          "brand": "Omo",
+          "detail": "Caixa 2Kg",
+          "cat": "Limpeza",
+          "price": 25.98,
+          "oldPrice": 29.99
+        },
+        {
+          "name": "Fraldas Descartáveis Confort Sec Fort Bag",
+          "brand": "Pampers",
+          "detail": "P72 / M70 / G60 / XG54 / XXG52 / XXXG44",
+          "cat": "Geral",
+          "price": 99.98,
+          "oldPrice": 139.98
+        },
+        {
+          "name": "Massa Gnocchi",
+          "brand": "Canpez",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 8.49,
+          "oldPrice": 9.9
+        },
+        {
+          "name": "Pão de Mel Coberto de Chocolate",
+          "brand": "Barion",
+          "detail": "90g",
+          "cat": "Mercearia",
+          "price": 4.49,
+          "oldPrice": null
+        },
+        {
+          "name": "Farinha de Trigo",
+          "brand": "Coamo",
+          "detail": "1Kg",
+          "cat": "Mercearia",
+          "price": 3.39,
+          "oldPrice": 3.99
+        },
+        {
+          "name": "Seleta de Legumes em Conserva",
+          "brand": "Fugini",
+          "detail": "Sachê 170g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": 7.99
+        },
+        {
+          "name": "Leite Zero Lactose Semidesnatado",
+          "brand": "Shefa",
+          "detail": "Pet 1 Litro",
+          "cat": "Laticínios",
+          "price": 5.89,
+          "oldPrice": 6.99
+        },
+        {
+          "name": "Molho de Tomate Tradicional",
+          "brand": "Heinz",
+          "detail": "Sachê 240g",
+          "cat": "Mercearia",
+          "price": 2.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Tapioca",
+          "brand": "Xuca",
+          "detail": "400g",
+          "cat": "Mercearia",
+          "price": 4.99,
+          "oldPrice": 6.99
+        },
+        {
+          "name": "Ketchup Tradicional",
+          "brand": "Heinz",
+          "detail": "397g",
+          "cat": "Mercearia",
+          "price": 13.9,
+          "oldPrice": 15.9
+        },
+        {
+          "name": "Molho Sabores",
+          "brand": "Billy & Jack",
+          "detail": "200g",
+          "cat": "Mercearia",
+          "price": 7.99,
+          "oldPrice": 10.98
+        },
+        {
+          "name": "Leite Desnatado ou Semidesnatado",
+          "brand": "Itambé",
+          "detail": "TP 1 Litro",
+          "cat": "Laticínios",
+          "price": 4.79,
+          "oldPrice": 5.49
+        },
+        {
+          "name": "Rosca de Creme Pequena",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Mercearia",
+          "price": 2.49,
+          "oldPrice": 2.99
+        },
+        {
+          "name": "Focaccia Sabores",
+          "brand": "",
+          "detail": "Cada 100g",
+          "cat": "Mercearia",
+          "price": 3.29,
+          "oldPrice": null
+        },
+        {
+          "name": "Leite em Pó Integral ou Instantâneo",
+          "brand": "Ninho",
+          "detail": "Sachê 350g",
+          "cat": "Mercearia",
+          "price": 18.9,
+          "oldPrice": 20.9
+        },
+        {
+          "name": "Chocolate Sabores",
+          "brand": "Lacta",
+          "detail": "80g/90g/98g",
+          "cat": "Mercearia",
+          "price": 8.9,
+          "oldPrice": 9.98
+        },
+        {
+          "name": "Chocolate Suflair",
+          "brand": "Nestlé",
+          "detail": "50g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Bebida Láctea Chocolate",
+          "brand": "Shefa",
+          "detail": "TP 1 Litro",
+          "cat": "Laticínios",
+          "price": 5.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Doce de Amendoim",
+          "brand": "Paçoquita",
+          "detail": "1,17Kg",
+          "cat": "Mercearia",
+          "price": 34.9,
+          "oldPrice": 39.9
+        },
+        {
+          "name": "Creme de Avelã",
+          "brand": "Metin",
+          "detail": "400g",
+          "cat": "Mercearia",
+          "price": 18.9,
+          "oldPrice": 21.9
+        },
+        {
+          "name": "Carb Up Gel Sabores Exceto Black",
+          "brand": "Probiótica",
+          "detail": "Sachê 30g",
+          "cat": "Mercearia",
+          "price": 5.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Creatina",
+          "brand": "Max Titanium",
+          "detail": "Pote 300g",
+          "cat": "Geral",
+          "price": 49.98,
+          "oldPrice": 59.98
+        },
+        {
+          "name": "Hambúrguer Misto Tradicional",
+          "brand": "Bovgrill",
+          "detail": "672g",
+          "cat": "Congelados",
+          "price": 10.9,
+          "oldPrice": 15.9
+        },
+        {
+          "name": "Almôndega Mista",
+          "brand": "Bov Grill",
+          "detail": "500g",
+          "cat": "Congelados",
+          "price": 12.9,
+          "oldPrice": 15.98
+        },
+        {
+          "name": "Presunto",
+          "brand": "Sadia",
+          "detail": "Cada 100g",
+          "cat": "Frios",
+          "price": 2.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Mortadela Mista",
+          "brand": "Perdigão",
+          "detail": "400g",
+          "cat": "Frios",
+          "price": 7.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Creme de Queijo Sabores",
+          "brand": "Quatá",
+          "detail": "180g",
+          "cat": "Laticínios",
+          "price": 9.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Hambúrguer Misto",
+          "brand": "Perdigão",
+          "detail": "56g",
+          "cat": "Congelados",
+          "price": 1.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Salame Fatiado",
+          "brand": "Perdigão",
+          "detail": "100g",
+          "cat": "Frios",
+          "price": 8.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Sobremesa Creamy Chocolate com Chantilly",
+          "brand": "Batavo",
+          "detail": "90g",
+          "cat": "Laticínios",
+          "price": 3.69,
+          "oldPrice": null
+        },
+        {
+          "name": "Creme Nuv Sabores",
+          "brand": "Batavo",
+          "detail": "100g",
+          "cat": "Laticínios",
+          "price": 3.69,
+          "oldPrice": null
+        },
+        {
+          "name": "Iogurte Sabores Exceto Skyr",
+          "brand": "Atilatte",
+          "detail": "170g",
+          "cat": "Laticínios",
+          "price": 5.49,
+          "oldPrice": null
+        },
+        {
+          "name": "Pão de Alho Bolinha Tradicional",
+          "brand": "Zinho",
+          "detail": "300g",
+          "cat": "Mercearia",
+          "price": 12.99,
+          "oldPrice": 14.99
+        },
+        {
+          "name": "Capeletti ou Ravioli Sabores",
+          "brand": "Mezzani",
+          "detail": "400g",
+          "cat": "Mercearia",
+          "price": 13.9,
+          "oldPrice": 15.79
+        },
+        {
+          "name": "Suco de Uva Refrigerado",
+          "brand": "Natural One",
+          "detail": "Pet 1,3 Litro",
+          "cat": "Bebidas",
+          "price": 16.9,
+          "oldPrice": 18.99
+        },
+        {
+          "name": "Iogurte Triplo Zero Sabores",
+          "brand": "Nestlé",
+          "detail": "1,15Kg",
+          "cat": "Laticínios",
+          "price": 15.9,
+          "oldPrice": 23.99
+        },
+        {
+          "name": "Margarina",
+          "brand": "Claybom",
+          "detail": "500g",
+          "cat": "Laticínios",
+          "price": 5.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Farofa Sabores",
+          "brand": "Casa de Mãe",
+          "detail": "300g",
+          "cat": "Mercearia",
+          "price": 8.99,
+          "oldPrice": 11.98
+        },
+        {
+          "name": "Azeitonas Verdes com Caroço",
+          "brand": "Casa de Mãe",
+          "detail": "100g",
+          "cat": "Mercearia",
+          "price": 4.99,
+          "oldPrice": 6.49
+        },
+        {
+          "name": "Coco Ralado Úmido e Adoçado",
+          "brand": "Casa de Mãe",
+          "detail": "100g",
+          "cat": "Mercearia",
+          "price": 3.99,
+          "oldPrice": 5.49
+        },
+        {
+          "name": "Manteiga Extra com Sal",
+          "brand": "Casa de Mãe",
+          "detail": "500g",
+          "cat": "Laticínios",
+          "price": 23.9,
+          "oldPrice": 27.39
+        },
+        {
+          "name": "Leite de Coco",
+          "brand": "Casa de Mãe",
+          "detail": "200ml",
+          "cat": "Mercearia",
+          "price": 3.99,
+          "oldPrice": 4.69
+        },
+        {
+          "name": "Queijo Minas Frescal",
+          "brand": "Casa de Mãe",
+          "detail": "450g",
+          "cat": "Laticínios",
+          "price": 19.9,
+          "oldPrice": 22.9
+        },
+        {
+          "name": "Copo 460ml",
+          "brand": "Casa de Mãe",
+          "detail": "Jogo com 2 Unidades",
+          "cat": "Geral",
+          "price": 14.98,
+          "oldPrice": 16.98
+        },
+        {
+          "name": "Shampoo Fragrâncias",
+          "brand": "Casa de Mãe",
+          "detail": "300ml",
+          "cat": "Limpeza",
+          "price": 19.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Papel Higiênico Folha Dupla 30 Metros",
+          "brand": "Casa de Mãe",
+          "detail": "Com 16 Rolos",
+          "cat": "Limpeza",
+          "price": 26.98,
+          "oldPrice": 32.99
+        },
+        {
+          "name": "Vinho Chileno",
+          "brand": "Hote",
+          "detail": "750ml",
+          "cat": "Bebidas",
+          "price": 19.9,
+          "oldPrice": 29.9
+        },
+        {
+          "name": "Vinho Português",
+          "brand": "Quatro Ventos",
+          "detail": "750ml",
+          "cat": "Bebidas",
+          "price": 49.9,
+          "oldPrice": 59.9
+        },
+        {
+          "name": "Vodka Imported",
+          "brand": "Absolut",
+          "detail": "1 Litro",
+          "cat": "Bebidas",
+          "price": 79.9,
+          "oldPrice": 109.9
+        },
+        {
+          "name": "Gin",
+          "brand": "Tanqueray",
+          "detail": "750ml",
+          "cat": "Bebidas",
+          "price": 119.9,
+          "oldPrice": 139.9
+        },
+        {
+          "name": "Whisky 12 Anos",
+          "brand": "Chivas Regal",
+          "detail": "1 Litro",
+          "cat": "Bebidas",
+          "price": 129.9,
+          "oldPrice": 159.9
+        },
+        {
+          "name": "Vassoura Phenix",
+          "brand": "Santa Maria",
+          "detail": "Unidade",
+          "cat": "Limpeza",
+          "price": 15.9,
+          "oldPrice": 18.99
+        },
+        {
+          "name": "Chinelo Clássica Cores",
+          "brand": "Ipanema",
+          "detail": "Unidade",
+          "cat": "Geral",
+          "price": 17.9,
+          "oldPrice": 22.98
+        },
+        {
+          "name": "Carvão",
+          "brand": "Jacaré",
+          "detail": "2,5Kg",
+          "cat": "Geral",
+          "price": 19.98,
+          "oldPrice": 22.98
+        },
+        {
+          "name": "Ração Friskies ou Dog Chow Sabores",
+          "brand": "Purina",
+          "detail": "Sachê 85g",
+          "cat": "Geral",
+          "price": 3.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Ração para Cães",
+          "brand": "Bolt",
+          "detail": "7Kg",
+          "cat": "Geral",
+          "price": 49.98,
+          "oldPrice": 69.98
+        },
+        {
+          "name": "Sabonete Fragrâncias",
+          "brand": "Lux",
+          "detail": "85g",
+          "cat": "Limpeza",
+          "price": 2.99,
+          "oldPrice": 3.99
+        },
+        {
+          "name": "Creme Dental Tripla Ação Sabores",
+          "brand": "Colgate",
+          "detail": "90g",
+          "cat": "Limpeza",
+          "price": 5.98,
+          "oldPrice": 7.99
+        },
+        {
+          "name": "Toalhas Umedecidas",
+          "brand": "Small Baby",
+          "detail": "Com 120 Unidades",
+          "cat": "Limpeza",
+          "price": 9.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Desodorante Fragrâncias Aero Exceto Clinical",
+          "brand": "Dove",
+          "detail": "150ml",
+          "cat": "Limpeza",
+          "price": 14.98,
+          "oldPrice": 21.98
+        },
+        {
+          "name": "Kit Shampoo + Condicionador Fragrâncias",
+          "brand": "Dove",
+          "detail": "350ml/175ml ou 300ml/150ml",
+          "cat": "Limpeza",
+          "price": 29.89,
+          "oldPrice": 39.98
+        },
+        {
+          "name": "Limpador Multiuso Fragrâncias",
+          "brand": "Uau",
+          "detail": "500ml",
+          "cat": "Limpeza",
+          "price": 5.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Vinagre de Álcool",
+          "brand": "Castelo",
+          "detail": "2 Litros",
+          "cat": "Mercearia",
+          "price": 14.9,
+          "oldPrice": 18.99
+        },
+        {
+          "name": "Amaciante Fragrâncias",
+          "brand": "Triex",
+          "detail": "5 Litros",
+          "cat": "Limpeza",
+          "price": 13.98,
+          "oldPrice": 16.49
+        },
+        {
+          "name": "Inseticida Fragrâncias Aero Leve + Pague -",
+          "brand": "Raid",
+          "detail": "420ml",
+          "cat": "Limpeza",
+          "price": 17.98,
+          "oldPrice": 23.98
+        },
+        {
+          "name": "Lava-Roupas Líquido Natureza Limpa",
+          "brand": "Coquel",
+          "detail": "3 Litros",
+          "cat": "Limpeza",
+          "price": 21.98,
+          "oldPrice": 26.99
+        },
+        {
+          "name": "Roseira Mini",
+          "brand": "",
+          "detail": "Pote 13",
+          "cat": "Geral",
+          "price": 16.98,
+          "oldPrice": 19.98
+        },
+        {
+          "name": "Samambaia Americana",
+          "brand": "",
+          "detail": "C21",
+          "cat": "Geral",
+          "price": 19.98,
+          "oldPrice": 24.99
+        },
+        {
+          "name": "Jibóia Verde Pendente",
+          "brand": "",
+          "detail": "C21",
+          "cat": "Geral",
+          "price": 24.99,
+          "oldPrice": 29.99
+        },
+        {
+          "name": "Phalaenopsis Mix, 2 Hastes ou Multiflora",
+          "brand": "",
+          "detail": "Pote 12",
+          "cat": "Geral",
+          "price": 34.9,
+          "oldPrice": 39.9
+        }
+      ]
+    },
+    {
+      "from": "2026-08-12",
+      "to": "2026-08-14",
+      "offers": [
+        {
+          "name": "Coxa com Sobrecoxa de Frango",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 7.99,
+          "oldPrice": null
+        },
+        {
+          "name": "Peito de Frango com Osso e Pele",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 10.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Linguiça Toscana",
+          "brand": "Frimesa",
+          "detail": "Pacote 600g",
+          "cat": "Carnes",
+          "price": 13.98,
+          "oldPrice": 18.9
+        },
+        {
+          "name": "Bisteca Suína do Lombo Congelada",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 14.98,
+          "oldPrice": null
+        },
+        {
+          "name": "Moela de Frango",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 16.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Fígado Bovino",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 18.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Filé de Tilápia",
+          "brand": "Ecofish",
+          "detail": "Pacote 400g",
+          "cat": "Peixes",
+          "price": 22.9,
+          "oldPrice": 25.9
+        },
+        {
+          "name": "Paleta Bovina",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 38.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Ponta de Alcatra Bovina",
+          "brand": "",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 43.9,
+          "oldPrice": null
+        },
+        {
+          "name": "Contrafilé Porcionado",
+          "brand": "Viva os Sabores",
+          "detail": "Kg",
+          "cat": "Carnes",
+          "price": 59.9,
+          "oldPrice": null
+        }
+      ]
+    }
+  ]
 }

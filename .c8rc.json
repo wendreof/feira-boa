@@ -3,6 +3,7 @@
     "tests/**",
     "**/*.test.mjs",
     "scripts/test-*.mjs",
+    "scripts/sync-develop-from-main.mjs",
     "node_modules/**",
     "coverage/**"
   ],

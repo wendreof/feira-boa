@@ -15,6 +15,7 @@
     "agent:ingest": "node scripts/agent-ingest.mjs",
     "check:site": "node scripts/check-site-health.mjs",
     "sync": "node scripts/sync.mjs",
+    "sync:develop": "node scripts/sync-develop-from-main.mjs",
     "send:price-alerts": "node scripts/send-price-alerts.mjs",
     "send:price-alerts:dry": "node scripts/send-price-alerts.mjs --dry-run",
     "send:catalog-push": "node scripts/send-catalog-push.mjs",

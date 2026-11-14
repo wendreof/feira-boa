@@ -54,6 +54,10 @@ test("resolveCategory keeps embutidos out of the meat categories", () => {
 test("resolveCategory uses keywords for groups without a product type", () => {
   assert.deepEqual(resolveCategory({ name: "Fralda P/M 30un", productTypes: ["Higiene pessoal"] }), { groupId: "infantil", subcategory: "Fraldas" });
   assert.deepEqual(resolveCategory({ name: "Ração Adulto Cães 15kg", productTypes: ["Pet"] }), { groupId: "pet", subcategory: "Ração para cães" });
+  assert.deepEqual(
+    resolveCategory({ name: "Ração Gatos Peixe Adultos Yuppie", productTypes: ["Pet"], detail: "1kg" }),
+    { groupId: "pet", subcategory: "Ração para gatos" },
+  );
   assert.deepEqual(resolveCategory({ name: "Pão de Mel", productTypes: ["Mercearia"] }), { groupId: "frescos", subcategory: "Padaria e confeitaria" });
   assert.deepEqual(resolveCategory({ name: "Pizza Calabresa", productTypes: ["Congelados"] }), { groupId: "congelados", subcategory: "Salgados e pizzas" });
 });

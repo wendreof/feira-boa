@@ -1,5 +1,6 @@
 import { foldText } from "../../src/shared/text.mjs";
 import { isBarbecueProductName } from "./churrasco-classification.mjs";
+import { isPetFoodOfferName } from "./carnes-department.mjs";
 
 /** @type {Array<[RegExp, string]>} */
 const PRODUCT_TYPE_RULES = [
@@ -17,6 +18,7 @@ const PRODUCT_TYPE_RULES = [
   [/\b(requeijao|ricota|queijo minas|queijo prato|mussarela|mucarela)\b/, "Queijos e requeijão"],
   [/\b(manteiga|margarina)\b/, "Manteiga"],
   [/\b(ketchup|mostarda|maionese)\b/, "Mercearia"],
+  [/\b(racao|racoes|petisco|petiscos|coleira|comedouro|areia sanit|areia sanitaria|antipulgas|higiene animal|shampoo pet|alimento para|para caes|para gatos)\b/, "Pet"],
   [/\b(presunto|mortadela|salsicha|linguica|bacon|embutido|salami|salame|pepperoni|quibe)\b/, "Frios"],
   [/\b(suina|suino|pernil|bisteca|panceta)\b/, "Carnes suínas"],
   [/\b(bovino|bovina|contrafile|paleta|alcatra|fraldinha|maminha|figado|acem|lombo|costela|patinho|picanha|entrecote|ancho|file mignon|filé mignon|carne moida)\b/, "Carne bovina"],
@@ -32,7 +34,6 @@ const PRODUCT_TYPE_RULES = [
   [/\b(new fort|fort lar|fervedor)\b/, "Casa"],
   [/\b(arroz|feijao|acucar|macarrao|massa para|farinha|azeite|maionese|ketchup|mostarda|azeitona|seleta|milho|oleo soja|molho|creme de leite|leite condensado|pao de forma|cereal|granola|aveia|filtro de papel|caldo|sopa|sal|vinagre|tempero|shoyu)\b/, "Mercearia"],
   [/\b(tomate|batata|cebola|cenoura|alface|banana|maca|fruta|verdura|legume|abacaxi|melancia|melao|laranja|uva|alho|manga|abobora|chuchu|repolho|abobrinha|pepino|milho verde|brocolis|couve|beterraba|brocolis|palmito|aipim|abacate|melancia)\b/, "Hortifruti"],
-  [/\b(racao|racoes|petisco|petiscos|coleira|comedouro|areia sanit|areia sanitaria|antipulgas|higiene animal|shampoo pet|alimento para|para caes|para gatos)\b/, "Pet"],
 ];
 
 /**
@@ -151,7 +152,7 @@ export function classifyProduct(name, category, storeCategory = "") {
   const text = normalizeForCategory(name);
   const normalizedCategory = category === "Geral" ? "Outros" : category;
   const storeType = classifyByStoreCategory(storeCategory);
-  const matched = storeType
+  const matched = storeType && !isPetFoodOfferName(name)
     ? [null, storeType]
     : PRODUCT_TYPE_RULES.find(([pattern]) => pattern.test(text));
   const productType = matched

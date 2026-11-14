@@ -194,6 +194,8 @@ When working in this repo, keep the interaction crisp:
 
 **Git commits:** Local agents must not run `git commit` unless the user explicitly asks. Do not set author/committer to Cursor or other agent identities; the user commits manually. See `.cursor/rules/no-agent-commits.mdc`. CI auto-commits (offer monitor workflow) are intentional and unrelated.
 
+**develop sync:** Run `npm run sync:develop` before new work on `develop`. Optional git hooks: `git config core.hooksPath .githooks` (runs `post-checkout` sync when switching to `develop`; agents do not set this for you).
+
 Use the existing repo knowledge, not generic assumptions. The site is a static frontend with Supabase-backed user features, not a full backend app.
 
 <!-- ai-memory:start -->

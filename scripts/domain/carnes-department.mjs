@@ -1,5 +1,17 @@
+import { foldText } from "../../src/shared/text.mjs";
+
 /** Counter meat/fish types under the home "Carnes" quick filter (kg-priced only). */
 export const CARNES_COUNTER_PRODUCT_TYPES = new Set(["Carne bovina", "Carnes suínas", "Peixes", "Frango"]);
+
+/** Pet food sold by kg must not use the açougue counter line or carnes filter. */
+const PET_FOOD_NAME = /\b(racao|racoes|petisco|petiscos|alimento para|para caes|para gatos|areia sanit|yuppie)\b/;
+
+/**
+ * @param {string} [name]
+ */
+export function isPetFoodOfferName(name) {
+  return PET_FOOD_NAME.test(foldText(name ?? ""));
+}
 
 /**
  * True when the offer unit is kilogram pricing (açougue), not fixed grams/units.
@@ -13,9 +25,10 @@ export function isSoldByKilogram(detail) {
 }
 
 /**
- * @param {{ productType?: string, productTypes?: string[], detail?: string }} offer
+ * @param {{ name?: string, productType?: string, productTypes?: string[], detail?: string }} offer
  */
 export function matchesCarnesDepartment(offer) {
+  if (isPetFoodOfferName(offer?.name)) return false;
   const primary = String(offer.productType ?? "");
   const types = offer.productTypes ?? [];
   const isCounterCut =

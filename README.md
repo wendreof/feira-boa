@@ -207,7 +207,7 @@ Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 
 ## Contributing
 
-1. Fork / branch from `main` or `develop`.
+1. Fork / branch from `main` or `develop`; on `develop`, run `npm run sync:develop` before starting feature work.
 2. `npm ci` → typecheck → build → `npm run test:coverage` (and `test:ui` if you change UI).
 3. Open a PR against `develop` (or `main` when appropriate); CI must pass. `npm run pr:create` uses the PR template and defaults `--base develop` — pass `--title`, `--base main`, etc. after `--`.
 

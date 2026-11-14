@@ -1,0 +1,31 @@
+---
+description: Agents must not create local git commits unless the user explicitly asks
+alwaysApply: true
+---
+
+# No agent git commits (local)
+
+Local Cursor/Codex/Composer sessions must **not** create git history on the user's machine unless the user clearly asks to commit (same bar as user rules: if unclear, ask first).
+
+## Do not
+
+- Run `git commit`, `git commit --amend`, or chained add+commit workflows after finishing a task.
+- Offer to commit proactively at the end of every change.
+- Set **author** or **committer** to Cursor, Composer, Codex, Claude, Copilot, or any agent/bot identity (`git -c user.name=...`, env vars, or hooks).
+- Add `Co-authored-by:` (or similar) lines attributing an AI product unless the user explicitly requests that attribution on a commit **they** will make.
+
+## Do
+
+- Leave changes unstaged or staged only when the user asked to stage; stop before commit.
+- Tell the user what changed and suggest a commit message they can run themselves.
+- Run read-only git (`git status`, `git diff`, `git log`) for investigation.
+- Push or open PRs only when the user explicitly asks (and only after they have committed).
+
+## Exceptions
+
+- **CI / GitHub Actions** (e.g. `.github/workflows/monitor-offers.yml` automated ingest commits) — not local agent behavior; do not disable.
+- **Explicit user request** — e.g. "commit this", "create a commit" — then follow the repo git safety protocol (no secrets, no `--no-verify` unless asked, no force-push to main).
+
+## Hooks
+
+This repo has no `.cursor/hooks.json` and no agent auto-commit hooks. Do not add local hooks that commit on agent stop unless the user asks.

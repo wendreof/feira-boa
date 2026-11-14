@@ -32,7 +32,7 @@ Use this skill when the operator wants to **refresh store offers** on Feira Boa.
    - Corso / Spasso: do **not** hand-edit unless fixing a bad automated cache — adapters write `corso-campaigns.json` / `spasso-campaigns.json` after successful extraction.
 3. **Product names**: brand stays inside `name` after ingest (`mergeBrandIntoName` / feed build). Avoid flyer junk in `name` — validity banners and “Pague/Leve” codes belong in `note` when the adapter supports it.
 4. **Taxonomy**: use realistic `cat` strings; `classifyProduct` maps to site sectors.
-5. Do **not** add Gemini/OpenAI vision calls to adapters or CI unless the operator explicitly asks for that architecture change (`BACKEND_PLAN.md` default is no paid API in the scheduled ingest).
+5. Do **not** add Gemini/OpenAI vision calls to adapters or CI unless the operator explicitly asks for that architecture change (`AGENT.md` — scheduled ingest has no paid vision API).
 
 ## Run pipeline (after JSON / adapter edits)
 

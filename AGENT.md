@@ -71,7 +71,6 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 ## Important files
 
 - `README.md` — project setup and operational notes
-- `BACKEND_PLAN.md` — architecture notes, pricing, and deployment constraints
 - `offers.ts` — curated fallback catalog
 - `catalog-taxonomy.mjs` — sectors, subcategories, and highlight tabs used by filters and ordering
 - `app.ts` — main UI behavior and client-side state
@@ -192,6 +191,8 @@ When working in this repo, keep the interaction crisp:
 - Fix the root cause.
 - Validate with a narrow command.
 - Summarize the result and any caveats.
+
+**Git commits:** Local agents must not run `git commit` unless the user explicitly asks. Do not set author/committer to Cursor or other agent identities; the user commits manually. See `.cursor/rules/no-agent-commits.mdc`. CI auto-commits (offer monitor workflow) are intentional and unrelated.
 
 Use the existing repo knowledge, not generic assumptions. The site is a static frontend with Supabase-backed user features, not a full backend app.
 

@@ -9,3 +9,7 @@ tmp/
 /.playwright-mcp
 /supabase/.temp/
 /coverage/
+
+# Internal planning markdown (local operator notes; keep README, AGENT, LICENSE, skills)
+*_PLAN.md
+*_plan.md

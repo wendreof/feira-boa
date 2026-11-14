@@ -30,3 +30,7 @@ dist/
 
 social-card.png
 icons/
+
+# Local planning notes (same patterns as .gitignore)
+*_PLAN.md
+*_plan.md

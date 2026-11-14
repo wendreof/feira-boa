@@ -25,7 +25,7 @@ Feira Boa aggregates official flyers and catalogs from regional chains in a **fa
 | Alerts | Price rules via Telegram and/or push (OneSignal / VAPID) |
 | Monitoring | Scheduled ingest, source review, and origin health checks |
 
-Architecture, taxonomy, and conventions: [`AGENT.md`](AGENT.md) and [`BACKEND_PLAN.md`](BACKEND_PLAN.md).
+Architecture, taxonomy, and conventions: [`AGENT.md`](AGENT.md).
 
 ## Stack
 
@@ -206,13 +206,12 @@ Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 ## Contributing
 
 1. Fork / branch from `main` or `develop`.
-2. `npm ci` → typecheck → build → tests (and `test:ui` if you change UI).
+2. `npm ci` → typecheck → build → tests (and `test:ui` if you change UI). `npm run test:coverage` must meet **80%** lines/statements (c8); branches floor **75%** until adapter coverage grows.
 3. Open a PR; CI must pass. From the CLI, `npm run pr:create` runs `gh pr create` with `.github/pull_request_template.md` (pass `--title`, `--base main`, etc. after `--`).
 
 **MIT** license — see [`LICENSE`](LICENSE).
 
 ## Useful links
 
-- [AGENT.md](AGENT.md) — guide for agents and maintainers
-- [BACKEND_PLAN.md](BACKEND_PLAN.md) — backend and deploy decisions
+- [AGENT.md](AGENT.md) — guide for agents and maintainers (architecture, deploy, ingest)
 - Official offer sources: [Sempre Vale](https://www.semprevale.com.br/ofertas.php), [Big Bom](https://bigbom.com.br), [Pague Menos SJDV](https://www.superpaguemenos.com.br/ofertas?productclusterids=161), [Spasso Sabores](https://spassosabores.com.br/ofertas-sao-joao/), [Corso](https://corso.com.br/jornalfrente.php)

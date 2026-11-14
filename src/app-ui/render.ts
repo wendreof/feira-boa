@@ -16,6 +16,15 @@ import { refreshAlertsInvitePanel } from "./alerts-invite";
 import { browseFiltersActive } from "./browse-filters";
 import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
 import { hideOfferGridLoading } from "./offer-grid-loading";
+import { bindIncrementalMountGrid, mountOffersIncrementally } from "./incremental-mount";
+
+let offerMountGeneration = 0;
+
+bindIncrementalMountGrid(grid);
+
+export type RenderOffersOptions = {
+  onFirstBatch?: () => void;
+};
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -80,54 +89,24 @@ function renderArchivedOffers(today: string, min: number | null, max: number | n
   }
 }
 
-export function renderOffers(): void {
-  hideOfferGridLoading();
-  const focused = document.activeElement instanceof HTMLElement && grid.contains(document.activeElement)
-    ? document.activeElement
-    : null;
-  const today = todayInSaoPaulo();
-  const { min, max } = getPriceBounds();
-  const activeCount = Number(appState.activeStore !== "Todas as lojas") + Number(Boolean(appState.activeDepartment)) + Number(Boolean(appState.activeProductType)) + Number(min !== null || max !== null);
-  activeFilterCount.hidden = activeCount === 0;
-  activeFilterCount.textContent = String(activeCount);
-  const priceRangeReversed = min !== null && max !== null && min > max;
-  const likes = likesByOffer();
-  let matching = priceRangeReversed ? [] : appState.offers.filter((offer) => {
-    const category = offerCategory(offer);
-    const matchesSectorFilter = matchesSector(offer);
-    const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
-    const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
-    return (appState.sharedOfferId ? offer.id === appState.sharedOfferId : isActive(offer, today)) && (appState.sharedOfferId || appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore) &&
-    (appState.sharedOfferId || matchesSectorFilter) &&
-    (appState.sharedOfferId || !appState.activeProductType || category.subcategory === appState.activeProductType) &&
-    (appState.sharedOfferId || !appState.favoriteOnly || appState.favoriteIds.has(offer.id)) &&
-    (appState.sharedOfferId || matchesReaction) && (appState.sharedOfferId || matchesDiscount) &&
-    (appState.sharedOfferId || min === null || offer.price >= min) && (appState.sharedOfferId || max === null || offer.price <= max) && (appState.sharedOfferId || matchesSearch(offer, input.value));
-  });
-  if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => randomOfferRank(a) - randomOfferRank(b));
-  if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
-  if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
-  if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => discountRatio(b) - discountRatio(a));
-  if (sortSelect.value === "top-rated") {
-    matching = [...matching].sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0));
+function mountMatchingOffer(offer: Offer): void {
+  let card = appState.cards.get(offer.id);
+  if (!card) {
+    card = createOfferCard(offer);
+    appState.cards.set(offer.id, card);
   }
+  updateOfferCard(card, offer);
+  grid.append(card.root);
+}
 
-  const matchingIds = new Set(matching.map((offer) => offer.id));
-  for (const [id, card] of appState.cards) {
-    if (!matchingIds.has(id)) {
-      card.root.remove();
-      appState.cards.delete(id);
-    }
-  }
-  for (const offer of matching) {
-    let card = appState.cards.get(offer.id);
-    if (!card) {
-      card = createOfferCard(offer);
-      appState.cards.set(offer.id, card);
-    }
-    updateOfferCard(card, offer);
-    grid.append(card.root);
-  }
+function finishOffersUi(
+  matching: Offer[],
+  focused: HTMLElement | null,
+  today: string,
+  priceRangeReversed: boolean,
+  min: number | null,
+  max: number | null,
+): void {
   if (matching.length === 0) grid.replaceChildren();
   if (focused?.isConnected) focused.focus({ preventScroll: true });
 
@@ -181,4 +160,58 @@ export function renderOffers(): void {
     resultsScopeBar.classList.remove("results-scope-bar--fresh");
   }
   refreshAlertsInvitePanel();
+}
+
+export function renderOffers(options?: RenderOffersOptions): void {
+  hideOfferGridLoading();
+  const generation = ++offerMountGeneration;
+  const focused = document.activeElement instanceof HTMLElement && grid.contains(document.activeElement)
+    ? document.activeElement
+    : null;
+  const today = todayInSaoPaulo();
+  const { min, max } = getPriceBounds();
+  const activeCount = Number(appState.activeStore !== "Todas as lojas") + Number(Boolean(appState.activeDepartment)) + Number(Boolean(appState.activeProductType)) + Number(min !== null || max !== null);
+  activeFilterCount.hidden = activeCount === 0;
+  activeFilterCount.textContent = String(activeCount);
+  const priceRangeReversed = min !== null && max !== null && min > max;
+  const likes = likesByOffer();
+  let matching = priceRangeReversed ? [] : appState.offers.filter((offer) => {
+    const category = offerCategory(offer);
+    const matchesSectorFilter = matchesSector(offer);
+    const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
+    const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
+    return (appState.sharedOfferId ? offer.id === appState.sharedOfferId : isActive(offer, today)) && (appState.sharedOfferId || appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore) &&
+    (appState.sharedOfferId || matchesSectorFilter) &&
+    (appState.sharedOfferId || !appState.activeProductType || category.subcategory === appState.activeProductType) &&
+    (appState.sharedOfferId || !appState.favoriteOnly || appState.favoriteIds.has(offer.id)) &&
+    (appState.sharedOfferId || matchesReaction) && (appState.sharedOfferId || matchesDiscount) &&
+    (appState.sharedOfferId || min === null || offer.price >= min) && (appState.sharedOfferId || max === null || offer.price <= max) && (appState.sharedOfferId || matchesSearch(offer, input.value));
+  });
+  if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => randomOfferRank(a) - randomOfferRank(b));
+  if (sortSelect.value === "price-low") matching = [...matching].sort((a, b) => a.price - b.price);
+  if (sortSelect.value === "price-high") matching = [...matching].sort((a, b) => b.price - a.price);
+  if (sortSelect.value === "discount") matching = [...matching].sort((a, b) => discountRatio(b) - discountRatio(a));
+  if (sortSelect.value === "top-rated") {
+    matching = [...matching].sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0));
+  }
+
+  const matchingIds = new Set(matching.map((offer) => offer.id));
+  for (const [id, card] of appState.cards) {
+    if (!matchingIds.has(id)) {
+      card.root.remove();
+      appState.cards.delete(id);
+    }
+  }
+  const finish = (): void => {
+    if (generation !== offerMountGeneration) return;
+    finishOffersUi(matching, focused, today, priceRangeReversed, min, max);
+  };
+
+  void mountOffersIncrementally(
+    matching,
+    mountMatchingOffer,
+    generation,
+    () => offerMountGeneration,
+    options?.onFirstBatch,
+  ).then(finish);
 }

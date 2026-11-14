@@ -285,6 +285,10 @@ test("assignIcon separates beef from pork", () => {
   assert.equal(assignIcon("Costelinha suína congelada", "Carnes suínas", "Açougue e peixaria"), "🐖");
   assert.equal(assignIcon("Picanha Suína Frinni Temperada", "Carnes suínas", "Açougue e peixaria"), "🐖");
   assert.equal(assignIcon("Filé de Peito de Frango", "Frango", "Açougue e peixaria"), "🍗");
+  assert.equal(
+    assignIcon("Frango A Passarinho Temperado Congelado Nutribem", "Frango", "Açougue e peixaria"),
+    "🍗",
+  );
 });
 
 test("assignIcon gives each deli item its own icon", () => {

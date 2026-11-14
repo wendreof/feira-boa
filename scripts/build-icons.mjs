@@ -6,7 +6,7 @@
  * zero-dependency approach as build-social-card.mjs.
  *
  * Sizes and purposes match manifest.webmanifest and service-worker.js:
- *   - icon-192.png / icon-512.png: app icons (purpose "any")
+ *   - icon-192.png / icon-512.png / icon-1024.png: app icons (purpose "any")
  *   - maskable-512.png: full-bleed background with the mark in the safe zone
  *   - notification-96.png: web push notification icon
  *   - badge-72.png: monochrome status-bar badge (white mark, transparent bg)
@@ -39,6 +39,7 @@ const BADGE_SCALE = 0.78;
 const TARGETS = [
   { file: 'icon-192.png', size: 192, kind: 'plain' },
   { file: 'icon-512.png', size: 512, kind: 'plain' },
+  { file: 'icon-1024.png', size: 1024, kind: 'plain' },
   { file: 'maskable-512.png', size: 512, kind: 'maskable' },
   { file: 'notification-96.png', size: 96, kind: 'plain' },
   { file: 'badge-72.png', size: 72, kind: 'badge' },

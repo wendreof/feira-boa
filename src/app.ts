@@ -16,11 +16,13 @@ import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
 import { renderOffers } from "./app-ui/render";
 import { hideOfferGridLoading } from "./app-ui/offer-grid-loading";
+import { hideFeedLoading, showFeedLoading } from "./app-ui/feed-status";
 import { appState } from "./app-ui/state";
 import { supabase } from "./supabase-client";
 
 function showFeedError(): void {
   hideOfferGridLoading();
+  hideFeedLoading();
   grid.replaceChildren();
   feedStatus.hidden = false;
   feedStatus.dataset.state = "error";
@@ -134,11 +136,13 @@ function restoreAccountSession(): void {
 restoreAccountSession();
 
 (async function startApp(): Promise<void> {
-  feedStatus.textContent = "Carregando ofertas…";
+  showFeedLoading();
   const feedResponse = await fetch("offers.json", { cache: "no-cache" });
   if (!feedResponse.ok) throw new Error(`Offer feed unavailable: ${feedResponse.status}`);
   const feed = await feedResponse.json() as OfferFeed;
   if (!Array.isArray(feed.offers) || !Array.isArray(feed.stores)) throw new Error("Offer feed has an invalid shape.");
+
+  hideOfferGridLoading();
 
   initializeState(feed);
   markCurrentNavigation();
@@ -160,7 +164,7 @@ restoreAccountSession();
   renderStoreFilters();
   renderPopularItems();
   renderFilters();
-  renderOffers();
+  renderOffers({ onFirstBatch: hideFeedLoading });
   applySourceFreshness();
   updatedLabel.textContent = formatFeedUpdate(feed.updatedAt);
   updatedLabel.title = "Data da última atualização do catálogo de ofertas";

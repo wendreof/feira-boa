@@ -5,6 +5,8 @@ import { linkPushDeviceToUser } from "../push";
 import { renderOffers } from "./render";
 import { refreshAlertsInvitePanel, syncAlertsInviteForUser } from "./alerts-invite";
 import { refreshCatalogPushInvite } from "./catalog-push-invite";
+import { providerAvatarUrlFromMetadata, importDisplayNameFromProvider } from "../account";
+import { supabase } from "../supabase-client";
 import { setAccountStatus, updateAccountControls, refreshTopbarAvatar, primeTopbarAvatar } from "./topbar";
 
 function readGuestFavorites(): Set<string> {
@@ -81,7 +83,11 @@ export async function connectAccount(userId: string): Promise<void> {
     } catch (reactionError) {
       console.warn("Could not load saved offer reactions.", reactionError);
     }
-    void refreshTopbarAvatar(userId, avatarPath);
+    const { data: authData } = await supabase.auth.getUser();
+    const providerAvatar = providerAvatarUrlFromMetadata(authData.user?.user_metadata as Record<string, unknown> | undefined);
+    void importDisplayNameFromProvider(userId)
+      .catch(() => null)
+      .finally(() => { void refreshTopbarAvatar(userId, avatarPath, providerAvatar); });
     void linkPushDeviceToUser(userId);
     await syncAlertsInviteForUser(userId);
     void refreshCatalogPushInvite();

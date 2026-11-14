@@ -1,4 +1,10 @@
-import { errorMessage, getCurrentUser, resetPasswordForEmail, signIn, signInWithGoogle, signUp } from "./account";
+import { errorMessage, getCurrentUser, resetPasswordForEmail, signIn, signInWithGoogle, signInWithX, signUp } from "./account";
+import {
+  oauthCallbackErrorUserMessage,
+  oauthProviderUnavailableUserMessage,
+  OAUTH_PROVIDER_LABELS,
+  type OAuthLoginProvider,
+} from "./shared/oauth-login";
 import { bindThemeToggle } from "./theme";
 
 bindThemeToggle();
@@ -15,6 +21,7 @@ const submitButton = document.querySelector<HTMLButtonElement>("#auth-submit")!;
 const switchLabel = document.querySelector<HTMLSpanElement>("#auth-switch-label")!;
 const modeToggle = document.querySelector<HTMLButtonElement>("#auth-mode-toggle")!;
 const googleButton = document.querySelector<HTMLButtonElement>("#google-signin")!;
+const xButton = document.querySelector<HTMLButtonElement>("#x-signin")!;
 const forgotRow = document.querySelector<HTMLParagraphElement>("#auth-forgot-row")!;
 const forgotButton = document.querySelector<HTMLButtonElement>("#auth-forgot-password")!;
 const status = document.querySelector<HTMLParagraphElement>("#auth-status")!;
@@ -23,6 +30,29 @@ let creatingAccount = false;
 
 function setStatus(message: string): void {
   status.textContent = message;
+}
+
+function readOAuthCallbackError(): string | null {
+  const fromSearch = new URLSearchParams(window.location.search);
+  const fromHash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  return fromSearch.get("error_description") ?? fromHash.get("error_description");
+}
+
+function stripOAuthErrorFromAddressBar(): void {
+  const url = new URL(window.location.href);
+  for (const key of ["error", "error_code", "error_description", "sb"]) {
+    url.searchParams.delete(key);
+  }
+  url.hash = "";
+  window.history.replaceState({}, document.title, `${url.pathname}${url.search}`);
+}
+
+function showOAuthCallbackErrorIfPresent(): boolean {
+  const description = readOAuthCallbackError();
+  if (!description) return false;
+  setStatus(oauthCallbackErrorUserMessage(description));
+  stripOAuthErrorFromAddressBar();
+  return true;
 }
 
 function getReturnPath(): string {
@@ -100,20 +130,26 @@ forgotButton.addEventListener("click", async () => {
   }
 });
 
-googleButton.addEventListener("click", async () => {
-  googleButton.disabled = true;
-  setStatus("Abrindo o login do Google…");
+function bindOAuthSignIn(
+  button: HTMLButtonElement,
+  provider: OAuthLoginProvider,
+  signInWithProvider: (returnTo: string) => Promise<void>,
+): void {
+  const label = OAUTH_PROVIDER_LABELS[provider];
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    setStatus(`Abrindo o login do ${label}…`);
+    try {
+      await signInWithProvider(getReturnPath());
+    } catch (error) {
+      setStatus(oauthProviderUnavailableUserMessage(provider, errorMessage(error)));
+      button.disabled = false;
+    }
+  });
+}
 
-  try {
-    await signInWithGoogle(getReturnPath());
-  } catch (error) {
-    const message = errorMessage(error);
-    setStatus(/provider|not enabled|not configured/i.test(message)
-      ? "O login com Google ainda não está disponível. Use seu e-mail e senha."
-      : `Não foi possível entrar com o Google: ${message}`);
-    googleButton.disabled = false;
-  }
-});
+bindOAuthSignIn(googleButton, "google", signInWithGoogle);
+bindOAuthSignIn(xButton, "x", signInWithX);
 
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
@@ -155,10 +191,12 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
   }
 });
 
-void getCurrentUser()
-  .then((user) => {
-    if (user) window.location.replace(getReturnPath());
-  })
-  .catch((error: unknown) => {
-    setStatus(`Não foi possível verificar sua sessão: ${errorMessage(error)}`);
-  });
+if (!showOAuthCallbackErrorIfPresent()) {
+  void getCurrentUser()
+    .then((user) => {
+      if (user) window.location.replace(getReturnPath());
+    })
+    .catch((error: unknown) => {
+      setStatus(`Não foi possível verificar sua sessão: ${errorMessage(error)}`);
+    });
+}

@@ -202,7 +202,7 @@ The **Pull request checks** workflow runs typecheck, build, and `npm run test:co
 
 Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 
-- **Login:** `login.html` — email/password and Google OAuth (configured in the Supabase console, not in code).
+- **Login:** `login.html` — email/password, Google OAuth, and X OAuth 2.0 (enable providers in the Supabase console; see `AGENT.md` for X callback URL and OAuth 2.0 client credentials).
 - **Pages:** `account.html`, `alertas.html`, `admin.html` (read-only panel for users in `admin_users`).
 - **Alerts:** Telegram (`telegram-webhook`) and push; secrets (`SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `ONESIGNAL_REST_API_KEY`, VAPID keys) only in GitHub Actions or Supabase secrets — never in the browser bundle.
 

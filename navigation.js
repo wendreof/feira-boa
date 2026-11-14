@@ -37,11 +37,12 @@
 
   setAccountLinkState();
 
+  // Canonical key: scripts/domain/supabase-auth-storage.mjs (Feira Boa project only).
+  const SUPABASE_AUTH_STORAGE_KEY = "sb-muiuvmhzzbqflxznpnez-auth-token";
+
   function readStoredUserId() {
     try {
-      const storageKey = Object.keys(localStorage).find((key) => /^sb-.*-auth-token$/.test(key));
-      if (!storageKey) return null;
-      let session = JSON.parse(localStorage.getItem(storageKey) || "null");
+      let session = JSON.parse(localStorage.getItem(SUPABASE_AUTH_STORAGE_KEY) || "null");
       if (Array.isArray(session)) session = JSON.parse(session.join(""));
       if (!session?.access_token || !session?.user?.id) return null;
       const expiresAt = session.expires_at;
@@ -49,6 +50,19 @@
       return String(session.user.id);
     } catch {
       return null;
+    }
+  }
+
+  function resetGuestSidebarAvatar() {
+    if (document.documentElement.dataset.authBootstrap === "guest") {
+      const image = document.querySelector("#topbar-account-image");
+      const fallback = document.querySelector("#topbar-account-fallback");
+      if (image instanceof HTMLImageElement) {
+        image.removeAttribute("src");
+        image.style.opacity = "";
+        image.hidden = true;
+      }
+      if (fallback instanceof HTMLElement) fallback.hidden = false;
     }
   }
 
@@ -108,7 +122,10 @@
     if (image.complete && image.naturalWidth > 0) showPhoto();
   }
 
-  primeSidebarAvatarFromCache();
+  resetGuestSidebarAvatar();
+  if (document.documentElement.dataset.authBootstrap === "signed-in") {
+    primeSidebarAvatarFromCache();
+  }
 
   // No desktop o menu lateral fica sempre aberto; o botão só existe no mobile.
   document.body.classList.remove("sidebar-collapsed");

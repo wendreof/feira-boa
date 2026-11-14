@@ -5,7 +5,8 @@ import { linkPushDeviceToUser } from "../push";
 import { renderOffers } from "./render";
 import { refreshAlertsInvitePanel, syncAlertsInviteForUser } from "./alerts-invite";
 import { refreshCatalogPushInvite } from "./catalog-push-invite";
-import { providerAvatarUrlFromMetadata, importDisplayNameFromProvider } from "../account";
+import { importDisplayNameFromProvider } from "../account";
+import { oauthProviderFromUser, providerAvatarUrlFromMetadata } from "../shared/provider-profile";
 import { supabase } from "../supabase-client";
 import { setAccountStatus, updateAccountControls, refreshTopbarAvatar, primeTopbarAvatar } from "./topbar";
 
@@ -84,7 +85,11 @@ export async function connectAccount(userId: string): Promise<void> {
       console.warn("Could not load saved offer reactions.", reactionError);
     }
     const { data: authData } = await supabase.auth.getUser();
-    const providerAvatar = providerAvatarUrlFromMetadata(authData.user?.user_metadata as Record<string, unknown> | undefined);
+    const oauthProvider = oauthProviderFromUser(authData.user);
+    const providerAvatar = providerAvatarUrlFromMetadata(
+      authData.user?.user_metadata as Record<string, unknown> | undefined,
+      oauthProvider,
+    );
     void importDisplayNameFromProvider(userId)
       .catch(() => null)
       .finally(() => { void refreshTopbarAvatar(userId, avatarPath, providerAvatar); });

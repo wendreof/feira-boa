@@ -1,9 +1,10 @@
 (() => {
+  // Canonical key: scripts/domain/supabase-auth-storage.mjs (Feira Boa project only).
+  const SUPABASE_AUTH_STORAGE_KEY = "sb-muiuvmhzzbqflxznpnez-auth-token";
+
   function readStoredUserId() {
     try {
-      const storageKey = Object.keys(localStorage).find((key) => /^sb-.*-auth-token$/.test(key));
-      if (!storageKey) return null;
-      let session = JSON.parse(localStorage.getItem(storageKey) || "null");
+      let session = JSON.parse(localStorage.getItem(SUPABASE_AUTH_STORAGE_KEY) || "null");
       if (Array.isArray(session)) session = JSON.parse(session.join(""));
       if (!session?.access_token || !session?.user?.id) return null;
       const expiresAt = session.expires_at;

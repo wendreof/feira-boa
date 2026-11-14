@@ -1,102 +1,214 @@
 # Feira Boa
 
-Local supermarket offers for São João da Boa Vista.
+**Ofertas de supermercados em São João da Boa Vista** — catálogo estático, busca e filtros, tema claro/escuro, favoritos e alertas opcionais com conta.
 
-## Current prototype
+[![Site](https://img.shields.io/badge/site-feira--boa.pages.dev-2ea44f)](https://feira-boa.pages.dev)
+[![CI](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml/badge.svg)](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml)
+![Node](https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white)
 
-- Search offers by product or brand.
-- Filter results by store, department, and product type.
-- Set a minimum and maximum price, then sort by price or discount.
-- Show the current price, previous price when printed, offer conditions, store, branch, and validity dates.
-- Use product illustrations in the cards instead of embedding a flyer as the main experience.
-- Link every offer back to its source flyer.
-- Hide offers outside their printed validity dates.
-- Switch between light and dark themes; signed-in users sync the choice with their account.
+---
 
-The catalog is assembled from official store sources by the adapters in `scripts/adapters/`. The current feed size changes with each ingest across five monitored sources: Sempre Vale, Big Bom, Pague Menos, Spasso Sabores, and Corso. Pague Menos offers come from the official online catalog collection and may differ in the physical store; this limitation is shown on each offer. The site automatically hides offers outside their listed validity dates. A scheduled GitHub Actions workflow runs **four times daily at 06:00, 09:00, 15:00, and 18:00 (America/Sao_Paulo)** on `main`, ingests official sources, commits `offers.json` + `state/`, and deploys via Cloudflare Pages. Big Bom, Pague Menos, and Spani update automatically; image/PDF flyers (Spasso, Corso, Sempre Vale, Forte Mix) use curated JSON in `scripts/adapters/data/` and are updated via the agent workflow in `.agents/skills/offer-ingestion/`. Source review gates price alerts only; it does not hide the public offer feed.
+## O que é
 
-## Run locally
+Feira Boa reúne encartes e catálogos oficiais das redes da região em uma **PWA** rápida (HTML/CSS/TypeScript, sem framework de UI). Cada oferta aponta para o material-fonte; ofertas fora da validade impressa somem do feed público.
 
-The app uses TypeScript for offer data and browser interactions. Run `npm ci`, `npm run build`, `npm run typecheck`, and `npm test` before shipping. `offers.json` is built from the latest snapshots in `state/`; the curated data in `offers.ts` is a development fallback and is only published when no snapshot exists at all, so outdated prices never mix with fresh ones. `npm run ingest:offers` fetches official sources and updates snapshots; `npm run monitor:sources` records source health. The site footer shows the semantic version, commit, build time, and whether local changes were present. The compiled JavaScript and generated feed are committed so static hosting can serve the site from the repository root.
+| Recurso | Descrição |
+|--------|-----------|
+| Busca e filtros | Produto, loja, setor, tipo, faixa de preço, ordenação |
+| Cards | Preço atual, desconto, validade, condições, link para o encarte |
+| Tema | Claro/escuro; sincroniza com a conta quando logado |
+| Conta (opcional) | Favoritos, curtidas, alertas — [Supabase](https://supabase.com) + RLS |
+| Alertas | Regras de preço via Telegram e/ou push (OneSignal / VAPID) |
+| Monitoramento | Ingestão agendada, revisão de fonte e saúde das origens |
 
-### Static server and Playwright
+Detalhes de arquitetura, taxonomia e convenções: [`AGENT.md`](AGENT.md) e [`BACKEND_PLAN.md`](BACKEND_PLAN.md).
 
-For UI checks against the built site, serve the repository root and run the Playwright scripts:
+## Stack
+
+- **Frontend:** TypeScript → `esbuild` → bundles na raiz (`app.js`, páginas dedicadas)
+- **Dados:** adaptadores em `scripts/adapters/` → snapshots em `state/` → `offers.json`
+- **Testes:** `node --test` + Playwright (UI)
+- **Hospedagem:** [Cloudflare Pages](https://pages.cloudflare.com) — build `npm run build`, diretório de saída `.`
+- **Auth / sync:** Supabase (chave publicável no cliente; segredos só em Actions ou Edge Functions)
+
+O fluxo abaixo liga **fontes oficiais** → **adaptadores** → **snapshots e feed** → **build estático** → **Cloudflare Pages** → **PWA** no navegador. Ingestão local: `npm run ingest:offers`; em produção o mesmo caminho roda no workflow agendado.
+
+```mermaid
+flowchart TB
+  subgraph fontes [Fontes oficiais]
+    apis[API e HTML - Sempre Vale Pague Menos]
+    pdf[PDF e scrape - Big Bom Spani]
+    corso[Corso jornal JPG]
+    spasso[Spasso imagens no site]
+    manual[fortemix-campaigns.json manual]
+  end
+
+  subgraph ingest [Ingestao no repo]
+    io[ingest-offers.mjs]
+    adp[scripts/adapters por loja]
+    gem[corso-gemini.mjs opcional GEMINI_API_KEY]
+  end
+
+  subgraph persist [Estado versionado]
+    st[state por loja .json]
+    prev[state/previous]
+    cache[corso-campaigns.json]
+  end
+
+  subgraph feed [Feed publico]
+    bof[build-offer-feed.mjs]
+    off[offers.json]
+    man[snapshot-manifest.json]
+  end
+
+  subgraph site [Build e hospedagem]
+    nb[npm run build - tsc esbuild structured data]
+    cf[Cloudflare Pages]
+  end
+
+  apis --> adp
+  pdf --> adp
+  corso --> gem
+  gem --> adp
+  corso --> adp
+  spasso --> adp
+  manual --> adp
+  io --> adp
+  adp --> st
+  adp --> prev
+  adp --> cache
+  io --> bof
+  st --> bof
+  prev --> bof
+  bof --> off
+  bof --> man
+  off --> nb
+  man --> nb
+  nb --> cf
+
+  subgraph ci [GitHub Actions monitor-offers.yml]
+    sched[4x dia ou workflow_dispatch]
+    mon[monitor:sources e health]
+    git[commit push main]
+  end
+
+  sched --> io
+  io --> mon
+  mon --> git
+  git --> cf
+
+  pwa[PWA index.html app.js offers.json]
+  cf --> pwa
+
+  subgraph conta [Opcional conta e alertas]
+    sb[Supabase login favoritos tema]
+    push[Telegram OneSignal workflows separados]
+  end
+
+  pwa --> sb
+  pwa -.-> push
+```
+
+**Leitura rápida:** cada adaptador grava ou preserva `state/<loja>.json`; o ingest chama `build-offer-feed.mjs` ao terminar. O deploy na Cloudflare executa `npm run build` (regera o feed a partir de `state/` e empacota JS). Conta e alertas são camada opcional no cliente — não entram no `offers.json`.
+
+## Início rápido
+
+Requisito: **Node.js 24** (mesma versão do CI em `.github/workflows/pull-request-checks.yml`).
+
+```bash
+git clone https://github.com/wendreof/feira-boa.git
+cd feira-boa
+npm ci
+npm run build
+npm run typecheck
+npm test
+```
+
+Servir localmente para checagens de UI:
 
 ```bash
 npm run build
 node scripts/dev-static-server.mjs   # http://127.0.0.1:8790
-npm run test:expiry-ui               # list/grid expiry labels
-npm run test:archive-ui              # encartes anteriores (grayscale)
-npm run test:logos                   # store logos on lojas.html
-npm run test:ui                      # all Playwright checks above
 ```
 
-Each script starts the static server on port 8790 when nothing is listening. Install browsers once with `npx playwright install chromium`. Optional sign-in for logo tests: set `FEIRA_E2E_EMAIL` and `FEIRA_E2E_PASSWORD` in the environment (never commit credentials).
+O feed publicado vem dos snapshots em `state/`; `src/offers.ts` é apenas fallback de desenvolvimento quando não há snapshot.
 
-## Supabase accounts
+## Scripts principais
 
-Email accounts are optional and use the dedicated `login.html` page. Guest favorites stay in the current browser; signed-in favorites sync through the `profiles` table. The browser uses the Supabase publishable key in `supabase-config.ts`, which is public by design. Row Level Security limits every user-owned row to its owner. Never put a database password or service-role key in frontend files.
+| Comando | Uso |
+|---------|-----|
+| `npm run build` | Typecheck parcial, gera `offers.json`, structured data, bundles `esbuild`, verifica artefatos |
+| `npm run typecheck` | `tsc` em modo verificação |
+| `npm test` | Testes unitários e de domínio (`tests/**/*.test.mjs`) |
+| `npm run test:ui` | Suite Playwright (expiração, arquivo, logos, termos, etc.) |
+| `npm run test:expiry-ui` / `test:archive-ui` / `test:logos` | Checagens Playwright individuais |
+| `npm run ingest:offers` | Busca fontes oficiais e atualiza `state/` |
+| `npm run agent:ingest` | Validação pós-ingestão manual (encartes curados) |
+| `npm run monitor:sources` | Registra saúde das fontes |
+| `npm run review:source` | Fluxo de revisão após mudança de fonte |
+| `npm run check:site` | Saúde do site em produção (`SITE_URL`) |
+| `npm run build:social-card` | Gera `social-card.png` (requer Chrome ou Edge local) |
+| `npm run build:icons` | Ícones PWA |
+| `npm run send:price-alerts` / `:dry` | Disparo de alertas (CI / operação) |
+| `npm run send:catalog-push` / `:dry` | Push de catálogo |
+| `npm run telegram:setup` | Configuração do bot Telegram |
 
-Run every migration in `supabase/migrations/` in filename order for a new environment before enabling account sync, suggestions, offer votes, Telegram alerts, and admin tools:
+Playwright: instale o Chromium uma vez com `npx playwright install chromium`. Testes de logo opcionais: `FEIRA_E2E_EMAIL` e `FEIRA_E2E_PASSWORD` no ambiente (nunca commitar).
 
-1. Apply the SQL migrations in the Supabase SQL Editor (or `supabase db push` against the project).
-2. Enable email sign-in in Auth. Set the Auth site URL and allowed redirect URLs to the deployed site (and local development URL if needed).
-3. Deploy Edge Functions as needed: `delete-account` (account deletion from the settings page) and `telegram-webhook` (bot commands and account linking). Keep service-role and bot secrets in Supabase function secrets only, never in the browser bundle.
+## Dados e ingestão
 
-The app remains browsable without an account. Guest theme choices are saved in the current browser; signed-in theme choices sync through `profiles.preferences`. Until the migrations and function are deployed, account sync and account deletion will report a setup error; local favorites continue to work.
+Adaptadores em `scripts/adapters/` montam o catálogo a partir de fontes oficiais. Lojas monitoradas incluem **Sempre Vale**, **Big Bom**, **Pague Menos**, **Spasso Sabores**, **Corso**, **Spani** e **Forte Mix** (lista e URLs em [`docs/OFFER_SOURCE_INVENTORY.md`](docs/OFFER_SOURCE_INVENTORY.md) quando aplicável).
 
-### Login with Google
+| Tipo de fonte | Atualização |
+|---------------|-------------|
+| API / página estruturada | Automática no `ingest:offers` (ex.: Pague Menos VTEX) |
+| PDF / site scrape | Adaptadores dedicados (ex.: Big Bom, Spani) |
+| Encarte em imagem | **Corso** e **Spasso**: pipeline com Gemini (`*-gemini.mjs`) e dados curados |
+| Campanhas WhatsApp / app | **Forte Mix**: JSON manual em `scripts/adapters/data/fortemix-campaigns.json` |
 
-`login.html` offers "Continuar com Google" next to the e-mail form. The button calls `supabase.auth.signInWithOAuth` with the Google provider and returns to `login.html?returnTo=…`; the saved destination is validated as a same-origin path before the redirect, and the session is completed by the Supabase client (`detectSessionInUrl`).
+Encartes curados (imagem/PDF): fluxo documentado em [`.agents/skills/offer-ingestion/SKILL.md`](.agents/skills/offer-ingestion/SKILL.md).
 
-Enabling it is a Supabase console setup, not a code change:
+**Agendamento (GitHub Actions):** o workflow `monitor-offers.yml` roda **quatro vezes ao dia** (06:00, 09:00, 15:00 e 18:00, America/Sao_Paulo), ingere, commita `offers.json` + `state/` e dispara deploy na Cloudflare. `needs_review` em uma fonte bloqueia **alertas de preço**, não o feed público.
 
-1. In Google Cloud Console, create an OAuth 2.0 Web client and add the Supabase callback URL `https://<project-ref>.supabase.co/auth/v1/callback` as an authorized redirect URI.
-2. In Supabase → Authentication → Sign In / Providers → Google, enable the provider and paste the Google client ID and client secret.
-3. In Supabase → Authentication → URL Configuration, set the Site URL to the deployed site and add `https://feira-boa.pages.dev/login.html` (plus `http://localhost:4173/login.html` for local work) to the redirect allow list.
-4. In Authentication → Providers, keep email/password enabled: Google sign-in creates the same account rows, and the `on_auth_user_created_profile` trigger creates the profile automatically.
+Ofertas do Pague Menos vêm do catálogo online e podem divergir da loja física — o site exibe esse aviso.
 
-If the provider is not enabled, the button reports that Google sign-in is unavailable and the e-mail form keeps working.
+## Testes e qualidade
 
-## Operations dashboard (admin)
+Antes de abrir PR ou publicar:
 
-`admin.html` is a read-only operations view for trusted maintainers: offer totals and validity per store, source verification status, and aggregate alert-delivery counters. It never shows emails, saved preferences, push endpoints, or notification payloads.
-
-Access is granted by an explicit allowlist table, never by a client-side flag or editable user metadata:
-
-```sql
--- grant access
-insert into public.admin_users (user_id)
-select id from auth.users where email = 'voce@exemplo.com';
-
--- revoke access
-delete from public.admin_users where user_id = (
-  select id from auth.users where email = 'voce@exemplo.com'
-);
+```bash
+npm run typecheck
+npm run build
+npm test
+npm run test:ui    # após npx playwright install chromium
 ```
 
-The page asks Supabase for the signed-in session and then calls the `is_admin` RPC; without an allowlisted account it shows an authorization message and loads no data. The aggregate counters come from the `get_admin_alert_stats` RPC, which re-checks the allowlist on the server. The page is `noindex` and is not part of the sitemap.
+O workflow **Pull request checks** executa typecheck, build e `npm test` em cada PR para `main` e `develop`.
 
-The account page saves favorite stores/product types, display name, theme, price alert rules, Telegram linking, and pause state. Price alerts are free and can use **Telegram** and/or **browser push (VAPID)**. Connect channels on `alertas.html`: Telegram via the bot webhook (`supabase/functions/telegram-webhook`); push by allowing notifications when prompted—the public VAPID key lives in `scripts/domain/vapid-config.mjs`, subscriptions in `push_subscriptions`, and `service-worker.js` shows incoming alerts.
+## Deploy
 
-The workflow in `.github/workflows/send-price-alerts.yml` runs `scripts/send-price-alerts.mjs` after **scheduled** ingest (06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo), not after every push to `main`. Manual runs: **Actions → Send price alerts → Run workflow**. Before enabling it, add the repository Actions secrets `SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, and `VAPID_PRIVATE_KEY` (pair with the committed public key; generate with `npx web-push generate-vapid-keys`), optionally set the Actions variable `VAPID_SUBJECT` (default `mailto:alertas@feira-boa.pages.dev`), and set `SITE_URL` to the deployed HTTPS site URL. Push sends are skipped when `VAPID_PRIVATE_KEY` is missing; Telegram still runs. The job reads the shared offer feed and monitor state; offers with unknown or changed source status are excluded. Telegram messages use the same disclaimer and inline buttons as documented in `scripts/alerts/plan.mjs`. Run it manually only after these settings and all SQL migrations are in place.
+- **Produção:** https://feira-boa.pages.dev — [Cloudflare Pages](https://pages.cloudflare.com) com `npm run build` e pasta `.` como diretório de saída.
+- `build-info.json` é gerado no build e não vai para o Git; confira `/build-info.json` no deploy após mudanças de pipeline.
+- Outros workflows: `send-price-alerts.yml`, `send-catalog-push.yml`, `check-site-health.yml`, `telegram-link-sync.yml`.
 
-## Scheduled source monitoring and production
+## Contas, alertas e admin
 
-The workflow in `.github/workflows/monitor-offers.yml` runs on a schedule at 06:00, 09:00, 15:00, and 18:00 (America/Sao_Paulo) and can also be started manually from the GitHub Actions tab. It runs the official-source adapters, saves offers in `state/`, and records source health in `.offer-monitor-state.json` and `source-status.js`. A changed or failed source is marked for review and can open a GitHub issue; reviewed prices publish immediately, while price alerts stay blocked until the source is reviewed. The workflow never guesses prices. GitHub says scheduled runs may be delayed during high load, so these are daily checks rather than exact-time guarantees.
+Resumo; passo a passo completo permanece nas migrações `supabase/migrations/` e em `AGENT.md`.
 
-Because the source repository is private, GitHub Pages on the free plan cannot host the public site. Cloudflare Pages builds with `npm run build` and publishes the repository root (`.`) directory. Cloudflare redeploys on pushes, including the monitor's changed-source alert commit. The monitor checks the known official source URLs; discovering unlinked campaigns and safely extracting those prices remain follow-up automation steps.
+- **Login:** `login.html` — e-mail/senha e Google OAuth (configuração no console Supabase, não no código).
+- **Páginas:** `account.html`, `alertas.html`, `admin.html` (painel somente leitura para usuários em `admin_users`).
+- **Alertas:** Telegram (`telegram-webhook`) e push; segredos (`SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `ONESIGNAL_REST_API_KEY`, chaves VAPID) apenas em GitHub Actions ou secrets do Supabase — nunca no bundle do navegador.
 
-## Data source
+## Contribuir
 
-- Sempre Vale official offers: https://www.semprevale.com.br/ofertas.php
-- Sempre Vale Durval Nicolau campaign: https://www.semprevale.com.br/downloads/ofertas/af2914c3-feb6-42c1-928d-035c32f3b337-campanha-583-crop-baixa(3).pdf
-- Big Bom São João flyer: https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf
-- Pague Menos official offers: https://www.superpaguemenos.com.br/ofertas?productclusterids=161
-- Spasso Sabores São João offers: https://spassosabores.com.br/ofertas-sao-joao/
-- Corso flyer: https://corso.com.br/jornalfrente.php
+1. Fork / branch a partir de `main` ou `develop`.
+2. `npm ci` → typecheck → build → testes (e `test:ui` se alterar UI).
+3. Abra PR; o CI deve passar.
 
-## Social card
+Licença **MIT** — veja [`LICENSE`](LICENSE).
 
-`social-card.png` (1200x630, used by the `og:image` and `twitter:image` meta tags) is generated by `npm run build:social-card`, which runs `node scripts/build-social-card.mjs`. The script renders an HTML document with the `favicon.svg` brand mark inlined and screenshots it with the locally installed Google Chrome (or Microsoft Edge) in headless mode, so no npm dependency is added and the build never depends on a browser. It asserts the produced PNG is exactly 1200x630 before writing it, and fails loudly when no browser is installed. The script is standalone on purpose: it is not part of `npm run build`, so CI does not need Chrome. The card uses a system font stack (`Segoe UI`, `Arial`, `sans-serif`) instead of the site's Manrope/DM Sans web fonts, because the generated PNG must not depend on a network fetch.
+## Links úteis
+
+- [AGENT.md](AGENT.md) — guia para agentes e mantenedores
+- [BACKEND_PLAN.md](BACKEND_PLAN.md) — decisões de backend e deploy
+- Fontes citadas no README anterior: [Sempre Vale](https://www.semprevale.com.br/ofertas.php), [Big Bom](https://bigbom.com.br), [Pague Menos SJDV](https://www.superpaguemenos.com.br/ofertas?productclusterids=161), [Spasso Sabores](https://spassosabores.com.br/ofertas-sao-joao/), [Corso](https://corso.com.br/jornalfrente.php)

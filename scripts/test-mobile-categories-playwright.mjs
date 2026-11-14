@@ -1,41 +1,12 @@
 /**
  * Mobile: categories, store logos, scroll strips, clear filters, list view.
  */
-import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+import { SITE_URL, dismissLoginGate, ensureStaticServer, waitForServer } from "./test/playwright-harness.mjs";
 
-const BASE = process.env.SITE_URL || "http://127.0.0.1:8790";
+const BASE = SITE_URL;
 
-async function waitForServer(url, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(2000) });
-      if (res.ok) return;
-    } catch {
-      // retry
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  throw new Error(`Server not reachable at ${url}. Start: node scripts/dev-static-server.mjs`);
-}
-
-function startServerIfNeeded() {
-  return new Promise((resolve) => {
-    fetch(`${BASE}/index.html`, { signal: AbortSignal.timeout(1500) })
-      .then((r) => resolve(r.ok ? null : "start"))
-      .catch(() => {
-        const child = spawn(process.execPath, ["scripts/dev-static-server.mjs"], {
-          cwd: new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
-          stdio: "ignore",
-          detached: true,
-        });
-        child.unref();
-        resolve("started");
-      });
-  });
-}
-
-const serverNote = await startServerIfNeeded();
+const serverNote = await ensureStaticServer("/index.html");
 if (serverNote === "started") await waitForServer(`${BASE}/index.html`);
 
 const browser = await chromium.launch({ headless: true });
@@ -71,8 +42,7 @@ try {
     failures.push("offer grid skeleton should clear after feed renders");
   }
   if (feedReady.cards < 1) failures.push("expected offer cards after feed load");
-  const cancel = page.locator("#login-gate-cancel");
-  if (await cancel.isVisible({ timeout: 4000 }).catch(() => false)) await cancel.click();
+  await dismissLoginGate(page);
 
   await page.waitForSelector("#popular-items .popular-item", { timeout: 30_000 });
   await page.waitForSelector("#store-filters .store-filter-chip", { timeout: 30_000 });

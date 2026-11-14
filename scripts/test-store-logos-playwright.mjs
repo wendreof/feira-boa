@@ -4,10 +4,15 @@
  *      node scripts/test-store-logos-playwright.mjs
  */
 import { mkdirSync } from "node:fs";
-import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+import {
+  SITE_URL,
+  dismissLoginGate,
+  ensureStaticServer,
+  waitForServer,
+} from "./test/playwright-harness.mjs";
 
-const BASE = process.env.SITE_URL || "http://127.0.0.1:8790";
+const BASE = SITE_URL;
 /** Optional: FEIRA_E2E_EMAIL + FEIRA_E2E_PASSWORD in env (never commit). */
 const E2E_EMAIL = process.env.FEIRA_E2E_EMAIL || "";
 const E2E_PASSWORD = process.env.FEIRA_E2E_PASSWORD || "";
@@ -20,47 +25,10 @@ const MAIN_STORES = [
   { id: "spani", src: "logos/spani.png" },
 ];
 
-async function waitForServer(url, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(2000) });
-      if (res.ok) return;
-    } catch {
-      // retry
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  throw new Error(`Server not reachable at ${url}. Start: node scripts/dev-static-server.mjs`);
-}
-
-function startServerIfNeeded() {
-  return new Promise((resolve) => {
-    fetch(`${BASE}/lojas.html`, { signal: AbortSignal.timeout(1500) })
-      .then((r) => resolve(r.ok ? null : "start"))
-      .catch(() => {
-        const child = spawn(process.execPath, ["scripts/dev-static-server.mjs"], {
-          cwd: new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
-          stdio: "ignore",
-          detached: true,
-        });
-        child.unref();
-        resolve("started");
-      });
-  });
-}
-
-const serverNote = await startServerIfNeeded();
+const serverNote = await ensureStaticServer("/lojas.html");
 if (serverNote === "started") await waitForServer(`${BASE}/lojas.html`);
 
 const browser = await chromium.launch({ headless: true });
-
-async function dismissLoginGate(page) {
-  const cancel = page.locator("#login-gate-cancel");
-  if (await cancel.isVisible({ timeout: 8000 }).catch(() => false)) {
-    await cancel.click();
-    await page.locator(".login-prompt").waitFor({ state: "hidden", timeout: 5000 }).catch(() => {});
-  }
-}
 
 async function signInIfConfigured(page) {
   if (!E2E_EMAIL || !E2E_PASSWORD) return;

@@ -2,41 +2,12 @@
  * Privacy disclosure is on the terms page and no AdSense script loads.
  * Run: node scripts/test-terms-playwright.mjs
  */
-import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+import { SITE_URL, ensureStaticServer, waitForServer } from "./test/playwright-harness.mjs";
 
-const BASE = process.env.SITE_URL || "http://127.0.0.1:8790";
+const BASE = SITE_URL;
 
-async function waitForServer(url, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(2000) });
-      if (res.ok) return;
-    } catch {
-      // retry
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  throw new Error(`Server not reachable at ${url}. Start: node scripts/dev-static-server.mjs`);
-}
-
-function startServerIfNeeded() {
-  return new Promise((resolve) => {
-    fetch(`${BASE}/termos.html`, { signal: AbortSignal.timeout(1500) })
-      .then((r) => resolve(r.ok ? null : "start"))
-      .catch(() => {
-        const child = spawn(process.execPath, ["scripts/dev-static-server.mjs"], {
-          cwd: new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
-          stdio: "ignore",
-          detached: true,
-        });
-        child.unref();
-        resolve("started");
-      });
-  });
-}
-
-const serverNote = await startServerIfNeeded();
+const serverNote = await ensureStaticServer("/termos.html");
 if (serverNote === "started") await waitForServer(`${BASE}/termos.html`);
 
 const browser = await chromium.launch({ headless: true });

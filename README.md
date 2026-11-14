@@ -29,7 +29,7 @@ Architecture, taxonomy, and conventions: [`AGENT.md`](AGENT.md).
 
 ## Stack
 
-- **Frontend:** TypeScript → `esbuild` → root bundles (`app.js`, dedicated pages)
+- **Frontend:** TypeScript → `scripts/build-bundles.mjs` (`esbuild`) → root bundles (`app.js`, page bundles) plus shared `supabase-vendor.js`; HTML authored in `src/html/`, copied to the repo root at build (`scripts/stage-site-html.mjs`)
 - **Data:** adapters in `scripts/adapters/` → snapshots in `state/` → `offers.json`
 - **Tests:** `node --test` + Playwright (UI)
 - **Hosting:** [Cloudflare Pages](https://pages.cloudflare.com) — build `npm run build`, output directory `.`
@@ -141,7 +141,9 @@ The published feed comes from snapshots in `state/`; `src/offers.ts` is a develo
 
 | Command | Purpose |
 |---------|---------|
-| `npm run build` | Partial typecheck, generates `offers.json`, structured data, `esbuild` bundles, verifies artifacts |
+| `npm run build` | `tsc`, feed + structured data, `build-bundles.mjs`, stage `src/html/` → root, `verify-root-artifacts.mjs` |
+| `npm run test:coverage` | Same tests as `npm test` with c8 gates — **80%** lines/statements/functions, **75%** branches (`.c8rc.json`) |
+| `npm run pr:create` | `gh pr create --base develop` with `.github/pull_request_template.md`; pass extra `gh` flags after `--` |
 | `npm run typecheck` | `tsc` in check mode |
 | `npm test` | Unit and domain tests (`tests/**/*.test.mjs`) |
 | `npm run test:ui` | Playwright suite (expiry, archive, logos, terms, etc.) |
@@ -183,11 +185,11 @@ Before opening a PR or shipping:
 ```bash
 npm run typecheck
 npm run build
-npm test
+npm run test:coverage
 npm run test:ui    # after npx playwright install chromium
 ```
 
-The **Pull request checks** workflow runs typecheck, build, and `npm test` on every PR to `main` and `develop`.
+The **Pull request checks** workflow runs typecheck, build, and `npm run test:coverage` on every PR to `main` and `develop`.
 
 ## Deploy
 
@@ -206,8 +208,8 @@ Summary only; full steps remain in `supabase/migrations/` and `AGENT.md`.
 ## Contributing
 
 1. Fork / branch from `main` or `develop`.
-2. `npm ci` → typecheck → build → tests (and `test:ui` if you change UI). `npm run test:coverage` must meet **80%** lines/statements (c8); branches floor **75%** until adapter coverage grows.
-3. Open a PR; CI must pass. From the CLI, `npm run pr:create` runs `gh pr create` with `.github/pull_request_template.md` (pass `--title`, `--base main`, etc. after `--`).
+2. `npm ci` → typecheck → build → `npm run test:coverage` (and `test:ui` if you change UI).
+3. Open a PR against `develop` (or `main` when appropriate); CI must pass. `npm run pr:create` uses the PR template and defaults `--base develop` — pass `--title`, `--base main`, etc. after `--`.
 
 **MIT** license — see [`LICENSE`](LICENSE).
 

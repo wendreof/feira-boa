@@ -14,6 +14,7 @@ const requiredFiles = [
   "styles.css",
   "theme.css",
   "theme-bootstrap.js",
+  "supabase-vendor.js",
   "navigation.js",
   "site-footer.js",
   "login-gate.js",
@@ -86,6 +87,18 @@ if (manifest) {
   if (!sizes.has("192x192") || !sizes.has("512x512")) failures.push("manifest.webmanifest: missing icon sizes");
 }
 
+const supabaseHtmlPages = [
+  "index.html",
+  "lojas.html",
+  "login.html",
+  "account.html",
+  "suggestions.html",
+  "termos.html",
+  "admin.html",
+  "alerts.html",
+  "mensagens.html",
+];
+
 for (const file of ["index.html", "lojas.html", "login.html", "account.html", "suggestions.html", "termos.html", "admin.html"]) {
   try {
     const html = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
@@ -95,6 +108,35 @@ for (const file of ["index.html", "lojas.html", "login.html", "account.html", "s
     if (/\son(?:click|load|error|change)\s*=/i.test(html)) failures.push(`${file}: contains an inline event handler`);
   } catch {
     // Missing file already reported.
+  }
+}
+
+for (const file of supabaseHtmlPages) {
+  try {
+    const html = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
+    const vendorPos = html.indexOf('src="supabase-vendor.js"');
+    if (vendorPos === -1) {
+      failures.push(`${file}: missing supabase-vendor.js`);
+      continue;
+    }
+    const themePos = html.indexOf('src="theme-bootstrap.js"');
+    if (themePos === -1 || vendorPos < themePos) {
+      failures.push(`${file}: supabase-vendor.js must load after theme-bootstrap.js`);
+    }
+  } catch {
+    // Missing file already reported.
+  }
+}
+
+const supabaseDependentBundles = ["app.js", "login.js", "account.js", "notification-badge.js"];
+for (const bundle of supabaseDependentBundles) {
+  try {
+    const js = await readFile(new URL(`../${bundle}`, import.meta.url), "utf8");
+    if (js.includes("GoTrueClient") && js.includes("PostgrestClient")) {
+      failures.push(`${bundle}: still embeds full Supabase client; expected supabase-vendor.js split`);
+    }
+  } catch {
+    // Missing bundle already reported.
   }
 }
 

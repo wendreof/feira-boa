@@ -1,13 +1,15 @@
 import { parseDateRange, parsePrice } from "./parsing.mjs";
 import { foldText } from "../../src/shared/text.mjs";
 import { loadFlyerCampaignFile } from "./flyer-campaign-cache.mjs";
+import { decodeHtmlEntities } from "./html-entities.mjs";
 
 const CORSO_ORIGIN = "https://corso.com.br/";
 
 export function discoverCorsoFlyerFromHtml(html) {
   if (!html || typeof html !== "string") return null;
-  const frenteMatch = html.match(/src=["']img\/jornal-frente\.jpg\?hash=(\d+)["']/i)
-    || html.match(/jornal-frente\.jpg\?hash=(\d+)/i);
+  const decoded = decodeHtmlEntities(html);
+  const frenteMatch = decoded.match(/src=["']img\/jornal-frente\.jpg\?hash=(\d+)["']/i)
+    || decoded.match(/jornal-frente\.jpg\?hash=(\d+)/i);
   const hash = frenteMatch?.[1] ?? null;
   if (!hash) return null;
   return {

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { createHash } from "node:crypto";
 import { loadFlyerCampaignFile } from "./flyer-campaign-cache.mjs";
+import { decodeHtmlEntities } from "./html-entities.mjs";
 
 const FLYER_HINT = /(?:^|[/_-])(?:flv|acougue|encarte|oferta|spasso-\d)/i;
 const NOISE_HINT = /(?:logo|icon|favicon|cropped|placeholder|spinner|avatar|banner-site|google-play|apple-store|app-store|play-store)/i;
@@ -56,11 +57,12 @@ export function labelSpassoFlyerImage(url) {
 }
 
 const SPASSO_UPLOAD_IMAGE_RE =
-  /src=["'](https?:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.(?:png|jpe?g|webp))["']/gi;
+  /src=["'](https?:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.(?:png|jpe?g|webp)[^"']*)["']/gi;
 
 export function discoverSpassoFlyersFromHtml(html) {
   if (!html || typeof html !== "string") return null;
-  const urls = [...html.matchAll(SPASSO_UPLOAD_IMAGE_RE)].map((match) => match[1]);
+  const decoded = decodeHtmlEntities(html);
+  const urls = [...decoded.matchAll(SPASSO_UPLOAD_IMAGE_RE)].map((match) => match[1]);
   const imageUrls = filterSpassoFlyerImages(urls);
   if (imageUrls.length === 0) return null;
   return {

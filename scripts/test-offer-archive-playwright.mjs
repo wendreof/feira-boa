@@ -3,43 +3,19 @@
  * Run: npm run build && npm run test:archive-ui
  */
 import { readFileSync } from "node:fs";
-import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+import {
+  SITE_URL,
+  dismissLoginGate,
+  ensureStaticServer,
+  repoRootPath,
+  waitForServer,
+} from "./test/playwright-harness.mjs";
 
-const BASE = process.env.SITE_URL || "http://127.0.0.1:8790";
-const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
-
-async function waitForServer(url, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(2000) });
-      if (res.ok) return;
-    } catch {
-      // retry
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  throw new Error(`Server not reachable at ${url}. Start: node scripts/dev-static-server.mjs`);
-}
-
-function startServerIfNeeded() {
-  return new Promise((resolve) => {
-    fetch(`${BASE}/index.html`, { signal: AbortSignal.timeout(1500) })
-      .then((r) => resolve(r.ok ? null : "start"))
-      .catch(() => {
-        const child = spawn(process.execPath, ["scripts/dev-static-server.mjs"], {
-          cwd: ROOT,
-          stdio: "ignore",
-          detached: true,
-        });
-        child.unref();
-        resolve("started");
-      });
-  });
-}
+const BASE = SITE_URL;
 
 function loadArchiveFixture() {
-  const feed = JSON.parse(readFileSync(`${ROOT}/offers.json`, "utf8"));
+  const feed = JSON.parse(readFileSync(`${repoRootPath()}/offers.json`, "utf8"));
   const campaign = (feed.archivedCampaigns ?? []).find((entry) => Array.isArray(entry.offers) && entry.offers.length > 0);
   if (!campaign) {
     throw new Error("offers.json has no archivedCampaigns with offers — seed state/previous/ and rebuild the feed.");
@@ -51,14 +27,7 @@ function loadArchiveFixture() {
   };
 }
 
-async function dismissLoginGate(page) {
-  const cancel = page.locator("#login-gate-cancel");
-  if (await cancel.isVisible({ timeout: 5000 }).catch(() => false)) {
-    await cancel.click();
-  }
-}
-
-const serverNote = await startServerIfNeeded();
+const serverNote = await ensureStaticServer("/index.html");
 if (serverNote === "started") await waitForServer(`${BASE}/index.html`);
 const fixture = loadArchiveFixture();
 const failures = [];

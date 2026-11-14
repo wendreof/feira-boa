@@ -3,52 +3,21 @@
  * Run: npm run build && npm run test:expiry-ui
  */
 import { readFileSync } from "node:fs";
-import { spawn } from "node:child_process";
 import { chromium } from "playwright";
 import { expiryHighlightLabel } from "../src/view/format.ts";
+import {
+  SITE_URL,
+  dismissLoginGate,
+  ensureStaticServer,
+  repoRootPath,
+  waitForServer,
+} from "./test/playwright-harness.mjs";
 
-const BASE = process.env.SITE_URL || "http://127.0.0.1:8790";
-const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
-
-async function waitForServer(url, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(2000) });
-      if (res.ok) return;
-    } catch {
-      // retry
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  throw new Error(`Server not reachable at ${url}. Start: node scripts/dev-static-server.mjs`);
-}
-
-function startServerIfNeeded() {
-  return new Promise((resolve) => {
-    fetch(`${BASE}/index.html`, { signal: AbortSignal.timeout(1500) })
-      .then((r) => resolve(r.ok ? null : "start"))
-      .catch(() => {
-        const child = spawn(process.execPath, ["scripts/dev-static-server.mjs"], {
-          cwd: ROOT,
-          stdio: "ignore",
-          detached: true,
-        });
-        child.unref();
-        resolve("started");
-      });
-  });
-}
+const BASE = SITE_URL;
 
 function loadOffersById() {
-  const feed = JSON.parse(readFileSync(`${ROOT}/offers.json`, "utf8"));
+  const feed = JSON.parse(readFileSync(`${repoRootPath()}/offers.json`, "utf8"));
   return new Map(feed.offers.map((offer) => [offer.id, offer]));
-}
-
-async function dismissLoginGate(page) {
-  const cancel = page.locator("#login-gate-cancel");
-  if (await cancel.isVisible({ timeout: 5000 }).catch(() => false)) {
-    await cancel.click();
-  }
 }
 
 async function collectCardExpiryDom(page) {
@@ -127,7 +96,7 @@ function assertGridViewCards(cards, offersById, failures) {
   }
 }
 
-const serverNote = await startServerIfNeeded();
+const serverNote = await ensureStaticServer("/index.html");
 if (serverNote === "started") await waitForServer(`${BASE}/index.html`);
 const offersById = loadOffersById();
 const failures = [];

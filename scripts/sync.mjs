@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { ESBUILD_ROOT_BUNDLES } from "./generated-bundles.mjs";
 
 /**
  * Sincroniza a branch atual com origin/main e regenera os arquivos gerados.
@@ -7,16 +8,7 @@ import { spawnSync } from "node:child_process";
  * conflitos neles são resolvidos reconstruindo a partir das fontes. Qualquer
  * outro conflito aborta a mesclagem.
  */
-const GENERATED_FILES = [
-  "offers.json",
-  "offers-jsonld.js",
-  "app.js",
-  "account.js",
-  "admin.js",
-  "login.js",
-  "stores.js",
-  "suggestions.js",
-];
+const GENERATED_FILES = ["offers.json", "offers-jsonld.js", ...ESBUILD_ROOT_BUNDLES];
 
 function run(command, args, { allowFailure = false, input } = {}) {
   const result = spawnSync(command, args, { encoding: "utf8", shell: process.platform === "win32", input });

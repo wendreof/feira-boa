@@ -171,7 +171,8 @@ export function bindAppEvents(): void {
     }
     const group = target.closest<HTMLButtonElement>("[data-group]");
     if (!group) return;
-    appState.activeDepartment = group.dataset.group ?? "";
+    const nextGroup = group.dataset.group ?? "";
+    appState.activeDepartment = appState.activeDepartment === nextGroup ? "" : nextGroup;
     appState.activeProductType = "";
     sortSelect.value = "recommended";
     saveActiveDepartment(appState.activeDepartment);
@@ -187,7 +188,8 @@ export function bindAppEvents(): void {
     if (!(target instanceof Element)) return;
     const button = target.closest<HTMLButtonElement>("[data-department]");
     if (!button || button.disabled) return;
-    appState.activeDepartment = button.dataset.department ?? "";
+    const nextDepartment = button.dataset.department ?? "";
+    appState.activeDepartment = appState.activeDepartment === nextDepartment ? "" : nextDepartment;
     appState.activeProductType = "";
     saveActiveDepartment(appState.activeDepartment);
     updateFilterStates(filters, "department", appState.activeDepartment);

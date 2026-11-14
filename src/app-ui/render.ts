@@ -15,6 +15,7 @@ import type { Offer } from "../types";
 import { refreshAlertsInvitePanel } from "./alerts-invite";
 import { browseFiltersActive } from "./browse-filters";
 import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
+import { hideOfferGridLoading } from "./offer-grid-loading";
 
 function likesByOffer(): Map<string, number> {
   return new Map([...appState.reactionCounts].map(([offerId, counts]) => [offerId, counts.likes]));
@@ -80,6 +81,7 @@ function renderArchivedOffers(today: string, min: number | null, max: number | n
 }
 
 export function renderOffers(): void {
+  hideOfferGridLoading();
   const focused = document.activeElement instanceof HTMLElement && grid.contains(document.activeElement)
     ? document.activeElement
     : null;

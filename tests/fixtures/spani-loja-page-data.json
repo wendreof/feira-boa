@@ -1,0 +1,43 @@
+{
+  "contentfulLojas": {
+    "nome": "São João da Boa Vista",
+    "bairro": "Jardim das Flores",
+    "slug": "sao-joao-boa-vista",
+    "tabloideRef": {
+      "nomeTabloide": "São Paulo Interior"
+    }
+  },
+  "allContentfulTabloide": {
+    "edges": [
+      {
+        "node": {
+          "tabloideRef": {
+            "nomeTabloide": "São Paulo Interior"
+          },
+          "capa": {
+            "localFile": {
+              "childImageSharp": {
+                "gatsbyImageData": {
+                  "images": {
+                    "fallback": {
+                      "src": "/static/39dc5169eab46cf6fe0d3659759d72d3/629a9/Jornal_de_Ofertas_Natal_Spani_INTERIOR_10_a_16_11_2026.jpg",
+                      "srcSet": "/static/39dc5169eab46cf6fe0d3659759d72d3/4fd06/Jornal_de_Ofertas_Natal_Spani_INTERIOR_10_a_16_11_2026.jpg 750w,\n/static/39dc5169eab46cf6fe0d3659759d72d3/629a9/Jornal_de_Ofertas_Natal_Spani_INTERIOR_10_a_16_11_2026.jpg 1920w"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "pdf": {
+            "file": {
+              "url": "//assets.ctfassets.net/fjd7a2rdei8n/3lXDqXyvzugUmi8V5OgnDn/68f5ef2a62658ad8dc8371306ce59ac7/Jornal_de_Ofertas_Natal_Spani_INTERIOR_10_a_16_11_2026.pdf",
+              "fileName": "Jornal de Ofertas Natal Spani INTERIOR 10 a 16 11 2026.pdf"
+            }
+          },
+          "dataInicio": "2026-11-10T00:00-03:00",
+          "dataFim": "2026-11-16T23:59-03:00"
+        }
+      }
+    ]
+  }
+}

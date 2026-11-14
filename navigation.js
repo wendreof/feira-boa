@@ -37,6 +37,79 @@
 
   setAccountLinkState();
 
+  function readStoredUserId() {
+    try {
+      const storageKey = Object.keys(localStorage).find((key) => /^sb-.*-auth-token$/.test(key));
+      if (!storageKey) return null;
+      let session = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (Array.isArray(session)) session = JSON.parse(session.join(""));
+      if (!session?.access_token || !session?.user?.id) return null;
+      const expiresAt = session.expires_at;
+      if (typeof expiresAt === "number" && expiresAt * 1000 <= Date.now()) return null;
+      return String(session.user.id);
+    } catch {
+      return null;
+    }
+  }
+
+  function readCachedAvatarPath(userId) {
+    try {
+      const raw = sessionStorage.getItem("feira-boa:avatar-path:v1");
+      if (!raw) return undefined;
+      const entry = JSON.parse(raw);
+      if (entry.userId !== userId) return undefined;
+      return entry.path ?? null;
+    } catch {
+      return undefined;
+    }
+  }
+
+  function avatarPublicUrl(path, sizePx) {
+    const objectPath = path.trim().split("/").map((segment) => encodeURIComponent(segment)).join("/");
+    const base = "https://muiuvmhzzbqflxznpnez.supabase.co";
+    if (!sizePx) {
+      return `${base}/storage/v1/object/public/avatars/${objectPath}`;
+    }
+    const params = new URLSearchParams({
+      width: String(sizePx),
+      height: String(sizePx),
+      resize: "cover",
+      quality: "80",
+    });
+    return `${base}/storage/v1/render/image/public/avatars/${objectPath}?${params}`;
+  }
+
+  function primeSidebarAvatarFromCache() {
+    const userId = readStoredUserId();
+    if (!userId) return;
+    const path = readCachedAvatarPath(userId);
+    if (!path) return;
+    const image = document.querySelector("#topbar-account-image");
+    const fallback = document.querySelector("#topbar-account-fallback");
+    if (!(image instanceof HTMLImageElement)) return;
+    const showPhoto = () => {
+      image.style.opacity = "";
+      image.hidden = false;
+      if (fallback instanceof HTMLElement) fallback.hidden = true;
+    };
+    const showFallback = () => {
+      image.style.opacity = "";
+      image.removeAttribute("src");
+      image.hidden = true;
+      if (fallback instanceof HTMLElement) fallback.hidden = false;
+    };
+    image.loading = "eager";
+    image.decoding = "async";
+    image.addEventListener("load", showPhoto, { once: true });
+    image.addEventListener("error", showFallback, { once: true });
+    image.hidden = false;
+    image.style.opacity = "0";
+    image.src = avatarPublicUrl(path, 64);
+    if (image.complete && image.naturalWidth > 0) showPhoto();
+  }
+
+  primeSidebarAvatarFromCache();
+
   // No desktop o menu lateral fica sempre aberto; o botão só existe no mobile.
   document.body.classList.remove("sidebar-collapsed");
   sidebar.inert = mobileQuery.matches;

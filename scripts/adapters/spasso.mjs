@@ -1,10 +1,119 @@
-import { readFile } from "node:fs/promises";
+import { readFileSync, writeFileSync } from "node:fs";
+import { classifyProduct } from "../domain/taxonomy.mjs";
+import { mergeBrandIntoName } from "../domain/brands.mjs";
+import { createOffer } from "./offer-factory.mjs";
 import { fetchWithRetry } from "./http.mjs";
-import { filterSpassoFlyerImages } from "./spasso-flyer-images.mjs";
+import { validateOffer } from "../domain/validation.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
+import {
+  defaultSpassoValidityWindow,
+  discoverSpassoFlyersFromHtml,
+  loadSpassoCampaignFile,
+} from "../domain/spasso-flyer.mjs";
+import { extractSpassoCampaignsViaGemini, geminiExtractionEnabled } from "./spasso-gemini.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
+const CACHE_PATH = new URL("./data/spasso-campaigns.json", import.meta.url);
+const MIN_OFFERS_GEMINI = 20;
+
+const SPASSO_STORE = {
+  name: "Spasso Sabores",
+  logo: logoUrlForStoreId("spasso"),
+  branch: "Av. Dr. Durval Nicolau, 1572 · São João",
+  source: "Folheto oficial · Loja São João",
+};
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
+
+function readCache() {
+  return loadSpassoCampaignFile(JSON.parse(readFileSync(CACHE_PATH, "utf8")));
+}
+
+function writeCache({ flyerHash, campaigns, extractionMethod }) {
+  writeFileSync(
+    CACHE_PATH,
+    `${JSON.stringify(
+      {
+        flyerHash,
+        updatedAt: new Date().toISOString(),
+        extractionMethod,
+        campaigns,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+}
+
+function countOffers(campaigns) {
+  return campaigns.reduce((sum, campaign) => sum + campaign.offers.length, 0);
+}
+
+function campaignsToOffers(campaigns, pageUrl) {
+  const offers = [];
+  let validFrom = null;
+  let validTo = null;
+
+  for (const campaign of campaigns) {
+    validFrom = validFrom === null || campaign.from < validFrom ? campaign.from : validFrom;
+    validTo = validTo === null || campaign.to > validTo ? campaign.to : validTo;
+
+    for (const item of campaign.offers) {
+      const name = mergeBrandIntoName(item.name, item.brand);
+      const taxonomy = classifyProduct(name, item.cat, item.cat);
+      const offer = createOffer({
+        storeId: "spasso",
+        idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from}`,
+        store: SPASSO_STORE,
+        sourceUrl: pageUrl,
+        product: {
+          name,
+          detail: item.detail,
+          storeCategory: item.cat,
+          price: item.price,
+          previousPrice: item.oldPrice,
+        },
+        validity: { from: campaign.from, to: campaign.to },
+        taxonomy,
+      });
+
+      if (validateOffer(offer)) {
+        offers.push(offer);
+      }
+    }
+  }
+
+  return { offers, validFrom, validTo };
+}
+
+async function resolveCampaigns(flyer, cache) {
+  const cacheIsCurrent = cache.flyerHash === flyer.hash && cache.campaigns.length > 0;
+  if (cacheIsCurrent) {
+    return { campaigns: cache.campaigns, extractionMethod: "cache" };
+  }
+
+  if (!geminiExtractionEnabled()) {
+    return {
+      campaigns: [],
+      extractionMethod: "skipped_no_api_key",
+      skipReason:
+        "GEMINI_API_KEY is not set. Spasso vision extraction skipped; commit scripts/adapters/data/spasso-campaigns.json after a CI run or set the key locally.",
+    };
+  }
+
+  const campaigns = await extractSpassoCampaignsViaGemini(flyer.imageUrls);
+  const extractionMethod = "gemini";
+  const total = countOffers(campaigns);
+
+  if (total < MIN_OFFERS_GEMINI) {
+    throw new Error(
+      `Spasso flyer extraction incomplete (${total} offers, need at least ${MIN_OFFERS_GEMINI}).`,
+    );
+  }
+
+  writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
+  return { campaigns, extractionMethod };
+}
 
 export async function extractSpasso(customUrl = null) {
   let pageUrl = customUrl?.trim() || SPASSO_URL;
@@ -15,49 +124,60 @@ export async function extractSpasso(customUrl = null) {
   if (!res.ok) throw new Error(`Could not fetch Spasso page (${res.status})`);
   const html = await res.text();
 
-  const images = filterSpassoFlyerImages(
-    [...html.matchAll(/src=["'](https?:\/\/spassosabores\.com\.br\/wp-content\/uploads\/[^"']+\.(?:png|jpe?g|webp))["']/gi)].map((m) => m[1]),
-  );
+  const flyer = discoverSpassoFlyersFromHtml(html);
+  if (!flyer) throw new Error("Could not discover Spasso flyer image URLs on the official page.");
 
-  let existingOffers = [];
-  try {
-    const existingText = await readFile(new URL("../../state/spasso.json", import.meta.url), "utf8");
-    const existing = JSON.parse(existingText);
-    if (Array.isArray(existing.offers)) existingOffers = existing.offers;
-  } catch {
-    // No previous snapshot yet
+  const cache = readCache();
+  const { campaigns, extractionMethod, skipReason } = await resolveCampaigns(flyer, cache);
+
+  if (campaigns.length === 0) {
+    if (skipReason) {
+      console.warn(`[Spasso Sabores] ${skipReason}`);
+    }
+    const validity = defaultSpassoValidityWindow();
+    return {
+      storeId: "spasso",
+      store: {
+        name: SPASSO_STORE.name,
+        branch: SPASSO_STORE.branch,
+        logo: SPASSO_STORE.logo,
+        source: SPASSO_STORE.source,
+        sourceUrl: pageUrl,
+        from: validity.from,
+        to: validity.to,
+      },
+      fetchedAt: new Date().toISOString(),
+      sourceUrl: pageUrl,
+      flyerHash: flyer.hash,
+      flyerImages: flyer.imageUrls,
+      extractionMethod,
+      offers: [],
+      status: "image_flyer_pending_transcription",
+    };
   }
 
-  const now = new Date();
-  const spDate = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Sao_Paulo",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(now);
-  const today = new Date(`${spDate}T12:00:00Z`);
-  const dayOfWeek = today.getUTCDay();
-  const daysUntilSaturday = (6 - dayOfWeek + 7) % 7 || 7;
-  const saturday = new Date(today.getTime() + daysUntilSaturday * 24 * 60 * 60 * 1000);
-  const saturdayStr = saturday.toISOString().slice(0, 10);
-
-  const validity = { from: spDate, to: saturdayStr };
+  const { offers, validFrom, validTo } = campaignsToOffers(campaigns, pageUrl);
+  if (offers.length === 0) {
+    throw new Error("Spasso adapter produced zero valid offers after extraction.");
+  }
 
   return {
     storeId: "spasso",
     store: {
-      name: "Spasso Sabores",
-      branch: "Av. Dr. Durval Nicolau, 1572 · São João",
-      logo: logoUrlForStoreId("spasso"),
-      source: "Folheto oficial · Loja São João",
+      name: SPASSO_STORE.name,
+      branch: SPASSO_STORE.branch,
+      logo: SPASSO_STORE.logo,
+      source: SPASSO_STORE.source,
       sourceUrl: pageUrl,
-      from: validity.from,
-      to: validity.to,
+      from: validFrom,
+      to: validTo,
     },
     fetchedAt: new Date().toISOString(),
     sourceUrl: pageUrl,
-    flyerImages: images.slice(0, 6),
-    offers: existingOffers,
-    status: existingOffers.length > 0 ? "ok" : "image_flyer_pending_transcription",
+    flyerHash: flyer.hash,
+    flyerImages: flyer.imageUrls,
+    extractionMethod,
+    offers,
+    status: "ok",
   };
 }

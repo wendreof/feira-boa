@@ -5,6 +5,7 @@ import {
   readCachedAvatarPath,
   writeCachedAvatarPath,
 } from "../scripts/domain/avatar-cache.mjs";
+import { avatarPublicUrl } from "../scripts/domain/avatar-public-url.mjs";
 
 export { readCachedAvatarPath, writeCachedAvatarPath, clearCachedAvatarPath };
 
@@ -42,10 +43,7 @@ export function avatarFileName(mimeType: string, fileName?: string): string | nu
 }
 
 export function avatarUrl(path: string, sizePx?: number): string {
-  const options = sizePx
-    ? { transform: { width: sizePx, height: sizePx, resize: "cover" as const, quality: 80 } }
-    : undefined;
-  return avatarBucket().getPublicUrl(path, options).data.publicUrl;
+  return avatarPublicUrl(path, sizePx);
 }
 
 function preloadAvatarUrl(url: string): void {
@@ -72,40 +70,55 @@ function currentAvatarSrc(image: HTMLImageElement): string {
  * de URL e só mostra spinner na primeira carga. Se a CDN não servir a transformação,
  * cai para o arquivo original.
  */
-export function setAvatarImage(image: HTMLImageElement, path: string | null, sizePx: number): void {
+export type AvatarImageSettled = (visible: boolean) => void;
+
+export function setAvatarImage(
+  image: HTMLImageElement,
+  path: string | null,
+  sizePx: number,
+  options?: { onSettled?: AvatarImageSettled },
+): void {
   const host = image.parentElement;
   image.onload = null;
   image.onerror = null;
+  image.style.opacity = "";
   if (!path) {
     hideSpinner(host);
     image.removeAttribute("src");
     image.hidden = true;
+    options?.onSettled?.(false);
     return;
   }
 
   const sizedUrl = avatarUrl(path, sizePx);
   const fullUrl = avatarUrl(path);
   preloadAvatarUrl(sizedUrl);
+  image.loading = "eager";
   image.fetchPriority = "high";
 
   const loadedSrc = currentAvatarSrc(image);
   if ((loadedSrc === sizedUrl || loadedSrc === fullUrl) && avatarImageIsLoaded(image)) {
     hideSpinner(host);
     image.hidden = false;
+    options?.onSettled?.(true);
     return;
   }
 
   const hadVisibleImage = !image.hidden && avatarImageIsLoaded(image);
   let retriedFullSize = false;
   if (!hadVisibleImage) {
-    image.hidden = true;
+    // Browsers defer or skip fetches for display:none images; stay in layout while loading.
+    image.hidden = false;
+    image.style.opacity = "0";
     showSpinner(host);
   }
   const settle = (visible: boolean): void => {
     image.onload = null;
     image.onerror = null;
     hideSpinner(host);
+    image.style.opacity = "";
     image.hidden = !visible;
+    options?.onSettled?.(visible);
   };
   image.onload = () => settle(true);
   image.onerror = () => {

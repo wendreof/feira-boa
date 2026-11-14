@@ -53,9 +53,8 @@ const serverNote = await startServerIfNeeded();
 if (serverNote === "started") await waitForServer(`${BASE}/lojas.html`);
 
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 
-async function dismissLoginGate() {
+async function dismissLoginGate(page) {
   const cancel = page.locator("#login-gate-cancel");
   if (await cancel.isVisible({ timeout: 8000 }).catch(() => false)) {
     await cancel.click();
@@ -63,7 +62,7 @@ async function dismissLoginGate() {
   }
 }
 
-async function signInIfConfigured() {
+async function signInIfConfigured(page) {
   if (!E2E_EMAIL || !E2E_PASSWORD) return;
   await page.goto(`${BASE}/login.html?returnTo=${encodeURIComponent("/lojas.html")}`, { waitUntil: "networkidle" });
   await page.locator("#auth-email").fill(E2E_EMAIL);
@@ -72,17 +71,16 @@ async function signInIfConfigured() {
   await page.waitForURL(/lojas\.html/, { timeout: 20_000 });
 }
 
-const failures = [];
-try {
+async function openLojas(page) {
   if (E2E_EMAIL && E2E_PASSWORD) {
-    await signInIfConfigured();
+    await signInIfConfigured(page);
   } else {
     await page.goto(`${BASE}/lojas.html`, { waitUntil: "networkidle", timeout: 30_000 });
-    await dismissLoginGate();
+    await dismissLoginGate(page);
   }
+}
 
-  mkdirSync(".playwright-mcp", { recursive: true });
-
+async function checkStoreLogos(page, failures) {
   for (const store of MAIN_STORES) {
     const card = page.locator(`.store-source[data-store-id="${store.id}"]`);
     const logo = card.locator(".source-logo");
@@ -119,7 +117,6 @@ try {
     if (fallbackVisible) failures.push(`${store.id}: initials fallback still visible`);
   }
 
-  // Forte Mix (local list): self-hosted logo
   const forte = page.locator('.store-source[data-store-id="forte-mix"] .source-logo');
   const forteImg = forte.locator("img");
   await forte.waitFor({ state: "attached" });
@@ -137,8 +134,109 @@ try {
     ).then(() => true).catch(() => false);
     if (!forteOk) failures.push("forte-mix: logo did not load or has-logo missing");
   }
+}
 
-  await page.screenshot({ path: ".playwright-mcp/lojas-logos-mobile.png", fullPage: true });
+async function checkDesktopStoreCardLayout(page) {
+  const layoutFailures = [];
+  await page.setViewportSize({ width: 1100, height: 900 });
+  await page.goto(`${BASE}/lojas.html`, { waitUntil: "networkidle", timeout: 30_000 });
+  await dismissLoginGate(page);
+
+  await page.waitForFunction(
+    () => document.querySelector(".store-source[data-store-id='spassosabores'] .source-actions .source-button--flyer"),
+    undefined,
+    { timeout: 12_000 },
+  ).catch(() => {
+    layoutFailures.push("desktop: spassosabores flyer buttons not injected from offers.json");
+  });
+
+  await page.waitForFunction(
+    () => getComputedStyle(document.querySelector(".store-source[data-store-id='spassosabores']") || document.body).display === "grid",
+    undefined,
+    { timeout: 8000 },
+  ).catch(() => {
+    layoutFailures.push("desktop: .store-source grid layout not applied");
+  });
+
+  const spassoLayout = await page.evaluate(() => {
+    const card = document.querySelector(".store-source[data-store-id='spassosabores']");
+    const copy = card?.querySelector(".source-copy");
+    const strong = copy?.querySelector("strong");
+    const actions = card?.querySelector(".source-actions");
+    const strongRect = strong?.getBoundingClientRect();
+    const buttons = actions ? [...actions.querySelectorAll(".source-button")] : [];
+    const tops = buttons.map((button) => Math.round(button.getBoundingClientRect().top));
+    return {
+      cardDisplay: card ? getComputedStyle(card).display : "",
+      copyWidth: copy?.getBoundingClientRect().width ?? 0,
+      strongHeight: strongRect?.height ?? 0,
+      actionsDisplay: actions ? getComputedStyle(actions).display : "",
+      actionButtonRows: new Set(tops).size,
+      actionButtonCount: buttons.length,
+    };
+  });
+
+  if (spassoLayout.cardDisplay !== "grid") {
+    layoutFailures.push(`desktop: spassosabores card display is ${spassoLayout.cardDisplay}, expected grid`);
+  }
+  if (spassoLayout.copyWidth < 320) {
+    layoutFailures.push(`desktop: spassosabores copy column too narrow (${Math.round(spassoLayout.copyWidth)}px)`);
+  }
+  if (spassoLayout.strongHeight > 72) {
+    layoutFailures.push(`desktop: spassosabores title wraps too tall (${Math.round(spassoLayout.strongHeight)}px)`);
+  }
+  if (spassoLayout.actionsDisplay && spassoLayout.actionsDisplay !== "grid") {
+    layoutFailures.push(`desktop: source-actions display is ${spassoLayout.actionsDisplay}, expected grid`);
+  }
+  if (spassoLayout.actionButtonCount >= 4 && spassoLayout.actionButtonRows < 2) {
+    layoutFailures.push(`desktop: spassosabores actions stuck in one row (${spassoLayout.actionButtonCount} buttons)`);
+  }
+
+  const forteLayout = await page.evaluate(() => {
+    const card = document.querySelector(".store-source[data-store-id='forte-mix']");
+    const copy = card?.querySelector(".source-copy");
+    return { copyWidth: copy?.getBoundingClientRect().width ?? 0 };
+  });
+  if (forteLayout.copyWidth < 320) {
+    layoutFailures.push(`desktop: forte-mix copy column too narrow (${Math.round(forteLayout.copyWidth)}px)`);
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload({ waitUntil: "networkidle" });
+  await dismissLoginGate(page);
+
+  const mobileSpassoAfter = await page.evaluate(() => {
+    const card = document.querySelector(".store-source[data-store-id='spassosabores']");
+    const copy = card?.querySelector(".source-copy");
+    return {
+      cardDisplay: card ? getComputedStyle(card).display : "",
+      copyWidth: copy?.getBoundingClientRect().width ?? 0,
+    };
+  });
+
+  if (mobileSpassoAfter.cardDisplay !== "grid") {
+    layoutFailures.push(`mobile: spassosabores card display is ${mobileSpassoAfter.cardDisplay}, expected grid`);
+  }
+  if (mobileSpassoAfter.copyWidth < 200) {
+    layoutFailures.push(`mobile: spassosabores copy column too narrow (${Math.round(mobileSpassoAfter.copyWidth)}px)`);
+  }
+
+  await page.screenshot({ path: ".playwright-mcp/lojas-logos-desktop.png", fullPage: true });
+  return layoutFailures;
+}
+
+const failures = [];
+try {
+  mkdirSync(".playwright-mcp", { recursive: true });
+
+  const mobilePage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await openLojas(mobilePage);
+  await checkStoreLogos(mobilePage, failures);
+  await mobilePage.screenshot({ path: ".playwright-mcp/lojas-logos-mobile.png", fullPage: true });
+
+  const desktopPage = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await openLojas(desktopPage);
+  failures.push(...await checkDesktopStoreCardLayout(desktopPage));
 } finally {
   await browser.close();
 }
@@ -149,5 +247,5 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK: ${MAIN_STORES.length} main store logos loaded on ${BASE}/lojas.html`);
+console.log(`OK: ${MAIN_STORES.length} main store logos loaded on ${BASE}/lojas.html (mobile + desktop layout)`);
 if (serverNote === "started") console.log("(Started embedded static server on 8790 for this run.)");

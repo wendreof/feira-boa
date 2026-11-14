@@ -55,7 +55,10 @@ export async function extractCorsoCampaignsViaGemini({ frenteUrl, versoUrl }) {
     CAMPAIGN_SCHEMA,
   ].join("\n");
 
-  const model = process.env.CORSO_GEMINI_MODEL?.trim() || DEFAULT_GEMINI_MODEL;
+  const model =
+    process.env.CORSO_GEMINI_MODEL?.trim() ||
+    process.env.GEMINI_MODEL?.trim() ||
+    DEFAULT_GEMINI_MODEL;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
   const body = {
     contents: [

@@ -43,7 +43,34 @@ const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 const failures = [];
 
 try {
+  await page.route("**/offers.json", async (route) => {
+    await new Promise((r) => setTimeout(r, 1200));
+    await route.continue();
+  });
   await page.goto(`${BASE}/index.html`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  const feedLoading = await page.evaluate(() => {
+    const grid = document.querySelector("#offer-grid");
+    return {
+      loadingClass: grid?.classList.contains("offer-grid--loading") ?? false,
+      skeletons: document.querySelectorAll("#offer-grid .offer-skeleton").length,
+      busy: grid?.getAttribute("aria-busy") === "true",
+    };
+  });
+  if (!feedLoading.loadingClass || feedLoading.skeletons < 4) {
+    failures.push(`offer grid should show skeleton while feed loads (loading=${feedLoading.loadingClass}, skeletons=${feedLoading.skeletons})`);
+  }
+  if (!feedLoading.busy) failures.push("offer grid should be aria-busy while feed loads");
+  await page.waitForSelector("#offer-grid .offer-card", { timeout: 45_000 });
+  await page.unroute("**/offers.json");
+  const feedReady = await page.evaluate(() => ({
+    loading: document.querySelector("#offer-grid")?.classList.contains("offer-grid--loading"),
+    skeletons: document.querySelectorAll("#offer-grid .offer-skeleton").length,
+    cards: document.querySelectorAll("#offer-grid .offer-card").length,
+  }));
+  if (feedReady.loading || feedReady.skeletons > 0) {
+    failures.push("offer grid skeleton should clear after feed renders");
+  }
+  if (feedReady.cards < 1) failures.push("expected offer cards after feed load");
   const cancel = page.locator("#login-gate-cancel");
   if (await cancel.isVisible({ timeout: 4000 }).catch(() => false)) await cancel.click();
 
@@ -116,6 +143,13 @@ try {
   await page.waitForSelector("#clear-active-filters:not([hidden])", { timeout: 5000 }).catch(() => {
     failures.push("Limpar filtros should appear when a category is active");
   });
+
+  await acougueChip.first().click();
+  const categoryToggledOff = await page.evaluate(() => {
+    const chip = document.querySelector('#popular-items button[data-group="carnes"]');
+    return Boolean(chip && !chip.classList.contains("active") && chip.getAttribute("aria-pressed") === "false");
+  });
+  if (!categoryToggledOff) failures.push("active category chip should clear when clicked again");
 
   const listMode = await page.evaluate(() => document.querySelector("#offer-grid")?.classList.contains("list-view"));
   if (!listMode) failures.push("mobile default should use list view on offer grid");

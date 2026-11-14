@@ -4,7 +4,7 @@ import { resolveCategory } from "./catalog-taxonomy.mjs";
 import { applySourceFreshness } from "./source-freshness";
 import { bindThemeToggle } from "./theme";
 import { formatFeedUpdate } from "./view/format";
-import { favoritesToggle, feedRetry, feedStatus, mobileNavFavoritesLink, mobileNavOffersLink, navFavoritesLink, updatedLabel } from "./app-ui/dom";
+import { favoritesToggle, feedRetry, feedStatus, grid, mobileNavFavoritesLink, mobileNavOffersLink, navFavoritesLink, updatedLabel } from "./app-ui/dom";
 import { bindCompactTopbar, setAccountStatus, updateAccountControls } from "./app-ui/topbar";
 import { askForLogin, bindLoginDialog } from "./app-ui/login-prompt";
 import { bindAppEvents, setFavoritesView } from "./app-ui/actions";
@@ -15,10 +15,13 @@ import { readSavedDepartment } from "./app-ui/session-filters";
 import { readViewMode, updateViewMode } from "./app-ui/view";
 import { renderFilters, renderPopularItems, renderStoreFilters } from "./app-ui/filters";
 import { renderOffers } from "./app-ui/render";
+import { hideOfferGridLoading } from "./app-ui/offer-grid-loading";
 import { appState } from "./app-ui/state";
 import { supabase } from "./supabase-client";
 
 function showFeedError(): void {
+  hideOfferGridLoading();
+  grid.replaceChildren();
   feedStatus.hidden = false;
   feedStatus.dataset.state = "error";
   feedStatus.textContent = "Não foi possível carregar as ofertas. Verifique sua conexão e tente novamente.";

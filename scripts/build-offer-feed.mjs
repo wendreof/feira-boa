@@ -1,10 +1,11 @@
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { rename, writeFile } from "node:fs/promises";
 import { assembleFeed } from "./feed/assemble-feed.mjs";
 import { buildSnapshotManifest } from "./feed/snapshot-manifest.mjs";
 import { createBuildInfo } from "./feed/build-info.mjs";
 import { loadFallbackCatalog, loadPreviousSnapshots, loadSnapshots } from "./feed/load-sources.mjs";
 import { validateFeed } from "./feed/validate-feed.mjs";
 import { counterCutDetailHints } from "./domain/carnes-department.mjs";
+import { readPackageVersion } from "./read-package-version.mjs";
 
 const fallback = await loadFallbackCatalog();
 const snapshots = await loadSnapshots();
@@ -47,6 +48,6 @@ await writeFile(manifestUrl, `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`Generated snapshot-manifest.json for ${manifest.current.length} current and ${manifest.previous.length} previous snapshot(s).`);
 console.log(`Generated offers.json with ${feed.offers.length} offers from ${feed.stores.length} stores.`);
 
-const packageInfo = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
-const buildInfo = createBuildInfo({ version: packageInfo.version });
+const packageVersion = await readPackageVersion(new URL("../package.json", import.meta.url));
+const buildInfo = createBuildInfo({ version: packageVersion });
 await writeFile(new URL("../build-info.json", import.meta.url), `${JSON.stringify(buildInfo, null, 2)}\n`);

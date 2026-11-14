@@ -194,8 +194,9 @@ The **Pull request checks** workflow runs typecheck, build, and `npm run test:co
 ## Deploy
 
 - **Production:** https://feira-boa.pages.dev — [Cloudflare Pages](https://pages.cloudflare.com) with `npm run build` and output directory `.`.
-- `build-info.json` is generated at build time and is not committed; check `/build-info.json` on deploy after pipeline changes.
-- Other workflows: `send-price-alerts.yml`, `send-catalog-push.yml`, `check-site-health.yml`, `telegram-link-sync.yml`.
+- `build-info.json` is generated at build time and is not committed; check `/build-info.json` on deploy after pipeline changes. Footer version comes from `package.json` via that file.
+- **Release:** bump `version` in `package.json` in your PR; merging to `main` runs `release-tag.yml`, which adds git tag `v{version}` when that tag is not already on the repo.
+- Other workflows: `release-tag.yml`, `send-price-alerts.yml`, `send-catalog-push.yml`, `check-site-health.yml`, `telegram-link-sync.yml`.
 
 ## Accounts, alerts, and admin
 

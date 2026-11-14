@@ -81,6 +81,12 @@ const buildInfo = await readJson("build-info.json");
 if (buildInfo && (!buildInfo.commit || !buildInfo.version || !Number.isFinite(Date.parse(buildInfo.builtAt)))) {
   failures.push("build-info.json: invalid shape");
 }
+try {
+  const footerBundle = await readFile(new URL("../site-footer.js", import.meta.url), "utf8");
+  if (!footerBundle.includes("data-site-version")) failures.push("site-footer.js: missing data-site-version");
+} catch {
+  // Missing bundle already reported via requiredFiles.
+}
 const manifest = await readJson("manifest.webmanifest");
 if (manifest) {
   const sizes = new Set((manifest.icons ?? []).map((icon) => icon.sizes));

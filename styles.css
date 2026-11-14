@@ -1524,9 +1524,11 @@ body:has(.topbar.is-compact) .category-bar{top:56px}
 .sidebar-profile{display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:56px}
 .sidebar-profile-avatar{position:relative;width:40px;height:40px;flex:0 0 auto;display:grid;place-items:center;border-radius:50%;overflow:hidden;background:#315444;color:#e7f3ea;border:1px solid #244033}
 .sidebar-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.sidebar-profile-fallback{display:grid;place-items:center;line-height:0}
+.sidebar-profile-avatar img[hidden]{display:none!important}
+.sidebar-profile-fallback{display:grid;place-items:center;line-height:0;grid-area:1/1}
+.sidebar-profile-avatar img:not([hidden]){grid-area:1/1}
 .sidebar-profile-fallback[hidden]{display:none}
-.sidebar-profile-fallback svg{display:block;fill:currentColor}
+.sidebar-profile-fallback svg{display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sidebar-profile-copy{display:flex;flex-direction:column;min-width:0;line-height:1.2}
 .sidebar-profile-copy strong{font:750 13px "DM Sans",sans-serif;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sidebar-profile-copy strong[hidden]{display:none}

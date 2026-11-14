@@ -19,6 +19,8 @@ Feira Boa is a static supermarket-offers site for São João da Boa Vista. The a
 - TypeScript entry points (in `src/`): `src/app.ts`, `src/login-page.ts`, `src/account-page.ts`, `src/suggestions-page.ts`.
 - Bundling is done with `esbuild` via `npm run build`.
 - Tracked site artifacts are served from the repository root. `build-info.json` is generated and ignored by Git, so deployment must run `npm run build` before publishing.
+- **Site version (footer):** bump semver only in `package.json`. `npm run build` runs `scripts/inject-site-version.mjs`, writes `build-info.json` (commit/build metadata), and bundles `site-footer.js` with `data-site-version` plus a visible `vX.Y.Z` pill; `site-version.js` enriches it from `build-info.json` on every page with footer scripts. Local optional tag helper: `npm run release:tag` (prints `git tag -a vX.Y.Z`).
+- **Release tags:** bump `version` in `package.json` in the PR when you ship a release. On push to `main`, workflow `release-tag.yml` creates annotated tag `v{version}` if that tag does not exist yet (no auto-bump).
 - Cloudflare Pages uses build command `npm run build` and output directory `.`. HTML sources live in `src/html/`; build stages copies to the repo root. Esbuild bundles at root are build outputs (gitignored). After changing build or deployment settings, verify the deployed `/build-info.json` is JSON and run `npm run check:site` against the public `SITE_URL`.
 
 ### Data pipeline

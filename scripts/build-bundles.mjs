@@ -1,6 +1,9 @@
 import * as esbuild from "esbuild";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { readPackageVersion } from "./read-package-version.mjs";
+
+const packageVersion = await readPackageVersion(new URL("../package.json", import.meta.url));
 
 const rootDir = fileURLToPath(new URL("..", import.meta.url));
 const supabaseShim = path.join(rootDir, "src/supabase-js-browser.ts");
@@ -50,6 +53,9 @@ await esbuild.build({
   entryPoints: pageEntries,
   outdir: rootDir,
   plugins: [supabaseShimPlugin],
+  define: {
+    __SITE_PACKAGE_VERSION__: JSON.stringify(packageVersion),
+  },
 });
 
 console.log(`Built supabase-vendor.js and ${pageEntries.length} page bundles.`);

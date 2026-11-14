@@ -61,8 +61,9 @@ test("the live site loads auto ads on offer pages and names them in the privacy 
   assert.match(terms, /id="privacidade"/);
   assert.match(terms, /exibem anúncios do Google \(AdSense\)/);
   assert.match(terms, /https:\/\/adssettings\.google\.com/);
-  const footer = readFileSync(new URL("../site-footer.js", import.meta.url), "utf8");
-  assert.match(footer, /termos\.html#privacidade/);
+  const footerSource = readFileSync(new URL("../src/shared/site-footer.ts", import.meta.url), "utf8");
+  assert.match(footerSource, /termos\.html#privacidade/);
+  assert.match(footerSource, /data-site-version/);
   const headers = readFileSync(new URL("../_headers", import.meta.url), "utf8");
   assert.match(headers, /script-src 'self' https:\/\/pagead2\.googlesyndication\.com/);
   assert.match(headers, /frame-src https:\/\/googleads\.g\.doubleclick\.net/);

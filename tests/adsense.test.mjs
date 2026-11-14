@@ -50,14 +50,14 @@ test("the live site loads auto ads on offer pages and names them in the privacy 
   const src = adsenseScriptSrc();
   assert.equal(src, `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${LIVE_CLIENT}`);
   for (const file of ["index.html", "lojas.html"]) {
-    const html = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+    const html = readFileSync(new URL(`../src/html/${file}`, import.meta.url), "utf8");
     assert.match(html, new RegExp(src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
   for (const file of ["termos.html", "login.html", "admin.html", "alerts.html", "account.html"]) {
-    const html = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+    const html = readFileSync(new URL(`../src/html/${file}`, import.meta.url), "utf8");
     assert.doesNotMatch(html, /adsbygoogle|ca-pub-/);
   }
-  const terms = readFileSync(new URL("../termos.html", import.meta.url), "utf8");
+  const terms = readFileSync(new URL("../src/html/termos.html", import.meta.url), "utf8");
   assert.match(terms, /id="privacidade"/);
   assert.match(terms, /exibem anúncios do Google \(AdSense\)/);
   assert.match(terms, /https:\/\/adssettings\.google\.com/);

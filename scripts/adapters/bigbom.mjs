@@ -7,6 +7,7 @@ import { parseDateRange } from "../domain/parsing.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
+import { decodeHtmlEntities } from "../domain/html-entities.mjs";
 
 const BIGBOM_STORE = {
   name: "Big Bom",
@@ -22,7 +23,7 @@ export async function discoverBigBomFlyer(pageUrl = "https://bigbom.com.br/") {
   try {
     const res = await fetchWithRetry(pageUrl, { headers: { "User-Agent": USER_AGENT } });
     if (!res.ok) return DEFAULT_FLYER_URL;
-    const html = await res.text();
+    const html = decodeHtmlEntities(await res.text());
     const pdfs = [...html.matchAll(/href=["'](https?:\/\/bigbom\.com\.br\/wp-content\/uploads\/[^"']+\.pdf)["']/gi)].map((m) => m[1]);
     const flyerPdfs = pdfs.filter((u) => /oferta/i.test(u));
     return flyerPdfs[0] || pdfs[0] || DEFAULT_FLYER_URL;

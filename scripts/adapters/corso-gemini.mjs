@@ -1,50 +1,20 @@
-import { fetchWithRetry } from "./http.mjs";
+import {
+  campaignSchemaJson,
+  downloadFlyerImageBase64,
+  geminiExtractionEnabled,
+  generateFlyerCampaignsViaGemini,
+} from "./gemini-flyer.mjs";
 
-const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
-const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
+export { geminiExtractionEnabled };
 
-const CAMPAIGN_SCHEMA = `{
-  "campaigns": [
-    {
-      "from": "YYYY-MM-DD",
-      "to": "YYYY-MM-DD",
-      "offers": [
-        {
-          "name": "product name without brand",
-          "brand": "brand or empty string",
-          "detail": "Unidade|Kg|500g|1L etc",
-          "cat": "Hortifruti|Mercearia|Laticínios|Limpeza|Bebidas|Carnes|Congelados|Geral",
-          "price": 0.0,
-          "oldPrice": 0.0 or null
-        }
-      ]
-    }
-  ]
-}`;
-
-function geminiApiKey() {
-  return process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim() || "";
-}
-
-async function downloadBase64(url) {
-  const res = await fetchWithRetry(url, { headers: { "User-Agent": USER_AGENT } });
-  if (!res.ok) throw new Error(`Could not download Corso flyer image (${res.status})`);
-  const buffer = Buffer.from(await res.arrayBuffer());
-  const mime = res.headers.get("content-type")?.split(";")[0]?.trim() || "image/jpeg";
-  return { mime, data: buffer.toString("base64") };
-}
-
-export function geminiExtractionEnabled() {
-  return geminiApiKey().length > 0;
-}
+const CORSO_SCHEMA = campaignSchemaJson();
 
 export async function extractCorsoCampaignsViaGemini({ frenteUrl, versoUrl }) {
-  const key = geminiApiKey();
-  if (!key) {
-    throw new Error("GEMINI_API_KEY is not set; cannot run Corso vision extraction.");
-  }
+  const [frente, verso] = await Promise.all([
+    downloadFlyerImageBase64(frenteUrl, { label: "Corso flyer", defaultMime: "image/jpeg" }),
+    downloadFlyerImageBase64(versoUrl, { label: "Corso flyer", defaultMime: "image/jpeg" }),
+  ]);
 
-  const [frente, verso] = await Promise.all([downloadBase64(frenteUrl), downloadBase64(versoUrl)]);
   const prompt = [
     "You transcribe official Brazilian supermarket flyer images into structured JSON.",
     "Read both flyer pages (frente and verso). Extract every priced offer.",
@@ -52,58 +22,14 @@ export async function extractCorsoCampaignsViaGemini({ frenteUrl, versoUrl }) {
     "Keep separate campaign windows when validity dates differ on the flyer.",
     "Never invent offers; omit unreadable cells.",
     "Return ONLY JSON matching this schema:",
-    CAMPAIGN_SCHEMA,
+    CORSO_SCHEMA,
   ].join("\n");
 
-  const model =
-    process.env.CORSO_GEMINI_MODEL?.trim() ||
-    process.env.GEMINI_MODEL?.trim() ||
-    DEFAULT_GEMINI_MODEL;
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
-  const body = {
-    contents: [
-      {
-        role: "user",
-        parts: [
-          { text: prompt },
-          { inline_data: { mime_type: frente.mime, data: frente.data } },
-          { inline_data: { mime_type: verso.mime, data: verso.data } },
-        ],
-      },
-    ],
-    generationConfig: {
-      temperature: 0.1,
-      responseMimeType: "application/json",
-    },
-  };
-
-  const res = await fetchWithRetry(
-    endpoint,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    },
-    { attempts: 5, delayMs: 2_000, timeoutMs: 120_000 },
-  );
-  if (!res.ok) {
-    const detail = await res.text();
-    throw new Error(`Gemini Corso extraction failed (${res.status}): ${detail.slice(0, 300)}`);
-  }
-
-  const payload = await res.json();
-  const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("") ?? "";
-  if (!text.trim()) throw new Error("Gemini Corso extraction returned empty content.");
-
-  let parsed;
-  try {
-    parsed = JSON.parse(text);
-  } catch {
-    throw new Error("Gemini Corso extraction did not return valid JSON.");
-  }
-
-  if (!Array.isArray(parsed.campaigns)) {
-    throw new Error("Gemini Corso extraction JSON is missing campaigns[].");
-  }
-  return parsed.campaigns;
+  return generateFlyerCampaignsViaGemini({
+    prompt,
+    images: [frente, verso],
+    modelEnvKeys: ["CORSO_GEMINI_MODEL", "GEMINI_MODEL"],
+    errorLabel: "Corso",
+    timeoutMs: 120_000,
+  });
 }

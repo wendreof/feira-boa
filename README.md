@@ -31,22 +31,85 @@ Detalhes de arquitetura, taxonomia e convenções: [`AGENT.md`](AGENT.md) e [`BA
 - **Hospedagem:** [Cloudflare Pages](https://pages.cloudflare.com) — build `npm run build`, diretório de saída `.`
 - **Auth / sync:** Supabase (chave publicável no cliente; segredos só em Actions ou Edge Functions)
 
+O fluxo abaixo liga **fontes oficiais** → **adaptadores** → **snapshots e feed** → **build estático** → **Cloudflare Pages** → **PWA** no navegador. Ingestão local: `npm run ingest:offers`; em produção o mesmo caminho roda no workflow agendado.
+
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph fontes [Fontes oficiais]
-    A[Web / API / PDF / imagem]
+    apis[API e HTML - Sempre Vale Pague Menos]
+    pdf[PDF e scrape - Big Bom Spani]
+    corso[Corso jornal JPG]
+    spasso[Spasso imagens no site]
+    manual[fortemix-campaigns.json manual]
   end
-  subgraph repo [Repositório]
-    B[scripts/adapters]
-    C[state/ snapshots]
-    D[build-offer-feed.mjs]
-    E[offers.json + bundles]
+
+  subgraph ingest [Ingestao no repo]
+    io[ingest-offers.mjs]
+    adp[scripts/adapters por loja]
+    gem[corso-gemini.mjs opcional GEMINI_API_KEY]
   end
-  subgraph deploy [Cloudflare Pages]
-    F[Site estático]
+
+  subgraph persist [Estado versionado]
+    st[state por loja .json]
+    prev[state/previous]
+    cache[corso-campaigns.json]
   end
-  A --> B --> C --> D --> E --> F
+
+  subgraph feed [Feed publico]
+    bof[build-offer-feed.mjs]
+    off[offers.json]
+    man[snapshot-manifest.json]
+  end
+
+  subgraph site [Build e hospedagem]
+    nb[npm run build - tsc esbuild structured data]
+    cf[Cloudflare Pages]
+  end
+
+  apis --> adp
+  pdf --> adp
+  corso --> gem
+  gem --> adp
+  corso --> adp
+  spasso --> adp
+  manual --> adp
+  io --> adp
+  adp --> st
+  adp --> prev
+  adp --> cache
+  io --> bof
+  st --> bof
+  prev --> bof
+  bof --> off
+  bof --> man
+  off --> nb
+  man --> nb
+  nb --> cf
+
+  subgraph ci [GitHub Actions monitor-offers.yml]
+    sched[4x dia ou workflow_dispatch]
+    mon[monitor:sources e health]
+    git[commit push main]
+  end
+
+  sched --> io
+  io --> mon
+  mon --> git
+  git --> cf
+
+  pwa[PWA index.html app.js offers.json]
+  cf --> pwa
+
+  subgraph conta [Opcional conta e alertas]
+    sb[Supabase login favoritos tema]
+    push[Telegram OneSignal workflows separados]
+  end
+
+  pwa --> sb
+  pwa -.-> push
 ```
+
+**Leitura rápida:** cada adaptador grava ou preserva `state/<loja>.json`; o ingest chama `build-offer-feed.mjs` ao terminar. O deploy na Cloudflare executa `npm run build` (regera o feed a partir de `state/` e empacota JS). Conta e alertas são camada opcional no cliente — não entram no `offers.json`.
 
 ## Início rápido
 

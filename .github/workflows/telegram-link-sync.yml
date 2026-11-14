@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 # Só este workflow chama getUpdates do bot; o grupo evita execuções sobrepostas.
 concurrency:
@@ -42,3 +43,9 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: node scripts/telegram-links.mjs
+
+      - name: Open or update failure issue
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/github-issue.mjs "[ops] Telegram link sync failed"

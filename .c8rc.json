@@ -1,0 +1,9 @@
+{
+  "exclude": [
+    "tests/**",
+    "**/*.test.mjs",
+    "scripts/test-*.mjs",
+    "node_modules/**",
+    "coverage/**"
+  ]
+}

@@ -4,6 +4,7 @@
 
 [![Site](https://img.shields.io/badge/site-feira--boa.pages.dev-2ea44f)](https://feira-boa.pages.dev)
 [![CI](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml/badge.svg)](https://github.com/wendreof/feira-boa/actions/workflows/pull-request-checks.yml)
+[![codecov](https://codecov.io/gh/wendreof/feira-boa/graph/badge.svg)](https://codecov.io/gh/wendreof/feira-boa)
 ![Node](https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![npm](https://img.shields.io/badge/npm-1.0.0-CB3837?logo=npm&logoColor=white)

@@ -9,7 +9,7 @@
     "from": "2026-11-09",
     "to": "2026-11-15"
   },
-  "fetchedAt": "2026-11-14T22:02:05.908Z",
+  "fetchedAt": "2026-11-15T03:00:01.110Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -4396,30 +4396,6 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Cabelos/Shampoo",
-      "price": 21.99,
-      "previousPrice": null,
-      "icon": "🧴",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-condicionador-palmolive-kids-splashers-palmolive-350ml-2026-11-09",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Condicionador Palmolive Kids Splashers",
-      "detail": "350ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "Mamãe e Bebê/Banho Infantil/Condicionador Infantil",
       "price": 21.99,
       "previousPrice": null,
       "icon": "🧴",
@@ -13134,8 +13110,8 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 19.99,
-      "previousPrice": 24.99,
+      "price": 23.99,
+      "previousPrice": null,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -16544,7 +16520,7 @@
       ],
       "storeCategory": "Café da Manhã/Aveias e Mingaus/Aveia",
       "price": 13.99,
-      "previousPrice": 15.99,
+      "previousPrice": 18.59,
       "icon": "🥣",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

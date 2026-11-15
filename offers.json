@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-15T16:08:02.827Z",
+  "updatedAt": "2026-11-15T22:33:45.353Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -8791,7 +8791,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Sabonete",
-      "price": 45.99,
+      "price": 41.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14865,7 +14865,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Massas/Macarrão",
-      "price": 10.29,
+      "price": 10.69,
       "previousPrice": null,
       "icon": "🍝",
       "tone": "#edf4e9",
@@ -18202,7 +18202,7 @@
       ],
       "storeCategory": "Perfumaria/Cabelos/Kit Shampoo e Condicionador",
       "price": 14.89,
-      "previousPrice": 24.99,
+      "previousPrice": 23.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -19859,7 +19859,7 @@
       ],
       "storeCategory": "Café da Manhã/Aveias e Mingaus/Aveia",
       "price": 13.99,
-      "previousPrice": 18.59,
+      "previousPrice": 15.99,
       "icon": "🥣",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -36805,30 +36805,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-1931-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Creme de Leite Itambé Lata",
-      "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "233",
-      "price": 6.59,
-      "previousPrice": 6.99,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-1933-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -50530,6 +50506,30 @@
       "price": 15.9,
       "previousPrice": 17.17,
       "icon": "🥪",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5702-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Queijo Minas Frescal Polenghi",
+      "detail": "400g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "108",
+      "price": 20.9,
+      "previousPrice": 22.57,
+      "icon": "🧀",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",

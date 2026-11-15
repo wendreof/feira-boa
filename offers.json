@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-15T03:00:09.241Z",
+  "updatedAt": "2026-11-15T16:08:02.827Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -7218,30 +7218,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-esmalte-cintilante-colorama-retro-grace-colorama-8ml-2026-11-09",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Esmalte Cintilante Colorama Retrô Grace",
-      "detail": "8ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "Perfumaria/Mãos e Pés/Esmalte",
-      "price": 12.49,
-      "previousPrice": null,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-esmalte-cintilante-colorama-retro-zaza-colorama-8ml-2026-11-09",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
@@ -11455,7 +11431,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Cuidado Íntimo/Absorvente",
-      "price": 12.19,
+      "price": 12.39,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -46814,30 +46790,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-4109-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Biscoito Club Social Pizza",
-      "detail": "141g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "storeCategory": "66",
-      "price": 4.99,
-      "previousPrice": 5.49,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-4110-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -49526,30 +49478,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-5262-2026-11-09",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Bolo Kim Milho",
-      "detail": "250g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "182",
-      "price": 5.99,
-      "previousPrice": 8.59,
-      "icon": "🎂",
-      "tone": "#edf4e9",
-      "note": "Oferta · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-5286-2026-11-09",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -50554,6 +50482,54 @@
       "price": 9.98,
       "previousPrice": 10.78,
       "icon": "🍓",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5644-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Petit Suísse Danoninho Sabores Morango",
+      "detail": "480g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Iogurtes",
+      "productTypes": [
+        "Iogurtes"
+      ],
+      "storeCategory": "107",
+      "price": 12.89,
+      "previousPrice": 13.99,
+      "icon": "🍓",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-09",
+      "validTo": "2026-11-15",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5659-2026-11-09",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Queijo Cheddar Tipo Sanduíche Polenghi",
+      "detail": "144g",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
+      "productTypes": [
+        "Congelados"
+      ],
+      "storeCategory": "108",
+      "price": 15.9,
+      "previousPrice": 17.17,
+      "icon": "🥪",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-09",

@@ -21,13 +21,44 @@
     });
   }
 
+  // Canonical key: scripts/domain/supabase-auth-storage.mjs (Feira Boa project only).
+  const SUPABASE_AUTH_STORAGE_KEY = "sb-muiuvmhzzbqflxznpnez-auth-token";
+  // Keep in sync with scripts/domain/display-name-cache.mjs.
+  const DISPLAY_NAME_CACHE_KEY = "feira-boa:display-name:v1";
+  const DISPLAY_NAME_METADATA_KEYS = ["display_name", "full_name", "name", "given_name", "user_name", "preferred_username"];
+
+  function readStoredSession() {
+    try {
+      let session = JSON.parse(localStorage.getItem(SUPABASE_AUTH_STORAGE_KEY) || "null");
+      if (Array.isArray(session)) session = JSON.parse(session.join(""));
+      if (!session?.access_token || !session?.user?.id) return null;
+      const expiresAt = session.expires_at;
+      if (typeof expiresAt === "number" && expiresAt * 1000 <= Date.now()) return null;
+      return session;
+    } catch {
+      return null;
+    }
+  }
+
+  function readStoredUserId() {
+    const session = readStoredSession();
+    return session ? String(session.user.id) : null;
+  }
+
+  if (!document.documentElement.dataset.authBootstrap) {
+    document.documentElement.dataset.authBootstrap = readStoredUserId() ? "signed-in" : "guest";
+  }
+
   function setAccountLinkState() {
     if (document.documentElement.dataset.authBootstrap !== "signed-in") return;
     try {
+      const onAccountPage = window.location.pathname.endsWith("/account.html");
       document.querySelectorAll("#nav-account, #mobile-nav-account").forEach((link) => {
         if (!(link instanceof HTMLAnchorElement)) return;
         link.href = "account.html";
         link.setAttribute("aria-label", "Minha conta");
+        if (onAccountPage) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
         link.querySelector("[data-account-label], [data-mobile-account-label]")?.replaceChildren("Minha conta");
       });
     } catch {
@@ -35,23 +66,47 @@
     }
   }
 
-  setAccountLinkState();
-
-  // Canonical key: scripts/domain/supabase-auth-storage.mjs (Feira Boa project only).
-  const SUPABASE_AUTH_STORAGE_KEY = "sb-muiuvmhzzbqflxznpnez-auth-token";
-
-  function readStoredUserId() {
+  function readCachedDisplayName(userId) {
     try {
-      let session = JSON.parse(localStorage.getItem(SUPABASE_AUTH_STORAGE_KEY) || "null");
-      if (Array.isArray(session)) session = JSON.parse(session.join(""));
-      if (!session?.access_token || !session?.user?.id) return null;
-      const expiresAt = session.expires_at;
-      if (typeof expiresAt === "number" && expiresAt * 1000 <= Date.now()) return null;
-      return String(session.user.id);
+      const raw = sessionStorage.getItem(DISPLAY_NAME_CACHE_KEY);
+      if (!raw) return null;
+      const entry = JSON.parse(raw);
+      if (entry.userId !== userId || typeof entry.name !== "string") return null;
+      const name = entry.name.trim().replace(/\s+/g, " ");
+      return name.length >= 2 ? name : null;
     } catch {
       return null;
     }
   }
+
+  function displayNameFromMetadata(metadata) {
+    if (!metadata || typeof metadata !== "object") return null;
+    for (const key of DISPLAY_NAME_METADATA_KEYS) {
+      const value = metadata[key];
+      if (typeof value !== "string") continue;
+      const name = value.trim().replace(/\s+/g, " ");
+      if (name.length >= 2) return name;
+    }
+    return null;
+  }
+
+  function primeSidebarDisplayName() {
+    const nameEl = document.querySelector("#sidebar-profile-name");
+    if (!(nameEl instanceof HTMLElement)) return;
+    if (document.documentElement.dataset.authBootstrap !== "signed-in") {
+      nameEl.textContent = "";
+      nameEl.hidden = true;
+      return;
+    }
+    const session = readStoredSession();
+    const userId = session ? String(session.user.id) : null;
+    const name = (userId && readCachedDisplayName(userId)) || displayNameFromMetadata(session?.user?.user_metadata);
+    nameEl.textContent = name ?? "";
+    nameEl.hidden = !name;
+  }
+
+  setAccountLinkState();
+  primeSidebarDisplayName();
 
   function resetGuestSidebarAvatar() {
     if (document.documentElement.dataset.authBootstrap === "guest") {

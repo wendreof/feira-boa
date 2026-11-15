@@ -14,6 +14,7 @@ import { renderCheckboxes } from "./account-ui/options";
 import { bindPreferenceControls, bindThemeControls, saveThemePreference } from "./account-ui/preference-controls";
 import { accountState } from "./account-ui/state";
 import { setActionsDisabled, setStatus } from "./account-ui/ui";
+import { writeCachedDisplayName } from "../scripts/domain/display-name-cache.mjs";
 import { displayNameInput, email, favoriteProductTypes, favoriteStores, signOutButton, deleteAccountButton } from "./account-ui/dom";
 
 function bindAccountActions(): void {
@@ -62,6 +63,14 @@ async function loadAccount(user: { id: string; email?: string | null }): Promise
     displayName = await importDisplayNameFromProvider(user.id).catch(() => null);
   }
   if (displayNameInput && displayName) displayNameInput.value = displayName;
+  if (displayName) {
+    writeCachedDisplayName(user.id, displayName, sessionStorage);
+    const profileName = document.querySelector<HTMLElement>("#sidebar-profile-name");
+    if (profileName) {
+      profileName.textContent = displayName;
+      profileName.hidden = false;
+    }
+  }
   const preferences = settings.preferences;
   if (accountState.pendingTheme) preferences.theme = accountState.pendingTheme;
   accountState.preferences = preferences;

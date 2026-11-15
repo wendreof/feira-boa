@@ -3,6 +3,7 @@ import { topbar, accountAccess, accountPanel, navAccountLink, navAccountLabel, m
 import { AVATAR_LOAD_TIMEOUT_MS, AVATAR_SIZE, isStorageAvatarPath, loadAvatar, readCachedAvatarPath, setAvatarImage, writeCachedAvatarPath } from "../avatar";
 import { hideSpinner, showSpinner } from "../loading";
 import { loadDisplayName } from "../account";
+import { clearCachedDisplayName, writeCachedDisplayName } from "../../scripts/domain/display-name-cache.mjs";
 
 export function bindCompactTopbar(): void {
   // O cabeçalho encolhe ao rolar para liberar espaço na tela.
@@ -39,7 +40,11 @@ export function updateAccountControls(): void {
   mobileNavAccountLink.setAttribute("href", href);
   if (!signedIn) {
     clearTopbarAvatar();
-    if (topbarHello) topbarHello.hidden = true;
+    clearCachedDisplayName(sessionStorage);
+    if (topbarHello) {
+      topbarHello.textContent = "";
+      topbarHello.hidden = true;
+    }
   } else if (topbarAccountImage && !topbarAccountImage.getAttribute("src")) {
     clearTopbarAvatar();
   }
@@ -144,6 +149,7 @@ export async function refreshTopbarAvatar(
   }
   try {
     const name = await loadDisplayName(userId);
+    writeCachedDisplayName(userId, name, sessionStorage);
     if (topbarHello) {
       topbarHello.textContent = name ?? "";
       topbarHello.hidden = !name;

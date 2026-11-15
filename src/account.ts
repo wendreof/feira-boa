@@ -3,6 +3,7 @@ import type { ProfilePreferences } from "./types";
 import { errorMessage } from "./errors";
 import { unregisterAnonymousCatalogPush } from "./catalog-push-register";
 import { buildOAuthLoginRedirect, OAUTH_PROVIDER_SCOPES, type OAuthLoginProvider } from "./shared/oauth-login";
+import { clearCachedDisplayName } from "../scripts/domain/display-name-cache.mjs";
 import { supabase } from "./supabase-client";
 
 export { errorMessage };
@@ -151,6 +152,7 @@ export async function resetPasswordForEmail(email: string, returnTo: string): Pr
 export async function signOut(): Promise<void> {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
+  clearCachedDisplayName(globalThis.sessionStorage);
 }
 
 export async function deleteAccount(): Promise<void> {

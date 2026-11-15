@@ -3,6 +3,7 @@ import { errorMessage, saveDisplayName, savePreferences } from "../account";
 import { accountState } from "./state";
 import { setStatus } from "./ui";
 import { checkedValues } from "./options";
+import { writeCachedDisplayName } from "../../scripts/domain/display-name-cache.mjs";
 import {
   displayNameInput,
   displayNameSaveButton,
@@ -60,6 +61,12 @@ async function saveDisplayNameFromInput(button: HTMLButtonElement): Promise<void
   try {
     const saved = await saveDisplayName(accountState.userId, value);
     if (displayNameInput) displayNameInput.value = saved;
+    writeCachedDisplayName(accountState.userId, saved, sessionStorage);
+    const profileName = document.querySelector<HTMLElement>("#sidebar-profile-name");
+    if (profileName) {
+      profileName.textContent = saved;
+      profileName.hidden = false;
+    }
     setStatus("Nome salvo. Ele aparece no topo do site e nos alertas.");
   } catch (error) {
     setStatus(`Não foi possível salvar o nome: ${errorMessage(error)}`);

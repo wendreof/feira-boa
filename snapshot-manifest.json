@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-15T03:00:09.241Z",
+  "updatedAt": "2026-11-16T12:58:29.514Z",
   "current": [
     {
       "role": "current",
@@ -33,12 +33,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-15T03:00:09.241Z",
+      "fetchedAt": "2026-11-16T12:58:29.514Z",
       "supersededAt": null,
-      "offerCount": 32,
+      "offerCount": 27,
       "status": "ok",
-      "validFrom": "2026-11-13",
-      "validTo": "2026-11-13",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-16",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {
@@ -126,12 +126,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-12T23:16:47.079Z",
-      "supersededAt": "2026-11-13T15:21:17.468Z",
-      "offerCount": 30,
+      "fetchedAt": "2026-11-15T03:00:09.241Z",
+      "supersededAt": "2026-11-16T12:58:29.514Z",
+      "offerCount": 32,
       "status": "ok",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-09",
+      "validFrom": "2026-11-13",
+      "validTo": "2026-11-13",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {

@@ -1,38 +1,28 @@
 {
-  "campaignId": "sextou-2026-11-13",
+  "campaignId": "dezcontao-2026-11-16",
   "sourceUrl": "https://smfortemix.com.br/",
   "campaigns": [
     {
-      "from": "2026-11-13",
-      "to": "2026-11-13",
-      "offerNote": "Sextou com Muita Oferta. Ofertas somente no app Forte Mix. Válido 13/11/2026 ou enquanto durarem os estoques.",
+      "from": "2026-11-16",
+      "to": "2026-11-16",
+      "offerNote": "Oferta do Dezcontão. Válido 16/11/2026 ou enquanto durarem os estoques.",
       "offers": [
         {
-          "name": "Óleo de Soja",
-          "brand": "ABC",
-          "detail": "900ml",
-          "cat": "Mercearia",
-          "price": 6.99,
-          "oldPrice": 7.99,
-          "note": "Ofertas somente no app. Limite 10 un."
+          "name": "Refrigerante Coca-Cola Zero",
+          "brand": "Coca-Cola",
+          "detail": "350ml pack 6 un",
+          "cat": "Bebidas",
+          "price": 3.79,
+          "note": "Nesta embalagem a unidade sai por R$ 3,79."
         },
         {
-          "name": "Arroz",
-          "brand": "Prato Fino",
+          "name": "Açúcar Cristal",
+          "brand": "Euroçúcar",
           "detail": "5kg",
           "cat": "Mercearia",
-          "price": 28.9,
-          "oldPrice": 31.9,
+          "price": 13.98,
+          "oldPrice": 17.9,
           "note": "Ofertas somente no app. Limite 6 un."
-        },
-        {
-          "name": "Açúcar Refinado",
-          "brand": "Alto Alegre",
-          "detail": "1kg",
-          "cat": "Mercearia",
-          "price": 3.38,
-          "oldPrice": 4.79,
-          "note": "Ofertas somente no app. Limite 10 un."
         },
         {
           "name": "Leite Condensado Moça",
@@ -44,230 +34,202 @@
           "note": "Ofertas somente no app. Limite 5 un."
         },
         {
-          "name": "Café Sachê",
-          "brand": "Três Corações",
-          "detail": "500g",
-          "cat": "Café",
-          "price": 22.98,
-          "oldPrice": 29.9,
-          "note": "Ofertas somente no app. Pague 475g. Limite 3 un."
-        },
-        {
-          "name": "Creme de Leite",
-          "brand": "Terra Viva",
-          "detail": "200g",
-          "cat": "Laticínios",
-          "price": 1.99,
-          "oldPrice": 2.99
-        },
-        {
-          "name": "Creme de Avelã",
-          "brand": "Nutella Ferrero",
-          "detail": "140g",
-          "cat": "Mercearia",
-          "price": 11.98,
-          "oldPrice": 14.9
-        },
-        {
-          "name": "Pão de Forma",
-          "brand": "Seven Boys",
-          "detail": "450g",
-          "cat": "Padaria",
-          "price": 5.98,
-          "oldPrice": 6.99
-        },
-        {
           "name": "Farinha de Trigo",
           "brand": "Renata",
           "detail": "1kg",
           "cat": "Mercearia",
           "price": 5.48,
-          "oldPrice": 6.99
+          "oldPrice": 6.99,
+          "note": "Ofertas somente no app. Limite 10 un."
         },
         {
-          "name": "Azeitona Sem Caroço",
-          "brand": "Nucete",
-          "detail": "150g",
-          "cat": "Mercearia",
-          "price": 5.98,
-          "oldPrice": 7.99
-        },
-        {
-          "name": "Alcatra com Maminha Bovino Bifes",
-          "brand": "",
-          "detail": "kg",
-          "cat": "Açougue",
-          "price": 52.9
-        },
-        {
-          "name": "Costela Minga Bovina",
-          "brand": "",
-          "detail": "kg",
-          "cat": "Açougue",
-          "price": 24.98
-        },
-        {
-          "name": "Miolo do Acém Bovino",
-          "brand": "",
-          "detail": "kg",
-          "cat": "Açougue",
-          "price": 39.9
-        },
-        {
-          "name": "Peito de Frango Sem Osso Lar Pacote Cong.",
-          "brand": "Lar",
-          "detail": "kg",
-          "cat": "Açougue",
-          "price": 18.98,
-          "oldPrice": 22.9
-        },
-        {
-          "name": "Iogurte Pedaços",
-          "brand": "Carolina",
-          "detail": "450g",
+          "name": "Requeijão Tradicional",
+          "brand": "Deale",
+          "detail": "180g",
           "cat": "Laticínios",
-          "price": 8.79,
-          "oldPrice": 9.95
+          "price": 6.98,
+          "oldPrice": 8.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Desodorante Aero",
-          "brand": "Rexona",
-          "detail": "150ml",
-          "cat": "Higiene",
-          "price": 13.98,
-          "oldPrice": 19.98,
-          "note": "Ofertas somente no app. Limite 2 un."
+          "name": "Lasanha Bolonhesa",
+          "brand": "Sadia",
+          "detail": "600g",
+          "cat": "Congelados",
+          "price": 12.98,
+          "oldPrice": 18.98,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Acém Bovino Peça ou Pedaço",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Açougue",
+          "price": 39.9,
+          "oldPrice": 42.9,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Ração Cães Carne RP AD",
+          "brand": "Pedigree",
+          "detail": "900g",
+          "cat": "Pet",
+          "price": 14.98,
+          "oldPrice": 21.98,
+          "note": "Ofertas somente no app."
         },
         {
           "name": "Lava Roupas Todo Ciclo",
           "brand": "Omo",
           "detail": "1,4kg",
           "cat": "Limpeza",
-          "price": 16.98,
-          "oldPrice": 21.98
+          "price": 15.9,
+          "oldPrice": 19.95,
+          "note": "Ofertas somente no app. Limite 2 un."
         },
         {
-          "name": "Protetor Solar Aero FPS 50",
-          "brand": "Above",
-          "detail": "150ml",
-          "cat": "Higiene",
-          "price": 14.98,
-          "oldPrice": 24.98
+          "name": "Bebida Láctea Bandeija",
+          "brand": "Carolina",
+          "detail": "360g",
+          "cat": "Laticínios",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
         },
         {
-          "name": "Cerveja Itaipava",
-          "brand": "",
-          "detail": "350ml",
-          "cat": "Bebidas",
-          "price": 2.38,
-          "oldPrice": 2.89
+          "name": "Iogurte Zero",
+          "brand": "Carolina La Vita",
+          "detail": "150g",
+          "cat": "Laticínios",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
         },
         {
-          "name": "Cerveja Heineken",
-          "brand": "",
-          "detail": "350ml",
-          "cat": "Bebidas",
-          "price": 4.48,
-          "oldPrice": 5.49,
-          "note": "Ofertas somente no app. A partir de 12 unidades por R$ 4,48; unidade avulsa R$ 5,49."
+          "name": "Biscoito Wafer Tubin",
+          "brand": "Montevergine",
+          "detail": "48g",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
         },
         {
-          "name": "Bebida Ice Original",
-          "brand": "Smirnoff",
-          "detail": "275ml LN",
-          "cat": "Bebidas",
-          "price": 5.98,
-          "oldPrice": 7.99
+          "name": "Bolo",
+          "brand": "Santa Edwiges",
+          "detail": "40g",
+          "cat": "Padaria",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 7 por R$ 10,00."
         },
         {
-          "name": "Aperitivo",
-          "brand": "Aperol",
-          "detail": "750ml",
-          "cat": "Bebidas",
-          "price": 49.9,
-          "oldPrice": 54.9
+          "name": "Drops",
+          "brand": "Icekiss",
+          "detail": "29g",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 8 por R$ 10,00."
         },
         {
-          "name": "Bebida Alcoólica",
-          "brand": "Mansão Maromba",
-          "detail": "1L",
-          "cat": "Bebidas",
-          "price": 12.98,
-          "oldPrice": 16.98
-        },
-        {
-          "name": "Vinho Uruguaio",
-          "brand": "Juan Carrau",
-          "detail": "750ml",
-          "cat": "Bebidas",
-          "price": 47.9,
-          "oldPrice": 59.9
-        },
-        {
-          "name": "Vinho",
-          "brand": "Quatro Reinos",
-          "detail": "750ml",
-          "cat": "Bebidas",
-          "price": 16.98,
-          "oldPrice": 19.9
-        },
-        {
-          "name": "Aguardente",
-          "brand": "Villa Velha",
-          "detail": "600ml",
-          "cat": "Bebidas",
-          "price": 5.98,
-          "oldPrice": 9.98
-        },
-        {
-          "name": "Whisky",
-          "brand": "Jack Daniel's",
-          "detail": "1L",
-          "cat": "Bebidas",
-          "price": 129.9,
-          "oldPrice": 169.9
-        },
-        {
-          "name": "Suco Levinho Néctar",
-          "brand": "Hugo Pietro",
-          "detail": "1,2L",
-          "cat": "Bebidas",
-          "price": 6.98,
-          "oldPrice": 9.98
-        },
-        {
-          "name": "Refrigerante Coca Cola Zero",
+          "name": "Refrigerante",
           "brand": "Coca-Cola",
-          "detail": "600ml",
+          "detail": "200ml Original ou Zero",
           "cat": "Bebidas",
-          "price": 4.99,
-          "oldPrice": 6.49
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
         },
         {
-          "name": "Energético Zero com BCAA",
-          "brand": "Itts",
-          "detail": "473ml",
-          "cat": "Bebidas",
-          "price": 6.98,
-          "oldPrice": 9.98
+          "name": "Creme de Leite",
+          "brand": "Terra Viva",
+          "detail": "200g",
+          "cat": "Laticínios",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
         },
         {
-          "name": "Água Mineral sem gás",
-          "brand": "Karisa",
-          "detail": "510ml",
-          "cat": "Bebidas",
-          "price": 0.88,
-          "oldPrice": 1.79,
-          "note": "Ofertas somente no app. A partir de 12 unidades por R$ 0,88; unidade avulsa R$ 1,79."
+          "name": "Extrato de Tomate",
+          "brand": "Fugini",
+          "detail": "300g sachê",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
         },
         {
-          "name": "Isotônico",
-          "brand": "Gatorade",
+          "name": "Leite de Coco",
+          "brand": "Bomcoco",
+          "detail": "200ml",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
+        },
+        {
+          "name": "Maionese",
+          "brand": "Saude",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
+        },
+        {
+          "name": "Macarrão Sêmola",
+          "brand": "Da Roz",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
+        },
+        {
+          "name": "Vinagre de Álcool",
+          "brand": "Neval",
+          "detail": "750ml",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 6 por R$ 10,00."
+        },
+        {
+          "name": "Caldo",
+          "brand": "Knorr",
+          "detail": "57g Bacon ou Galinha",
+          "cat": "Mercearia",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
+        },
+        {
+          "name": "Steak de Frango",
+          "brand": "Lar",
+          "detail": "100g",
+          "cat": "Açougue",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
+        },
+        {
+          "name": "Hambúrguer",
+          "brand": "Brasil Burguer",
+          "detail": "56g",
+          "cat": "Açougue",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 10 por R$ 10,00."
+        },
+        {
+          "name": "Prendedor de Roupa",
+          "brand": "Paraná",
+          "detail": "12 un madeira",
+          "cat": "Casa e utilidades",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
+        },
+        {
+          "name": "Detergente",
+          "brand": "Limpol",
           "detail": "500ml",
-          "cat": "Bebidas",
-          "price": 29.94,
-          "oldPrice": 35.94,
-          "note": "Ofertas somente no app. Leve 6 pague 5 por R$ 29,94."
+          "cat": "Limpeza",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
+        },
+        {
+          "name": "Sabonete",
+          "brand": "Cliss",
+          "detail": "85g",
+          "cat": "Higiene",
+          "price": 10,
+          "note": "Oferta do Dezcontão. Leve 10 por R$ 10,00."
         }
       ]
     }

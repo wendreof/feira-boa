@@ -1,0 +1,110 @@
+/* Festa de fim de ano — ativa com html[data-christmas="on"] (christmas-bootstrap.js) */
+
+:root[data-christmas="on"] {
+  --gold: #e8b84a;
+  --topbar-bg: linear-gradient(180deg, #ffffff 0%, #f3faf4 55%, #eef8f0 100%);
+}
+
+:root[data-christmas="on"][data-theme="dark"] {
+  --topbar-bg: linear-gradient(180deg, #1b241e 0%, #17231c 55%, #14261a 100%);
+}
+
+:root[data-christmas="on"] body {
+  position: relative;
+}
+
+:root[data-christmas="on"] body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 12% 8%, #ffffffe6 0 1px, transparent 1.5px),
+    radial-gradient(circle at 28% 18%, #ffffffd9 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 6%, #ffffffcc 0 1px, transparent 1.5px),
+    radial-gradient(circle at 62% 14%, #ffffffe0 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 22%, #ffffffd1 0 1px, transparent 1.5px),
+    radial-gradient(circle at 91% 10%, #ffffffeb 0 1px, transparent 1.5px);
+  background-size: 100% 240px;
+  animation: christmas-snow-drift 48s linear infinite;
+}
+
+:root[data-christmas="on"] .topbar {
+  border-bottom-color: #c5dfd0;
+  box-shadow:
+    0 10px 28px #203c270d,
+    inset 0 -3px 0 linear-gradient(
+      90deg,
+      #c41e3a 0 8%,
+      #228b4c 8% 20%,
+      #c41e3a 20% 32%,
+      #228b4c 32% 44%,
+      #c41e3a 44% 56%,
+      #228b4c 56% 68%,
+      #c41e3a 68% 80%,
+      #228b4c 80% 92%,
+      #c41e3a 92% 100%
+    );
+}
+
+:root[data-christmas="on"] .brand {
+  position: relative;
+}
+
+:root[data-christmas="on"] .sidebar-brand-mark {
+  position: relative;
+}
+
+:root[data-christmas="on"] .brand::after,
+:root[data-christmas="on"] .sidebar-brand-mark::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 26px;
+  height: 20px;
+  pointer-events: none;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23d42426' d='M4 18 16 2l12 16Z'/%3E%3Cpath fill='%23fff' d='M16 2 5 17h22Z'/%3E%3Ccircle cx='26' cy='7' r='3' fill='%23fff'/%3E%3Crect x='1' y='17' width='30' height='5' rx='2.5' fill='%23fff'/%3E%3C/svg%3E");
+  filter: drop-shadow(0 2px 3px #0003);
+}
+
+:root[data-christmas="on"] .brand::after {
+  left: 18px;
+  transform: translateX(-50%);
+}
+
+:root[data-christmas="on"] .sidebar-brand-mark::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes christmas-snow-drift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0 240px, 0 240px, 0 240px, 0 240px, 0 240px, 0 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-christmas="on"] body::before {
+    animation: none;
+    opacity: 0.22;
+  }
+}
+
+@media (max-width: 760px) {
+  :root[data-christmas="on"] .brand::after,
+  :root[data-christmas="on"] .sidebar-brand-mark::after {
+    width: 22px;
+    height: 17px;
+    top: -7px;
+  }
+
+  :root[data-christmas="on"] .brand::after {
+    left: 15px;
+  }
+}

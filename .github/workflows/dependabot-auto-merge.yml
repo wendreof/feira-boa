@@ -1,0 +1,115 @@
+# Partial auto-merge for Dependabot: patch/minor npm and github-actions updates only.
+# Requires pull-request-checks "build-and-test" to pass on the PR head SHA before merge.
+# Branch protection "required checks" on main/develop must include build-and-test (GitHub UI).
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      startsWith(github.head_ref, 'dependabot/')
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Apply merge eligibility policy
+        id: policy
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
+        run: node scripts/ci/evaluate-dependabot-merge.mjs
+
+      - name: Label eligible Dependabot PRs
+        if: steps.policy.outputs.eligible == 'true'
+        uses: actions/github-script@60a0d8303908c393c40221256683b07437b47956 # v7.0.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["auto-merge"],
+            });
+
+      - name: Wait for build-and-test on PR head
+        if: steps.policy.outputs.eligible == 'true'
+        uses: actions/github-script@60a0d8303908c393c40221256683b07437b47956 # v7.0.1
+        env:
+          REQUIRED_CHECK: build-and-test
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            const requiredCheck = process.env.REQUIRED_CHECK;
+            const sha = context.payload.pull_request.head.sha;
+            const maxAttempts = 40;
+            const delayMs = 30_000;
+
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+              const { data } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: sha,
+              });
+
+              const run = data.check_runs.find((check) => check.name === requiredCheck);
+              if (!run) {
+                core.info(
+                  `Attempt ${attempt}/${maxAttempts}: ${requiredCheck} not found yet for ${sha}`,
+                );
+              } else if (run.status !== "completed") {
+                core.info(
+                  `Attempt ${attempt}/${maxAttempts}: ${requiredCheck} status=${run.status}`,
+                );
+              } else if (run.conclusion === "success") {
+                core.info(`${requiredCheck} succeeded on ${sha}`);
+                return;
+              } else {
+                core.setFailed(
+                  `${requiredCheck} finished with conclusion=${run.conclusion ?? "unknown"}`,
+                );
+                return;
+              }
+
+              if (attempt < maxAttempts) {
+                await sleep(delayMs);
+              }
+            }
+
+            core.setFailed(
+              `Timed out waiting for ${requiredCheck} on ${sha} after ${maxAttempts} attempts`,
+            );
+
+      - name: Squash-merge Dependabot PR
+        if: steps.policy.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          gh pr merge "$PR_NUMBER" --squash --delete-branch

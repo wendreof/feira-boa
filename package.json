@@ -38,7 +38,7 @@
     "jsonrepair": "^3.15.0",
     "pdf-parse": "^2.4.5",
     "playwright": "^1.65.0",
-    "supabase": "^3.0.0",
+    "supabase": "^3.1.0",
     "tesseract.js": "^6.0.1",
     "typescript": "^7.0.2",
     "web-push": "^3.6.7"

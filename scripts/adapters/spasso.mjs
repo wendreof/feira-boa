@@ -6,6 +6,7 @@ import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 import {
+  campaignCacheIsActive,
   defaultSpassoValidityWindow,
   discoverSpassoFlyersFromHtml,
   loadSpassoCampaignFile,
@@ -87,7 +88,10 @@ function campaignsToOffers(campaigns, pageUrl) {
 }
 
 async function resolveCampaigns(flyer, cache) {
-  const cacheIsCurrent = cache.flyerHash === flyer.hash && cache.campaigns.length > 0;
+  const cacheIsCurrent =
+    cache.flyerHash === flyer.hash &&
+    cache.campaigns.length > 0 &&
+    campaignCacheIsActive(cache.campaigns);
   if (cacheIsCurrent) {
     return { campaigns: cache.campaigns, extractionMethod: "cache" };
   }

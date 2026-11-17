@@ -12,6 +12,11 @@
  *   - badge-72.png: monochrome status-bar badge (white mark, transparent bg)
  *
  * Usage: node scripts/build-icons.mjs
+ *
+ * Seasonal swap-in: replace favicon-christmas.svg (same 64×64 viewBox, green #155b3b
+ * rounded rect) then re-run this script to refresh notification-christmas-96.png and
+ * badge-christmas-72.png. For Gemini/full-bleed exports, keep the mark centered;
+ * maskable / store icons still use favicon.svg only.
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';

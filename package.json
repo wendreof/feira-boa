@@ -27,7 +27,7 @@
     "test:logos": "node scripts/test-store-logos-playwright.mjs",
     "test:expiry-ui": "node scripts/test-offer-expiry-playwright.mjs",
     "test:archive-ui": "node scripts/test-offer-archive-playwright.mjs",
-    "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs && node scripts/test-terms-playwright.mjs && node scripts/test-catalog-push-invite-playwright.mjs && node scripts/test-mobile-categories-playwright.mjs && node scripts/test-login-oauth-playwright.mjs && node scripts/test-sidebar-profile-playwright.mjs",
+    "test:ui": "node scripts/test-offer-expiry-playwright.mjs && node scripts/test-offer-archive-playwright.mjs && node scripts/test-store-logos-playwright.mjs && node scripts/test-terms-playwright.mjs && node scripts/test-catalog-push-invite-playwright.mjs && node scripts/test-mobile-categories-playwright.mjs && node scripts/test-login-oauth-playwright.mjs && node scripts/test-sidebar-profile-playwright.mjs && node scripts/test-christmas-theme-playwright.mjs",
     "telegram:setup": "node scripts/set-telegram-bot.mjs",
     "pr:create": "node scripts/create-pr.mjs"
   },
@@ -37,8 +37,8 @@
     "he": "^2.0.0",
     "jsonrepair": "^3.15.0",
     "pdf-parse": "^2.4.5",
-    "playwright": "^1.65.0",
-    "supabase": "^3.0.0",
+    "playwright": "^1.65.1",
+    "supabase": "^3.1.0",
     "tesseract.js": "^6.0.1",
     "typescript": "^7.0.2",
     "web-push": "^3.6.7"

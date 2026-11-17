@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { describe, it } from "node:test";
 import {
   FAVICON_CHRISTMAS,
@@ -52,6 +53,11 @@ describe("christmas-season", () => {
   it("resolves notification season like the site theme", () => {
     assert.equal(resolveChristmasSeasonForNotifications({ today: "2026-11-17" }), true);
     assert.equal(resolveChristmasSeasonForNotifications({ christmas: false }), false);
+  });
+
+  it("drapes the Santa hat toward the right handle", async () => {
+    const svg = await readFile(new URL("../favicon-christmas.svg", import.meta.url), "utf8");
+    assert.match(svg, /matrix\(-1 0 0 1 64 0\)/);
   });
 
   it("builds favicon and push asset URLs from SITE_URL", () => {

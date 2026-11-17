@@ -2,6 +2,9 @@
 
 const SAO_PAULO_TZ = "America/Sao_Paulo";
 
+export const FAVICON_DEFAULT = "favicon.svg";
+export const FAVICON_CHRISTMAS = "favicon-christmas.svg";
+
 /**
  * @param {string} [timeZone]
  * @param {Date} [now]

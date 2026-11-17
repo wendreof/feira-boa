@@ -1,4 +1,6 @@
 import {
+  FAVICON_CHRISTMAS,
+  FAVICON_DEFAULT,
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
   todayIsoInTimeZone,
@@ -17,6 +19,44 @@ function readStorageOverride(): boolean | null {
   return null;
 }
 
+function faviconAssetName(enabled: boolean): string {
+  return enabled ? FAVICON_CHRISTMAS : FAVICON_DEFAULT;
+}
+
+function endsWithFaviconName(src: string, name: string): boolean {
+  return src.endsWith(`/${name}`) || src.endsWith(name) || src.includes(name);
+}
+
+function applySeasonalFavicon(enabled: boolean) {
+  const target = faviconAssetName(enabled);
+  const alternate = enabled ? FAVICON_DEFAULT : FAVICON_CHRISTMAS;
+
+  const shouldSwap = (value: string) =>
+    endsWithFaviconName(value, alternate) || value === FAVICON_DEFAULT || value === FAVICON_CHRISTMAS;
+
+  document.querySelectorAll<HTMLImageElement>("img.brand-mark, .sidebar-brand-mark img").forEach((img) => {
+    const current = img.getAttribute("src") ?? "";
+    if (!current.endsWith(".svg")) return;
+    if (endsWithFaviconName(current, target)) return;
+    if (shouldSwap(current)) img.src = target;
+  });
+
+  document.querySelectorAll<HTMLLinkElement>('link[rel="icon"]').forEach((link) => {
+    const href = link.getAttribute("href") ?? "";
+    if (!href.endsWith(".svg")) return;
+    if (endsWithFaviconName(href, target)) return;
+    if (shouldSwap(href)) link.href = target;
+  });
+}
+
+function scheduleSeasonalFavicon(enabled: boolean) {
+  applySeasonalFavicon(enabled);
+  const refreshMarks = () => applySeasonalFavicon(enabled);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", refreshMarks, { once: true });
+  }
+}
+
 (() => {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -27,7 +67,9 @@ function readStorageOverride(): boolean | null {
     });
     if (enabled) document.documentElement.dataset.christmas = "on";
     else delete document.documentElement.dataset.christmas;
+    scheduleSeasonalFavicon(enabled);
   } catch {
     delete document.documentElement.dataset.christmas;
+    scheduleSeasonalFavicon(false);
   }
 })();

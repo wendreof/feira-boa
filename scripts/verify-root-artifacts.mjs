@@ -41,6 +41,7 @@ const requiredFiles = [
   "_headers",
   "ads.txt",
   "favicon.svg",
+  "favicon-christmas.svg",
   "social-card.png",
   "icons/icon-192.png",
   "icons/icon-512.png",

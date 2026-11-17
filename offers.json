@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-17T18:35:04.745Z",
+  "updatedAt": "2026-11-17T20:43:22.223Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -9549,7 +9549,7 @@
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Condicionador Infantil",
       "price": 21.99,
-      "previousPrice": 29.59,
+      "previousPrice": 29.89,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14471,7 +14471,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 17.99,
+      "price": 18.99,
       "previousPrice": 24.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -14495,7 +14495,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 17.99,
+      "price": 18.99,
       "previousPrice": 24.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -28814,30 +28814,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-727-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Limpador de Vidros Veja Vidrex Tradicional Refil",
-      "detail": "500ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
-      "productTypes": [
-        "Lavanderia e limpeza"
-      ],
-      "storeCategory": "132",
-      "price": 16.9,
-      "previousPrice": 18.9,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-728-2026-11-16",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -29525,30 +29501,6 @@
       "storeCategory": "131",
       "price": 29.89,
       "previousPrice": 32.28,
-      "icon": "👟",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-866-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Sandálias Havainas Tradicional Azul 37/38",
-      "detail": "un",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "131",
-      "price": 21.9,
-      "previousPrice": 23.65,
       "icon": "👟",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
@@ -45500,30 +45452,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-4605-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Doce Santa Helena Display de Paçoca Zero Quadrada",
-      "detail": "432g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "53",
-      "price": 39.9,
-      "previousPrice": 43.89,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-4643-2026-11-16",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -47084,30 +47012,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-5259-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Bolo Kim Coco",
-      "detail": "250g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "182",
-      "price": 6.99,
-      "previousPrice": 8.59,
-      "icon": "🎂",
-      "tone": "#edf4e9",
-      "note": "Oferta · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-5260-2026-11-16",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -48399,6 +48303,102 @@
       "storeCategory": "104",
       "price": 7.99,
       "previousPrice": 8.63,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5802-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijão de Copo Pedra Selada Light",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 7.39,
+      "previousPrice": 7.99,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5803-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijão Copo Pedra Selada Tradicional",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 7.59,
+      "previousPrice": 8.2,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5804-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijão Copo Polenghi Cheedar",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 8.99,
+      "previousPrice": 9.71,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5808-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijao Copo Tirolez",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 7.39,
+      "previousPrice": 7.99,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",

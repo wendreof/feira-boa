@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  campaignCacheIsActive,
   discoverSpassoFlyersFromHtml,
   hashSpassoFlyerSet,
   loadSpassoCampaignFile,
@@ -36,4 +37,16 @@ test("loadSpassoCampaignFile accepts legacy array and wrapped cache", () => {
     campaigns: [{ from: "2026-01-01", to: "2026-01-02", offers: [] }],
   });
   assert.equal(wrapped.flyerHash, "abc123");
+});
+
+test("campaignCacheIsActive is false when every campaign ended before today", () => {
+  assert.equal(
+    campaignCacheIsActive([
+      { from: "2026-11-03", to: "2026-11-07" },
+      { from: "2026-08-12", to: "2026-08-14" },
+    ]),
+    false,
+    "2026-11-17",
+  );
+  assert.equal(campaignCacheIsActive([{ from: "2026-11-17", to: "2026-11-22" }], "2026-11-17"), true);
 });

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-17T14:05:09.725Z",
+  "updatedAt": "2026-11-17T14:37:30.340Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -7676,7 +7676,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Escova Dental",
-      "price": 31.99,
+      "price": 31.89,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -9740,7 +9740,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Sabonete Infantil",
-      "price": 21.39,
+      "price": 19.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -12910,7 +12910,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Temperos Prontos",
-      "price": 2.79,
+      "price": 2.49,
       "previousPrice": null,
       "icon": "🍲",
       "tone": "#edf4e9",

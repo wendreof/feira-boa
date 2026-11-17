@@ -9,7 +9,7 @@
     "from": "2026-11-16",
     "to": "2026-11-22"
   },
-  "fetchedAt": "2026-11-17T14:03:19.307Z",
+  "fetchedAt": "2026-11-17T14:35:51.481Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -5282,7 +5282,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Escova Dental",
-      "price": 31.99,
+      "price": 31.89,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -7346,7 +7346,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Sabonete Infantil",
-      "price": 21.39,
+      "price": 19.99,
       "previousPrice": null,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -10516,7 +10516,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Temperos Prontos",
-      "price": 2.79,
+      "price": 2.49,
       "previousPrice": null,
       "icon": "🍲",
       "tone": "#edf4e9",

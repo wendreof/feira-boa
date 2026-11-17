@@ -39,6 +39,15 @@ try {
     failures.push(`link icon href missing favicon-christmas.svg (${favicons.iconHref})`);
   }
 
+  const brandLoads = await page.evaluate(async () => {
+    const img = document.querySelector(".sidebar-brand-mark img");
+    if (!(img instanceof HTMLImageElement) || !img.src) return { ok: false, reason: "missing brand img src" };
+    if (img.naturalWidth > 0) return { ok: true };
+    const response = await fetch(img.src, { cache: "no-store" });
+    return { ok: response.ok, status: response.status, src: img.src };
+  });
+  if (!brandLoads.ok) failures.push(`favicon-christmas must load for brand mark (${JSON.stringify(brandLoads)})`);
+
   const overlayHat = await page.evaluate(() => {
     const brand = document.querySelector(".topbar .brand");
     const sidebar = document.querySelector(".sidebar-brand-mark");

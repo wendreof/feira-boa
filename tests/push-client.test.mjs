@@ -24,6 +24,19 @@ test("buildPushPayload serializes notification fields", () => {
   assert.deepEqual(payload, { title: "T", body: "B", url: "https://x.test/o", tag: "offer-1" });
 });
 
+test("buildPushPayload adds seasonal icon URLs when siteUrl is set", () => {
+  const siteUrl = new URL("https://feira.test/");
+  const payload = JSON.parse(buildPushPayload({
+    title: "T",
+    body: "B",
+    url: "https://feira.test/",
+    siteUrl,
+    christmas: true,
+  }));
+  assert.match(payload.icon, /notification-christmas-96\.png$/);
+  assert.match(payload.badge, /badge-christmas-72\.png$/);
+});
+
 test("buildPushPayloadForOffer uses offer link", () => {
   const siteUrl = new URL("https://feira-boa.pages.dev/");
   const offer = { id: "abc-123", store: "Loja", name: "Item", price: 9.99, validTo: "2026-11-02" };

@@ -66,6 +66,8 @@ function buildCatalogMessage({ activeCount, siteUrl }) {
       body,
       url: `${siteUrl.origin}/index.html`,
       tag: `feira-catalog-${saoPauloDate()}`,
+      siteUrl,
+      today: saoPauloDate(),
     }),
   };
 }

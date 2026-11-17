@@ -137,7 +137,21 @@ export async function refreshTopbarAvatar(
     const path = knownPath !== undefined ? knownPath : await loadAvatar(userId);
     writeCachedAvatarPath(userId, path, sessionStorage);
     if (path) {
-      setTopbarAvatarPath(path);
+      if (!topbarAccountImage) return;
+      if (!isStorageAvatarPath(path)) {
+        setTopbarRemoteAvatar(path);
+      } else {
+        setAvatarImage(topbarAccountImage, path, AVATAR_SIZE.topbar, {
+          onSettled: (visible) => {
+            if (visible) {
+              if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+              return;
+            }
+            if (providerAvatarUrl) setTopbarRemoteAvatar(providerAvatarUrl);
+            else clearTopbarAvatar();
+          },
+        });
+      }
     } else if (providerAvatarUrl) {
       setTopbarRemoteAvatar(providerAvatarUrl);
     } else {

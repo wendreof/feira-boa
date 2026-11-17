@@ -3,6 +3,7 @@ import {
   FAVICON_DEFAULT,
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
+  siteFaviconPath,
   todayIsoInTimeZone,
 } from "../scripts/domain/christmas-season.mjs";
 
@@ -19,32 +20,32 @@ function readStorageOverride(): boolean | null {
   return null;
 }
 
-function faviconAssetName(enabled: boolean): string {
-  return enabled ? FAVICON_CHRISTMAS : FAVICON_DEFAULT;
-}
-
 function endsWithFaviconName(src: string, name: string): boolean {
   return src.endsWith(`/${name}`) || src.endsWith(name) || src.includes(name);
 }
 
 function applySeasonalFavicon(enabled: boolean) {
-  const target = faviconAssetName(enabled);
-  const alternate = enabled ? FAVICON_DEFAULT : FAVICON_CHRISTMAS;
+  const target = siteFaviconPath({ christmas: enabled });
+  const alternate = siteFaviconPath({ christmas: !enabled });
 
   const shouldSwap = (value: string) =>
-    endsWithFaviconName(value, alternate) || value === FAVICON_DEFAULT || value === FAVICON_CHRISTMAS;
+    endsWithFaviconName(value, alternate)
+    || value === FAVICON_DEFAULT
+    || value === FAVICON_CHRISTMAS
+    || value === `/${FAVICON_DEFAULT}`
+    || value === `/${FAVICON_CHRISTMAS}`;
 
-  document.querySelectorAll<HTMLImageElement>("img.brand-mark, .sidebar-brand-mark img").forEach((img) => {
+  document.querySelectorAll<HTMLImageElement>(".topbar .brand img.brand-mark, .sidebar-brand-mark img").forEach((img) => {
     const current = img.getAttribute("src") ?? "";
     if (!current.endsWith(".svg")) return;
-    if (endsWithFaviconName(current, target)) return;
+    if (endsWithFaviconName(current, enabled ? FAVICON_CHRISTMAS : FAVICON_DEFAULT)) return;
     if (shouldSwap(current)) img.src = target;
   });
 
   document.querySelectorAll<HTMLLinkElement>('link[rel="icon"]').forEach((link) => {
     const href = link.getAttribute("href") ?? "";
     if (!href.endsWith(".svg")) return;
-    if (endsWithFaviconName(href, target)) return;
+    if (endsWithFaviconName(href, enabled ? FAVICON_CHRISTMAS : FAVICON_DEFAULT)) return;
     if (shouldSwap(href)) link.href = target;
   });
 }

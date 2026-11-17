@@ -12,4 +12,5 @@ export const ESBUILD_ROOT_BUNDLES = [
   "site-footer.js",
   "login-gate.js",
   "notification-badge.js",
+  "christmas-bootstrap.js",
 ];

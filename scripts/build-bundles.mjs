@@ -40,6 +40,7 @@ const pageEntries = [
   { in: "src/shared/site-footer.ts", out: "site-footer" },
   { in: "src/shared/login-gate.ts", out: "login-gate" },
   { in: "src/notification-badge-page.ts", out: "notification-badge" },
+  { in: "src/christmas-bootstrap.ts", out: "christmas-bootstrap" },
 ];
 
 await esbuild.build({

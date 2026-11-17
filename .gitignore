@@ -23,6 +23,7 @@ tmp/
 /site-footer.js
 /login-gate.js
 /notification-badge.js
+/christmas-bootstrap.js
 
 # Staged HTML copies at root (sources live in src/html/)
 /*.html

@@ -44,14 +44,14 @@ try {
       appleHref: apple?.getAttribute("href") ?? "",
     };
   });
-  if (!defaultMarks.brandSrc.includes("favicon.svg") || defaultMarks.brandSrc.includes("favicon-christmas")) {
-    failures.push(`topbar brand-mark should be default favicon.svg (${defaultMarks.brandSrc})`);
+  if (!defaultMarks.brandSrc.includes("favicon.svg?v=") || defaultMarks.brandSrc.includes("favicon-christmas")) {
+    failures.push(`topbar brand-mark should be cache-busted favicon.svg (${defaultMarks.brandSrc})`);
   }
-  if (!defaultMarks.sidebarSrc.includes("favicon.svg") || defaultMarks.sidebarSrc.includes("favicon-christmas")) {
-    failures.push(`sidebar brand should be default favicon.svg (${defaultMarks.sidebarSrc})`);
+  if (!defaultMarks.sidebarSrc.includes("favicon.svg?v=") || defaultMarks.sidebarSrc.includes("favicon-christmas")) {
+    failures.push(`sidebar brand should be cache-busted favicon.svg (${defaultMarks.sidebarSrc})`);
   }
-  if (!defaultMarks.iconHref.includes("favicon.svg") || defaultMarks.iconHref.includes("favicon-christmas")) {
-    failures.push(`link icon href should be default favicon.svg (${defaultMarks.iconHref})`);
+  if (!defaultMarks.iconHref.includes("favicon.svg?v=") || defaultMarks.iconHref.includes("favicon-christmas")) {
+    failures.push(`link icon href should be cache-busted favicon.svg (${defaultMarks.iconHref})`);
   }
   if (defaultMarks.manifestHref !== "manifest.webmanifest") {
     failures.push(`manifest should stay default without query (${defaultMarks.manifestHref})`);

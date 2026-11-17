@@ -14,6 +14,8 @@ export const MANIFEST_DEFAULT = "manifest.webmanifest";
 export const MANIFEST_CHRISTMAS = "manifest-christmas.webmanifest";
 
 export const PWA_ICON_QUERY = "?v=20261117-ref";
+/** Cache-bust for tab + sidebar brand mark (same rev as PWA icons). */
+export const BRAND_FAVICON_HREF = `${FAVICON_DEFAULT}${PWA_ICON_QUERY}`;
 export const PWA_ICON_192_DEFAULT = "icons/icon-192.png";
 export const PWA_ICON_192_CHRISTMAS = "icons/icon-christmas-192.png";
 export const PWA_ICON_512_DEFAULT = "icons/icon-512.png";
@@ -91,7 +93,7 @@ export function resolveChristmasSeasonForNotifications(options = {}) {
  * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */
 export function siteFaviconPath(_options = {}) {
-  return `/${FAVICON_DEFAULT}`;
+  return `/${BRAND_FAVICON_HREF}`;
 }
 
 /**

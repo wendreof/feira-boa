@@ -154,6 +154,9 @@ const supabaseHtmlPages = [
 for (const file of ["index.html", "lojas.html", "login.html", "account.html", "suggestions.html", "termos.html", "admin.html"]) {
   try {
     const html = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
+    if (html.includes('href="favicon.svg"') || html.includes('src="favicon.svg"')) {
+      failures.push(`${file}: favicon.svg must include cache-bust query (?v=)`);
+    }
     if (!html.includes('src="theme-bootstrap.js"')) failures.push(`${file}: missing theme bootstrap`);
     if (!html.includes('src="pwa.js"')) failures.push(`${file}: missing PWA registration`);
     if (html.includes("document.documentElement.dataset.theme")) failures.push(`${file}: contains inline theme script`);

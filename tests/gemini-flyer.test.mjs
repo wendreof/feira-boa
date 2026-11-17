@@ -41,6 +41,10 @@ describe("gemini-flyer", () => {
     process.env.CUSTOM_MODEL = "custom";
     assert.equal(resolveGeminiModel(["CUSTOM_MODEL", "GEMINI_MODEL"]), "custom");
     assert.equal(resolveGeminiModel(["MISSING"]), "gemini-3.8-flash");
+    assert.equal(
+      resolveGeminiModel(["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"]),
+      "gemini-3.5-flash-lite",
+    );
   });
 
   it("parseGeminiCampaignsJson validates campaigns array", () => {

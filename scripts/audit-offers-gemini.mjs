@@ -92,26 +92,35 @@ async function auditFortemixVision(manifest, apiKeyPresent) {
     campaignSchemaJson(["Hortifruti"]),
   ].join("\n");
 
-  const extractedCampaigns = await generateFlyerCampaignsViaGemini({
-    prompt,
-    images,
-    modelEnvKeys: ["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"],
-    errorLabel: "ForteMix audit",
-    timeoutMs: 120_000,
-  });
-  const comparison = compareOfferSets(
-    flattenCampaignOffers(reference),
-    flattenCampaignOffers({ campaigns: extractedCampaigns }),
-  );
-  entry.vision = {
-    status: comparison.criticalCount === 0 ? "ok" : "mismatch",
-    images: imagePaths.slice(0, MAX_AUDIT_IMAGES),
-    ...comparison,
-  };
-  if (comparison.criticalCount > 0) {
+  try {
+    const extractedCampaigns = await generateFlyerCampaignsViaGemini({
+      prompt,
+      images,
+      modelEnvKeys: ["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"],
+      errorLabel: "ForteMix audit",
+      timeoutMs: 120_000,
+    });
+    const comparison = compareOfferSets(
+      flattenCampaignOffers(reference),
+      flattenCampaignOffers({ campaigns: extractedCampaigns }),
+    );
+    entry.vision = {
+      status: comparison.criticalCount === 0 ? "ok" : "mismatch",
+      images: imagePaths.slice(0, MAX_AUDIT_IMAGES),
+      ...comparison,
+    };
+    if (comparison.criticalCount > 0) {
+      entry.sanity.push({
+        level: "critical",
+        message: `Gemini re-read disagrees with manual cache (${comparison.criticalCount} critical diffs).`,
+      });
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    entry.vision = { status: "error", reason: message };
     entry.sanity.push({
-      level: "critical",
-      message: `Gemini re-read disagrees with manual cache (${comparison.criticalCount} critical diffs).`,
+      level: "warning",
+      message: `Forte Mix vision audit failed (non-fatal): ${message.slice(0, 200)}`,
     });
   }
   return entry;

@@ -104,11 +104,27 @@ async function checkStoreLogos(page, failures) {
   }
 }
 
+function readSourceListColumns(page) {
+  return page.evaluate(() => {
+    const list = document.querySelector(".stores-page .source-list");
+    if (!list) return { columnCount: 0, template: "" };
+    const style = getComputedStyle(list);
+    const template = style.gridTemplateColumns || "";
+    const columnCount = template.split(" ").filter((part) => part && part !== "none").length;
+    return { columnCount, template };
+  });
+}
+
 async function checkDesktopStoreCardLayout(page) {
   const layoutFailures = [];
   await page.setViewportSize({ width: 1100, height: 900 });
   await page.goto(`${BASE}/lojas.html`, { waitUntil: "networkidle", timeout: 30_000 });
   await dismissLoginGate(page);
+
+  const desktopList = await readSourceListColumns(page);
+  if (desktopList.columnCount !== 2) {
+    layoutFailures.push(`desktop: source-list expected 2 columns, got ${desktopList.columnCount} (${desktopList.template})`);
+  }
 
   await page.waitForFunction(
     () => document.querySelector(".store-source[data-store-id='spassosabores'] .source-actions .source-button--flyer"),
@@ -147,10 +163,10 @@ async function checkDesktopStoreCardLayout(page) {
   if (spassoLayout.cardDisplay !== "grid") {
     layoutFailures.push(`desktop: spassosabores card display is ${spassoLayout.cardDisplay}, expected grid`);
   }
-  if (spassoLayout.copyWidth < 320) {
+  if (spassoLayout.copyWidth < 260) {
     layoutFailures.push(`desktop: spassosabores copy column too narrow (${Math.round(spassoLayout.copyWidth)}px)`);
   }
-  if (spassoLayout.strongHeight > 72) {
+  if (spassoLayout.strongHeight > 96) {
     layoutFailures.push(`desktop: spassosabores title wraps too tall (${Math.round(spassoLayout.strongHeight)}px)`);
   }
   if (spassoLayout.actionsDisplay && spassoLayout.actionsDisplay !== "grid") {
@@ -165,8 +181,16 @@ async function checkDesktopStoreCardLayout(page) {
     const copy = card?.querySelector(".source-copy");
     return { copyWidth: copy?.getBoundingClientRect().width ?? 0 };
   });
-  if (forteLayout.copyWidth < 320) {
+  if (forteLayout.copyWidth < 260) {
     layoutFailures.push(`desktop: forte-mix copy column too narrow (${Math.round(forteLayout.copyWidth)}px)`);
+  }
+
+  await page.setViewportSize({ width: 620, height: 900 });
+  await page.reload({ waitUntil: "networkidle" });
+  await dismissLoginGate(page);
+  const tabletList = await readSourceListColumns(page);
+  if (tabletList.columnCount !== 2) {
+    layoutFailures.push(`620px: source-list expected 2 columns, got ${tabletList.columnCount} (${tabletList.template})`);
   }
 
   await page.setViewportSize({ width: 390, height: 844 });
@@ -187,6 +211,11 @@ async function checkDesktopStoreCardLayout(page) {
   }
   if (mobileSpassoAfter.copyWidth < 200) {
     layoutFailures.push(`mobile: spassosabores copy column too narrow (${Math.round(mobileSpassoAfter.copyWidth)}px)`);
+  }
+
+  const mobileList = await readSourceListColumns(page);
+  if (mobileList.columnCount !== 1) {
+    layoutFailures.push(`mobile: source-list expected 1 column, got ${mobileList.columnCount} (${mobileList.template})`);
   }
 
   await page.screenshot({ path: ".playwright-mcp/lojas-logos-desktop.png", fullPage: true });

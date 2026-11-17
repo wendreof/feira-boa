@@ -2,14 +2,14 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { describe, it } from "node:test";
 import {
-  FAVICON_CHRISTMAS,
   FAVICON_DEFAULT,
   isChristmasSeasonDate,
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
   resolveChristmasSeasonForNotifications,
-  MANIFEST_CHRISTMAS,
   MANIFEST_DEFAULT,
+  PWA_ICON_192_DEFAULT,
+  PWA_ICON_QUERY,
   siteAppleTouchIconHref,
   siteFaviconPath,
   siteFaviconUrl,
@@ -71,27 +71,32 @@ describe("christmas-season", () => {
     assert.equal(resolveChristmasSeasonForNotifications({ christmas: true }), true);
   });
 
-  it("drapes the Santa hat toward the right handle", async () => {
-    const svg = await readFile(new URL("../favicon-christmas.svg", import.meta.url), "utf8");
-    assert.match(svg, /scale\(-0\.54 0\.54\)/);
-    assert.match(svg, /translate\(64 5\)/);
+  it("embeds the reference raster in favicon.svg (year-round brand)", async () => {
+    const svg = await readFile(new URL("../favicon.svg", import.meta.url), "utf8");
+    assert.match(svg, /data:image\/png;base64,/);
+    assert.ok(svg.length > 8_000, "favicon.svg should embed the user tile, not the tiny basket SVG");
   });
 
-  it("builds favicon and push asset URLs from SITE_URL", () => {
+  it("uses default brand files for favicon, Telegram, and push regardless of season", () => {
     const site = new URL("https://feira-boa.pages.dev/");
-    assert.equal(siteFaviconPath({ christmas: true }), `/${FAVICON_CHRISTMAS}`);
+    assert.equal(siteFaviconPath({ christmas: true }), `/${FAVICON_DEFAULT}`);
     assert.equal(siteFaviconPath({ christmas: false }), `/${FAVICON_DEFAULT}`);
-    assert.equal(siteFaviconUrl(site, { christmas: true }), "https://feira-boa.pages.dev/favicon-christmas.svg");
-    const assets = sitePushNotificationAssets(site, { christmas: true });
-    assert.equal(assets.icon, "https://feira-boa.pages.dev/icons/notification-christmas-96.png");
-    assert.equal(assets.badge, "https://feira-boa.pages.dev/icons/badge-christmas-72.png");
+    assert.equal(
+      siteFaviconUrl(site, { christmas: true }),
+      `https://feira-boa.pages.dev/${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`,
+    );
+    const inSeason = sitePushNotificationAssets(site, { christmas: true });
+    const offSeason = sitePushNotificationAssets(site, { christmas: false });
+    assert.equal(inSeason.icon, "https://feira-boa.pages.dev/icons/notification-96.png");
+    assert.equal(inSeason.badge, "https://feira-boa.pages.dev/icons/badge-72.png");
+    assert.deepEqual(inSeason, offSeason);
   });
 
-  it("builds manifest and apple-touch paths for the active season", () => {
-    assert.equal(siteManifestHref({ christmas: true }), MANIFEST_CHRISTMAS);
+  it("keeps apple-touch and manifest on default icon files year-round", () => {
+    assert.equal(siteManifestHref({ christmas: true }), MANIFEST_DEFAULT);
     assert.equal(siteManifestHref({ christmas: false }), MANIFEST_DEFAULT);
-    assert.match(siteAppleTouchIconHref({ christmas: true }), /icon-christmas-192\.png\?v=/);
-    assert.match(siteAppleTouchIconHref({ christmas: false }), /icon-192\.png\?v=/);
-    assert.doesNotMatch(siteAppleTouchIconHref({ christmas: true }), /christmas.*christmas/);
+    assert.match(siteAppleTouchIconHref({ christmas: true }), /icon-192\.png\?v=/);
+    assert.doesNotMatch(siteAppleTouchIconHref({ christmas: true }), /christmas/);
+    assert.equal(siteAppleTouchIconHref({ christmas: true }), siteAppleTouchIconHref({ christmas: false }));
   });
 });

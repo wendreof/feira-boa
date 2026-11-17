@@ -13,13 +13,10 @@
  *
  * Usage: node scripts/build-icons.mjs [--include-christmas-svg]
  *
- * Christmas PNGs in icons/*-christmas-* are exported from reference art
- * (icons/source/christmas/, see scripts/export-christmas-icons-from-reference.mjs).
- * This script does NOT overwrite them unless you pass --include-christmas-svg
- * (legacy SVG/Chrome render — not the shipped seasonal icons).
- *
- * favicon-christmas.svg is still used for in-app brand marks; seasonal raster icons
- * are maintained via export-christmas-icons-from-reference.mjs.
+ * Default brand PNGs, favicon.svg, and leftover *-christmas-* aliases are
+ * exported from icons/source/christmas/ (export-christmas-icons-from-reference.mjs).
+ * This script delegates to that exporter. Pass --include-christmas-svg only for
+ * the legacy Chrome SVG raster (not the shipped marks).
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -208,8 +205,21 @@ function includeChristmasSvgRender() {
   return process.argv.includes('--include-christmas-svg');
 }
 
+async function exportReferenceBrandIcons() {
+  const script = path.join(HERE, 'export-christmas-icons-from-reference.mjs');
+  await execFileAsync(process.execPath, [script], { cwd: ROOT });
+}
+
 async function main() {
   const includeChristmasSvg = includeChristmasSvgRender();
+  if (!includeChristmasSvg) {
+    await exportReferenceBrandIcons();
+    console.log(
+      'Default brand icons come from icons/source/christmas/. ' +
+        'Pass --include-christmas-svg only to rasterize from SVG via Chrome.',
+    );
+    return;
+  }
   const browser = await findBrowser();
   if (!browser) {
     console.error(

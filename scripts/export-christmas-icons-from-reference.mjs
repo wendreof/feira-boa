@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Exports committed icons/*-christmas-*.png from reference sheet art (not from favicon-christmas.svg).
+ * Exports default brand PNGs (and leftover *-christmas-* aliases) from
+ * reference sheet art — not from favicon-christmas.svg.
  *
  * Masters live in icons/source/christmas/ (cropped tiles + reference-sheet PNG).
  * Re-run after replacing reference-sheet-20261117.png from design export.
@@ -55,6 +56,23 @@ async function writeMaster(sheetPath, tile, masterName) {
   return out;
 }
 
+/**
+ * Tab/topbar favicon: embed the square tile so href=favicon.svg is the user art,
+ * not a generated hat SVG that only appears after christmas-bootstrap.
+ * @param {Buffer} png
+ */
+async function writeEmbeddedFavicon(png) {
+  const b64 = png.toString('base64');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Feira Boa</title>
+  <image href="data:image/png;base64,${b64}" width="256" height="256" preserveAspectRatio="xMidYMid meet"/>
+</svg>
+`;
+  await fs.writeFile(path.join(ROOT, 'favicon.svg'), svg);
+  await fs.writeFile(path.join(ROOT, 'favicon-christmas.svg'), svg);
+  console.log(`Wrote favicon.svg and favicon-christmas.svg (${svg.length} bytes, embedded PNG)`);
+}
+
 async function main() {
   const sheetPath = path.join(SOURCE_DIR, SHEET_FILE);
   try {
@@ -75,6 +93,12 @@ async function main() {
   const push = sharp(path.join(SOURCE_DIR, MASTER_FILES.push));
 
   const exports = [
+    { file: 'icon-192.png', size: 192, src: plain },
+    { file: 'icon-512.png', size: 512, src: plain },
+    { file: 'icon-1024.png', size: 1024, src: plain },
+    { file: 'maskable-512.png', size: 512, src: maskable },
+    { file: 'notification-96.png', size: 96, src: push },
+    { file: 'badge-72.png', size: 72, src: push },
     { file: 'icon-christmas-192.png', size: 192, src: plain },
     { file: 'icon-christmas-512.png', size: 512, src: plain },
     { file: 'icon-christmas-1024.png', size: 1024, src: plain },
@@ -89,6 +113,9 @@ async function main() {
     await fs.writeFile(dest, buf);
     console.log(`Wrote icons/${file} (${size}×${size}, ${buf.length} bytes)`);
   }
+
+  const faviconPng = await resizeToSquare(plain, 256);
+  await writeEmbeddedFavicon(faviconPng);
 }
 
 main().catch((error) => {

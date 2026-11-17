@@ -24,7 +24,7 @@ test("buildPushPayload serializes notification fields", () => {
   assert.deepEqual(payload, { title: "T", body: "B", url: "https://x.test/o", tag: "offer-1" });
 });
 
-test("buildPushPayload adds seasonal icon URLs when siteUrl is set", () => {
+test("buildPushPayload adds default brand icon URLs when siteUrl is set", () => {
   const siteUrl = new URL("https://feira.test/");
   const payload = JSON.parse(buildPushPayload({
     title: "T",
@@ -33,8 +33,10 @@ test("buildPushPayload adds seasonal icon URLs when siteUrl is set", () => {
     siteUrl,
     christmas: true,
   }));
-  assert.match(payload.icon, /notification-christmas-96\.png$/);
-  assert.match(payload.badge, /badge-christmas-72\.png$/);
+  assert.match(payload.icon, /notification-96\.png$/);
+  assert.doesNotMatch(payload.icon, /christmas/);
+  assert.match(payload.badge, /badge-72\.png$/);
+  assert.doesNotMatch(payload.badge, /christmas/);
 });
 
 test("buildPushPayloadForOffer uses offer link", () => {

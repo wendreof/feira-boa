@@ -87,53 +87,49 @@ export function resolveChristmasSeasonForNotifications(options = {}) {
 }
 
 /**
- * Root-relative favicon path for the active season.
- * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * Root-relative favicon. Brand mark is year-round; season only gates CSS theme.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */
-export function siteFaviconPath(options = {}) {
-  const file = resolveChristmasSeasonForNotifications(options) ? FAVICON_CHRISTMAS : FAVICON_DEFAULT;
-  return `/${file}`;
+export function siteFaviconPath(_options = {}) {
+  return `/${FAVICON_DEFAULT}`;
 }
 
 /**
- * Absolute favicon URL for outbound notifications and link previews.
+ * Absolute brand PNG for Telegram link previews (SVG favicons do not preview reliably).
  * @param {string | URL} siteUrl
- * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */
-export function siteFaviconUrl(siteUrl, options = {}) {
+export function siteFaviconUrl(siteUrl, _options = {}) {
   const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
-  return new URL(siteFaviconPath(options), base).href;
+  return new URL(`${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`, base).href;
 }
 
 /**
+ * Web Push icon/badge. Always the default brand files (season does not swap marks).
  * @param {string | URL} siteUrl
- * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  * @returns {{ icon: string, badge: string }}
  */
-export function sitePushNotificationAssets(siteUrl, options = {}) {
+export function sitePushNotificationAssets(siteUrl, _options = {}) {
   const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
-  const christmas = resolveChristmasSeasonForNotifications(options);
-  const iconPath = christmas ? PUSH_NOTIFICATION_ICON_CHRISTMAS : PUSH_NOTIFICATION_ICON_DEFAULT;
-  const badgePath = christmas ? PUSH_NOTIFICATION_BADGE_CHRISTMAS : PUSH_NOTIFICATION_BADGE_DEFAULT;
   return {
-    icon: new URL(iconPath, base).href,
-    badge: new URL(badgePath, base).href,
+    icon: new URL(PUSH_NOTIFICATION_ICON_DEFAULT, base).href,
+    badge: new URL(PUSH_NOTIFICATION_BADGE_DEFAULT, base).href,
   };
 }
 
 /**
- * Web app manifest link href for the active season.
- * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * Web app manifest href. Icons live on the default manifest year-round.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */
-export function siteManifestHref(options = {}) {
-  return resolveChristmasSeasonForNotifications(options) ? MANIFEST_CHRISTMAS : MANIFEST_DEFAULT;
+export function siteManifestHref(_options = {}) {
+  return MANIFEST_DEFAULT;
 }
 
 /**
  * Apple touch / home-screen icon href (relative, includes cache query).
- * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */
-export function siteAppleTouchIconHref(options = {}) {
-  const icon = resolveChristmasSeasonForNotifications(options) ? PWA_ICON_192_CHRISTMAS : PWA_ICON_192_DEFAULT;
-  return `${icon}${PWA_ICON_QUERY}`;
+export function siteAppleTouchIconHref(_options = {}) {
+  return `${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`;
 }

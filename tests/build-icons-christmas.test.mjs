@@ -22,6 +22,12 @@ describe('christmas icon pipeline', () => {
       assert.ok(info.size > 500, `${rel} should exist and be non-trivial`);
     }
     const outputs = [
+      'icons/icon-192.png',
+      'icons/icon-512.png',
+      'icons/icon-1024.png',
+      'icons/maskable-512.png',
+      'icons/notification-96.png',
+      'icons/badge-72.png',
       'icons/icon-christmas-192.png',
       'icons/icon-christmas-512.png',
       'icons/icon-christmas-1024.png',

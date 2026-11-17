@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { describe, it } from "node:test";
 import {
-  FAVICON_DEFAULT,
+  BRAND_FAVICON_HREF,
   isChristmasSeasonDate,
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
@@ -79,8 +79,8 @@ describe("christmas-season", () => {
 
   it("uses default brand files for favicon and push regardless of season", () => {
     const site = new URL("https://feira-boa.pages.dev/");
-    assert.equal(siteFaviconPath({ christmas: true }), `/${FAVICON_DEFAULT}`);
-    assert.equal(siteFaviconPath({ christmas: false }), `/${FAVICON_DEFAULT}`);
+    assert.equal(siteFaviconPath({ christmas: true }), `/${BRAND_FAVICON_HREF}`);
+    assert.equal(siteFaviconPath({ christmas: false }), `/${BRAND_FAVICON_HREF}`);
     assert.equal(
       siteFaviconUrl(site, { christmas: true }),
       `https://feira-boa.pages.dev/${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`,

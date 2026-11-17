@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-17T13:51:59.422Z",
+  "updatedAt": "2026-11-17T14:05:09.725Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -42452,30 +42452,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-3459-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Água de Coco Sococo Maracujá",
-      "detail": "200ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Sucos e bebidas",
-      "productTypes": [
-        "Sucos e bebidas"
-      ],
-      "storeCategory": "238",
-      "price": 1.79,
-      "previousPrice": 1.99,
-      "icon": "🥥",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-3467-2026-11-16",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -48399,6 +48375,30 @@
       "storeCategory": "104",
       "price": 9.98,
       "previousPrice": 10.78,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5797-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijão Copo Danone Tradicional",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 7.99,
+      "previousPrice": 8.63,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",

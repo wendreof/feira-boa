@@ -12,7 +12,7 @@ const PT_WEEKDAY = [
   { re: /\bs[aá]bado\b/, dow: 6 },
 ];
 
-const WEEKDAY_SHORT_PT = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+export { formatWeekdaySpotLabel } from "./weekday-spot-label.mjs";
 
 /** @param {string} isoDate YYYY-MM-DD */
 function utcDayOfWeek(isoDate) {
@@ -189,12 +189,6 @@ export function spassoCampaignOfferValidity(campaign, flyerImageUrls, now = new 
     to: window.to,
     validWeekdays,
   };
-}
-
-/** @param {number[]} weekdays Sunday=0 … Saturday=6 */
-export function formatWeekdaySpotLabel(weekdays) {
-  if (!weekdays?.length) return "";
-  return weekdays.map((dow) => WEEKDAY_SHORT_PT[dow] ?? "").filter(Boolean).join("–");
 }
 
 /** @param {string} name */

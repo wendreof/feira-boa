@@ -1,6 +1,6 @@
 import { normalizeSearchText } from "../../scripts/domain/offer-search.mjs";
 import { isOfferActive } from "../../scripts/domain/offer-validity.mjs";
-import { formatWeekdaySpotLabel } from "../../scripts/domain/spasso-weekday-validity.mjs";
+import { formatWeekdaySpotLabel } from "../../scripts/domain/weekday-spot-label.mjs";
 
 const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });

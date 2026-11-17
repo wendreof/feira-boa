@@ -10,6 +10,17 @@ export const PUSH_NOTIFICATION_ICON_CHRISTMAS = "icons/notification-christmas-96
 export const PUSH_NOTIFICATION_BADGE_DEFAULT = "icons/badge-72.png";
 export const PUSH_NOTIFICATION_BADGE_CHRISTMAS = "icons/badge-christmas-72.png";
 
+export const MANIFEST_DEFAULT = "manifest.webmanifest";
+export const MANIFEST_CHRISTMAS = "manifest-christmas.webmanifest";
+
+export const PWA_ICON_QUERY = "?v=20261117";
+export const PWA_ICON_192_DEFAULT = "icons/icon-192.png";
+export const PWA_ICON_192_CHRISTMAS = "icons/icon-christmas-192.png";
+export const PWA_ICON_512_DEFAULT = "icons/icon-512.png";
+export const PWA_ICON_512_CHRISTMAS = "icons/icon-christmas-512.png";
+export const PWA_MASKABLE_512_DEFAULT = "icons/maskable-512.png";
+export const PWA_MASKABLE_512_CHRISTMAS = "icons/maskable-christmas-512.png";
+
 /**
  * @param {string} [timeZone]
  * @param {Date} [now]
@@ -107,4 +118,21 @@ export function sitePushNotificationAssets(siteUrl, options = {}) {
     icon: new URL(iconPath, base).href,
     badge: new URL(badgePath, base).href,
   };
+}
+
+/**
+ * Web app manifest link href for the active season.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ */
+export function siteManifestHref(options = {}) {
+  return resolveChristmasSeasonForNotifications(options) ? MANIFEST_CHRISTMAS : MANIFEST_DEFAULT;
+}
+
+/**
+ * Apple touch / home-screen icon href (relative, includes cache query).
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ */
+export function siteAppleTouchIconHref(options = {}) {
+  const icon = resolveChristmasSeasonForNotifications(options) ? PWA_ICON_192_CHRISTMAS : PWA_ICON_192_DEFAULT;
+  return `${icon}${PWA_ICON_QUERY}`;
 }

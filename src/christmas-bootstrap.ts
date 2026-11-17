@@ -1,9 +1,15 @@
 import {
   FAVICON_CHRISTMAS,
   FAVICON_DEFAULT,
+  MANIFEST_CHRISTMAS,
+  MANIFEST_DEFAULT,
+  PWA_ICON_192_CHRISTMAS,
+  PWA_ICON_192_DEFAULT,
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
+  siteAppleTouchIconHref,
   siteFaviconPath,
+  siteManifestHref,
   todayIsoInTimeZone,
 } from "../scripts/domain/christmas-season.mjs";
 
@@ -50,9 +56,43 @@ function applySeasonalFavicon(enabled: boolean) {
   });
 }
 
-function scheduleSeasonalFavicon(enabled: boolean) {
+function applySeasonalPwaIcons(enabled: boolean) {
+  const manifest = siteManifestHref({ christmas: enabled });
+  const touchIcon = siteAppleTouchIconHref({ christmas: enabled });
+
+  document.querySelectorAll<HTMLLinkElement>('link[rel="manifest"]').forEach((link) => {
+    const href = link.getAttribute("href") ?? "";
+    if (href === manifest) return;
+    if (
+      href === MANIFEST_DEFAULT
+      || href === MANIFEST_CHRISTMAS
+      || href === siteManifestHref({ christmas: !enabled })
+    ) {
+      link.href = manifest;
+    }
+  });
+
+  document.querySelectorAll<HTMLLinkElement>('link[rel="apple-touch-icon"]').forEach((link) => {
+    const href = link.getAttribute("href") ?? "";
+    if (href === touchIcon) return;
+    if (
+      href.includes(PWA_ICON_192_DEFAULT)
+      || href.includes(PWA_ICON_192_CHRISTMAS)
+      || href.includes("icon-192.png")
+    ) {
+      link.href = touchIcon;
+    }
+  });
+}
+
+function applySeasonalIcons(enabled: boolean) {
   applySeasonalFavicon(enabled);
-  const refreshMarks = () => applySeasonalFavicon(enabled);
+  applySeasonalPwaIcons(enabled);
+}
+
+function scheduleSeasonalFavicon(enabled: boolean) {
+  applySeasonalIcons(enabled);
+  const refreshMarks = () => applySeasonalIcons(enabled);
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", refreshMarks, { once: true });
   }

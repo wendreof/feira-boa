@@ -23,6 +23,7 @@
     "send:catalog-push:dry": "node scripts/send-catalog-push.mjs --dry-run",
     "review:source": "node scripts/review-source.mjs",
     "monitor:sources": "node scripts/monitor-sources.mjs",
+    "audit:gemini": "node scripts/audit-offers-gemini.mjs",
     "monitor:status": "node scripts/write-source-status.mjs",
     "test:logos": "node scripts/test-store-logos-playwright.mjs",
     "test:expiry-ui": "node scripts/test-offer-expiry-playwright.mjs",

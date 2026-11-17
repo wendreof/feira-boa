@@ -17,6 +17,10 @@ import { browseFiltersActive } from "./browse-filters";
 import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
 import { hideOfferGridLoading } from "./offer-grid-loading";
 import { bindIncrementalMountGrid, mountOffersIncrementally } from "./incremental-mount";
+import {
+  partitionOfferCardCache,
+  shouldRemountOffersSynchronously,
+} from "../../scripts/domain/offer-card-cache.mjs";
 
 let offerMountGeneration = 0;
 
@@ -72,11 +76,23 @@ function renderArchivedOffers(today: string, min: number | null, max: number | n
   archiveSubtitle.textContent = `${matching.length} ${matching.length === 1 ? "oferta encerrada" : "ofertas encerradas"}${storeNames.length === 1 ? "" : ` · ${storeNames.length} lojas`}${periodHints.length === 1 ? ` · ${periodHints[0]}` : ""}`;
 
   const matchingIds = new Set(matching.map((offer) => offer.id));
-  for (const [id, card] of appState.archivedCards) {
-    if (!matchingIds.has(id)) {
-      card.root.remove();
-      appState.archivedCards.delete(id);
-    }
+  const liveArchivedIds = new Set(
+    appState.archivedCampaigns.flatMap((campaign) => campaign.offers.map((offer) => offer.id)),
+  );
+  const archivedCachePlan = partitionOfferCardCache({
+    cachedIds: appState.archivedCards.keys(),
+    matchingIds,
+    liveOfferIds: liveArchivedIds,
+  });
+  for (const id of archivedCachePlan.evict) {
+    const card = appState.archivedCards.get(id);
+    if (!card) continue;
+    card.root.remove();
+    appState.archivedCards.delete(id);
+  }
+  for (const id of archivedCachePlan.detach) {
+    const card = appState.archivedCards.get(id);
+    if (card?.root.isConnected) card.root.remove();
   }
   for (const offer of matching) {
     let card = appState.archivedCards.get(offer.id);
@@ -196,16 +212,32 @@ export function renderOffers(options?: RenderOffersOptions): void {
   }
 
   const matchingIds = new Set(matching.map((offer) => offer.id));
-  for (const [id, card] of appState.cards) {
-    if (!matchingIds.has(id)) {
-      card.root.remove();
-      appState.cards.delete(id);
-    }
+  const liveOfferIds = new Set(appState.offers.map((offer) => offer.id));
+  const cardCachePlan = partitionOfferCardCache({
+    cachedIds: appState.cards.keys(),
+    matchingIds,
+    liveOfferIds,
+  });
+  for (const id of cardCachePlan.evict) {
+    const card = appState.cards.get(id);
+    if (!card) continue;
+    card.root.remove();
+    appState.cards.delete(id);
+  }
+  for (const id of cardCachePlan.detach) {
+    const card = appState.cards.get(id);
+    if (card?.root.isConnected) card.root.remove();
   }
   const finish = (): void => {
     if (generation !== offerMountGeneration) return;
     finishOffersUi(matching, focused, today, priceRangeReversed, min, max);
   };
+
+  if (shouldRemountOffersSynchronously(matching.map((offer) => offer.id), appState.cards)) {
+    for (const offer of matching) mountMatchingOffer(offer);
+    finish();
+    return;
+  }
 
   void mountOffersIncrementally(
     matching,

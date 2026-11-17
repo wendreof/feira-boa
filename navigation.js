@@ -194,11 +194,23 @@
       if (fallback instanceof HTMLElement) fallback.hidden = false;
     };
 
-    const bindLoad = (url) => {
+    const session = readStoredSession();
+    const remote = providerAvatarUrlFromMetadata(
+      session?.user?.user_metadata,
+      oauthProviderFromUser(session?.user),
+    );
+
+    const bindLoad = (url, onError) => {
       image.loading = "eager";
       image.decoding = "async";
-      image.addEventListener("load", showPhoto, { once: true });
-      image.addEventListener("error", showFallback, { once: true });
+      const onLoad = () => showPhoto();
+      const onFail = () => {
+        image.removeEventListener("load", onLoad);
+        if (onError) onError();
+        else showFallback();
+      };
+      image.addEventListener("load", onLoad, { once: true });
+      image.addEventListener("error", onFail, { once: true });
       image.hidden = false;
       image.style.opacity = "0";
       image.referrerPolicy = "no-referrer";
@@ -208,15 +220,9 @@
 
     const cachedPath = readCachedAvatarPath(userId);
     if (cachedPath) {
-      bindLoad(avatarPublicUrl(cachedPath, 64));
+      bindLoad(avatarPublicUrl(cachedPath, 64), remote ? () => bindLoad(remote) : undefined);
       return;
     }
-
-    const session = readStoredSession();
-    const remote = providerAvatarUrlFromMetadata(
-      session?.user?.user_metadata,
-      oauthProviderFromUser(session?.user),
-    );
     if (remote) bindLoad(remote);
   }
 

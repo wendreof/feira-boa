@@ -25,8 +25,21 @@ const execFileAsync = promisify(execFile);
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const FAVICON = path.join(ROOT, 'favicon.svg');
 const ICONS_DIR = path.join(ROOT, 'icons');
+
+/** @type {{ faviconFile: string, notificationFile: string, badgeFile: string }[]} */
+const NOTIFICATION_SOURCES = [
+  {
+    faviconFile: 'favicon.svg',
+    notificationFile: 'notification-96.png',
+    badgeFile: 'badge-72.png',
+  },
+  {
+    faviconFile: 'favicon-christmas.svg',
+    notificationFile: 'notification-christmas-96.png',
+    badgeFile: 'badge-christmas-72.png',
+  },
+];
 const CHROME_TIMEOUT_MS = 60_000;
 
 const GREEN = '#155b3b';
@@ -36,13 +49,11 @@ const MASKABLE_SCALE = 0.64;
 /** Artwork scale for the monochrome badge. */
 const BADGE_SCALE = 0.78;
 
-const TARGETS = [
+const APP_ICON_TARGETS = [
   { file: 'icon-192.png', size: 192, kind: 'plain' },
   { file: 'icon-512.png', size: 512, kind: 'plain' },
   { file: 'icon-1024.png', size: 1024, kind: 'plain' },
   { file: 'maskable-512.png', size: 512, kind: 'maskable' },
-  { file: 'notification-96.png', size: 96, kind: 'plain' },
-  { file: 'badge-72.png', size: 72, kind: 'badge' },
 ];
 
 /** Basket silhouette for the badge: solid white, readable at 24x24. */
@@ -189,19 +200,30 @@ async function main() {
     process.exit(1);
   }
 
-  const rawMark = await fs.readFile(FAVICON, 'utf8');
-  const faviconMark = rawMark.replace(/<\?xml[^>]*\?>/g, '').trim();
-  if (!faviconMark.startsWith('<svg')) {
-    throw new Error(`favicon.svg does not look like an SVG document: ${FAVICON}`);
+  const defaultFaviconPath = path.join(ROOT, 'favicon.svg');
+  const defaultMarkRaw = await fs.readFile(defaultFaviconPath, 'utf8');
+  const defaultMark = defaultMarkRaw.replace(/<\?xml[^>]*\?>/g, '').trim();
+  if (!defaultMark.startsWith('<svg')) {
+    throw new Error(`favicon.svg does not look like an SVG document: ${defaultFaviconPath}`);
   }
 
   await fs.mkdir(ICONS_DIR, { recursive: true });
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'feira-boa-icons-'));
 
   try {
-    for (const target of TARGETS) {
-      const mark = target.kind === 'badge' ? BADGE_MARK : faviconMark;
+    for (const target of APP_ICON_TARGETS) {
+      const mark = target.kind === 'badge' ? BADGE_MARK : defaultMark;
       await render(browser, tmpDir, { ...target, mark });
+    }
+    for (const source of NOTIFICATION_SOURCES) {
+      const faviconPath = path.join(ROOT, source.faviconFile);
+      const raw = await fs.readFile(faviconPath, 'utf8');
+      const mark = raw.replace(/<\?xml[^>]*\?>/g, '').trim();
+      if (!mark.startsWith('<svg')) {
+        throw new Error(`${source.faviconFile} does not look like an SVG document: ${faviconPath}`);
+      }
+      await render(browser, tmpDir, { file: source.notificationFile, size: 96, kind: 'plain', mark });
+      await render(browser, tmpDir, { file: source.badgeFile, size: 72, kind: 'plain', mark });
     }
   } finally {
     await fs.rm(tmpDir, { recursive: true, force: true }).catch(() => {});

@@ -5,6 +5,11 @@ const SAO_PAULO_TZ = "America/Sao_Paulo";
 export const FAVICON_DEFAULT = "favicon.svg";
 export const FAVICON_CHRISTMAS = "favicon-christmas.svg";
 
+export const PUSH_NOTIFICATION_ICON_DEFAULT = "icons/notification-96.png";
+export const PUSH_NOTIFICATION_ICON_CHRISTMAS = "icons/notification-christmas-96.png";
+export const PUSH_NOTIFICATION_BADGE_DEFAULT = "icons/badge-72.png";
+export const PUSH_NOTIFICATION_BADGE_CHRISTMAS = "icons/badge-christmas-72.png";
+
 /**
  * @param {string} [timeZone]
  * @param {Date} [now]
@@ -56,4 +61,50 @@ export function resolveChristmasSeasonEnabled(options = {}) {
   if (queryOverride === true || storageOverride === true) return true;
   if (queryOverride === false || storageOverride === false) return false;
   return true;
+}
+
+/**
+ * Server-side (push/Telegram): same rules as the site theme, without browser overrides.
+ * @param {{ today?: string, now?: Date, christmas?: boolean } & ChristmasSeasonOptions} [options]
+ */
+export function resolveChristmasSeasonForNotifications(options = {}) {
+  const { today, now = new Date(), christmas = undefined } = options;
+  if (typeof christmas === "boolean") return christmas;
+  const resolvedToday = today ?? todayIsoInTimeZone(SAO_PAULO_TZ, now);
+  return resolveChristmasSeasonEnabled({ ...options, today: resolvedToday, now });
+}
+
+/**
+ * Root-relative favicon path for the active season.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ */
+export function siteFaviconPath(options = {}) {
+  const file = resolveChristmasSeasonForNotifications(options) ? FAVICON_CHRISTMAS : FAVICON_DEFAULT;
+  return `/${file}`;
+}
+
+/**
+ * Absolute favicon URL for outbound notifications and link previews.
+ * @param {string | URL} siteUrl
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ */
+export function siteFaviconUrl(siteUrl, options = {}) {
+  const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
+  return new URL(siteFaviconPath(options), base).href;
+}
+
+/**
+ * @param {string | URL} siteUrl
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [options]
+ * @returns {{ icon: string, badge: string }}
+ */
+export function sitePushNotificationAssets(siteUrl, options = {}) {
+  const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
+  const christmas = resolveChristmasSeasonForNotifications(options);
+  const iconPath = christmas ? PUSH_NOTIFICATION_ICON_CHRISTMAS : PUSH_NOTIFICATION_ICON_DEFAULT;
+  const badgePath = christmas ? PUSH_NOTIFICATION_BADGE_CHRISTMAS : PUSH_NOTIFICATION_BADGE_DEFAULT;
+  return {
+    icon: new URL(iconPath, base).href,
+    badge: new URL(badgePath, base).href,
+  };
 }

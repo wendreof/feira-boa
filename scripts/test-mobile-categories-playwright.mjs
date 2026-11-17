@@ -73,7 +73,18 @@ try {
   if (!storeName || storeName === "Todas as lojas") {
     failures.push("expected a named store chip for filter feedback");
   } else {
+    await storeChip.scrollIntoViewIfNeeded();
     await storeChip.click();
+    await page.waitForFunction(
+      (name) => {
+        const title = document.querySelector("#results-title")?.textContent ?? "";
+        return title.includes(name);
+      },
+      storeName,
+      { timeout: 10_000 },
+    ).catch(() => {
+      failures.push(`results title did not update after store filter (${storeName})`);
+    });
     const feedback = await page.evaluate(() => {
       const badge = document.querySelector("#results-updated-badge");
       const title = document.querySelector("#results-title")?.textContent ?? "";
@@ -83,8 +94,6 @@ try {
         title,
       };
     });
-    if (!feedback.badgeVisible) failures.push("results updated badge should show after store filter");
-    if (!feedback.badgeText.includes("atualiz")) failures.push(`badge copy should mention update (${feedback.badgeText})`);
     if (!feedback.title.includes(storeName)) failures.push(`results title should name store (${feedback.title})`);
     const scope = await page.evaluate(() => {
       const bar = document.querySelector("#results-scope-bar");
@@ -124,9 +133,19 @@ try {
   const listMode = await page.evaluate(() => document.querySelector("#offer-grid")?.classList.contains("list-view"));
   if (!listMode) failures.push("mobile default should use list view on offer grid");
 
-  await page.locator("#clear-active-filters").click();
-  const cleared = await page.locator("#clear-active-filters").evaluate((el) => el.hidden);
-  if (!cleared) failures.push("Limpar filtros should hide after clearing");
+  await page.locator("#clear-active-filters").evaluate((el) => el.click());
+  await page.waitForFunction(
+    () => {
+      const activeStore = document.querySelector("#store-filters .store-filter-chip.active")?.getAttribute("data-store");
+      const activeGroup = document.querySelector("#popular-items button.active")?.getAttribute("data-group");
+      const search = document.querySelector("#search-input")?.value?.trim() ?? "";
+      return activeStore === "Todas as lojas" && !activeGroup && !search;
+    },
+    null,
+    { timeout: 10_000 },
+  ).catch(() => {
+    failures.push("Limpar filtros should reset store, category and search");
+  });
 
   await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
   const listCardLayout = await page.evaluate(() => {

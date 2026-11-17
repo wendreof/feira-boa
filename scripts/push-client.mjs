@@ -1,5 +1,6 @@
 import webpush from "web-push";
 import { VAPID_PUBLIC_KEY } from "./domain/vapid-config.mjs";
+import { sitePushNotificationAssets } from "./domain/christmas-season.mjs";
 import { offerUrl } from "./alerts/plan.mjs";
 
 const DEFAULT_VAPID_SUBJECT = "mailto:alertas@feira-boa.pages.dev";
@@ -17,16 +18,26 @@ export function configureVapid({ publicKey, privateKey, subject }) {
   webpush.setVapidDetails(subject, publicKey, privateKey);
 }
 
-export function buildPushPayload({ title, body, url, tag }) {
-  return JSON.stringify({ title, body, url, tag: tag ?? "feira-alert" });
+/**
+ * @param {{ title: string, body: string, url: string, tag?: string, siteUrl?: URL, christmas?: boolean, today?: string }} options
+ */
+export function buildPushPayload({ title, body, url, tag, siteUrl, christmas, today }) {
+  const payload = { title, body, url, tag: tag ?? "feira-alert" };
+  if (siteUrl) {
+    const assets = sitePushNotificationAssets(siteUrl, { christmas, today });
+    Object.assign(payload, assets);
+  }
+  return JSON.stringify(payload);
 }
 
-export function buildPushPayloadForOffer({ offer, siteUrl, title, body }) {
+export function buildPushPayloadForOffer({ offer, siteUrl, title, body, today }) {
   return buildPushPayload({
     title,
     body,
     url: offerUrl(siteUrl, offer),
     tag: offer.id,
+    siteUrl,
+    today,
   });
 }
 

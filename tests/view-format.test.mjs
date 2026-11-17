@@ -33,6 +33,12 @@ test("offer is active on both validity boundaries and not outside them", () => {
   assert.equal(isActive(offer, "2026-10-26"), false);
 });
 
+test("offer with weekday spot is active only on listed days within encarte window", () => {
+  const offer = { validFrom: "2026-11-16", validTo: "2026-11-21", validWeekdays: [2, 3] };
+  assert.equal(isActive(offer, "2026-11-17"), true);
+  assert.equal(isActive(offer, "2026-11-19"), false);
+});
+
 test("expiry highlight flags today and tomorrow before the offer ends", () => {
   const offer = { validFrom: "2026-10-20", validTo: "2026-10-25" };
   assert.equal(addCalendarDays("2026-10-24", 1), "2026-10-25");

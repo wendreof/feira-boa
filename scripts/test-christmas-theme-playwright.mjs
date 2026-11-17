@@ -20,11 +20,16 @@ try {
   if (flag !== "on") failures.push(`data-christmas was ${flag}`);
 
   const hatBg = await page.evaluate(() => {
-    const mark = document.querySelector(".brand-mark");
-    return mark ? getComputedStyle(mark, "::after").backgroundImage : "";
+    const brand = document.querySelector(".topbar .brand");
+    const sidebar = document.querySelector(".sidebar-brand-mark");
+    const topbarHat = brand ? getComputedStyle(brand, "::after").backgroundImage : "";
+    const sidebarHat = sidebar ? getComputedStyle(sidebar, "::after").backgroundImage : "";
+    return { topbarHat, sidebarHat };
   });
-  if (!hatBg || hatBg === "none") failures.push("santa hat ::after missing on .brand-mark");
-  if (!hatBg.includes("santa-hat.svg")) failures.push(`santa hat asset unexpected: ${hatBg}`);
+  if (!hatBg.topbarHat || hatBg.topbarHat === "none") failures.push("santa hat ::after missing on .topbar .brand");
+  if (!hatBg.topbarHat.includes("santa-hat.svg")) failures.push(`topbar hat asset unexpected: ${hatBg.topbarHat}`);
+  if (!hatBg.sidebarHat || hatBg.sidebarHat === "none") failures.push("santa hat ::after missing on .sidebar-brand-mark");
+  if (!hatBg.sidebarHat.includes("santa-hat.svg")) failures.push(`sidebar hat asset unexpected: ${hatBg.sidebarHat}`);
 
   const topbarBox = await page.locator(".topbar").boundingBox();
   if (!topbarBox || topbarBox.height > 120) failures.push("topbar height looks broken on mobile");

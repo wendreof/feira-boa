@@ -9,7 +9,7 @@
     "from": "2026-11-16",
     "to": "2026-11-22"
   },
-  "fetchedAt": "2026-11-16T19:20:52.159Z",
+  "fetchedAt": "2026-11-17T03:27:05.870Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -14526,8 +14526,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 169.99,
-      "previousPrice": 189.9,
+      "price": 189.9,
+      "previousPrice": null,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14622,8 +14622,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Whisky/Whisky Importado",
-      "price": 189.9,
-      "previousPrice": null,
+      "price": 169.99,
+      "previousPrice": 189.9,
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -17383,7 +17383,7 @@
         "Refrigerantes"
       ],
       "storeCategory": "Bebidas/Sucos e Refrigerantes/Refrigerante",
-      "price": 9.89,
+      "price": 9.99,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",

@@ -49,33 +49,25 @@
     );
 }
 
-:root[data-christmas="on"] .brand {
-  position: relative;
-}
-
+:root[data-christmas="on"] .brand-mark,
 :root[data-christmas="on"] .sidebar-brand-mark {
   position: relative;
+  overflow: visible;
 }
 
-:root[data-christmas="on"] .brand::after,
+:root[data-christmas="on"] .brand-mark::after,
 :root[data-christmas="on"] .sidebar-brand-mark::after {
   content: "";
   position: absolute;
-  top: -11px;
-  width: 30px;
-  height: 22px;
+  top: -17px;
+  left: 52%;
+  width: 46px;
+  height: 34px;
   pointer-events: none;
+  transform: translateX(-50%) rotate(-6deg);
+  transform-origin: 50% 100%;
   background: no-repeat center / contain url("logos/santa-hat.svg");
-}
-
-:root[data-christmas="on"] .brand::after {
-  left: 18px;
-  transform: translateX(-50%);
-}
-
-:root[data-christmas="on"] .sidebar-brand-mark::after {
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 2;
 }
 
 @keyframes christmas-snow-drift {
@@ -95,14 +87,16 @@
 }
 
 @media (max-width: 760px) {
-  :root[data-christmas="on"] .brand::after,
+  :root[data-christmas="on"] .brand-mark::after,
   :root[data-christmas="on"] .sidebar-brand-mark::after {
-    width: 26px;
-    height: 19px;
-    top: -9px;
+    width: 40px;
+    height: 30px;
+    top: -15px;
   }
+}
 
-  :root[data-christmas="on"] .brand::after {
-    left: 15px;
-  }
+:root[data-christmas="on"] .topbar.is-compact .brand-mark::after {
+  width: 38px;
+  height: 28px;
+  top: -14px;
 }

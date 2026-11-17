@@ -33,3 +33,6 @@ tmp/
 # Internal planning markdown (local operator notes; keep README, AGENT, LICENSE, skills)
 *_PLAN.md
 *_plan.md
+
+# Superpowers plugin local session files (brainstorm companion, SDD scratch)
+.superpowers/

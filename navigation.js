@@ -140,6 +140,32 @@
     }
   }
 
+  // Keep in sync with scripts/domain/sidebar-avatar-src-cache.mjs
+  const SIDEBAR_AVATAR_SRC_CACHE_KEY = "feira-boa:sidebar-avatar-src:v1";
+
+  function readCachedSidebarAvatarSrc(userId) {
+    try {
+      const raw = sessionStorage.getItem(SIDEBAR_AVATAR_SRC_CACHE_KEY);
+      if (!raw) return undefined;
+      const entry = JSON.parse(raw);
+      if (entry.userId !== userId) return undefined;
+      const src = typeof entry.src === "string" ? entry.src.trim() : "";
+      return /^https?:\/\//i.test(src) ? src : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  function writeCachedSidebarAvatarSrc(userId, src) {
+    try {
+      const trimmed = typeof src === "string" ? src.trim() : "";
+      if (!/^https?:\/\//i.test(trimmed)) return;
+      sessionStorage.setItem(SIDEBAR_AVATAR_SRC_CACHE_KEY, JSON.stringify({ userId, src: trimmed }));
+    } catch {
+      // Private mode or quota.
+    }
+  }
+
   function oauthProviderFromUser(user) {
     const fromApp = user?.app_metadata?.provider;
     if (typeof fromApp === "string" && fromApp.trim()) return fromApp.trim().toLowerCase();
@@ -174,6 +200,24 @@
     return `${base}/storage/v1/render/image/public/avatars/${objectPath}?${params}`;
   }
 
+  // Keep in sync with scripts/domain/sidebar-avatar-prime.mjs
+  function sidebarAvatarUrlsToTry(userId, remoteOAuthUrl) {
+    const cachedSrc = readCachedSidebarAvatarSrc(userId);
+    if (cachedSrc) return [cachedSrc];
+
+    const cachedPath = readCachedAvatarPath(userId);
+    if (typeof cachedPath === "string" && cachedPath.trim()) {
+      const path = cachedPath.trim();
+      return [avatarPublicUrl(path, 64), avatarPublicUrl(path)];
+    }
+
+    const oauth = typeof remoteOAuthUrl === "string" ? remoteOAuthUrl.trim() : "";
+    if (/^https?:\/\//i.test(oauth) && (cachedPath === null || cachedPath === undefined)) {
+      return [oauth];
+    }
+    return null;
+  }
+
   function primeSidebarAvatarFromCache() {
     const userId = readStoredUserId();
     if (!userId) return;
@@ -186,6 +230,8 @@
       image.style.opacity = "";
       image.hidden = false;
       if (fallback instanceof HTMLElement) fallback.hidden = true;
+      const settledSrc = image.currentSrc || image.src;
+      if (settledSrc) writeCachedSidebarAvatarSrc(userId, settledSrc);
     };
     const showFallback = () => {
       image.style.opacity = "";
@@ -199,6 +245,9 @@
       session?.user?.user_metadata,
       oauthProviderFromUser(session?.user),
     );
+
+    const urls = sidebarAvatarUrlsToTry(userId, remote);
+    if (!urls || urls.length === 0) return;
 
     const bindLoad = (url, onError) => {
       image.loading = "eager";
@@ -215,15 +264,24 @@
       image.style.opacity = "0";
       image.referrerPolicy = "no-referrer";
       image.src = url;
-      if (image.complete && image.naturalWidth > 0) showPhoto();
+      if (image.complete && image.naturalWidth > 0) {
+        showPhoto();
+      } else if (image.complete && image.naturalWidth === 0) {
+        onFail();
+      }
     };
 
-    const cachedPath = readCachedAvatarPath(userId);
-    if (cachedPath) {
-      bindLoad(avatarPublicUrl(cachedPath, 64), remote ? () => bindLoad(remote) : undefined);
-      return;
-    }
-    if (remote) bindLoad(remote);
+    const tryFromIndex = (index) => {
+      const url = urls[index];
+      if (!url) {
+        showFallback();
+        return;
+      }
+      const next = urls[index + 1];
+      bindLoad(url, next ? () => tryFromIndex(index + 1) : undefined);
+    };
+
+    tryFromIndex(0);
   }
 
   resetGuestSidebarAvatar();

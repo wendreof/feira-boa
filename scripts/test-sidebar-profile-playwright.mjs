@@ -47,6 +47,50 @@ try {
   if ((await signedIn.locator("#sidebar-profile-name").innerText()).trim() !== "Wendreo Fernandes") failures.push("signed-in name missing");
   if (await signedIn.locator("#nav-account").count() !== 1) failures.push("duplicate account entry");
   await signedIn.close();
+
+  const stableSrc = `${SITE_URL}/icons/icon-192.png`;
+  const signedNav = await browser.newPage({ viewport: { width: 1200, height: 800 } });
+  const oauthSession = JSON.stringify({
+    access_token: "sidebar-profile-test",
+    expires_at: Math.floor(Date.now() / 1000) + 3600,
+    user: {
+      id: "user-sidebar",
+      app_metadata: { provider: "google" },
+      user_metadata: {
+        full_name: "Wendreo Fernandes",
+        picture: stableSrc,
+      },
+    },
+  });
+  await signedNav.addInitScript(({ storedSession, stableSrc: avatarSrc }) => {
+    localStorage.setItem("sb-muiuvmhzzbqflxznpnez-auth-token", storedSession);
+    sessionStorage.setItem(
+      "feira-boa:avatar-path:v1",
+      JSON.stringify({ userId: "user-sidebar", path: null }),
+    );
+    sessionStorage.setItem(
+      "feira-boa:sidebar-avatar-src:v1",
+      JSON.stringify({ userId: "user-sidebar", src: avatarSrc }),
+    );
+  }, { storedSession: oauthSession, stableSrc });
+  await signedNav.goto(`${SITE_URL}/lojas.html`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await dismissLoginGate(signedNav);
+  await signedNav.waitForFunction((expected) => {
+    const img = document.querySelector("#topbar-account-image");
+    return img instanceof HTMLImageElement && !img.hidden && img.getAttribute("src") === expected;
+  }, stableSrc, { timeout: 10_000 });
+  const srcLojas = await signedNav.locator("#topbar-account-image").getAttribute("src");
+  await signedNav.goto(`${SITE_URL}/suggestions.html`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await dismissLoginGate(signedNav);
+  await signedNav.waitForFunction((expected) => {
+    const img = document.querySelector("#topbar-account-image");
+    return img instanceof HTMLImageElement && !img.hidden && img.getAttribute("src") === expected;
+  }, stableSrc, { timeout: 10_000 });
+  const srcSuggestions = await signedNav.locator("#topbar-account-image").getAttribute("src");
+  if (srcLojas !== stableSrc) failures.push(`lojas avatar src ${srcLojas}`);
+  if (srcSuggestions !== stableSrc) failures.push(`suggestions avatar src ${srcSuggestions}`);
+  if (srcLojas !== srcSuggestions) failures.push("avatar src changed across lojas -> suggestions");
+  await signedNav.close();
 } finally {
   await browser.close();
 }

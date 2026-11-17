@@ -4,6 +4,10 @@ import { AVATAR_LOAD_TIMEOUT_MS, AVATAR_SIZE, isStorageAvatarPath, loadAvatar, r
 import { hideSpinner, showSpinner } from "../loading";
 import { loadDisplayName } from "../account";
 import { clearCachedDisplayName, writeCachedDisplayName } from "../../scripts/domain/display-name-cache.mjs";
+import {
+  clearCachedSidebarAvatarSrc,
+  writeCachedSidebarAvatarSrc,
+} from "../../scripts/domain/sidebar-avatar-src-cache.mjs";
 
 export function bindCompactTopbar(): void {
   // O cabeçalho encolhe ao rolar para liberar espaço na tela.
@@ -41,6 +45,7 @@ export function updateAccountControls(): void {
   if (!signedIn) {
     clearTopbarAvatar();
     clearCachedDisplayName(sessionStorage);
+    clearCachedSidebarAvatarSrc(sessionStorage);
     if (topbarHello) {
       topbarHello.textContent = "";
       topbarHello.hidden = true;
@@ -106,6 +111,9 @@ function setTopbarRemoteAvatar(url: string): void {
     if (visible) {
       image.hidden = false;
       if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+      const userId = appState.currentUserId;
+      const settledSrc = image.currentSrc || image.src;
+      if (userId && settledSrc) writeCachedSidebarAvatarSrc(userId, settledSrc, sessionStorage);
       return;
     }
     clearTopbarAvatar();
@@ -135,6 +143,10 @@ export async function refreshTopbarAvatar(
 ): Promise<void> {
   try {
     const path = knownPath !== undefined ? knownPath : await loadAvatar(userId);
+    const previousPath = readCachedAvatarPath(userId, sessionStorage);
+    if (previousPath !== undefined && previousPath !== path) {
+      clearCachedSidebarAvatarSrc(sessionStorage);
+    }
     writeCachedAvatarPath(userId, path, sessionStorage);
     if (path) {
       if (!topbarAccountImage) return;
@@ -145,6 +157,9 @@ export async function refreshTopbarAvatar(
           onSettled: (visible) => {
             if (visible) {
               if (topbarAccountFallback) topbarAccountFallback.hidden = true;
+              const img = topbarAccountImage;
+              const settledSrc = img?.currentSrc || img?.src;
+              if (settledSrc) writeCachedSidebarAvatarSrc(userId, settledSrc, sessionStorage);
               return;
             }
             if (providerAvatarUrl) setTopbarRemoteAvatar(providerAvatarUrl);

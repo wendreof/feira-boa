@@ -12,7 +12,7 @@ function readStorageOverride(): boolean | null {
     if (raw === "1" || raw === "true" || raw === "on") return true;
     if (raw === "0" || raw === "false" || raw === "off") return false;
   } catch {
-    // Private mode — follow the calendar only.
+    // Private mode — default theme on.
   }
   return null;
 }

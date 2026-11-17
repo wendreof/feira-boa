@@ -44,13 +44,13 @@ export function parseChristmasSeasonQuery(searchParams) {
 }
 
 /**
+ * Default: theme on. Opt out via ?christmas=0 or localStorage preview key.
  * @param {ChristmasSeasonOptions} [options]
  * @returns {boolean}
  */
 export function resolveChristmasSeasonEnabled(options = {}) {
-  const { today, queryOverride = null, storageOverride = null, now = new Date() } = options;
+  const { queryOverride = null, storageOverride = null } = options;
   if (queryOverride === true || storageOverride === true) return true;
   if (queryOverride === false || storageOverride === false) return false;
-  const resolvedToday = today ?? todayIsoInTimeZone(SAO_PAULO_TZ, now);
-  return isChristmasSeasonDate(resolvedToday);
+  return true;
 }

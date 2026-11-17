@@ -15,7 +15,7 @@ const failures = [];
 
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await page.goto(`${BASE}/index.html?christmas=1`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.goto(`${BASE}/index.html`, { waitUntil: "domcontentloaded", timeout: 30_000 });
   const flag = await page.locator("html").getAttribute("data-christmas");
   if (flag !== "on") failures.push(`data-christmas was ${flag}`);
 
@@ -41,4 +41,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK: christmas theme preview at ${BASE}/index.html?christmas=1`);
+console.log(`OK: christmas theme on by default at ${BASE}/index.html`);

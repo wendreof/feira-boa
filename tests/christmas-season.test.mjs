@@ -8,8 +8,12 @@ import {
   parseChristmasSeasonQuery,
   resolveChristmasSeasonEnabled,
   resolveChristmasSeasonForNotifications,
+  MANIFEST_CHRISTMAS,
+  MANIFEST_DEFAULT,
+  siteAppleTouchIconHref,
   siteFaviconPath,
   siteFaviconUrl,
+  siteManifestHref,
   sitePushNotificationAssets,
   todayIsoInTimeZone,
 } from "../scripts/domain/christmas-season.mjs";
@@ -68,5 +72,13 @@ describe("christmas-season", () => {
     const assets = sitePushNotificationAssets(site, { christmas: true });
     assert.equal(assets.icon, "https://feira-boa.pages.dev/icons/notification-christmas-96.png");
     assert.equal(assets.badge, "https://feira-boa.pages.dev/icons/badge-christmas-72.png");
+  });
+
+  it("builds manifest and apple-touch paths for the active season", () => {
+    assert.equal(siteManifestHref({ christmas: true }), MANIFEST_CHRISTMAS);
+    assert.equal(siteManifestHref({ christmas: false }), MANIFEST_DEFAULT);
+    assert.match(siteAppleTouchIconHref({ christmas: true }), /icon-christmas-192\.png\?v=/);
+    assert.match(siteAppleTouchIconHref({ christmas: false }), /icon-192\.png\?v=/);
+    assert.doesNotMatch(siteAppleTouchIconHref({ christmas: true }), /christmas.*christmas/);
   });
 });

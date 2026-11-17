@@ -14,9 +14,8 @@
  * Usage: node scripts/build-icons.mjs
  *
  * Seasonal swap-in: replace favicon-christmas.svg (same 64×64 viewBox, green #155b3b
- * rounded rect) then re-run this script to refresh notification-christmas-96.png and
- * badge-christmas-72.png. For Gemini/full-bleed exports, keep the mark centered;
- * maskable / store icons still use favicon.svg only.
+ * rounded rect) then re-run this script to refresh notification-christmas-96.png,
+ * badge-christmas-72.png, and PWA sizes in icons/icon-christmas-*.png.
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -59,6 +58,13 @@ const APP_ICON_TARGETS = [
   { file: 'icon-512.png', size: 512, kind: 'plain' },
   { file: 'icon-1024.png', size: 1024, kind: 'plain' },
   { file: 'maskable-512.png', size: 512, kind: 'maskable' },
+];
+
+const CHRISTMAS_APP_ICON_TARGETS = [
+  { file: 'icon-christmas-192.png', size: 192, kind: 'plain' },
+  { file: 'icon-christmas-512.png', size: 512, kind: 'plain' },
+  { file: 'icon-christmas-1024.png', size: 1024, kind: 'plain' },
+  { file: 'maskable-christmas-512.png', size: 512, kind: 'maskable' },
 ];
 
 /** Basket silhouette for the badge: solid white, readable at 24x24. */
@@ -205,21 +211,25 @@ async function main() {
     process.exit(1);
   }
 
-  const defaultFaviconPath = path.join(ROOT, 'favicon.svg');
-  const defaultMarkRaw = await fs.readFile(defaultFaviconPath, 'utf8');
-  const defaultMark = defaultMarkRaw.replace(/<\?xml[^>]*\?>/g, '').trim();
-  if (!defaultMark.startsWith('<svg')) {
-    throw new Error(`favicon.svg does not look like an SVG document: ${defaultFaviconPath}`);
-  }
-
   await fs.mkdir(ICONS_DIR, { recursive: true });
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'feira-boa-icons-'));
 
-  try {
-    for (const target of APP_ICON_TARGETS) {
-      const mark = target.kind === 'badge' ? BADGE_MARK : defaultMark;
+  /** @param {string} faviconFile @param {typeof APP_ICON_TARGETS} targets */
+  async function renderAppIcons(faviconFile, targets) {
+    const faviconPath = path.join(ROOT, faviconFile);
+    const raw = await fs.readFile(faviconPath, 'utf8');
+    const mark = raw.replace(/<\?xml[^>]*\?>/g, '').trim();
+    if (!mark.startsWith('<svg')) {
+      throw new Error(`${faviconFile} does not look like an SVG document: ${faviconPath}`);
+    }
+    for (const target of targets) {
       await render(browser, tmpDir, { ...target, mark });
     }
+  }
+
+  try {
+    await renderAppIcons('favicon.svg', APP_ICON_TARGETS);
+    await renderAppIcons('favicon-christmas.svg', CHRISTMAS_APP_ICON_TARGETS);
     for (const source of NOTIFICATION_SOURCES) {
       const faviconPath = path.join(ROOT, source.faviconFile);
       const raw = await fs.readFile(faviconPath, 'utf8');

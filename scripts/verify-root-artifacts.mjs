@@ -37,6 +37,7 @@ const requiredFiles = [
   "build-info.json",
   "service-worker.js",
   "manifest.webmanifest",
+  "manifest-christmas.webmanifest",
   "offers-jsonld.js",
   "_headers",
   "ads.txt",
@@ -47,6 +48,10 @@ const requiredFiles = [
   "icons/icon-512.png",
   "icons/icon-1024.png",
   "icons/maskable-512.png",
+  "icons/icon-christmas-192.png",
+  "icons/icon-christmas-512.png",
+  "icons/icon-christmas-1024.png",
+  "icons/maskable-christmas-512.png",
   "icons/notification-96.png",
   "icons/notification-christmas-96.png",
   "icons/badge-72.png",
@@ -97,6 +102,13 @@ const manifest = await readJson("manifest.webmanifest");
 if (manifest) {
   const sizes = new Set((manifest.icons ?? []).map((icon) => icon.sizes));
   if (!sizes.has("192x192") || !sizes.has("512x512")) failures.push("manifest.webmanifest: missing icon sizes");
+}
+const manifestChristmas = await readJson("manifest-christmas.webmanifest");
+if (manifestChristmas) {
+  const sizes = new Set((manifestChristmas.icons ?? []).map((icon) => icon.sizes));
+  if (!sizes.has("192x192") || !sizes.has("512x512")) failures.push("manifest-christmas.webmanifest: missing icon sizes");
+  const iconSrcs = (manifestChristmas.icons ?? []).map((icon) => icon.src).join(" ");
+  if (!iconSrcs.includes("icon-christmas-")) failures.push("manifest-christmas.webmanifest: icons must use icon-christmas-*");
 }
 
 const supabaseHtmlPages = [

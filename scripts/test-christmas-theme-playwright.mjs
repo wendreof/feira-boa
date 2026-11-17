@@ -23,10 +23,14 @@ try {
     const brand = document.querySelector(".topbar .brand img.brand-mark");
     const sidebar = document.querySelector(".sidebar-brand-mark img");
     const icon = document.querySelector('link[rel="icon"]');
+    const manifest = document.querySelector('link[rel="manifest"]');
+    const apple = document.querySelector('link[rel="apple-touch-icon"]');
     return {
       brandSrc: brand?.getAttribute("src") ?? "",
       sidebarSrc: sidebar?.getAttribute("src") ?? "",
       iconHref: icon?.getAttribute("href") ?? "",
+      manifestHref: manifest?.getAttribute("href") ?? "",
+      appleHref: apple?.getAttribute("href") ?? "",
     };
   });
   if (!favicons.brandSrc.includes("favicon-christmas.svg")) {
@@ -37,6 +41,12 @@ try {
   }
   if (!favicons.iconHref.includes("favicon-christmas.svg")) {
     failures.push(`link icon href missing favicon-christmas.svg (${favicons.iconHref})`);
+  }
+  if (!favicons.manifestHref.includes("manifest-christmas.webmanifest")) {
+    failures.push(`manifest link should be seasonal (${favicons.manifestHref})`);
+  }
+  if (!favicons.appleHref.includes("icon-christmas-192.png")) {
+    failures.push(`apple-touch-icon should be seasonal (${favicons.appleHref})`);
   }
 
   const brandLoads = await page.evaluate(async () => {

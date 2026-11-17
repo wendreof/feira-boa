@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "fortemix": {
+    "campaignsFile": "fortemix-campaigns.json",
+    "minOffers": 15,
+    "auditImagePaths": []
+  }
+}

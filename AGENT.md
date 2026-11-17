@@ -163,6 +163,7 @@ Skip **`npm run ingest:offers`** in agent sessions unless live ingest adapters c
 - **Home / offers UI:** `src/app.ts`, `src/app-ui/`, `index.html`
 - **Alerts invite:** `src/shared/alert-rules.mjs`, `src/app-ui/alerts-invite.ts`
 - **CI ingest push:** `.github/workflows/monitor-offers.yml` — cron `0 9,12,18,21 * * *` (06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo); commit `state/`, `offers.json`, `snapshot-manifest.json`, `source-status.js`, `.offer-monitor-state.json` (`build-info.json` stays gitignored; Pages builds it via `npm run build`).
+- **Daily Gemini audit (optional vision):** `.github/workflows/gemini-daily-audit.yml` — cron `0 14 * * *` UTC; `npm run audit:gemini` checks Corso/Spasso live flyer hash vs cache (no extra vision when aligned), Forte Mix JSON sanity, and optional Forte Mix vision when flyer paths are listed in `scripts/adapters/data/gemini-audit-manifest.json`. Set `GEMINI_AUDIT_MODEL` (default in workflow: `gemini-2.0-flash-lite`). API stores (Pague Menos, Spani) are not re-read.
 - **Dependabot auto-merge:** `.github/workflows/dependabot-auto-merge.yml` — squash-merges patch/minor npm and non-major `github-actions` Dependabot PRs after **Pull request checks** `build-and-test` succeeds; policy in `scripts/ci/dependabot-merge-eligible.mjs`. Branch protection must still require `build-and-test` on `develop`/`main` (GitHub settings).
 
 ### Prompting

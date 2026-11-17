@@ -84,6 +84,10 @@ Resolve adapter/data conflicts by hand, then re-ingest.
 4. `node --test tests/fortemix-adapter.test.mjs`
 5. Commit adapter JSON + generated feed artifacts if the operator asked to push.
 
+## Daily Gemini audit (v1)
+
+- Workflow `gemini-daily-audit.yml` once per day: hash alignment for Corso/Spasso caches (skips vision when hash matches), Forte Mix JSON plausibility, optional Forte Mix re-read when `auditImagePaths` in `gemini-audit-manifest.json` point at committed flyer images. Local: `npm run audit:gemini`.
+
 ## What “automated” means here
 
 - **GitHub Actions**: scheduled ingest + monitor on `main`.

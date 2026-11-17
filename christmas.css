@@ -61,13 +61,11 @@
 :root[data-christmas="on"] .sidebar-brand-mark::after {
   content: "";
   position: absolute;
-  top: -9px;
-  width: 26px;
-  height: 20px;
+  top: -11px;
+  width: 30px;
+  height: 22px;
   pointer-events: none;
-  background: no-repeat center / contain
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23d42426' d='M4 18 16 2l12 16Z'/%3E%3Cpath fill='%23fff' d='M16 2 5 17h22Z'/%3E%3Ccircle cx='26' cy='7' r='3' fill='%23fff'/%3E%3Crect x='1' y='17' width='30' height='5' rx='2.5' fill='%23fff'/%3E%3C/svg%3E");
-  filter: drop-shadow(0 2px 3px #0003);
+  background: no-repeat center / contain url("logos/santa-hat.svg");
 }
 
 :root[data-christmas="on"] .brand::after {
@@ -99,9 +97,9 @@
 @media (max-width: 760px) {
   :root[data-christmas="on"] .brand::after,
   :root[data-christmas="on"] .sidebar-brand-mark::after {
-    width: 22px;
-    height: 17px;
-    top: -7px;
+    width: 26px;
+    height: 19px;
+    top: -9px;
   }
 
   :root[data-christmas="on"] .brand::after {

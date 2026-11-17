@@ -24,6 +24,8 @@ export async function extractSpassoCampaignsViaGemini(imageUrls) {
     "Read every flyer image. Extract each priced product offer you can read clearly.",
     "Use Brazilian decimal prices as numbers (4,18 => 4.18).",
     "Keep separate campaign windows when validity dates differ between encarte sections.",
+    "When the flyer only shows weekday names (Terça e Quarta, Quarta a Sexta, etc.) without numeric dates, set campaign weekdays as Portuguese day names and leave from/to as best-effort or omit them.",
+    "Do not emit section headers (e.g. Terça e Quarta do Hortifruti) as product offers; only priced products.",
     "Never invent offers; omit unreadable cells.",
     "Return ONLY JSON matching this schema:",
     SPASSO_SCHEMA,

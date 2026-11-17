@@ -3,6 +3,12 @@
 :root[data-christmas="on"] {
   --gold: #e8b84a;
   --topbar-bg: linear-gradient(180deg, #ffffff 0%, #f3faf4 55%, #eef8f0 100%);
+  --santa-hat-image: url("logos/santa-hat.svg");
+  --santa-hat-w: 58px;
+  --santa-hat-h: 50px;
+  --santa-hat-left: -11px;
+  --santa-hat-top: -21px;
+  --santa-hat-rotate: -14deg;
 }
 
 :root[data-christmas="on"][data-theme="dark"] {
@@ -32,6 +38,7 @@
 }
 
 :root[data-christmas="on"] .topbar {
+  overflow: visible;
   border-bottom-color: #c5dfd0;
   box-shadow:
     0 10px 28px #203c270d,
@@ -49,25 +56,32 @@
     );
 }
 
-:root[data-christmas="on"] .brand-mark {
+/* Draped hat sticker on the favicon tile (topbar + sidebar), not on the wordmark. */
+:root[data-christmas="on"] .topbar .brand,
+:root[data-christmas="on"] .sidebar-brand-mark {
   position: relative;
   overflow: visible;
 }
 
-/* Topbar favicon tile only — sidebar brand stays clean (hat scales poorly there). */
-:root[data-christmas="on"] .brand-mark::after {
+:root[data-christmas="on"] .topbar .brand::after,
+:root[data-christmas="on"] .sidebar-brand-mark::after {
   content: "";
   position: absolute;
-  top: -22px;
-  left: 42%;
-  width: 54px;
-  height: 42px;
+  left: var(--santa-hat-left);
+  top: var(--santa-hat-top);
+  width: var(--santa-hat-w);
+  height: var(--santa-hat-h);
   pointer-events: none;
-  transform: translateX(-50%) rotate(-14deg);
-  transform-origin: 55% 95%;
-  background: no-repeat center / contain url("logos/santa-hat.svg");
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35));
+  transform: rotate(var(--santa-hat-rotate));
+  transform-origin: 72% 88%;
+  background: no-repeat left bottom / contain var(--santa-hat-image);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.28));
   z-index: 2;
+}
+
+:root[data-christmas="on"] .brand-mark {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes christmas-snow-drift {
@@ -87,15 +101,17 @@
 }
 
 @media (max-width: 760px) {
-  :root[data-christmas="on"] .brand-mark::after {
-    width: 48px;
-    height: 38px;
-    top: -20px;
+  :root[data-christmas="on"] {
+    --santa-hat-w: 52px;
+    --santa-hat-h: 44px;
+    --santa-hat-top: -19px;
+    --santa-hat-left: -10px;
   }
 }
 
-:root[data-christmas="on"] .topbar.is-compact .brand-mark::after {
-  width: 38px;
-  height: 28px;
-  top: -14px;
+:root[data-christmas="on"] .topbar.is-compact {
+  --santa-hat-w: 44px;
+  --santa-hat-h: 38px;
+  --santa-hat-top: -15px;
+  --santa-hat-left: -8px;
 }

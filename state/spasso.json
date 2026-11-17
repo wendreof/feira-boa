@@ -6,23 +6,21 @@
     "logo": "logos/spasso.png",
     "source": "Folheto oficial · Loja São João",
     "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "from": "2026-08-12",
-    "to": "2026-11-07"
+    "from": "2026-11-16",
+    "to": "2026-11-21"
   },
-  "fetchedAt": "2026-11-17T12:31:36.855Z",
+  "fetchedAt": "2026-11-17T13:35:54.533Z",
   "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
-  "flyerHash": "cc1a947fbc34d0fd",
+  "flyerHash": "1528a99a8ccfb093",
   "flyerImages": [
     "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
     "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-ACOGUE-4-A-6-11-2026.png",
     "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-1.png",
     "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-2.png",
     "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-3.png",
-    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-4.png",
-    "https://spassosabores.com.br/wp-content/uploads/2026/08/ACOUGUE-SPASSO-1.png",
-    "https://spassosabores.com.br/wp-content/uploads/2021/01/bg-novidades.jpg"
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-4.png"
   ],
-  "extractionMethod": "cache",
+  "extractionMethod": "cache_stale_hash",
   "offers": [
     {
       "id": "spasso-pessego-nacional-cada-100g-2026-11-03",
@@ -43,10 +41,14 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-repolho-verde-kg-2026-11-03",
@@ -67,10 +69,14 @@
       "icon": "🥬",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-melancia-kg-2026-11-03",
@@ -91,10 +97,14 @@
       "icon": "🍉",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-laranja-pera-kg-2026-11-03",
@@ -115,10 +125,14 @@
       "icon": "🍊",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-chuchu-kg-2026-11-03",
@@ -139,10 +153,14 @@
       "icon": "🥒",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-alho-roxo-granel-cada-100g-2026-11-03",
@@ -163,10 +181,14 @@
       "icon": "🧄",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-beterraba-kg-2026-11-03",
@@ -187,10 +209,14 @@
       "icon": "🥬",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-banana-prata-kg-2026-11-03",
@@ -211,10 +237,14 @@
       "icon": "🍌",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-batata-monalisa-ou-pepino-conserva-kg-2026-11-03",
@@ -235,10 +265,14 @@
       "icon": "🥔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-manga-tommy-kg-2026-11-03",
@@ -259,10 +293,14 @@
       "icon": "🥭",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-abacaxi-perola-ou-havai-medio-unidade-2026-11-03",
@@ -283,10 +321,14 @@
       "icon": "🍍",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-uva-verde-vermelha-ou-vitoria-duvale-bandeja-500g-2026-11-03",
@@ -307,10 +349,14 @@
       "icon": "🍇",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-maca-gala-ou-pera-packhams-kg-2026-11-03",
@@ -331,10 +377,14 @@
       "icon": "🍎",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-ovos-grandes-brancos-sabor-ovo-com-20-unidades-2026-11-03",
@@ -355,10 +405,14 @@
       "icon": "🥚",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-ameixa-importada-ou-kiwi-verde-bandeja-500g-600g-2026-11-03",
@@ -379,10 +433,14 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-04",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3
+      ]
     },
     {
       "id": "spasso-coxa-com-sobrecoxa-de-frango-kg-2026-11-04",
@@ -403,10 +461,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-linguica-toscana-seara-pacote-600g-2026-11-04",
@@ -428,10 +491,15 @@
       "icon": "🌭",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-moela-de-frango-kg-2026-11-04",
@@ -452,10 +520,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-asa-de-frango-kg-2026-11-04",
@@ -476,10 +549,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-figado-bovino-kg-2026-11-04",
@@ -500,10 +578,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-file-de-tilapia-ecofish-pacote-400g-2026-11-04",
@@ -524,10 +607,15 @@
       "icon": "🐟",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-file-mignon-suino-kg-2026-11-04",
@@ -549,10 +637,15 @@
       "icon": "🐖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-paleta-bovina-kg-2026-11-04",
@@ -573,10 +666,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-patinho-bovino-kg-2026-11-04",
@@ -597,10 +695,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-miolo-da-alcatra-bovina-kg-2026-11-04",
@@ -622,10 +725,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-04",
-      "validTo": "2026-11-06",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-doces-sortidos-sabores-do-mercadao-cada-100g-2026-11-03",
@@ -646,10 +754,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-lemon-pepper-cada-100g-2026-11-03",
@@ -670,10 +785,17 @@
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-azeitonas-pretas-azapa-cada-100g-2026-11-03",
@@ -694,10 +816,17 @@
       "icon": "🫒",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-amendoim-sabores-pacote-200g-2026-11-03",
@@ -718,10 +847,17 @@
       "icon": "🥜",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-cerveja-puro-malte-spaten-lata-350ml-2026-11-03",
@@ -742,10 +878,17 @@
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-cerveja-heineken-lata-350ml-2026-11-03",
@@ -766,10 +909,17 @@
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-cerveja-michelob-ultra-lata-350ml-2026-11-03",
@@ -790,10 +940,17 @@
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-refrigerante-tradicional-ou-black-pepsi-pet-2-litros-2026-11-03",
@@ -814,10 +971,17 @@
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-salsicha-perdigao-kg-2026-11-03",
@@ -838,10 +1002,17 @@
       "icon": "🫔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-peito-de-frango-com-osso-e-pele-kg-2026-11-03",
@@ -862,10 +1033,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-linguica-toscana-granel-sadia-kg-2026-11-03",
@@ -887,10 +1065,17 @@
       "icon": "🌭",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-contrafile-porcionado-kg-2026-11-03",
@@ -912,10 +1097,17 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-requeijao-cremoso-tradicional-danone-200g-2026-11-03",
@@ -936,10 +1128,17 @@
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-batata-palito-fininhas-congeladas-mccain-1-05kg-2026-11-03",
@@ -960,10 +1159,17 @@
       "icon": "🍟",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-arroz-tipo-1-albaruska-5kg-2026-11-03",
@@ -984,10 +1190,17 @@
       "icon": "🍚",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-feijao-carioca-broto-legal-1kg-2026-11-03",
@@ -1008,10 +1221,17 @@
       "icon": "🍲",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-macarrao-com-ovos-exceto-ninho-dona-benta-500g-2026-11-03",
@@ -1032,10 +1252,17 @@
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-cafe-evolutto-500g-2026-11-03",
@@ -1056,10 +1283,17 @@
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-maionese-tradicional-hellmann-s-500g-2026-11-03",
@@ -1080,10 +1314,17 @@
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-achocolatado-em-po-chocolatto-3-coracoes-sache-560g-2026-11-03",
@@ -1104,10 +1345,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-leite-condensado-piracanjuba-tp-395g-2026-11-03",
@@ -1128,10 +1376,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-papel-higienico-folha-dupla-30-metros-fofinho-com-12-rolos-2026-11-03",
@@ -1152,10 +1407,17 @@
       "icon": "🧻",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-lava-roupas-em-po-todo-ciclo-omo-caixa-2kg-2026-11-03",
@@ -1176,10 +1438,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-fraldas-descartaveis-confort-sec-fort-bag-pampers-p72-m70-g60-xg54-xxg52-xxxg44-2026-11-03",
@@ -1200,10 +1469,17 @@
       "icon": "🧻",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-massa-gnocchi-canpez-500g-2026-11-03",
@@ -1224,10 +1500,17 @@
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-pao-de-mel-coberto-de-chocolate-barion-90g-2026-11-03",
@@ -1248,10 +1531,17 @@
       "icon": "🎂",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-farinha-de-trigo-coamo-1kg-2026-11-03",
@@ -1272,10 +1562,17 @@
       "icon": "🌾",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-seleta-de-legumes-em-conserva-fugini-sache-170g-2026-11-03",
@@ -1296,10 +1593,17 @@
       "icon": "🥗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-leite-zero-lactose-semidesnatado-shefa-pet-1-litro-2026-11-03",
@@ -1320,10 +1624,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-molho-de-tomate-tradicional-heinz-sache-240g-2026-11-03",
@@ -1344,10 +1655,17 @@
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-tapioca-xuca-400g-2026-11-03",
@@ -1368,10 +1686,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-ketchup-tradicional-heinz-397g-2026-11-03",
@@ -1392,10 +1717,17 @@
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-molho-sabores-billy-jack-200g-2026-11-03",
@@ -1416,10 +1748,17 @@
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-leite-desnatado-ou-semidesnatado-itambe-tp-1-litro-2026-11-03",
@@ -1440,10 +1779,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-rosca-de-creme-pequena-cada-100g-2026-11-03",
@@ -1464,10 +1810,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-focaccia-sabores-cada-100g-2026-11-03",
@@ -1488,10 +1841,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-leite-em-po-integral-ou-instantaneo-ninho-sache-350g-2026-11-03",
@@ -1512,10 +1872,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-chocolate-sabores-lacta-80g-90g-98g-2026-11-03",
@@ -1536,10 +1903,17 @@
       "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-chocolate-suflair-nestle-50g-2026-11-03",
@@ -1560,10 +1934,17 @@
       "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-bebida-lactea-chocolate-shefa-tp-1-litro-2026-11-03",
@@ -1584,10 +1965,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-doce-de-amendoim-pacoquita-1-17kg-2026-11-03",
@@ -1608,10 +1996,17 @@
       "icon": "🥜",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-creme-de-avela-metin-400g-2026-11-03",
@@ -1632,10 +2027,17 @@
       "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-carb-up-gel-sabores-exceto-black-probiotica-sache-30g-2026-11-03",
@@ -1656,10 +2058,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-creatina-max-titanium-pote-300g-2026-11-03",
@@ -1680,10 +2089,17 @@
       "icon": "💊",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-hamburguer-misto-tradicional-bovgrill-672g-2026-11-03",
@@ -1704,10 +2120,17 @@
       "icon": "🍔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-almondega-mista-bov-grill-500g-2026-11-03",
@@ -1728,10 +2151,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-presunto-sadia-cada-100g-2026-11-03",
@@ -1752,10 +2182,17 @@
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-mortadela-mista-perdigao-400g-2026-11-03",
@@ -1776,10 +2213,17 @@
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-creme-de-queijo-sabores-quata-180g-2026-11-03",
@@ -1800,10 +2244,17 @@
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-hamburguer-misto-perdigao-56g-2026-11-03",
@@ -1824,10 +2275,17 @@
       "icon": "🍔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-salame-fatiado-perdigao-100g-2026-11-03",
@@ -1848,10 +2306,17 @@
       "icon": "🍖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-sobremesa-creamy-chocolate-com-chantilly-batavo-90g-2026-11-03",
@@ -1872,10 +2337,17 @@
       "icon": "🍫",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-creme-nuv-sabores-batavo-100g-2026-11-03",
@@ -1896,10 +2368,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-iogurte-sabores-exceto-skyr-atilatte-170g-2026-11-03",
@@ -1920,10 +2399,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-pao-de-alho-bolinha-tradicional-zinho-300g-2026-11-03",
@@ -1945,10 +2431,17 @@
       "icon": "🧄",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-capeletti-ou-ravioli-sabores-mezzani-400g-2026-11-03",
@@ -1969,10 +2462,17 @@
       "icon": "🍝",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-suco-de-uva-refrigerado-natural-one-pet-1-3-litro-2026-11-03",
@@ -1993,10 +2493,17 @@
       "icon": "🧃",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-iogurte-triplo-zero-sabores-nestle-1-15kg-2026-11-03",
@@ -2017,10 +2524,17 @@
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-margarina-claybom-500g-2026-11-03",
@@ -2041,10 +2555,17 @@
       "icon": "🧈",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-farofa-sabores-casa-de-mae-300g-2026-11-03",
@@ -2065,10 +2586,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-azeitonas-verdes-com-caroco-casa-de-mae-100g-2026-11-03",
@@ -2089,10 +2617,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-coco-ralado-umido-e-adocado-casa-de-mae-100g-2026-11-03",
@@ -2113,10 +2648,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-manteiga-extra-com-sal-casa-de-mae-500g-2026-11-03",
@@ -2137,10 +2679,17 @@
       "icon": "🧂",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-leite-de-coco-casa-de-mae-200ml-2026-11-03",
@@ -2161,10 +2710,17 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-queijo-minas-frescal-casa-de-mae-450g-2026-11-03",
@@ -2185,10 +2741,17 @@
       "icon": "🧀",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-copo-460ml-casa-de-mae-jogo-com-2-unidades-2026-11-03",
@@ -2209,10 +2772,17 @@
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-shampoo-fragrancias-casa-de-mae-300ml-2026-11-03",
@@ -2233,10 +2803,17 @@
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-papel-higienico-folha-dupla-30-metros-casa-de-mae-com-16-rolos-2026-11-03",
@@ -2257,10 +2834,17 @@
       "icon": "🧻",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-vinho-chileno-hote-750ml-2026-11-03",
@@ -2281,10 +2865,17 @@
       "icon": "🍷",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-vinho-portugues-quatro-ventos-750ml-2026-11-03",
@@ -2305,10 +2896,17 @@
       "icon": "🍷",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-vodka-imported-absolut-1-litro-2026-11-03",
@@ -2329,10 +2927,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-gin-tanqueray-750ml-2026-11-03",
@@ -2353,10 +2958,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-whisky-12-anos-chivas-regal-1-litro-2026-11-03",
@@ -2377,10 +2989,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-vassoura-phenix-santa-maria-unidade-2026-11-03",
@@ -2401,10 +3020,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-chinelo-classica-cores-ipanema-unidade-2026-11-03",
@@ -2425,10 +3051,17 @@
       "icon": "👟",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-carvao-jacare-2-5kg-2026-11-03",
@@ -2446,13 +3079,20 @@
       "storeCategory": "Geral",
       "price": 19.98,
       "previousPrice": 22.98,
-      "icon": "🏷️",
+      "icon": "♨️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-racao-friskies-ou-dog-chow-sabores-purina-sache-85g-2026-11-03",
@@ -2473,10 +3113,17 @@
       "icon": "🐾",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-racao-para-caes-bolt-7kg-2026-11-03",
@@ -2497,10 +3144,17 @@
       "icon": "🐾",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-sabonete-fragrancias-lux-85g-2026-11-03",
@@ -2521,10 +3175,17 @@
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-creme-dental-tripla-acao-sabores-colgate-90g-2026-11-03",
@@ -2545,10 +3206,17 @@
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-toalhas-umedecidas-small-baby-com-120-unidades-2026-11-03",
@@ -2566,13 +3234,20 @@
       "storeCategory": "Limpeza",
       "price": 9.99,
       "previousPrice": null,
-      "icon": "🏷️",
+      "icon": "🧻",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-desodorante-fragrancias-aero-exceto-clinical-dove-150ml-2026-11-03",
@@ -2593,10 +3268,17 @@
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-kit-shampoo-condicionador-fragrancias-dove-350ml-175ml-ou-300ml-150ml-2026-11-03",
@@ -2617,10 +3299,17 @@
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-limpador-multiuso-fragrancias-uau-500ml-2026-11-03",
@@ -2641,10 +3330,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-vinagre-de-alcool-castelo-2-litros-2026-11-03",
@@ -2665,10 +3361,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-amaciante-fragrancias-triex-5-litros-2026-11-03",
@@ -2689,10 +3392,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-inseticida-fragrancias-aero-leve-pague-raid-420ml-2026-11-03",
@@ -2713,10 +3423,17 @@
       "icon": "🪰",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-lava-roupas-liquido-natureza-limpa-coquel-3-litros-2026-11-03",
@@ -2737,10 +3454,17 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-roseira-mini-pote-13-2026-11-03",
@@ -2761,10 +3485,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-samambaia-americana-c21-2026-11-03",
@@ -2785,10 +3516,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-jiboia-verde-pendente-c21-2026-11-03",
@@ -2809,10 +3547,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-phalaenopsis-mix-2-hastes-ou-multiflora-pote-12-2026-11-03",
@@ -2833,10 +3578,17 @@
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-03",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": "spasso-coxa-com-sobrecoxa-de-frango-kg-2026-08-12",
@@ -2857,10 +3609,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-peito-de-frango-com-osso-e-pele-kg-2026-08-12",
@@ -2881,10 +3638,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-linguica-toscana-frimesa-pacote-600g-2026-08-12",
@@ -2906,10 +3668,15 @@
       "icon": "🌭",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-bisteca-suina-do-lombo-congelada-kg-2026-08-12",
@@ -2931,10 +3698,15 @@
       "icon": "🐖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-moela-de-frango-kg-2026-08-12",
@@ -2955,10 +3727,15 @@
       "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-figado-bovino-kg-2026-08-12",
@@ -2979,10 +3756,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-file-de-tilapia-ecofish-pacote-400g-2026-08-12",
@@ -3003,10 +3785,15 @@
       "icon": "🐟",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-paleta-bovina-kg-2026-08-12",
@@ -3027,10 +3814,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-ponta-de-alcatra-bovina-kg-2026-08-12",
@@ -3052,10 +3844,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     },
     {
       "id": "spasso-contrafile-porcionado-viva-os-sabores-kg-2026-08-12",
@@ -3077,10 +3874,15 @@
       "icon": "🥩",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-08-14",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "source": "Folheto oficial · Loja São João",
-      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
+      "validWeekdays": [
+        3,
+        4,
+        5
+      ]
     }
   ],
   "status": "ok"

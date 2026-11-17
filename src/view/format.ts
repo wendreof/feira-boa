@@ -1,4 +1,6 @@
 import { normalizeSearchText } from "../../scripts/domain/offer-search.mjs";
+import { isOfferActive } from "../../scripts/domain/offer-validity.mjs";
+import { formatWeekdaySpotLabel } from "../../scripts/domain/spasso-weekday-validity.mjs";
 
 const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" });
@@ -40,9 +42,19 @@ export function todayInSaoPaulo(): string {
   return `${part.year}-${part.month}-${part.day}`;
 }
 
-/** Oferta válida na data informada (limites inclusivos). */
-export function isActive(offer: { validFrom: string; validTo: string }, today: string = todayInSaoPaulo()): boolean {
-  return today >= offer.validFrom && today <= offer.validTo;
+/** Oferta válida na data informada (limites inclusivos; opcionalmente dias da semana do encarte). */
+export function isActive(
+  offer: { validFrom: string; validTo: string; validWeekdays?: number[] },
+  today: string = todayInSaoPaulo(),
+): boolean {
+  return isOfferActive(offer, today);
+}
+
+/** Rótulo de validade: faixa de datas ou dias do encarte (Spasso). */
+export function offerValidityLabel(offer: { validFrom: string; validTo: string; validWeekdays?: number[] }): string {
+  const spot = formatWeekdaySpotLabel(offer.validWeekdays ?? []);
+  if (spot) return spot;
+  return `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
 }
 
 /** Soma dias a uma data AAAA-MM-DD (meio-dia UTC evita borda de fuso). */

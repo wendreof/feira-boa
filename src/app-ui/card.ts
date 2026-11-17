@@ -1,6 +1,6 @@
 import { appState, type CardRefs } from "./state";
 import { element, shareIcon, favoriteButton, reactionButton } from "./elements";
-import { money, dateLabel, expiryHighlightLabel } from "../view/format";
+import { money, expiryHighlightLabel, offerValidityLabel } from "../view/format";
 import { offerCategory, offerOrder } from "./offer-model";
 import { createOfferStoreLogo, updateOfferStoreLogo } from "./store-logo";
 import { type Offer } from "../types";
@@ -104,7 +104,7 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
     refs.discount.removeAttribute("title");
     refs.discount.removeAttribute("aria-label");
   }
-  refs.valid.textContent = `${dateLabel(offer.validFrom)}–${dateLabel(offer.validTo)}`;
+  refs.valid.textContent = offerValidityLabel(offer);
   const archived = refs.root.classList.contains("is-archived");
   const expiryLabel = archived ? null : expiryHighlightLabel(offer);
   refs.expiryFlag.textContent = expiryLabel ?? "";

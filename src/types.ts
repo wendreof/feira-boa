@@ -28,6 +28,8 @@ export interface Offer {
   notice?: string;
   validFrom: string;
   validTo: string;
+  /** Sunday=0 … Saturday=6; Spasso encarte day spots when the flyer has no numeric dates. */
+  validWeekdays?: number[];
   source: string;
   sourceUrl: string;
 }

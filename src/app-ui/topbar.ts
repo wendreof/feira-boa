@@ -111,6 +111,7 @@ function setTopbarRemoteAvatar(url: string): void {
     clearTopbarAvatar();
   };
   const loadTimeout = window.setTimeout(() => settle(false), AVATAR_LOAD_TIMEOUT_MS);
+  image.referrerPolicy = "no-referrer";
   image.onload = () => settle(true);
   image.onerror = () => settle(false);
   image.src = url;

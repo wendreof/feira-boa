@@ -3,6 +3,11 @@
   "fortemix": {
     "campaignsFile": "fortemix-campaigns.json",
     "minOffers": 15,
-    "auditImagePaths": []
+    "auditImagePaths": [
+      "assets/fortemix/2026-11-17/hortifruti.jpg",
+      "assets/fortemix/2026-11-17/economia.jpg",
+      "assets/fortemix/2026-11-17/felita-leve-pague.jpg",
+      "assets/fortemix/2026-11-17/felita-bulk.jpg"
+    ]
   }
 }

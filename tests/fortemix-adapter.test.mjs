@@ -3,25 +3,33 @@ import test from "node:test";
 import { extractForteMix } from "../scripts/adapters/fortemix.mjs";
 import { validateSnapshot } from "../scripts/domain/validation.mjs";
 
-test("Forte Mix Dezcontão flyer transcription produces a valid snapshot", async () => {
+test("Forte Mix WhatsApp flyer transcription produces a valid snapshot", async () => {
   const snapshot = await extractForteMix();
   assert.equal(snapshot.storeId, "fortemix");
   assert.equal(snapshot.store.name, "Forte Mix");
-  assert.equal(snapshot.campaignId, "dezcontao-2026-11-16");
-  assert.equal(snapshot.store.from, "2026-11-16");
-  assert.equal(snapshot.store.to, "2026-11-16");
-  assert.equal(snapshot.offers.length, 27, `expected 27 offers, got ${snapshot.offers.length}`);
+  assert.equal(snapshot.campaignId, "fortemix-2026-11-17");
+  assert.equal(snapshot.store.from, "2026-11-17");
+  assert.equal(snapshot.store.to, "2026-11-30");
+  assert.equal(snapshot.offers.length, 61, `expected 61 offers, got ${snapshot.offers.length}`);
   assert.ok(validateSnapshot(snapshot));
-  const acucar = snapshot.offers.find((o) => o.name.includes("Açúcar") && o.name.includes("Euroçúcar"));
-  assert.ok(acucar);
-  assert.equal(acucar.price, 13.98);
-  assert.equal(acucar.previousPrice, 17.9);
-  assert.match(acucar.note, /app/i);
-  const detergente = snapshot.offers.find((o) => o.name.includes("Detergente") && o.name.includes("Limpol"));
-  assert.ok(detergente);
-  assert.match(detergente.note, /Leve 4 por R\$ 10/i);
-  const acem = snapshot.offers.find((o) => o.name.includes("Acém"));
-  assert.ok(acem);
-  assert.equal(acem.price, 39.9);
-  assert.equal(acem.previousPrice, 42.9);
+  const laranja = snapshot.offers.find((o) => o.name.includes("Laranja Lima"));
+  assert.ok(laranja);
+  assert.equal(laranja.price, 1.28);
+  assert.equal(laranja.previousPrice, 3.99);
+  assert.match(laranja.note, /app/i);
+  const cafeFelita = snapshot.offers.find(
+    (o) => o.name.includes("Café") && o.name.includes("Felitá"),
+  );
+  assert.ok(cafeFelita);
+  assert.equal(cafeFelita.price, 16.9);
+  assert.match(cafeFelita.note, /Leve 2.*2ª un R\$ 16,90/i);
+  const gelatinaBulk = snapshot.offers.find(
+    (o) => o.name.includes("Gelatina") && o.name.includes("Felitá"),
+  );
+  assert.ok(gelatinaBulk);
+  assert.equal(gelatinaBulk.price, 1.19);
+  assert.match(gelatinaBulk.note, /A partir de 3 un/i);
+  const costela = snapshot.offers.find((o) => o.name.includes("Costela Minga"));
+  assert.ok(costela);
+  assert.equal(costela.price, 26.98);
 });

@@ -1,235 +1,576 @@
 {
-  "campaignId": "dezcontao-2026-11-16",
+  "campaignId": "fortemix-2026-11-17",
   "sourceUrl": "https://smfortemix.com.br/",
   "campaigns": [
     {
-      "from": "2026-11-16",
-      "to": "2026-11-16",
-      "offerNote": "Oferta do Dezcontão. Válido 16/11/2026 ou enquanto durarem os estoques.",
+      "from": "2026-11-17",
+      "to": "2026-11-17",
+      "offerNote": "Terça do Hortifruti Forte Mix. Válido 17/11/2026 ou enquanto durarem os estoques.",
       "offers": [
         {
-          "name": "Refrigerante Coca-Cola Zero",
-          "brand": "Coca-Cola",
-          "detail": "350ml pack 6 un",
-          "cat": "Bebidas",
-          "price": 3.79,
-          "note": "Nesta embalagem a unidade sai por R$ 3,79."
+          "name": "Abóbora Italiana",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": 5.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Açúcar Cristal",
-          "brand": "Euroçúcar",
-          "detail": "5kg",
-          "cat": "Mercearia",
-          "price": 13.98,
-          "oldPrice": 17.9,
-          "note": "Ofertas somente no app. Limite 6 un."
+          "name": "Batata-Doce Rosada",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 2.98,
+          "oldPrice": 4.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Leite Condensado Moça",
-          "brand": "Nestlé",
-          "detail": "395g lata",
-          "cat": "Laticínios",
-          "price": 7.98,
-          "oldPrice": 8.79,
-          "note": "Ofertas somente no app. Limite 5 un."
+          "name": "Berinjela",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": 5.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Farinha de Trigo",
-          "brand": "Renata",
-          "detail": "1kg",
-          "cat": "Mercearia",
-          "price": 5.48,
-          "oldPrice": 6.99,
-          "note": "Ofertas somente no app. Limite 10 un."
+          "name": "Cenoura",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 2.98,
+          "oldPrice": 4.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Requeijão Tradicional",
-          "brand": "Deale",
-          "detail": "180g",
-          "cat": "Laticínios",
-          "price": 6.98,
+          "name": "Pepino Caipira",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
           "oldPrice": 8.99,
           "note": "Ofertas somente no app."
         },
         {
-          "name": "Lasanha Bolonhesa",
-          "brand": "Sadia",
-          "detail": "600g",
-          "cat": "Congelados",
-          "price": 12.98,
-          "oldPrice": 18.98,
-          "note": "Ofertas somente no app."
-        },
-        {
-          "name": "Acém Bovino Peça ou Pedaço",
+          "name": "Pimentão Verde",
           "brand": "",
           "detail": "kg",
-          "cat": "Açougue",
-          "price": 39.9,
-          "oldPrice": 42.9,
+          "cat": "Hortifruti",
+          "price": 8.98,
+          "oldPrice": 13.98,
           "note": "Ofertas somente no app."
         },
         {
-          "name": "Ração Cães Carne RP AD",
-          "brand": "Pedigree",
-          "detail": "900g",
-          "cat": "Pet",
+          "name": "Vagem",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 11.98,
+          "oldPrice": 19.98,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Abóbora Cabotiá",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": 5.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Jiló",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 6.98,
+          "oldPrice": 9.98,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Milho Verde",
+          "brand": "",
+          "detail": "bandeja",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": 8.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Ervilha Congelada Easy Chef",
+          "brand": "",
+          "detail": "1,1kg",
+          "cat": "Congelados",
           "price": 14.98,
-          "oldPrice": 21.98,
+          "oldPrice": 16.9,
           "note": "Ofertas somente no app."
         },
         {
-          "name": "Lava Roupas Todo Ciclo",
-          "brand": "Omo",
-          "detail": "1,4kg",
-          "cat": "Limpeza",
-          "price": 15.9,
-          "oldPrice": 19.95,
+          "name": "Laranja Lima",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 1.28,
+          "oldPrice": 3.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Mamão Formosa",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.48,
+          "oldPrice": 8.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Manga Tommy",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 4.98,
+          "oldPrice": 7.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Melancia",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 2.88,
+          "oldPrice": 3.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Melão Amarelo",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 5.68,
+          "oldPrice": 9.95,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Abacaxi Pérola",
+          "brand": "",
+          "detail": "un",
+          "cat": "Hortifruti",
+          "price": 5.98,
+          "oldPrice": 9.95,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Maçã Gala",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 6.98,
+          "oldPrice": 9.98,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Uva Roxa Sem Semente",
+          "brand": "",
+          "detail": "bandeja 400g",
+          "cat": "Hortifruti",
+          "price": 5.98,
+          "oldPrice": 9.98,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Coco Seco",
+          "brand": "",
+          "detail": "kg",
+          "cat": "Hortifruti",
+          "price": 6.98,
+          "oldPrice": 8.99,
+          "note": "Ofertas somente no app."
+        }
+      ]
+    },
+    {
+      "from": "2026-11-17",
+      "to": "2026-11-17",
+      "offerNote": "Terça da Economia Forte Mix. Válido 17/11/2026 ou enquanto durarem os estoques.",
+      "offers": [
+        {
+          "name": "Arroz Tipo 1",
+          "brand": "Exxtra",
+          "detail": "5kg",
+          "cat": "Arroz",
+          "price": 17.98,
+          "oldPrice": 19.9,
+          "note": "Ofertas somente no app. Limite 6 un."
+        },
+        {
+          "name": "Achocolatado",
+          "brand": "Nescau",
+          "detail": "350g cilindro",
+          "cat": "Achocolatado",
+          "price": 8.48,
+          "oldPrice": 9.98,
           "note": "Ofertas somente no app. Limite 2 un."
         },
         {
-          "name": "Bebida Láctea Bandeija",
-          "brand": "Carolina",
-          "detail": "360g",
+          "name": "Bombom Especialidades",
+          "brand": "Nestlé",
+          "detail": "220g",
+          "cat": "Doces",
+          "price": 11.48,
+          "oldPrice": 14.98,
+          "note": "Ofertas somente no app. Limite 5 un."
+        },
+        {
+          "name": "Goma",
+          "brand": "Haribo",
+          "detail": "168g",
+          "cat": "Doces",
+          "price": 4.98,
+          "oldPrice": 7.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Mistura Condensada",
+          "brand": "Mococa",
+          "detail": "395g TP",
           "cat": "Laticínios",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
+          "price": 3.98,
+          "oldPrice": 4.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Iogurte Zero",
-          "brand": "Carolina La Vita",
-          "detail": "150g",
-          "cat": "Laticínios",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
-        },
-        {
-          "name": "Biscoito Wafer Tubin",
-          "brand": "Montevergine",
-          "detail": "48g",
+          "name": "Azeitona Com Caroço",
+          "brand": "Nucete",
+          "detail": "180g",
           "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
+          "price": 4.98,
+          "oldPrice": 5.99,
+          "note": "Ofertas somente no app."
         },
         {
-          "name": "Bolo",
-          "brand": "Santa Edwiges",
-          "detail": "40g",
-          "cat": "Padaria",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 7 por R$ 10,00."
-        },
-        {
-          "name": "Drops",
-          "brand": "Icekiss",
-          "detail": "29g",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 8 por R$ 10,00."
-        },
-        {
-          "name": "Refrigerante",
-          "brand": "Coca-Cola",
-          "detail": "200ml Original ou Zero",
-          "cat": "Bebidas",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
-        },
-        {
-          "name": "Creme de Leite",
-          "brand": "Terra Viva",
-          "detail": "200g",
-          "cat": "Laticínios",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
-        },
-        {
-          "name": "Extrato de Tomate",
-          "brand": "Fugini",
-          "detail": "300g sachê",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
-        },
-        {
-          "name": "Leite de Coco",
-          "brand": "Bomcoco",
-          "detail": "200ml",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
-        },
-        {
-          "name": "Maionese",
-          "brand": "Saude",
-          "detail": "500g",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 3 por R$ 10,00."
-        },
-        {
-          "name": "Macarrão Sêmola",
-          "brand": "Da Roz",
-          "detail": "500g",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
-        },
-        {
-          "name": "Vinagre de Álcool",
-          "brand": "Neval",
-          "detail": "750ml",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 6 por R$ 10,00."
-        },
-        {
-          "name": "Caldo",
-          "brand": "Knorr",
-          "detail": "57g Bacon ou Galinha",
-          "cat": "Mercearia",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
-        },
-        {
-          "name": "Steak de Frango",
+          "name": "Ervilha Congelada",
           "brand": "Lar",
-          "detail": "100g",
+          "detail": "300g",
+          "cat": "Congelados",
+          "price": 6.98,
+          "oldPrice": 9.95,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Costela Minga Bovina",
+          "brand": "",
+          "detail": "kg",
           "cat": "Açougue",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
+          "price": 26.98
         },
         {
-          "name": "Hambúrguer",
-          "brand": "Brasil Burguer",
-          "detail": "56g",
+          "name": "Ponta de Alcatra Bovina Bifes",
+          "brand": "",
+          "detail": "kg",
           "cat": "Açougue",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 10 por R$ 10,00."
+          "price": 48.9
         },
         {
-          "name": "Prendedor de Roupa",
-          "brand": "Paraná",
-          "detail": "12 un madeira",
-          "cat": "Casa e utilidades",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 5 por R$ 10,00."
+          "name": "Cerveja",
+          "brand": "Itaipava",
+          "detail": "350ml lata",
+          "cat": "Bebidas",
+          "price": 2.38,
+          "oldPrice": 2.89,
+          "note": "Ofertas somente no app. A partir de 12 un, R$ 2,38/un. Limite 48 un."
         },
         {
-          "name": "Detergente",
-          "brand": "Limpol",
-          "detail": "500ml",
+          "name": "Lava Roupas em Pó Sachê",
+          "brand": "Surf",
+          "detail": "800g",
           "cat": "Limpeza",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 4 por R$ 10,00."
+          "price": 7.98,
+          "oldPrice": 8.99,
+          "note": "Ofertas somente no app."
         },
         {
           "name": "Sabonete",
-          "brand": "Cliss",
-          "detail": "85g",
+          "brand": "Lux",
+          "detail": "85g pack 6 un",
           "cat": "Higiene",
-          "price": 10,
-          "note": "Oferta do Dezcontão. Leve 10 por R$ 10,00."
+          "price": 1.98,
+          "note": "Ofertas somente no app. Pack 6 un por R$ 11,88 (R$ 1,98/un). Limite 4 packs. Leve Mais Pague Menos."
+        },
+        {
+          "name": "Toalha Umedecida",
+          "brand": "Chameguinho",
+          "detail": "100 un PG80",
+          "cat": "Higiene",
+          "price": 5.98,
+          "oldPrice": 7.99,
+          "note": "Ofertas somente no app."
+        },
+        {
+          "name": "Ração Gato",
+          "brand": "Bummer Cats",
+          "detail": "900g",
+          "cat": "Pet",
+          "price": 12.98,
+          "oldPrice": 14.98,
+          "note": "Ofertas somente no app."
+        }
+      ]
+    },
+    {
+      "from": "2026-11-17",
+      "to": "2026-11-30",
+      "offerNote": "Festival Felitá LEVE+ PAGUE-. Marca exclusiva Forte Mix. Ofertas somente no app.",
+      "offers": [
+        {
+          "name": "Achocolatado Chef",
+          "brand": "Felitá",
+          "detail": "400g",
+          "cat": "Achocolatado",
+          "price": 5.99,
+          "oldPrice": 8.99,
+          "note": "Leve 2: 1ª un R$ 8,99; 2ª un R$ 5,99. Ofertas somente no app."
+        },
+        {
+          "name": "Café Tradicional",
+          "brand": "Felitá",
+          "detail": "500g",
+          "cat": "Café",
+          "price": 16.9,
+          "oldPrice": 22.9,
+          "note": "Leve 2: 1ª un R$ 22,90; 2ª un R$ 16,90. Ofertas somente no app."
+        },
+        {
+          "name": "Feijão Carioca",
+          "brand": "Felitá",
+          "detail": "1kg",
+          "cat": "Feijão",
+          "price": 6.99,
+          "oldPrice": 7.99,
+          "note": "Leve 2: 1ª un R$ 7,99; 2ª un R$ 6,99. Ofertas somente no app."
+        },
+        {
+          "name": "Goiabada",
+          "brand": "Felitá",
+          "detail": "250g",
+          "cat": "Doces",
+          "price": 2.99,
+          "oldPrice": 6.99,
+          "note": "Leve 2: 1ª un R$ 6,99; 2ª un R$ 2,99. Ofertas somente no app."
+        },
+        {
+          "name": "Batata Chips",
+          "brand": "Felitá",
+          "detail": "45g",
+          "cat": "Snacks",
+          "price": 2.99,
+          "oldPrice": 4.99,
+          "note": "Leve 2: 1ª un R$ 4,99; 2ª un R$ 2,99. Ofertas somente no app."
+        },
+        {
+          "name": "Rosquinha",
+          "brand": "Felitá",
+          "detail": "300g",
+          "cat": "Biscoitos",
+          "price": 3.49,
+          "oldPrice": 5.99,
+          "note": "Leve 2: 1ª un R$ 5,99; 2ª un R$ 3,49. Ofertas somente no app."
+        },
+        {
+          "name": "Suco de Uva Integral",
+          "brand": "Felitá",
+          "detail": "1,35L",
+          "cat": "Sucos",
+          "price": 8.98,
+          "oldPrice": 14.98,
+          "note": "Leve 2: 1ª un R$ 14,98; 2ª un R$ 8,98. Ofertas somente no app."
+        },
+        {
+          "name": "Goma Tapioca",
+          "brand": "Felitá",
+          "detail": "500g",
+          "cat": "Mercearia",
+          "price": 3.99,
+          "oldPrice": 6.99,
+          "note": "Leve 2: 1ª un R$ 6,99; 2ª un R$ 3,99. Ofertas somente no app."
+        },
+        {
+          "name": "Biscoito Champagne",
+          "brand": "Felitá",
+          "detail": "150g",
+          "cat": "Biscoitos",
+          "price": 4.99,
+          "oldPrice": 9.95,
+          "note": "Leve 2: 1ª un R$ 9,95; 2ª un R$ 4,99. Ofertas somente no app."
+        },
+        {
+          "name": "Torresmo Pururuca",
+          "brand": "Felitá",
+          "detail": "120g",
+          "cat": "Snacks",
+          "price": 14.98,
+          "oldPrice": 19.98,
+          "note": "Leve 2: 1ª un R$ 19,98; 2ª un R$ 14,98. Ofertas somente no app."
+        },
+        {
+          "name": "Papel Higiênico Folha Dupla",
+          "brand": "Felitá",
+          "detail": "20m · 12 un",
+          "cat": "Higiene",
+          "price": 8.99,
+          "oldPrice": 13.98,
+          "note": "Leve 2: 1ª un R$ 13,98; 2ª un R$ 8,99. Ofertas somente no app."
+        },
+        {
+          "name": "Toalha Umedecida Baby",
+          "brand": "Felitá",
+          "detail": "48 un",
+          "cat": "Bebês",
+          "price": 7.99,
+          "oldPrice": 9.98,
+          "note": "Leve 2: 1ª un R$ 9,98; 2ª un R$ 7,99. Ofertas somente no app."
+        },
+        {
+          "name": "Saco de Lixo Rolo",
+          "brand": "Felitá",
+          "detail": "100L · 15 un",
+          "cat": "Limpeza",
+          "price": 4.99,
+          "oldPrice": 9.95,
+          "note": "Leve 2: 1ª un R$ 9,95; 2ª un R$ 4,99. Ofertas somente no app."
+        },
+        {
+          "name": "Saco de Lixo Rolo",
+          "brand": "Felitá",
+          "detail": "50L · 30 un",
+          "cat": "Limpeza",
+          "price": 4.99,
+          "oldPrice": 9.95,
+          "note": "Leve 2: 1ª un R$ 9,95; 2ª un R$ 4,99. Ofertas somente no app."
+        }
+      ]
+    },
+    {
+      "from": "2026-11-17",
+      "to": "2026-11-30",
+      "offerNote": "Festival Felitá. Compre em quantidade no app. Ofertas somente no app.",
+      "offers": [
+        {
+          "name": "Batata Palha",
+          "brand": "Felitá",
+          "detail": "100g trad/temperada/extra fina",
+          "cat": "Snacks",
+          "price": 4.99,
+          "oldPrice": 6.99,
+          "note": "A partir de 2 un, R$ 4,99/un (avulso R$ 6,99). Ofertas somente no app."
+        },
+        {
+          "name": "Gelatina",
+          "brand": "Felitá",
+          "detail": "20g",
+          "cat": "Doces",
+          "price": 1.19,
+          "oldPrice": 1.89,
+          "note": "A partir de 3 un, R$ 1,19/un (avulso R$ 1,89). Ofertas somente no app."
+        },
+        {
+          "name": "Panettone",
+          "brand": "Felitá",
+          "detail": "400g frutas ou gotas",
+          "cat": "Panettones",
+          "price": 9.98,
+          "oldPrice": 14.9,
+          "note": "A partir de 2 un, R$ 9,98/un (avulso R$ 14,90). Ofertas somente no app."
+        },
+        {
+          "name": "Fermento Biológico Seco",
+          "brand": "Felitá",
+          "detail": "10g",
+          "cat": "Mercearia",
+          "price": 0.99,
+          "oldPrice": 1.79,
+          "note": "A partir de 3 un, R$ 0,99/un (avulso R$ 1,79). Ofertas somente no app."
+        },
+        {
+          "name": "Mini Salgado Congelado",
+          "brand": "Felitá",
+          "detail": "300g",
+          "cat": "Congelados",
+          "price": 6.99,
+          "oldPrice": 9.98,
+          "note": "A partir de 2 un, R$ 6,99/un (avulso R$ 9,98). Ofertas somente no app."
+        },
+        {
+          "name": "Pão de Queijo Tradicional",
+          "brand": "Felitá",
+          "detail": "800g",
+          "cat": "Congelados",
+          "price": 9.49,
+          "oldPrice": 14.98,
+          "note": "A partir de 2 un, R$ 9,49/un (avulso R$ 14,98). Ofertas somente no app."
+        },
+        {
+          "name": "Hastes Flexíveis",
+          "brand": "Felitá",
+          "detail": "150 un",
+          "cat": "Higiene",
+          "price": 2.99,
+          "oldPrice": 5.99,
+          "note": "A partir de 2 un, R$ 2,99/un (avulso R$ 5,99). Ofertas somente no app."
+        },
+        {
+          "name": "Hastes Flexíveis",
+          "brand": "Felitá",
+          "detail": "75 un",
+          "cat": "Higiene",
+          "price": 1.99,
+          "oldPrice": 3.79,
+          "note": "A partir de 2 un, R$ 1,99/un (avulso R$ 3,79). Ofertas somente no app."
+        },
+        {
+          "name": "Absorvente Noturno",
+          "brand": "Felitá",
+          "detail": "8 un",
+          "cat": "Higiene",
+          "price": 4.49,
+          "oldPrice": 6.99,
+          "note": "A partir de 2 un, R$ 4,49/un (avulso R$ 6,99). Ofertas somente no app."
+        },
+        {
+          "name": "Algodão Baby Quadrado",
+          "brand": "Felitá",
+          "detail": "50 un",
+          "cat": "Higiene",
+          "price": 9.98,
+          "oldPrice": 14.98,
+          "note": "A partir de 2 un, R$ 9,98/un (avulso R$ 14,98). Ofertas somente no app."
+        },
+        {
+          "name": "Algodão Bola",
+          "brand": "Felitá",
+          "detail": "50g",
+          "cat": "Higiene",
+          "price": 2.99,
+          "oldPrice": 6.99,
+          "note": "A partir de 2 un, R$ 2,99/un (avulso R$ 6,99). Ofertas somente no app."
+        },
+        {
+          "name": "Algodão Bola",
+          "brand": "Felitá",
+          "detail": "95g",
+          "cat": "Higiene",
+          "price": 5.99,
+          "oldPrice": 9.98,
+          "note": "A partir de 2 un, R$ 5,99/un (avulso R$ 9,98). Ofertas somente no app."
+        },
+        {
+          "name": "Papel Toalha",
+          "brand": "Felitá",
+          "detail": "100 folhas folha dupla · 2 rolos",
+          "cat": "Limpeza",
+          "price": 3.99,
+          "oldPrice": 4.99,
+          "note": "A partir de 2 un, R$ 3,99/un (avulso R$ 4,99). Ofertas somente no app."
         }
       ]
     }

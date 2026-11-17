@@ -1,5 +1,6 @@
 /**
- * Christmas accents: data flag, integrated favicon, reduced layout shift on mobile.
+ * Christmas CSS theme still gates on date / ?christmas=1.
+ * Brand marks (favicon, topbar, apple-touch) are year-round — no query required.
  * Run: node scripts/test-christmas-theme-playwright.mjs
  */
 import { chromium } from "playwright";
@@ -29,11 +30,7 @@ try {
     failures.push(`data-christmas should be off outside season, was ${flag}`);
   }
 
-  await page.goto(`${BASE}/index.html?christmas=1`, { waitUntil: "domcontentloaded", timeout: 30_000 });
-  const previewFlag = await page.locator("html").getAttribute("data-christmas");
-  if (previewFlag !== "on") failures.push(`data-christmas should be on with ?christmas=1, was ${previewFlag}`);
-
-  const favicons = await page.evaluate(() => {
+  const defaultMarks = await page.evaluate(() => {
     const brand = document.querySelector(".topbar .brand img.brand-mark");
     const sidebar = document.querySelector(".sidebar-brand-mark img");
     const icon = document.querySelector('link[rel="icon"]');
@@ -47,20 +44,29 @@ try {
       appleHref: apple?.getAttribute("href") ?? "",
     };
   });
-  if (!favicons.brandSrc.includes("favicon-christmas.svg")) {
-    failures.push(`topbar brand-mark src missing favicon-christmas.svg (${favicons.brandSrc})`);
+  if (!defaultMarks.brandSrc.includes("favicon.svg") || defaultMarks.brandSrc.includes("favicon-christmas")) {
+    failures.push(`topbar brand-mark should be default favicon.svg (${defaultMarks.brandSrc})`);
   }
-  if (!favicons.sidebarSrc.includes("favicon-christmas.svg")) {
-    failures.push(`sidebar brand src missing favicon-christmas.svg (${favicons.sidebarSrc})`);
+  if (!defaultMarks.sidebarSrc.includes("favicon.svg") || defaultMarks.sidebarSrc.includes("favicon-christmas")) {
+    failures.push(`sidebar brand should be default favicon.svg (${defaultMarks.sidebarSrc})`);
   }
-  if (!favicons.iconHref.includes("favicon-christmas.svg")) {
-    failures.push(`link icon href missing favicon-christmas.svg (${favicons.iconHref})`);
+  if (!defaultMarks.iconHref.includes("favicon.svg") || defaultMarks.iconHref.includes("favicon-christmas")) {
+    failures.push(`link icon href should be default favicon.svg (${defaultMarks.iconHref})`);
   }
-  if (!favicons.manifestHref.includes("manifest-christmas.webmanifest")) {
-    failures.push(`manifest link should be seasonal (${favicons.manifestHref})`);
+  if (defaultMarks.manifestHref !== "manifest.webmanifest") {
+    failures.push(`manifest should stay default without query (${defaultMarks.manifestHref})`);
   }
-  if (!favicons.appleHref.includes("icon-christmas-192.png")) {
-    failures.push(`apple-touch-icon should be seasonal (${favicons.appleHref})`);
+  if (!defaultMarks.appleHref.includes("icon-192.png") || defaultMarks.appleHref.includes("christmas")) {
+    failures.push(`apple-touch-icon should be default icon-192.png (${defaultMarks.appleHref})`);
+  }
+
+  const faviconBody = await page.evaluate(async () => {
+    const response = await fetch("favicon.svg", { cache: "no-store" });
+    const text = await response.text();
+    return { ok: response.ok, length: text.length, hasPng: text.includes("data:image/png;base64,") };
+  });
+  if (!faviconBody.ok || !faviconBody.hasPng || faviconBody.length < 8_000) {
+    failures.push(`favicon.svg on / without query must be the embedded reference tile (${JSON.stringify(faviconBody)})`);
   }
 
   const brandLoads = await page.evaluate(async () => {
@@ -70,7 +76,22 @@ try {
     const response = await fetch(img.src, { cache: "no-store" });
     return { ok: response.ok, status: response.status, src: img.src };
   });
-  if (!brandLoads.ok) failures.push(`favicon-christmas must load for brand mark (${JSON.stringify(brandLoads)})`);
+  if (!brandLoads.ok) failures.push(`default favicon must load for brand mark (${JSON.stringify(brandLoads)})`);
+
+  await page.goto(`${BASE}/lojas.html`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  const nestedIcon = await page.locator('link[rel="icon"]').getAttribute("href");
+  if (!nestedIcon?.includes("favicon.svg") || nestedIcon.includes("favicon-christmas")) {
+    failures.push(`nested /lojas.html favicon should be default (${nestedIcon})`);
+  }
+
+  await page.goto(`${BASE}/index.html?christmas=1`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  const previewFlag = await page.locator("html").getAttribute("data-christmas");
+  if (previewFlag !== "on") failures.push(`data-christmas should be on with ?christmas=1, was ${previewFlag}`);
+
+  const previewBrand = await page.locator(".topbar .brand img.brand-mark").getAttribute("src");
+  if (!previewBrand?.includes("favicon.svg") || previewBrand.includes("favicon-christmas")) {
+    failures.push(`theme preview must not swap brand href (${previewBrand})`);
+  }
 
   const overlayHat = await page.evaluate(() => {
     const brand = document.querySelector(".topbar .brand");
@@ -95,7 +116,7 @@ try {
 
   const offBrand = await page.locator(".topbar .brand img.brand-mark").getAttribute("src");
   if (!offBrand?.includes("favicon.svg") || offBrand.includes("favicon-christmas")) {
-    failures.push(`christmas=0 should restore favicon.svg (${offBrand})`);
+    failures.push(`christmas=0 should keep favicon.svg (${offBrand})`);
   }
 } finally {
   await browser.close();
@@ -108,5 +129,5 @@ if (failures.length) {
 }
 
 console.log(
-  `OK: christmas calendar gating (inSeason=${calendarInSeason}) and ?christmas=1 preview at ${BASE}/index.html`,
+  `OK: year-round brand icons on / and nested pages; CSS theme gating (inSeason=${calendarInSeason}) at ${BASE}/index.html`,
 );

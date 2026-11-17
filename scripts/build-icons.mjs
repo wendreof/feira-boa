@@ -11,11 +11,12 @@
  *   - notification-96.png: web push notification icon
  *   - badge-72.png: monochrome status-bar badge (white mark, transparent bg)
  *
- * Usage: node scripts/build-icons.mjs
+ * Usage: node scripts/build-icons.mjs [--include-christmas-svg]
  *
- * Seasonal swap-in: replace favicon-christmas.svg (same 64×64 viewBox, green #155b3b
- * rounded rect) then re-run this script to refresh notification-christmas-96.png,
- * badge-christmas-72.png, and PWA sizes in icons/icon-christmas-*.png.
+ * Default brand PNGs, favicon.svg, and leftover *-christmas-* aliases are
+ * exported from icons/source/christmas/ (export-christmas-icons-from-reference.mjs).
+ * This script delegates to that exporter. Pass --include-christmas-svg only for
+ * the legacy Chrome SVG raster (not the shipped marks).
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -200,7 +201,25 @@ async function render(browser, tmpDir, { file, size, kind, mark }) {
   console.log(`Wrote icons/${file} (${width}x${height}, ${out.size} bytes)`);
 }
 
+function includeChristmasSvgRender() {
+  return process.argv.includes('--include-christmas-svg');
+}
+
+async function exportReferenceBrandIcons() {
+  const script = path.join(HERE, 'export-christmas-icons-from-reference.mjs');
+  await execFileAsync(process.execPath, [script], { cwd: ROOT });
+}
+
 async function main() {
+  const includeChristmasSvg = includeChristmasSvgRender();
+  if (!includeChristmasSvg) {
+    await exportReferenceBrandIcons();
+    console.log(
+      'Default brand icons come from icons/source/christmas/. ' +
+        'Pass --include-christmas-svg only to rasterize from SVG via Chrome.',
+    );
+    return;
+  }
   const browser = await findBrowser();
   if (!browser) {
     console.error(
@@ -227,10 +246,21 @@ async function main() {
     }
   }
 
+  const notificationSources = includeChristmasSvg
+    ? NOTIFICATION_SOURCES
+    : NOTIFICATION_SOURCES.filter((s) => s.faviconFile === 'favicon.svg');
+
   try {
     await renderAppIcons('favicon.svg', APP_ICON_TARGETS);
-    await renderAppIcons('favicon-christmas.svg', CHRISTMAS_APP_ICON_TARGETS);
-    for (const source of NOTIFICATION_SOURCES) {
+    if (includeChristmasSvg) {
+      await renderAppIcons('favicon-christmas.svg', CHRISTMAS_APP_ICON_TARGETS);
+    } else {
+      console.log(
+        'Skipping Christmas raster icons (use node scripts/export-christmas-icons-from-reference.mjs). ' +
+          'Pass --include-christmas-svg to regenerate from favicon-christmas.svg.',
+      );
+    }
+    for (const source of notificationSources) {
       const faviconPath = path.join(ROOT, source.faviconFile);
       const raw = await fs.readFile(faviconPath, 'utf8');
       const mark = raw.replace(/<\?xml[^>]*\?>/g, '').trim();

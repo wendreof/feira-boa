@@ -102,6 +102,34 @@ const manifest = await readJson("manifest.webmanifest");
 if (manifest) {
   const sizes = new Set((manifest.icons ?? []).map((icon) => icon.sizes));
   if (!sizes.has("192x192") || !sizes.has("512x512")) failures.push("manifest.webmanifest: missing icon sizes");
+  const iconSrcs = (manifest.icons ?? []).map((icon) => icon.src).join(" ");
+  if (iconSrcs.includes("christmas")) failures.push("manifest.webmanifest: default icons must not use *-christmas-* paths");
+  if (!iconSrcs.includes("icon-192.png") || !iconSrcs.includes("icon-512.png")) {
+    failures.push("manifest.webmanifest: missing default icon-192/icon-512");
+  }
+}
+try {
+  const icon192 = await stat(new URL("../icons/icon-192.png", import.meta.url));
+  if (icon192.size < 20_000) failures.push("icons/icon-192.png: expected reference-tile export, file too small");
+} catch {
+  // Missing file already reported.
+}
+try {
+  const favicon = await readFile(new URL("../favicon.svg", import.meta.url), "utf8");
+  if (!favicon.includes("data:image/png;base64,")) failures.push("favicon.svg: must embed the reference PNG tile");
+} catch {
+  // Missing file already reported.
+}
+try {
+  const worker = await readFile(new URL("../service-worker.js", import.meta.url), "utf8");
+  if (!worker.includes('const NOTIFICATION_ICON = "/icons/notification-96.png"')) {
+    failures.push("service-worker.js: NOTIFICATION_ICON must be /icons/notification-96.png");
+  }
+  if (!worker.includes('const NOTIFICATION_BADGE = "/icons/badge-72.png"')) {
+    failures.push("service-worker.js: NOTIFICATION_BADGE must be /icons/badge-72.png");
+  }
+} catch {
+  // Missing file already reported.
 }
 const manifestChristmas = await readJson("manifest-christmas.webmanifest");
 if (manifestChristmas) {

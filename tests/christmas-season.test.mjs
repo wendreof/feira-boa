@@ -33,8 +33,14 @@ describe("christmas-season", () => {
     assert.equal(parseChristmasSeasonQuery(new URLSearchParams("")), null);
   });
 
-  it("honors query and storage opt-out", () => {
-    assert.equal(resolveChristmasSeasonEnabled({ today: "2026-11-16" }), true);
+  it("gates default enablement to 1 Dec–6 Jan", () => {
+    assert.equal(resolveChristmasSeasonEnabled({ today: "2026-11-16" }), false);
+    assert.equal(resolveChristmasSeasonEnabled({ today: "2026-12-20" }), true);
+    assert.equal(resolveChristmasSeasonEnabled({ today: "2027-01-06" }), true);
+    assert.equal(resolveChristmasSeasonEnabled({ today: "2027-01-07" }), false);
+  });
+
+  it("honors query and storage preview overrides", () => {
     assert.equal(
       resolveChristmasSeasonEnabled({ today: "2026-11-16", queryOverride: true }),
       true,
@@ -47,6 +53,10 @@ describe("christmas-season", () => {
       resolveChristmasSeasonEnabled({ today: "2026-12-20", storageOverride: false }),
       false,
     );
+    assert.equal(
+      resolveChristmasSeasonEnabled({ today: "2026-11-16", storageOverride: true }),
+      true,
+    );
   });
 
   it("formats São Paulo calendar date for bootstrap", () => {
@@ -55,8 +65,10 @@ describe("christmas-season", () => {
   });
 
   it("resolves notification season like the site theme", () => {
-    assert.equal(resolveChristmasSeasonForNotifications({ today: "2026-11-17" }), true);
+    assert.equal(resolveChristmasSeasonForNotifications({ today: "2026-11-17" }), false);
+    assert.equal(resolveChristmasSeasonForNotifications({ today: "2026-12-15" }), true);
     assert.equal(resolveChristmasSeasonForNotifications({ christmas: false }), false);
+    assert.equal(resolveChristmasSeasonForNotifications({ christmas: true }), true);
   });
 
   it("drapes the Santa hat toward the right handle", async () => {

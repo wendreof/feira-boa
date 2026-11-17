@@ -63,15 +63,16 @@ export function parseChristmasSeasonQuery(searchParams) {
 }
 
 /**
- * Default: theme on. Opt out via ?christmas=0 or localStorage preview key.
+ * Default: on 1 Dec–6 Jan (São Paulo calendar). Preview via ?christmas=1 or localStorage; opt out via ?christmas=0.
  * @param {ChristmasSeasonOptions} [options]
  * @returns {boolean}
  */
 export function resolveChristmasSeasonEnabled(options = {}) {
-  const { queryOverride = null, storageOverride = null } = options;
+  const { queryOverride = null, storageOverride = null, today, now = new Date() } = options;
   if (queryOverride === true || storageOverride === true) return true;
   if (queryOverride === false || storageOverride === false) return false;
-  return true;
+  const resolvedToday = today ?? todayIsoInTimeZone(SAO_PAULO_TZ, now);
+  return isChristmasSeasonDate(resolvedToday);
 }
 
 /**

@@ -5,6 +5,7 @@ import {
   readCachedAvatarPath,
   writeCachedAvatarPath,
 } from "../scripts/domain/avatar-cache.mjs";
+import { clearCachedSidebarAvatarSrc } from "../scripts/domain/sidebar-avatar-src-cache.mjs";
 import { avatarPublicUrl } from "../scripts/domain/avatar-public-url.mjs";
 import { isStorageAvatarPath } from "./shared/provider-profile";
 
@@ -213,6 +214,7 @@ export async function uploadAvatar(userId: string, file: File, currentPath: stri
     });
   }
   writeCachedAvatarPath(userId, path, sessionStorage);
+  clearCachedSidebarAvatarSrc(sessionStorage);
   return path;
 }
 
@@ -227,6 +229,7 @@ export async function removeAvatar(userId: string, currentPath: string | null): 
     .eq("user_id", userId);
   if (updateError) throw updateError;
   writeCachedAvatarPath(userId, null, sessionStorage);
+  clearCachedSidebarAvatarSrc(sessionStorage);
 }
 
 function isMissingObjectError(message: string): boolean {

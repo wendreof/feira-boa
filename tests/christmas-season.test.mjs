@@ -22,7 +22,8 @@ describe("christmas-season", () => {
     assert.equal(parseChristmasSeasonQuery(new URLSearchParams("")), null);
   });
 
-  it("honors query override over calendar", () => {
+  it("honors query and storage opt-out", () => {
+    assert.equal(resolveChristmasSeasonEnabled({ today: "2026-11-16" }), true);
     assert.equal(
       resolveChristmasSeasonEnabled({ today: "2026-11-16", queryOverride: true }),
       true,
@@ -31,11 +32,14 @@ describe("christmas-season", () => {
       resolveChristmasSeasonEnabled({ today: "2026-12-20", queryOverride: false }),
       false,
     );
+    assert.equal(
+      resolveChristmasSeasonEnabled({ today: "2026-12-20", storageOverride: false }),
+      false,
+    );
   });
 
-  it("uses São Paulo calendar date by default", () => {
+  it("formats São Paulo calendar date for bootstrap", () => {
     const now = new Date("2026-12-20T15:00:00.000Z");
     assert.equal(todayIsoInTimeZone("America/Sao_Paulo", now), "2026-12-20");
-    assert.equal(resolveChristmasSeasonEnabled({ now }), true);
   });
 });

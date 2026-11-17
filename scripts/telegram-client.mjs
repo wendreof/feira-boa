@@ -28,19 +28,14 @@ export async function telegramCall(token, method, params = {}) {
 
 /** Envia texto simples (sem parse_mode, para não quebrar com nomes de produto). */
 export function sendTelegramMessage(token, chatId, text, options = {}) {
-  const { replyMarkup, linkPreview = false, linkPreviewUrl = null } = options;
+  const { replyMarkup, linkPreview = false } = options;
   const params = {
     chat_id: chatId,
     text,
-    disable_web_page_preview: !linkPreview && !linkPreviewUrl,
+    disable_web_page_preview: !linkPreview,
   };
-  if (linkPreviewUrl) {
-    params.link_preview_options = {
-      is_disabled: false,
-      url: linkPreviewUrl,
-      prefer_small_media: true,
-      show_above_text: true,
-    };
+  if (!linkPreview) {
+    params.link_preview_options = { is_disabled: true };
   }
   if (replyMarkup) params.reply_markup = replyMarkup;
   return telegramCall(token, "sendMessage", params);

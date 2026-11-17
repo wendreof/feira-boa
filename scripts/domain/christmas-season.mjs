@@ -95,7 +95,7 @@ export function siteFaviconPath(_options = {}) {
 }
 
 /**
- * Absolute brand PNG for Telegram link previews (SVG favicons do not preview reliably).
+ * Absolute brand PNG URL (SVG favicons do not render as a raster everywhere).
  * @param {string | URL} siteUrl
  * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
  */

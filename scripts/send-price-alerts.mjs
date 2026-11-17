@@ -20,7 +20,6 @@ import {
   sendWebPush,
   subscriptionFromRow,
 } from "./push-client.mjs";
-import { siteFaviconUrl } from "./domain/christmas-season.mjs";
 
 const MAX_FEED_AGE_MS = 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
@@ -122,17 +121,14 @@ async function logNotification(supabase, { channel, userId, offerId, delivered, 
   if (error) throw error;
 }
 
-async function sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, brandPreviewUrl, counts }) {
+async function sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, counts }) {
   const { title, body } = buildAlertMessage(offer);
   const text = buildTelegramText(offer, config.siteUrl, today);
   const replyMarkup = buildTelegramReplyMarkup(offer, config.siteUrl);
   let delivered = false;
   let safeErrorCode = null;
   try {
-    await sendTelegramMessage(config.telegramToken, chatId, text, {
-      replyMarkup,
-      linkPreviewUrl: brandPreviewUrl ?? undefined,
-    });
+    await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup });
     delivered = true;
   } catch (error) {
     safeErrorCode = telegramErrorCode(error);
@@ -211,7 +207,6 @@ async function sendAlerts({
     pushFailed: 0,
     skippedNoPush: 0,
   };
-  const brandPreviewUrl = siteFaviconUrl(config.siteUrl, { today });
 
   for (const { userId, offer } of telegramPending) {
     if (dryRun) {
@@ -231,7 +226,7 @@ async function sendAlerts({
       counts.skippedNoChannel += 1;
       continue;
     }
-    await sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, brandPreviewUrl, counts });
+    await sendOneTelegramAlert({ supabase, config, chatId, userId, offer, today, counts });
   }
 
   for (const { userId, offers } of digests) {
@@ -245,10 +240,7 @@ async function sendAlerts({
     const text = buildTelegramDigestText(offers, config.siteUrl);
     const replyMarkup = buildTelegramDigestReplyMarkup(config.siteUrl);
     try {
-      await sendTelegramMessage(config.telegramToken, chatId, text, {
-        replyMarkup,
-        linkPreviewUrl: brandPreviewUrl,
-      });
+      await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup });
       counts.digestsSent += 1;
     } catch (error) {
       const code = telegramErrorCode(error);

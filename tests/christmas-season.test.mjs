@@ -77,7 +77,7 @@ describe("christmas-season", () => {
     assert.ok(svg.length > 8_000, "favicon.svg should embed the user tile, not the tiny basket SVG");
   });
 
-  it("uses default brand files for favicon, Telegram, and push regardless of season", () => {
+  it("uses default brand files for favicon and push regardless of season", () => {
     const site = new URL("https://feira-boa.pages.dev/");
     assert.equal(siteFaviconPath({ christmas: true }), `/${FAVICON_DEFAULT}`);
     assert.equal(siteFaviconPath({ christmas: false }), `/${FAVICON_DEFAULT}`);

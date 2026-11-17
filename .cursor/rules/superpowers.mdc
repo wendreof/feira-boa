@@ -1,0 +1,31 @@
+---
+description: Load Superpowers process skills; keep ai-memory for project memory
+alwaysApply: true
+---
+
+# Superpowers (process) + ai-memory (memory)
+
+Feira Boa uses the official **Superpowers** Cursor plugin for how to work, and **ai-memory** for durable project knowledge. Do not replace one with the other. Do not copy Superpowers skills into `.agents/skills`.
+
+## Load Superpowers
+
+1. At session start, follow `using-superpowers` (plugin SessionStart hook injects it; if missing, Read the plugin `SKILL.md`).
+2. If a Superpowers skill might apply, **Read that skill and follow it** before exploring or coding. Announce `Using [skill] to [purpose]`.
+3. Common matches:
+   - New feature / behavior change → `brainstorming` (then plan/TDD as the skill says)
+   - Bug → `systematic-debugging`
+   - Implementation → `test-driven-development` (repo tests: `tests/*.test.mjs`, `npm test`)
+   - Written plan → `executing-plans` or `subagent-driven-development`
+
+Skills live in the installed plugin (not this git repo):
+
+`%USERPROFILE%\.cursor\plugins\cache\cursor-public\superpowers\<rev>\skills\<name>\SKILL.md`
+
+Use the newest `superpowers` cache folder if the hash changed.
+
+## Do not clash with this repo
+
+- **ai-memory** stays the memory of record (`.ai-memory.toml`, `.agents/skills/ai-memory-*`, `AGENT.md` ai-memory block). Superpowers is not a wiki.
+- **User and project rules win** (Caveman Ultra, no agent commits, clean architecture, agent efficiency). Superpowers itself says this.
+- **Git:** no local agent commits unless the user asks. Prefer a named branch + PR over Superpowers worktrees unless the user asked for a worktree.
+- **`.agents/skills`:** only project skills (`ai-memory-*`, `offer-ingestion`). Superpowers stays in the plugin.

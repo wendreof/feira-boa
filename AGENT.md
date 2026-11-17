@@ -2,6 +2,8 @@
 
 Cross-session memory for this repo is **ai-memory** (`.ai-memory.toml`, `.cursor/rules/ai-memory-default.mdc`, `.agents/skills/ai-memory-*`).
 
+Process skills are **Superpowers** (Cursor plugin `superpowers`, rule `.cursor/rules/superpowers.mdc`). Load `using-superpowers`, then the matching skill. Do not copy Superpowers into `.agents/skills`.
+
 ## Project: Feira Boa
 
 Feira Boa is a static supermarket-offers site for São João da Boa Vista. The app shows flyer offers, filters, favorites, theme switching, and optional Supabase-backed account features without needing a server-rendered app.
@@ -204,6 +206,14 @@ When working in this repo, keep the interaction crisp:
 **develop sync:** Run `npm run sync:develop` before new work on `develop`. Optional git hooks: `git config core.hooksPath .githooks` (runs `post-checkout` sync when switching to `develop`; agents do not set this for you).
 
 Use the existing repo knowledge, not generic assumptions. The site is a static frontend with Supabase-backed user features, not a full backend app.
+
+## Superpowers (process skills)
+
+Cursor loads Superpowers via the marketplace plugin (`/add-plugin superpowers`). The plugin `sessionStart` hook injects `using-superpowers`. Other skills (`brainstorming`, `test-driven-development`, `systematic-debugging`, `writing-plans`, `executing-plans`, `subagent-driven-development`, …) live under the plugin cache, not in this repository.
+
+Harness installs (official README): Cursor `/add-plugin superpowers`; Claude Code `/plugin install superpowers@claude-plugins-official`; Codex app/CLI marketplace plugin. Install per harness — this repo does not vendor a second copy.
+
+Keep **ai-memory** for durable Feira Boa knowledge. Superpowers does not replace it.
 
 <!-- ai-memory:start -->
 ## Long-term memory (ai-memory)

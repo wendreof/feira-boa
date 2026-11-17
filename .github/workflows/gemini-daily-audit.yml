@@ -33,7 +33,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_AUDIT_MODEL: gemini-2.0-flash-lite
+          GEMINI_AUDIT_MODEL: gemini-3.5-flash-lite
         run: node scripts/audit-offers-gemini.mjs
 
       - name: Upload audit report

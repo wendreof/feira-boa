@@ -3,6 +3,8 @@ import { fetchWithRetry } from "./http.mjs";
 
 export const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 export const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
+/** Lighter model for daily audit / advisory scripts (quota-friendly). */
+export const DEFAULT_GEMINI_AUDIT_MODEL = "gemini-3.5-flash-lite";
 
 const BASE_CATEGORIES = [
   "Hortifruti",
@@ -69,6 +71,12 @@ export function resolveGeminiModel(modelEnvKeys) {
   for (const key of modelEnvKeys) {
     const value = process.env[key]?.trim();
     if (value) return value;
+  }
+  const auditOnly =
+    modelEnvKeys.length > 0 &&
+    modelEnvKeys.every((key) => key === "GEMINI_AUDIT_MODEL" || key.startsWith("GEMINI_AUDIT"));
+  if (auditOnly || modelEnvKeys.includes("GEMINI_AUDIT_MODEL")) {
+    return DEFAULT_GEMINI_AUDIT_MODEL;
   }
   return DEFAULT_GEMINI_MODEL;
 }

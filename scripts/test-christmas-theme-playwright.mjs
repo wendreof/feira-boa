@@ -20,10 +20,10 @@ try {
   if (flag !== "on") failures.push(`data-christmas was ${flag}`);
 
   const hatBg = await page.evaluate(() => {
-    const brand = document.querySelector(".brand");
-    return brand ? getComputedStyle(brand, "::after").backgroundImage : "";
+    const mark = document.querySelector(".brand-mark");
+    return mark ? getComputedStyle(mark, "::after").backgroundImage : "";
   });
-  if (!hatBg || hatBg === "none") failures.push("santa hat ::after missing on .brand");
+  if (!hatBg || hatBg === "none") failures.push("santa hat ::after missing on .brand-mark");
   if (!hatBg.includes("santa-hat.svg")) failures.push(`santa hat asset unexpected: ${hatBg}`);
 
   const topbarBox = await page.locator(".topbar").boundingBox();

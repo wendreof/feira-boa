@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Feira Boa  natal</title>
+  <rect width="64" height="64" rx="18" fill="#155b3b"/>
+  <path d="M28.5 27c-8.2-1.1-12-5.1-11.6-11.2 6.5-.4 11 2.4 13.4 8.4 1.8-7.6 6.7-11.1 14.8-10.5-.2 7.4-4.8 12-13.8 13.5" fill="#c9f27b"/>
+  <path d="M31.7 24.7v5.7" fill="none" stroke="#c9f27b" stroke-linecap="round" stroke-width="2.8"/>
+  <path d="M15 31h34l-4.2 19H19.2L15 31Z" fill="#f7f4df"/>
+  <path d="M15 31h34M23 35v11m9-11v11m9-11v11" fill="none" stroke="#155b3b" stroke-linecap="round" stroke-width="2.8"/>
+  <path d="M22 31c.3-5.4 3.7-8.1 10-8.1s9.7 2.7 10 8.1" fill="none" stroke="#f7f4df" stroke-linecap="round" stroke-width="3.2"/>
+  <g aria-hidden="true">
+    <path
+      fill="#d62828"
+      stroke="#0f2919"
+      stroke-width="1.4"
+      stroke-linejoin="round"
+      d="M10 18c4-10 18-17 34-15 8 1 12 5 11 10-1 6-9 12-19 16-8 3-17 4-22 2-2-1-3-3-1-4 4-3 6-7-3-9Z"
+    />
+    <path
+      fill="#fff"
+      stroke="#0f2919"
+      stroke-width="1.4"
+      stroke-linejoin="round"
+      d="M6 16c5-3 16-5 27-5 11 0 23 2 31 6 5 2 6 5 4 8-3 4-10 7-20 8-12 1-28-2-38-6-5-2-7-5-4-11Z"
+    />
+    <circle cx="11" cy="23" r="4.2" fill="#fff" stroke="#0f2919" stroke-width="1.2"/>
+  </g>
+</svg>

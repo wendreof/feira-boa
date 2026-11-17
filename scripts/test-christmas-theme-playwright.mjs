@@ -1,5 +1,5 @@
 /**
- * Christmas accents: data flag, santa hat pseudo, reduced layout shift on mobile.
+ * Christmas accents: data flag, integrated favicon, reduced layout shift on mobile.
  * Run: node scripts/test-christmas-theme-playwright.mjs
  */
 import { chromium } from "playwright";
@@ -19,17 +19,39 @@ try {
   const flag = await page.locator("html").getAttribute("data-christmas");
   if (flag !== "on") failures.push(`data-christmas was ${flag}`);
 
-  const hatBg = await page.evaluate(() => {
+  const favicons = await page.evaluate(() => {
+    const brand = document.querySelector(".topbar .brand img.brand-mark");
+    const sidebar = document.querySelector(".sidebar-brand-mark img");
+    const icon = document.querySelector('link[rel="icon"]');
+    return {
+      brandSrc: brand?.getAttribute("src") ?? "",
+      sidebarSrc: sidebar?.getAttribute("src") ?? "",
+      iconHref: icon?.getAttribute("href") ?? "",
+    };
+  });
+  if (!favicons.brandSrc.includes("favicon-christmas.svg")) {
+    failures.push(`topbar brand-mark src missing favicon-christmas.svg (${favicons.brandSrc})`);
+  }
+  if (!favicons.sidebarSrc.includes("favicon-christmas.svg")) {
+    failures.push(`sidebar brand src missing favicon-christmas.svg (${favicons.sidebarSrc})`);
+  }
+  if (!favicons.iconHref.includes("favicon-christmas.svg")) {
+    failures.push(`link icon href missing favicon-christmas.svg (${favicons.iconHref})`);
+  }
+
+  const overlayHat = await page.evaluate(() => {
     const brand = document.querySelector(".topbar .brand");
     const sidebar = document.querySelector(".sidebar-brand-mark");
-    const topbarHat = brand ? getComputedStyle(brand, "::after").backgroundImage : "";
-    const sidebarHat = sidebar ? getComputedStyle(sidebar, "::after").backgroundImage : "";
-    return { topbarHat, sidebarHat };
+    const brandAfter = brand ? getComputedStyle(brand, "::after").content : "";
+    const sidebarAfter = sidebar ? getComputedStyle(sidebar, "::after").content : "";
+    return { brandAfter, sidebarAfter };
   });
-  if (!hatBg.topbarHat || hatBg.topbarHat === "none") failures.push("santa hat ::after missing on .topbar .brand");
-  if (!hatBg.topbarHat.includes("santa-hat.svg")) failures.push(`topbar hat asset unexpected: ${hatBg.topbarHat}`);
-  if (!hatBg.sidebarHat || hatBg.sidebarHat === "none") failures.push("santa hat ::after missing on .sidebar-brand-mark");
-  if (!hatBg.sidebarHat.includes("santa-hat.svg")) failures.push(`sidebar hat asset unexpected: ${hatBg.sidebarHat}`);
+  if (overlayHat.brandAfter && overlayHat.brandAfter !== "none" && overlayHat.brandAfter !== '""') {
+    failures.push("unexpected ::after hat overlay on .topbar .brand");
+  }
+  if (overlayHat.sidebarAfter && overlayHat.sidebarAfter !== "none" && overlayHat.sidebarAfter !== '""') {
+    failures.push("unexpected ::after hat overlay on .sidebar-brand-mark");
+  }
 
   const topbarBox = await page.locator(".topbar").boundingBox();
   if (!topbarBox || topbarBox.height > 120) failures.push("topbar height looks broken on mobile");
@@ -37,6 +59,11 @@ try {
   await page.goto(`${BASE}/index.html?christmas=0`, { waitUntil: "domcontentloaded", timeout: 30_000 });
   const offFlag = await page.locator("html").getAttribute("data-christmas");
   if (offFlag === "on") failures.push("christmas=0 should disable theme");
+
+  const offBrand = await page.locator(".topbar .brand img.brand-mark").getAttribute("src");
+  if (!offBrand?.includes("favicon.svg") || offBrand.includes("favicon-christmas")) {
+    failures.push(`christmas=0 should restore favicon.svg (${offBrand})`);
+  }
 } finally {
   await browser.close();
 }

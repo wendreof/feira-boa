@@ -26,6 +26,13 @@
   // Keep in sync with scripts/domain/display-name-cache.mjs.
   const DISPLAY_NAME_CACHE_KEY = "feira-boa:display-name:v1";
   const DISPLAY_NAME_METADATA_KEYS = ["display_name", "full_name", "name", "given_name", "user_name", "preferred_username"];
+  // Keep in sync with scripts/domain/provider-avatar-url.mjs
+  const PROVIDER_AVATAR_KEYS = {
+    twitter: ["avatar_url", "profile_image_url", "picture"],
+    x: ["avatar_url", "profile_image_url", "picture"],
+    google: ["picture", "avatar_url", "profile_image_url"],
+  };
+  const DEFAULT_AVATAR_KEYS = ["avatar_url", "picture", "profile_image_url"];
 
   function readStoredSession() {
     try {
@@ -133,6 +140,25 @@
     }
   }
 
+  function oauthProviderFromUser(user) {
+    const fromApp = user?.app_metadata?.provider;
+    if (typeof fromApp === "string" && fromApp.trim()) return fromApp.trim().toLowerCase();
+    const identity = user?.identities?.find((entry) => typeof entry?.provider === "string" && entry.provider.trim());
+    if (identity?.provider) return identity.provider.trim().toLowerCase();
+    return null;
+  }
+
+  function providerAvatarUrlFromMetadata(metadata, provider) {
+    if (!metadata || typeof metadata !== "object") return null;
+    const normalized = String(provider ?? "").toLowerCase().trim();
+    const keys = PROVIDER_AVATAR_KEYS[normalized] ?? DEFAULT_AVATAR_KEYS;
+    for (const key of keys) {
+      const value = metadata[key];
+      if (typeof value === "string" && /^https?:\/\//i.test(value.trim())) return value.trim();
+    }
+    return null;
+  }
+
   function avatarPublicUrl(path, sizePx) {
     const objectPath = path.trim().split("/").map((segment) => encodeURIComponent(segment)).join("/");
     const base = "https://muiuvmhzzbqflxznpnez.supabase.co";
@@ -151,12 +177,12 @@
   function primeSidebarAvatarFromCache() {
     const userId = readStoredUserId();
     if (!userId) return;
-    const path = readCachedAvatarPath(userId);
-    if (!path) return;
     const image = document.querySelector("#topbar-account-image");
     const fallback = document.querySelector("#topbar-account-fallback");
     if (!(image instanceof HTMLImageElement)) return;
+
     const showPhoto = () => {
+      image.referrerPolicy = "no-referrer";
       image.style.opacity = "";
       image.hidden = false;
       if (fallback instanceof HTMLElement) fallback.hidden = true;
@@ -167,14 +193,31 @@
       image.hidden = true;
       if (fallback instanceof HTMLElement) fallback.hidden = false;
     };
-    image.loading = "eager";
-    image.decoding = "async";
-    image.addEventListener("load", showPhoto, { once: true });
-    image.addEventListener("error", showFallback, { once: true });
-    image.hidden = false;
-    image.style.opacity = "0";
-    image.src = avatarPublicUrl(path, 64);
-    if (image.complete && image.naturalWidth > 0) showPhoto();
+
+    const bindLoad = (url) => {
+      image.loading = "eager";
+      image.decoding = "async";
+      image.addEventListener("load", showPhoto, { once: true });
+      image.addEventListener("error", showFallback, { once: true });
+      image.hidden = false;
+      image.style.opacity = "0";
+      image.referrerPolicy = "no-referrer";
+      image.src = url;
+      if (image.complete && image.naturalWidth > 0) showPhoto();
+    };
+
+    const cachedPath = readCachedAvatarPath(userId);
+    if (cachedPath) {
+      bindLoad(avatarPublicUrl(cachedPath, 64));
+      return;
+    }
+
+    const session = readStoredSession();
+    const remote = providerAvatarUrlFromMetadata(
+      session?.user?.user_metadata,
+      oauthProviderFromUser(session?.user),
+    );
+    if (remote) bindLoad(remote);
   }
 
   resetGuestSidebarAvatar();

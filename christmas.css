@@ -49,24 +49,24 @@
     );
 }
 
-:root[data-christmas="on"] .brand-mark,
-:root[data-christmas="on"] .sidebar-brand-mark {
+:root[data-christmas="on"] .brand-mark {
   position: relative;
   overflow: visible;
 }
 
-:root[data-christmas="on"] .brand-mark::after,
-:root[data-christmas="on"] .sidebar-brand-mark::after {
+/* Topbar favicon tile only — sidebar brand stays clean (hat scales poorly there). */
+:root[data-christmas="on"] .brand-mark::after {
   content: "";
   position: absolute;
-  top: -17px;
-  left: 52%;
-  width: 46px;
-  height: 34px;
+  top: -22px;
+  left: 42%;
+  width: 54px;
+  height: 42px;
   pointer-events: none;
-  transform: translateX(-50%) rotate(-6deg);
-  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(-14deg);
+  transform-origin: 55% 95%;
   background: no-repeat center / contain url("logos/santa-hat.svg");
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35));
   z-index: 2;
 }
 
@@ -87,11 +87,10 @@
 }
 
 @media (max-width: 760px) {
-  :root[data-christmas="on"] .brand-mark::after,
-  :root[data-christmas="on"] .sidebar-brand-mark::after {
-    width: 40px;
-    height: 30px;
-    top: -15px;
+  :root[data-christmas="on"] .brand-mark::after {
+    width: 48px;
+    height: 38px;
+    top: -20px;
   }
 }
 

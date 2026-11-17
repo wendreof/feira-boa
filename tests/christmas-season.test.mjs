@@ -73,7 +73,8 @@ describe("christmas-season", () => {
 
   it("drapes the Santa hat toward the right handle", async () => {
     const svg = await readFile(new URL("../favicon-christmas.svg", import.meta.url), "utf8");
-    assert.match(svg, /matrix\(-1 0 0 1 64 0\)/);
+    assert.match(svg, /scale\(-0\.54 0\.54\)/);
+    assert.match(svg, /translate\(64 5\)/);
   });
 
   it("builds favicon and push asset URLs from SITE_URL", () => {

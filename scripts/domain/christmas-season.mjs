@@ -13,7 +13,7 @@ export const PUSH_NOTIFICATION_BADGE_CHRISTMAS = "icons/badge-christmas-72.png";
 export const MANIFEST_DEFAULT = "manifest.webmanifest";
 export const MANIFEST_CHRISTMAS = "manifest-christmas.webmanifest";
 
-export const PWA_ICON_QUERY = "?v=20261117";
+export const PWA_ICON_QUERY = "?v=20261117-hat";
 export const PWA_ICON_192_DEFAULT = "icons/icon-192.png";
 export const PWA_ICON_192_CHRISTMAS = "icons/icon-christmas-192.png";
 export const PWA_ICON_512_DEFAULT = "icons/icon-512.png";

@@ -21,7 +21,7 @@ function readStorageOverride(): boolean | null {
     if (raw === "1" || raw === "true" || raw === "on") return true;
     if (raw === "0" || raw === "false" || raw === "off") return false;
   } catch {
-    // Private mode — default theme on.
+    // Private mode — fall through to calendar gating.
   }
   return null;
 }

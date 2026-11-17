@@ -3,9 +3,14 @@
  * Run: node scripts/test-christmas-theme-playwright.mjs
  */
 import { chromium } from "playwright";
+import {
+  isChristmasSeasonDate,
+  todayIsoInTimeZone,
+} from "./domain/christmas-season.mjs";
 import { SITE_URL, ensureStaticServer, waitForServer } from "./test/playwright-harness.mjs";
 
 const BASE = SITE_URL;
+const calendarInSeason = isChristmasSeasonDate(todayIsoInTimeZone());
 
 const serverNote = await ensureStaticServer("/index.html");
 if (serverNote === "started") await waitForServer(`${BASE}/index.html`);
@@ -15,9 +20,18 @@ const failures = [];
 
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+
   await page.goto(`${BASE}/index.html`, { waitUntil: "domcontentloaded", timeout: 30_000 });
   const flag = await page.locator("html").getAttribute("data-christmas");
-  if (flag !== "on") failures.push(`data-christmas was ${flag}`);
+  if (calendarInSeason) {
+    if (flag !== "on") failures.push(`data-christmas should be on in season, was ${flag}`);
+  } else if (flag === "on") {
+    failures.push(`data-christmas should be off outside season, was ${flag}`);
+  }
+
+  await page.goto(`${BASE}/index.html?christmas=1`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  const previewFlag = await page.locator("html").getAttribute("data-christmas");
+  if (previewFlag !== "on") failures.push(`data-christmas should be on with ?christmas=1, was ${previewFlag}`);
 
   const favicons = await page.evaluate(() => {
     const brand = document.querySelector(".topbar .brand img.brand-mark");
@@ -93,4 +107,6 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK: christmas theme on by default at ${BASE}/index.html`);
+console.log(
+  `OK: christmas calendar gating (inSeason=${calendarInSeason}) and ?christmas=1 preview at ${BASE}/index.html`,
+);

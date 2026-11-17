@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
-    "checked_at": "2026-11-17T20:53:11.889Z",
-    "last_success_at": "2026-11-17T20:53:11.889Z",
+    "checked_at": "2026-11-17T21:14:18.864Z",
+    "last_success_at": "2026-11-17T21:14:18.864Z",
     "last_error": null,
     "needs_review": false
   },
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-17T20:53:13.983Z",
-    "last_success_at": "2026-11-17T20:53:13.983Z",
+    "checked_at": "2026-11-17T21:14:20.330Z",
+    "last_success_at": "2026-11-17T21:14:20.330Z",
     "last_error": null,
     "needs_review": false
   },
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://smfortemix.com.br/",
-    "checked_at": "2026-11-17T20:53:14.618Z",
-    "last_success_at": "2026-11-17T20:53:14.618Z",
+    "checked_at": "2026-11-17T21:14:21.250Z",
+    "last_success_at": "2026-11-17T21:14:21.250Z",
     "last_error": null,
     "needs_review": true
   },
@@ -55,8 +55,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-17T20:53:16.084Z",
-    "last_success_at": "2026-11-17T20:53:16.084Z",
+    "checked_at": "2026-11-17T21:14:23.554Z",
+    "last_success_at": "2026-11-17T21:14:23.554Z",
     "last_error": null,
     "needs_review": false
   },
@@ -70,7 +70,7 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-17T20:53:16.594Z",
+    "checked_at": "2026-11-17T21:14:24.073Z",
     "last_success_at": "2026-11-04T13:07:19.091Z",
     "last_error": "TypeError",
     "needs_review": false
@@ -86,8 +86,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-17T20:53:22.493Z",
-    "last_success_at": "2026-11-17T20:53:22.493Z",
+    "checked_at": "2026-11-17T21:14:29.757Z",
+    "last_success_at": "2026-11-17T21:14:29.757Z",
     "last_error": null,
     "needs_review": true
   },
@@ -101,8 +101,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-17T20:53:25.600Z",
-    "last_success_at": "2026-11-17T20:53:25.600Z",
+    "checked_at": "2026-11-17T21:14:31.890Z",
+    "last_success_at": "2026-11-17T21:14:31.890Z",
     "last_error": null,
     "needs_review": true
   }

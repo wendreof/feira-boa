@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-17T21:14:18.258Z",
+  "updatedAt": "2026-11-18T02:46:43.583Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -7207,30 +7207,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-creme-dental-colgate-natural-extracts-carvao-ativado-com-menta-colgate-140g-2026-11-16",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Creme Dental Colgate Natural Extracts Carvão Ativado com Menta",
-      "detail": "140g",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
-      "price": 18.99,
-      "previousPrice": null,
-      "icon": "🪥",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-creme-dental-colgate-pro-alivio-imediato-branqueador-fresh-colgate-90g-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
@@ -7340,7 +7316,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
-      "price": 18.99,
+      "price": 19.99,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -9343,30 +9319,6 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-creme-de-pentear-johnson-s-baby-blackinho-poderoso-johnson-s-baby-200ml-2026-11-16",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Creme de Pentear Johnson's Baby Blackinho Poderoso",
-      "detail": "200ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "storeCategory": "Mamãe e Bebê/Banho Infantil/Creme de Pentear Infantil",
-      "price": 32.99,
-      "previousPrice": 59.99,
-      "icon": "🧴",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-sabonete-liquido-johnson-s-baby-frutas-vermelhas-johnson-s-baby-400ml-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
@@ -9573,7 +9525,7 @@
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Condicionador Infantil",
       "price": 21.99,
-      "previousPrice": 29.89,
+      "previousPrice": 29.99,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10822,30 +10774,6 @@
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
       "price": 39.99,
       "previousPrice": null,
-      "icon": "🥫",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-ketchup-heinz-tradicional-heinz-397g-2026-11-16",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Ketchup Heinz Tradicional",
-      "detail": "397g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "Mercearia/Molhos Frios/Catchup",
-      "price": 12.99,
-      "previousPrice": 15.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -12958,7 +12886,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Temperos e Condimentos/Creme de Cebola",
-      "price": 9.69,
+      "price": 8.99,
       "previousPrice": null,
       "icon": "🧅",
       "tone": "#edf4e9",
@@ -14410,59 +14338,11 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-capsula-nescafe-dolce-gusto-cafe-caseiro-dolce-gusto-10-unidades-2026-11-16",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Cápsula Nescafé Dolce Gusto Café Caseiro",
-      "detail": "10 unidades",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Café",
-      "productTypes": [
-        "Café"
-      ],
-      "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 18.99,
-      "previousPrice": 24.99,
-      "icon": "☕",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
       "id": "paguemenos-capsula-nescafe-dolce-gusto-cappuccino-dolce-gusto-10-unidades-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
       "branch": "Loja 33 · Jardim Santo André",
       "name": "Cápsula Nescafé Dolce Gusto Cappuccino",
-      "detail": "10 unidades",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Café",
-      "productTypes": [
-        "Café"
-      ],
-      "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 18.99,
-      "previousPrice": 24.99,
-      "icon": "☕",
-      "tone": "#edf4e9",
-      "note": "Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · Loja 33",
-      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
-    },
-    {
-      "id": "paguemenos-capsula-nescafe-dolce-gusto-caffe-matinal-dolce-gusto-10-unidades-2026-11-16",
-      "store": "Pague Menos",
-      "storeLogo": "logos/paguemenos.png",
-      "branch": "Loja 33 · Jardim Santo André",
-      "name": "Cápsula Nescafé Dolce Gusto Caffè Matinal",
       "detail": "10 unidades",
       "category": "Mercearia",
       "department": "Mercearia",
@@ -14615,7 +14495,7 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 17.99,
+      "price": 18.99,
       "previousPrice": 24.99,
       "icon": "☕",
       "tone": "#edf4e9",
@@ -26405,30 +26285,6 @@
       "price": 59.69,
       "previousPrice": 62.69,
       "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-160-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Molho para Salada Oruam Rose",
-      "detail": "240ml",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "174",
-      "price": 4.65,
-      "previousPrice": 5.09,
-      "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-16",
@@ -48399,6 +48255,30 @@
       "storeCategory": "104",
       "price": 7.39,
       "previousPrice": 7.99,
+      "icon": "🥤",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-5809-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Requeijão Copo Tirolez Light",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "storeCategory": "104",
+      "price": 9.19,
+      "previousPrice": 9.93,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",

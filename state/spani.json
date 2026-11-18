@@ -9,7 +9,7 @@
     "from": "2026-11-16",
     "to": "2026-11-22"
   },
-  "fetchedAt": "2026-11-18T02:46:43.576Z",
+  "fetchedAt": "2026-11-18T13:45:49.888Z",
   "sourceUrl": "https://www.spanionline.com.br/ofertas",
   "offers": [
     {
@@ -847,6 +847,30 @@
       "icon": "🥗",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-251-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Brocolis Ninja Unid",
+      "detail": "UN",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
+      "productTypes": [
+        "Hortifruti"
+      ],
+      "storeCategory": "118",
+      "price": 7.49,
+      "previousPrice": 9.99,
+      "icon": "🥦",
+      "tone": "#edf4e9",
+      "note": "Oferta · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-16",
       "validTo": "2026-11-22",
       "source": "Ofertas online oficiais · retirada na loja",
@@ -3269,6 +3293,30 @@
       "storeCategory": "140",
       "price": 21.9,
       "previousPrice": 22.9,
+      "icon": "☕",
+      "tone": "#edf4e9",
+      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-782-2026-11-16",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Café Rosa De Ouro 500g Almofada Extra Forte",
+      "detail": "UN",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
+      "productTypes": [
+        "Café"
+      ],
+      "storeCategory": "140",
+      "price": 17.5,
+      "previousPrice": 18.39,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
@@ -19220,30 +19268,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-4331-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Biscoito Wafer Tub - In 48g Avelã",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "storeCategory": "62",
-      "price": 2.29,
-      "previousPrice": 2.49,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-4333-2026-11-16",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -21561,8 +21585,8 @@
         "Iogurtes"
       ],
       "storeCategory": "105",
-      "price": 2.69,
-      "previousPrice": 2.91,
+      "price": 2.39,
+      "previousPrice": 2.58,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
@@ -22527,30 +22551,6 @@
       "storeCategory": "104",
       "price": 7.39,
       "previousPrice": 7.99,
-      "icon": "🥤",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-5809-2026-11-16",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Requeijão Copo Tirolez Light 200g",
-      "detail": "UN",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
-      "productTypes": [
-        "Queijos e requeijão"
-      ],
-      "storeCategory": "104",
-      "price": 9.19,
-      "previousPrice": 9.93,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",

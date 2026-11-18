@@ -9,7 +9,7 @@
     "from": "2026-11-16",
     "to": "2026-11-22"
   },
-  "fetchedAt": "2026-11-18T02:46:05.276Z",
+  "fetchedAt": "2026-11-18T13:35:58.985Z",
   "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
   "offers": [
     {
@@ -3986,7 +3986,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Desinfetante",
-      "price": 21.29,
+      "price": 18.99,
       "previousPrice": 29.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4010,7 +4010,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Desinfetante",
-      "price": 21.29,
+      "price": 18.99,
       "previousPrice": 29.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4106,7 +4106,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Desinfetante",
-      "price": 21.29,
+      "price": 18.99,
       "previousPrice": 29.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4154,7 +4154,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Desinfetante",
-      "price": 21.29,
+      "price": 18.99,
       "previousPrice": 29.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4202,7 +4202,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Desinfetante",
-      "price": 21.29,
+      "price": 18.99,
       "previousPrice": 29.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4371,7 +4371,7 @@
       ],
       "storeCategory": "Limpeza/Casa/Limpadores",
       "price": 11.99,
-      "previousPrice": 18.39,
+      "previousPrice": 17.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -4418,7 +4418,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Casa/Limpadores",
-      "price": 22.99,
+      "price": 22.49,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -4803,6 +4803,30 @@
       ],
       "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
       "price": 24.99,
+      "previousPrice": null,
+      "icon": "🪥",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "id": "paguemenos-creme-dental-colgate-natural-extracts-carvao-ativado-com-menta-colgate-140g-2026-11-16",
+      "store": "Pague Menos",
+      "storeLogo": "logos/paguemenos.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Creme Dental Colgate Natural Extracts Carvão Ativado com Menta",
+      "detail": "140g",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "storeCategory": "Perfumaria/Higiene Oral/Creme Dental",
+      "price": 18.99,
       "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
@@ -7850,7 +7874,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 34.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7874,7 +7898,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 34.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7898,7 +7922,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 34.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7922,7 +7946,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 36.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7946,7 +7970,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 34.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -7970,7 +7994,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Mamãe e Bebê/Banho Infantil/Shampoo Infantil",
-      "price": 23.99,
+      "price": 20.99,
       "previousPrice": 33.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -8283,7 +8307,7 @@
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
       "price": 12.99,
-      "previousPrice": 15.99,
+      "previousPrice": 14.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8331,7 +8355,7 @@
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
       "price": 12.99,
-      "previousPrice": 15.99,
+      "previousPrice": 14.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8389,6 +8413,30 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
+      "id": "paguemenos-ketchup-heinz-tradicional-heinz-397g-2026-11-16",
+      "store": "Pague Menos",
+      "storeLogo": "logos/paguemenos.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Ketchup Heinz Tradicional",
+      "detail": "397g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "storeCategory": "Mercearia/Molhos Frios/Catchup",
+      "price": 12.99,
+      "previousPrice": 14.99,
+      "icon": "🥫",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
       "id": "paguemenos-ketchup-heinz-picante-heinz-397g-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
@@ -8403,7 +8451,7 @@
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
       "price": 12.99,
-      "previousPrice": 15.99,
+      "previousPrice": 14.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -8883,7 +8931,7 @@
       ],
       "storeCategory": "Mercearia/Molho de Tomate e Similares/Extrato de Tomate",
       "price": 4.99,
-      "previousPrice": 6.89,
+      "previousPrice": 5.99,
       "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9866,8 +9914,8 @@
         "Cervejas"
       ],
       "storeCategory": "Bebidas/Cervejas/Cerveja Puro Malte",
-      "price": 4.79,
-      "previousPrice": null,
+      "price": 3.39,
+      "previousPrice": 4.79,
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9890,8 +9938,8 @@
         "Cervejas"
       ],
       "storeCategory": "Bebidas/Cervejas/Cerveja Light",
-      "price": 4.79,
-      "previousPrice": null,
+      "price": 3.39,
+      "previousPrice": 4.79,
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9914,8 +9962,8 @@
         "Cervejas"
       ],
       "storeCategory": "Bebidas/Cervejas/Cerveja Puro Malte",
-      "price": 3.69,
-      "previousPrice": null,
+      "price": 2.59,
+      "previousPrice": 3.69,
       "icon": "🍺",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9938,8 +9986,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.99,
-      "previousPrice": null,
+      "price": 6.29,
+      "previousPrice": 8.99,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9962,8 +10010,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.99,
-      "previousPrice": null,
+      "price": 6.29,
+      "previousPrice": 8.99,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -9986,8 +10034,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.99,
-      "previousPrice": null,
+      "price": 6.29,
+      "previousPrice": 8.99,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10010,8 +10058,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Energético",
-      "price": 8.99,
-      "previousPrice": null,
+      "price": 6.29,
+      "previousPrice": 8.99,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10034,8 +10082,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Isotônico",
-      "price": 4.59,
-      "previousPrice": null,
+      "price": 3.49,
+      "previousPrice": 4.59,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10058,8 +10106,8 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Isotônico",
-      "price": 4.69,
-      "previousPrice": null,
+      "price": 3.49,
+      "previousPrice": 4.69,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -10130,7 +10178,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Lava Roupas",
-      "price": 26.99,
+      "price": 20.9,
       "previousPrice": 28.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -10154,7 +10202,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Lava Roupas",
-      "price": 26.99,
+      "price": 20.9,
       "previousPrice": 28.99,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -11573,8 +11621,8 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 23.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 23.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11597,8 +11645,8 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 23.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 23.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11621,8 +11669,8 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 24.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 24.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11645,8 +11693,8 @@
         "Café"
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
-      "price": 23.99,
-      "previousPrice": null,
+      "price": 14.99,
+      "previousPrice": 23.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -11944,11 +11992,59 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
+      "id": "paguemenos-capsula-nescafe-dolce-gusto-cafe-caseiro-dolce-gusto-10-unidades-2026-11-16",
+      "store": "Pague Menos",
+      "storeLogo": "logos/paguemenos.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Cápsula Nescafé Dolce Gusto Café Caseiro",
+      "detail": "10 Unidades",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
+      "productTypes": [
+        "Café"
+      ],
+      "storeCategory": "Café da Manhã/Café/Cápsulas",
+      "price": 18.99,
+      "previousPrice": 24.99,
+      "icon": "☕",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
       "id": "paguemenos-capsula-nescafe-dolce-gusto-cappuccino-dolce-gusto-10-unidades-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
       "branch": "Loja 33 · Jardim Santo André",
       "name": "Cápsula Nescafé Dolce Gusto Cappuccino",
+      "detail": "10 Unidades",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
+      "productTypes": [
+        "Café"
+      ],
+      "storeCategory": "Café da Manhã/Café/Cápsulas",
+      "price": 18.99,
+      "previousPrice": 24.99,
+      "icon": "☕",
+      "tone": "#edf4e9",
+      "note": "Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
+      "source": "Ofertas online oficiais · Loja 33",
+      "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
+    },
+    {
+      "id": "paguemenos-capsula-nescafe-dolce-gusto-caffe-matinal-dolce-gusto-10-unidades-2026-11-16",
+      "store": "Pague Menos",
+      "storeLogo": "logos/paguemenos.png",
+      "branch": "Loja 33 · Jardim Santo André",
+      "name": "Cápsula Nescafé Dolce Gusto Caffè Matinal",
       "detail": "10 Unidades",
       "category": "Mercearia",
       "department": "Mercearia",
@@ -12725,7 +12821,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Tira Manchas",
-      "price": 75.99,
+      "price": 83.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -13312,11 +13408,11 @@
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
-      "id": "paguemenos-limpador-veja-banheiro-x-14-tira-limo-veja-500ml-2026-11-16",
+      "id": "paguemenos-limpador-veja-tira-limo-x-14-veja-500ml-2026-11-16",
       "store": "Pague Menos",
       "storeLogo": "logos/paguemenos.png",
       "branch": "Loja 33 · Jardim Santo André",
-      "name": "Limpador Veja Banheiro X-14 Tira Limo",
+      "name": "Limpador Veja Tira Limo X-14",
       "detail": "500ml",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
@@ -13733,7 +13829,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 17.99,
+      "price": 16.99,
       "previousPrice": 20.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13757,7 +13853,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 14.99,
+      "price": 8.99,
       "previousPrice": 21.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13853,7 +13949,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Facial/Creme Facial",
-      "price": 34.99,
+      "price": 29.9,
       "previousPrice": 43.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13877,7 +13973,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.9,
+      "price": 7.99,
       "previousPrice": 13.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13901,7 +13997,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.9,
+      "price": 7.99,
       "previousPrice": 13.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13925,7 +14021,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.9,
+      "price": 7.99,
       "previousPrice": 13.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -13997,7 +14093,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 17.99,
+      "price": 16.99,
       "previousPrice": 20.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14021,7 +14117,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 19.9,
+      "price": 9.9,
       "previousPrice": 36.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14165,7 +14261,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 14.99,
+      "price": 8.99,
       "previousPrice": 21.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14309,7 +14405,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 24.99,
+      "price": 14.99,
       "previousPrice": 31.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14453,7 +14549,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 14.99,
+      "price": 8.99,
       "previousPrice": 21.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14525,7 +14621,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.99,
+      "price": 8.99,
       "previousPrice": 12.59,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14837,7 +14933,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 17.99,
+      "price": 16.99,
       "previousPrice": 20.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14861,7 +14957,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 17.99,
+      "price": 16.99,
       "previousPrice": 20.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14885,7 +14981,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.99,
+      "price": 8.99,
       "previousPrice": 12.59,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14909,7 +15005,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.99,
+      "price": 8.99,
       "previousPrice": 12.59,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14933,7 +15029,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.99,
+      "price": 8.99,
       "previousPrice": 12.59,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14957,7 +15053,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Desodorante",
-      "price": 9.99,
+      "price": 8.99,
       "previousPrice": 12.59,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -14981,7 +15077,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 11.99,
+      "price": 10.99,
       "previousPrice": 14.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -15005,7 +15101,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 11.99,
+      "price": 10.99,
       "previousPrice": 14.99,
       "icon": "🧴",
       "tone": "#edf4e9",
@@ -15029,7 +15125,7 @@
         "Higiene pessoal"
       ],
       "storeCategory": "Perfumaria/Corpo/Loção Hidratante",
-      "price": 11.99,
+      "price": 10.99,
       "previousPrice": 14.99,
       "icon": "🧴",
       "tone": "#edf4e9",

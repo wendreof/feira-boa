@@ -151,23 +151,24 @@ export async function generateFlyerCampaignsViaGemini({
     },
   };
 
-  const res = await withGeminiTransientRetry(
-    () =>
-      fetchWithRetry(
-        endpoint,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        },
-        { attempts: 6, delayMs: 2_500, timeoutMs },
-      ),
-    { attempts: 4, delayMs: 5_000 },
-  );
-  if (!res.ok) {
-    const detail = await res.text();
-    throw new Error(`Gemini ${errorLabel} extraction failed (${res.status}): ${detail.slice(0, 300)}`);
-  }
+  const res = await withGeminiTransientRetry(async () => {
+    const response = await fetchWithRetry(
+      endpoint,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+      { attempts: 6, delayMs: 2_500, timeoutMs },
+    );
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(
+        `Gemini ${errorLabel} extraction failed (${response.status}): ${detail.slice(0, 300)}`,
+      );
+    }
+    return response;
+  }, { attempts: 4, delayMs: 5_000 });
 
   const payload = await res.json();
   const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("") ?? "";

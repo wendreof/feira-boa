@@ -7,6 +7,7 @@ import {
   geminiApiKey,
   generateFlyerCampaignsViaGemini,
   USER_AGENT,
+  withGeminiTransientRetry,
 } from "./adapters/gemini-flyer.mjs";
 import { discoverCorsoFlyerFromHtml } from "./domain/corso-flyer.mjs";
 import { discoverSpassoFlyersFromHtml } from "./domain/spasso-flyer.mjs";
@@ -93,13 +94,17 @@ async function auditFortemixVision(manifest, apiKeyPresent) {
   ].join("\n");
 
   try {
-    const extractedCampaigns = await generateFlyerCampaignsViaGemini({
-      prompt,
-      images,
-      modelEnvKeys: ["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"],
-      errorLabel: "ForteMix audit",
-      timeoutMs: 120_000,
-    });
+    const extractedCampaigns = await withGeminiTransientRetry(
+      () =>
+        generateFlyerCampaignsViaGemini({
+          prompt,
+          images,
+          modelEnvKeys: ["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"],
+          errorLabel: "ForteMix audit",
+          timeoutMs: 120_000,
+        }),
+      { attempts: 3, delayMs: 6_000 },
+    );
     const comparison = compareVisionOfferSets(
       flattenCampaignOffers(reference),
       flattenCampaignOffers({ campaigns: extractedCampaigns }),

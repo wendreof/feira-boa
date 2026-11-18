@@ -50,6 +50,35 @@ export function geminiExtractionEnabled() {
   return geminiApiKey().length > 0;
 }
 
+/** @param {unknown} error */
+export function isTransientGeminiError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    /\((503|429|500|502|504)\)/.test(message) ||
+    /overloaded|unavailable|resource exhausted|rate limit/i.test(message) ||
+    /terminated|aborted|ECONNRESET|fetch failed/i.test(message)
+  );
+}
+
+/**
+ * @template T
+ * @param {() => Promise<T>} fn
+ * @param {{ attempts?: number, delayMs?: number }} [options]
+ */
+export async function withGeminiTransientRetry(fn, { attempts = 3, delayMs = 4_000 } = {}) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      if (!isTransientGeminiError(error) || attempt === attempts) throw error;
+      await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+    }
+  }
+  throw lastError ?? new Error("Gemini transient retry exhausted.");
+}
+
 /**
  * @param {string} url
  * @param {{ label?: string, defaultMime?: string }} [options]
@@ -122,14 +151,18 @@ export async function generateFlyerCampaignsViaGemini({
     },
   };
 
-  const res = await fetchWithRetry(
-    endpoint,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    },
-    { attempts: 5, delayMs: 2_000, timeoutMs },
+  const res = await withGeminiTransientRetry(
+    () =>
+      fetchWithRetry(
+        endpoint,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        },
+        { attempts: 6, delayMs: 2_500, timeoutMs },
+      ),
+    { attempts: 4, delayMs: 5_000 },
   );
   if (!res.ok) {
     const detail = await res.text();

@@ -3,6 +3,7 @@ import {
   downloadFlyerImageBase64,
   geminiExtractionEnabled,
   generateFlyerCampaignsViaGemini,
+  withGeminiTransientRetry,
 } from "./gemini-flyer.mjs";
 
 export { geminiExtractionEnabled };
@@ -54,13 +55,17 @@ export async function extractSpassoCampaignsViaGemini(imageUrls) {
     const images = await Promise.all(
       urls.map((url) => downloadFlyerImageBase64(url, { label: "Spasso flyer", defaultMime: "image/png" })),
     );
-    const part = await generateFlyerCampaignsViaGemini({
-      prompt: spassoPrompt(batchIndex + 1, batches.length),
-      images,
-      modelEnvKeys: ["SPASSO_GEMINI_MODEL", "GEMINI_MODEL"],
-      errorLabel: "Spasso",
-      timeoutMs: 180_000,
-    });
+    const part = await withGeminiTransientRetry(
+      () =>
+        generateFlyerCampaignsViaGemini({
+          prompt: spassoPrompt(batchIndex + 1, batches.length),
+          images,
+          modelEnvKeys: ["SPASSO_GEMINI_MODEL", "GEMINI_MODEL"],
+          errorLabel: "Spasso",
+          timeoutMs: 180_000,
+        }),
+      { attempts: 3, delayMs: 6_000 },
+    );
     campaigns.push(...part);
   }
 

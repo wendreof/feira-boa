@@ -11,7 +11,7 @@ import {
 import { discoverCorsoFlyerFromHtml } from "./domain/corso-flyer.mjs";
 import { discoverSpassoFlyersFromHtml } from "./domain/spasso-flyer.mjs";
 import {
-  compareOfferSets,
+  compareVisionOfferSets,
   describeFlyerHashAlignment,
   flattenCampaignOffers,
   hasCriticalIssues,
@@ -100,7 +100,7 @@ async function auditFortemixVision(manifest, apiKeyPresent) {
       errorLabel: "ForteMix audit",
       timeoutMs: 120_000,
     });
-    const comparison = compareOfferSets(
+    const comparison = compareVisionOfferSets(
       flattenCampaignOffers(reference),
       flattenCampaignOffers({ campaigns: extractedCampaigns }),
     );

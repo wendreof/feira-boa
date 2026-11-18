@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   compareOfferSets,
+  compareVisionOfferSets,
   describeFlyerHashAlignment,
   offerAuditKey,
   sanityCheckCampaignFile,
@@ -39,5 +40,31 @@ describe("flyer-audit", () => {
     const msg = describeFlyerHashAlignment("999", "123");
     assert.equal(msg.status, "stale");
     assert.equal(msg.level, "critical");
+  });
+
+  it("visionAuditKey folds Gemini OCR formatting against manual transcription", () => {
+    const manual = { name: "Milho Verde", brand: "", detail: "bandeja", price: 4.98 };
+    const gemini = { name: "MILHO VERDE", brand: "", detail: "BDJ", price: 4.98 };
+  assert.equal(compareVisionOfferSets([manual], [gemini]).criticalCount, 0);
+  });
+
+  it("compareVisionOfferSets tolerates brand placement and flyer abbreviations", () => {
+    const expected = [
+      { name: "Arroz Tipo 1", brand: "Exxtra", detail: "5kg", price: 17.98 },
+      { name: "Abóbora Cabotiá", brand: "", detail: "kg", price: 4.98 },
+    ];
+    const actual = [
+      { name: "ARROZ EXXTRA", brand: "EXXTRA", detail: "5KG TIPO 1", price: 17.98 },
+      { name: "ABÓBORA CABOTHIA", brand: "", detail: "Kg", price: 4.98 },
+    ];
+    const result = compareVisionOfferSets(expected, actual);
+    assert.equal(result.criticalCount, 0);
+  });
+
+  it("compareVisionOfferSets treats pack totals as matching unit prices", () => {
+    const expected = [{ name: "Sabonete", brand: "Lux", detail: "85g pack 6 un", price: 1.98 }];
+    const actual = [{ name: "SABONETE LUX", brand: "LUX", detail: "85G 6UN", price: 11.88 }];
+    const result = compareVisionOfferSets(expected, actual);
+    assert.equal(result.criticalCount, 0);
   });
 });

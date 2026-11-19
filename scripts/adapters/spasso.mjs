@@ -10,6 +10,10 @@ import {
   discoverSpassoFlyersFromHtml,
   loadSpassoCampaignFile,
 } from "../domain/spasso-flyer.mjs";
+import {
+  isSpassoSectionBannerName,
+  spassoCampaignOfferValidity,
+} from "../domain/spasso-weekday-validity.mjs";
 import { extractSpassoCampaignsViaGemini, geminiExtractionEnabled } from "./spasso-gemini.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
@@ -49,21 +53,23 @@ function countOffers(campaigns) {
   return campaigns.reduce((sum, campaign) => sum + campaign.offers.length, 0);
 }
 
-function campaignsToOffers(campaigns, pageUrl) {
+function campaignsToOffers(campaigns, pageUrl, flyerImageUrls = []) {
   const offers = [];
   let validFrom = null;
   let validTo = null;
 
   for (const campaign of campaigns) {
-    validFrom = validFrom === null || campaign.from < validFrom ? campaign.from : validFrom;
-    validTo = validTo === null || campaign.to > validTo ? campaign.to : validTo;
+    const validity = spassoCampaignOfferValidity(campaign, flyerImageUrls);
+    validFrom = validFrom === null || validity.from < validFrom ? validity.from : validFrom;
+    validTo = validTo === null || validity.to > validTo ? validity.to : validTo;
 
     for (const item of campaign.offers) {
       const name = mergeBrandIntoName(item.name, item.brand);
+      if (isSpassoSectionBannerName(name)) continue;
       const taxonomy = classifyProduct(name, item.cat, item.cat);
       const offer = createOffer({
         storeId: "spasso",
-        idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from}`,
+        idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from ?? validity.from}`,
         store: SPASSO_STORE,
         sourceUrl: pageUrl,
         product: {
@@ -73,7 +79,7 @@ function campaignsToOffers(campaigns, pageUrl) {
           price: item.price,
           previousPrice: item.oldPrice,
         },
-        validity: { from: campaign.from, to: campaign.to },
+        validity: { from: validity.from, to: validity.to, validWeekdays: validity.validWeekdays },
         taxonomy,
       });
 
@@ -87,12 +93,17 @@ function campaignsToOffers(campaigns, pageUrl) {
 }
 
 async function resolveCampaigns(flyer, cache) {
-  const cacheIsCurrent = cache.flyerHash === flyer.hash && cache.campaigns.length > 0;
-  if (cacheIsCurrent) {
+  if (cache.flyerHash === flyer.hash && cache.campaigns.length > 0) {
     return { campaigns: cache.campaigns, extractionMethod: "cache" };
   }
 
   if (!geminiExtractionEnabled()) {
+    if (cache.campaigns.length > 0) {
+      console.warn(
+        "[Spasso Sabores] Flyer hash changed; reusing last transcription until Gemini runs in CI.",
+      );
+      return { campaigns: cache.campaigns, extractionMethod: "cache_stale_hash" };
+    }
     return {
       campaigns: [],
       extractionMethod: "skipped_no_api_key",
@@ -156,7 +167,7 @@ export async function extractSpasso(customUrl = null) {
     };
   }
 
-  const { offers, validFrom, validTo } = campaignsToOffers(campaigns, pageUrl);
+  const { offers, validFrom, validTo } = campaignsToOffers(campaigns, pageUrl, flyer.imageUrls);
   if (offers.length === 0) {
     throw new Error("Spasso adapter produced zero valid offers after extraction.");
   }

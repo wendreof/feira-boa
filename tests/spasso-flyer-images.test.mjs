@@ -29,3 +29,21 @@ test("drops Spasso logos and keeps dated flyer PNGs", () => {
   assert.equal(labelSpassoFlyerImage(urls[1]), "Hortifruti");
   assert.equal(labelSpassoFlyerImage(urls[2]), "Açougue");
 });
+
+test("Spasso typo ACOGUE and page decoration URLs are not flyer images", () => {
+  const mixed = [
+    "https://spassosabores.com.br/wp-content/uploads/2026/08/ACOUGUE-SPASSO-1.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-ACOGUE-4-A-6-11-2026.png",
+    "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
+    "https://spassosabores.com.br/wp-content/uploads/2021/01/bg-novidades.jpg",
+  ];
+  assert.deepEqual(
+    [...filterSpassoFlyerImages(mixed)].sort(),
+    [
+      "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-ACOGUE-4-A-6-11-2026.png",
+      "https://spassosabores.com.br/wp-content/uploads/2026/11/SPASSO-FLV-3-A-4-11-2026.png",
+    ].sort(),
+  );
+  assert.equal(isSpassoFlyerImage(mixed[3]), false);
+  assert.equal(labelSpassoFlyerImage(mixed[1]), "Açougue");
+});

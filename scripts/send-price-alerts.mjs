@@ -128,7 +128,7 @@ async function sendOneTelegramAlert({ supabase, config, chatId, userId, offer, t
   let delivered = false;
   let safeErrorCode = null;
   try {
-    await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup, linkPreview: true });
+    await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup });
     delivered = true;
   } catch (error) {
     safeErrorCode = telegramErrorCode(error);
@@ -149,9 +149,9 @@ async function sendOneTelegramAlert({ supabase, config, chatId, userId, offer, t
   await sleep(TELEGRAM_SEND_GAP_MS);
 }
 
-async function sendOnePushAlert({ supabase, config, userId, offer, subscriptions, counts }) {
+async function sendOnePushAlert({ supabase, config, userId, offer, subscriptions, today, counts }) {
   const { title, body } = buildAlertMessage(offer);
-  const payload = buildPushPayloadForOffer({ offer, siteUrl: config.siteUrl, title, body });
+  const payload = buildPushPayloadForOffer({ offer, siteUrl: config.siteUrl, title, body, today });
   let delivered = false;
   let safeErrorCode = null;
   for (const row of subscriptions) {
@@ -240,7 +240,7 @@ async function sendAlerts({
     const text = buildTelegramDigestText(offers, config.siteUrl);
     const replyMarkup = buildTelegramDigestReplyMarkup(config.siteUrl);
     try {
-      await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup, linkPreview: false });
+      await sendTelegramMessage(config.telegramToken, chatId, text, { replyMarkup });
       counts.digestsSent += 1;
     } catch (error) {
       const code = telegramErrorCode(error);
@@ -263,7 +263,7 @@ async function sendAlerts({
       counts.skippedNoPush += 1;
       continue;
     }
-    await sendOnePushAlert({ supabase, config, userId, offer, subscriptions, counts });
+    await sendOnePushAlert({ supabase, config, userId, offer, subscriptions, today, counts });
   }
 
   return counts;

@@ -5,6 +5,7 @@ import {
   catalogFeedFingerprint,
   catalogPushAlreadySentToday,
 } from "./domain/catalog-feed-fingerprint.mjs";
+import { isOfferActive } from "./domain/offer-validity.mjs";
 import {
   buildPushPayload,
   configureVapid,
@@ -65,6 +66,8 @@ function buildCatalogMessage({ activeCount, siteUrl }) {
       body,
       url: `${siteUrl.origin}/index.html`,
       tag: `feira-catalog-${saoPauloDate()}`,
+      siteUrl,
+      today: saoPauloDate(),
     }),
   };
 }
@@ -78,9 +81,7 @@ async function main() {
   const today = saoPauloDate();
   const feed = await loadFeed();
   const fingerprint = catalogFeedFingerprint(feed, today);
-  const activeCount = (feed.offers ?? []).filter(
-    (offer) => offer.validFrom <= today && offer.validTo >= today,
-  ).length;
+  const activeCount = (feed.offers ?? []).filter((offer) => isOfferActive(offer, today)).length;
 
   const { data: stateRow, error: stateError } = await supabase
     .from("catalog_push_state")

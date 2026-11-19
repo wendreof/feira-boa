@@ -15,7 +15,7 @@ export const DEFAULT_OFFER_TONE = "#edf4e9";
  * @param {object} fields.store { name, logo, branch, source }
  * @param {string} fields.sourceUrl URL pública da oferta na fonte oficial
  * @param {object} fields.product { name, detail, storeCategory?, price, previousPrice?, note? }
- * @param {{ from: string, to: string }} fields.validity
+ * @param {{ from: string, to: string, validWeekdays?: number[] | null }} fields.validity
  * @param {{ department: string, productType: string, productTypes: string[] }} fields.taxonomy
  */
 export function createOffer({ storeId, idKey, store, sourceUrl, product, validity, taxonomy }) {
@@ -43,5 +43,8 @@ export function createOffer({ storeId, idKey, store, sourceUrl, product, validit
     source: store.source,
     sourceUrl,
   });
+  if (Array.isArray(validity.validWeekdays) && validity.validWeekdays.length > 0) {
+    offer.validWeekdays = validity.validWeekdays;
+  }
   return offer;
 }

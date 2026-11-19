@@ -26,6 +26,13 @@
   // Keep in sync with scripts/domain/display-name-cache.mjs.
   const DISPLAY_NAME_CACHE_KEY = "feira-boa:display-name:v1";
   const DISPLAY_NAME_METADATA_KEYS = ["display_name", "full_name", "name", "given_name", "user_name", "preferred_username"];
+  // Keep in sync with scripts/domain/provider-avatar-url.mjs
+  const PROVIDER_AVATAR_KEYS = {
+    twitter: ["avatar_url", "profile_image_url", "picture"],
+    x: ["avatar_url", "profile_image_url", "picture"],
+    google: ["picture", "avatar_url", "profile_image_url"],
+  };
+  const DEFAULT_AVATAR_KEYS = ["avatar_url", "picture", "profile_image_url"];
 
   function readStoredSession() {
     try {
@@ -133,6 +140,51 @@
     }
   }
 
+  // Keep in sync with scripts/domain/sidebar-avatar-src-cache.mjs
+  const SIDEBAR_AVATAR_SRC_CACHE_KEY = "feira-boa:sidebar-avatar-src:v1";
+
+  function readCachedSidebarAvatarSrc(userId) {
+    try {
+      const raw = sessionStorage.getItem(SIDEBAR_AVATAR_SRC_CACHE_KEY);
+      if (!raw) return undefined;
+      const entry = JSON.parse(raw);
+      if (entry.userId !== userId) return undefined;
+      const src = typeof entry.src === "string" ? entry.src.trim() : "";
+      return /^https?:\/\//i.test(src) ? src : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  function writeCachedSidebarAvatarSrc(userId, src) {
+    try {
+      const trimmed = typeof src === "string" ? src.trim() : "";
+      if (!/^https?:\/\//i.test(trimmed)) return;
+      sessionStorage.setItem(SIDEBAR_AVATAR_SRC_CACHE_KEY, JSON.stringify({ userId, src: trimmed }));
+    } catch {
+      // Private mode or quota.
+    }
+  }
+
+  function oauthProviderFromUser(user) {
+    const fromApp = user?.app_metadata?.provider;
+    if (typeof fromApp === "string" && fromApp.trim()) return fromApp.trim().toLowerCase();
+    const identity = user?.identities?.find((entry) => typeof entry?.provider === "string" && entry.provider.trim());
+    if (identity?.provider) return identity.provider.trim().toLowerCase();
+    return null;
+  }
+
+  function providerAvatarUrlFromMetadata(metadata, provider) {
+    if (!metadata || typeof metadata !== "object") return null;
+    const normalized = String(provider ?? "").toLowerCase().trim();
+    const keys = PROVIDER_AVATAR_KEYS[normalized] ?? DEFAULT_AVATAR_KEYS;
+    for (const key of keys) {
+      const value = metadata[key];
+      if (typeof value === "string" && /^https?:\/\//i.test(value.trim())) return value.trim();
+    }
+    return null;
+  }
+
   function avatarPublicUrl(path, sizePx) {
     const objectPath = path.trim().split("/").map((segment) => encodeURIComponent(segment)).join("/");
     const base = "https://muiuvmhzzbqflxznpnez.supabase.co";
@@ -148,18 +200,38 @@
     return `${base}/storage/v1/render/image/public/avatars/${objectPath}?${params}`;
   }
 
+  // Keep in sync with scripts/domain/sidebar-avatar-prime.mjs
+  function sidebarAvatarUrlsToTry(userId, remoteOAuthUrl) {
+    const cachedSrc = readCachedSidebarAvatarSrc(userId);
+    if (cachedSrc) return [cachedSrc];
+
+    const cachedPath = readCachedAvatarPath(userId);
+    if (typeof cachedPath === "string" && cachedPath.trim()) {
+      const path = cachedPath.trim();
+      return [avatarPublicUrl(path, 64), avatarPublicUrl(path)];
+    }
+
+    const oauth = typeof remoteOAuthUrl === "string" ? remoteOAuthUrl.trim() : "";
+    if (/^https?:\/\//i.test(oauth) && (cachedPath === null || cachedPath === undefined)) {
+      return [oauth];
+    }
+    return null;
+  }
+
   function primeSidebarAvatarFromCache() {
     const userId = readStoredUserId();
     if (!userId) return;
-    const path = readCachedAvatarPath(userId);
-    if (!path) return;
     const image = document.querySelector("#topbar-account-image");
     const fallback = document.querySelector("#topbar-account-fallback");
     if (!(image instanceof HTMLImageElement)) return;
+
     const showPhoto = () => {
+      image.referrerPolicy = "no-referrer";
       image.style.opacity = "";
       image.hidden = false;
       if (fallback instanceof HTMLElement) fallback.hidden = true;
+      const settledSrc = image.currentSrc || image.src;
+      if (settledSrc) writeCachedSidebarAvatarSrc(userId, settledSrc);
     };
     const showFallback = () => {
       image.style.opacity = "";
@@ -167,14 +239,49 @@
       image.hidden = true;
       if (fallback instanceof HTMLElement) fallback.hidden = false;
     };
-    image.loading = "eager";
-    image.decoding = "async";
-    image.addEventListener("load", showPhoto, { once: true });
-    image.addEventListener("error", showFallback, { once: true });
-    image.hidden = false;
-    image.style.opacity = "0";
-    image.src = avatarPublicUrl(path, 64);
-    if (image.complete && image.naturalWidth > 0) showPhoto();
+
+    const session = readStoredSession();
+    const remote = providerAvatarUrlFromMetadata(
+      session?.user?.user_metadata,
+      oauthProviderFromUser(session?.user),
+    );
+
+    const urls = sidebarAvatarUrlsToTry(userId, remote);
+    if (!urls || urls.length === 0) return;
+
+    const bindLoad = (url, onError) => {
+      image.loading = "eager";
+      image.decoding = "async";
+      const onLoad = () => showPhoto();
+      const onFail = () => {
+        image.removeEventListener("load", onLoad);
+        if (onError) onError();
+        else showFallback();
+      };
+      image.addEventListener("load", onLoad, { once: true });
+      image.addEventListener("error", onFail, { once: true });
+      image.hidden = false;
+      image.style.opacity = "0";
+      image.referrerPolicy = "no-referrer";
+      image.src = url;
+      if (image.complete && image.naturalWidth > 0) {
+        showPhoto();
+      } else if (image.complete && image.naturalWidth === 0) {
+        onFail();
+      }
+    };
+
+    const tryFromIndex = (index) => {
+      const url = urls[index];
+      if (!url) {
+        showFallback();
+        return;
+      }
+      const next = urls[index + 1];
+      bindLoad(url, next ? () => tryFromIndex(index + 1) : undefined);
+    };
+
+    tryFromIndex(0);
   }
 
   resetGuestSidebarAvatar();

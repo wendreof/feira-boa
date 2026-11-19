@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { createHash } from "node:crypto";
+import { isOfferActive } from "./offer-validity.mjs";
 
 /**
  * Stable fingerprint for the active catalog slice (detect ingest changes).
@@ -8,9 +9,7 @@ import { createHash } from "node:crypto";
  */
 export function catalogFeedFingerprint(feed, today) {
   const updatedAt = String(feed?.updatedAt ?? "");
-  const active = (feed?.offers ?? []).filter(
-    (offer) => offer.validFrom <= today && offer.validTo >= today,
-  );
+  const active = (feed?.offers ?? []).filter((offer) => isOfferActive(offer, today));
   const ids = active.map((offer) => offer.id).sort();
   const idDigest = createHash("sha256").update(ids.join("\n")).digest("hex");
   return createHash("sha256").update(`${updatedAt}|${active.length}|${idDigest}`).digest("hex");

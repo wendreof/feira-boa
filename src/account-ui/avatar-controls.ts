@@ -1,4 +1,5 @@
 import { AVATAR_SIZE, loadAvatar, readCachedAvatarPath, removeAvatar, setAvatarImage, uploadAvatar, writeCachedAvatarPath } from "../avatar";
+import { clearCachedSidebarAvatarSrc } from "../../scripts/domain/sidebar-avatar-src-cache.mjs";
 import { errorMessage } from "../account";
 import { accountState } from "./state";
 import { setStatus } from "./ui";
@@ -40,6 +41,7 @@ export function primeAvatarFromCache(userId: string): void {
 export function applyAvatarPath(userId: string, path: string | null): void {
   accountState.avatarPath = path;
   writeCachedAvatarPath(userId, path, sessionStorage);
+  clearCachedSidebarAvatarSrc(sessionStorage);
   renderAvatar();
 }
 

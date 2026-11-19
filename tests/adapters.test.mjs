@@ -298,6 +298,8 @@ test("assignIcon gives each deli item its own icon", () => {
   assert.equal(assignIcon("Mortadela Defumada Sadia", "Frios", "Frios e laticínios"), "🍖");
   assert.equal(assignIcon("Presunto Sadia Cozido Fatiado", "Frios", "Frios e laticínios"), "🍖");
   assert.equal(assignIcon("Ketchup Bacon com Cebola Caramelizada", "Mercearia", "Mercearia"), "🥫");
+  assert.equal(assignIcon("Lava-Louças Líquido Ypê", "Outros", "Casa e limpeza"), "🧺");
+  assert.equal(assignIcon("Panetone Artesanal", "Outros", "Mercearia"), "🎂");
 });
 
 test("normalizeOfferPresentation keeps the brand inside the product name", () => {

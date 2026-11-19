@@ -4,7 +4,8 @@ import { loadFlyerCampaignFile } from "./flyer-campaign-cache.mjs";
 import { decodeHtmlEntities } from "./html-entities.mjs";
 
 const FLYER_HINT = /(?:^|[/_-])(?:flv|acougue|encarte|oferta|spasso-\d)/i;
-const NOISE_HINT = /(?:logo|icon|favicon|cropped|placeholder|spinner|avatar|banner-site|google-play|apple-store|app-store|play-store)/i;
+const NOISE_HINT =
+  /(?:logo|icon|favicon|cropped|placeholder|spinner|avatar|banner-site|google-play|apple-store|app-store|play-store|novidades|\bbg[-_])/i;
 
 /** @param {string} url */
 export function isSpassoFlyerImage(url) {
@@ -24,7 +25,7 @@ function uploadYearMonth(url) {
 function flyerFamily(url) {
   const file = url.split("/").pop()?.toLowerCase() ?? "";
   if (file.includes("flv")) return "flv";
-  if (file.includes("acougue")) return "acougue";
+  if (file.includes("acougue") || file.includes("acogue")) return "acougue";
   return file.replace(/\.(?:png|jpe?g|webp)$/i, "");
 }
 
@@ -51,7 +52,7 @@ export function filterSpassoFlyerImages(urls) {
 export function labelSpassoFlyerImage(url) {
   const file = url.split("/").pop()?.replace(/\.png$/i, "") ?? "Encarte";
   if (/FLV/i.test(file)) return "Hortifruti";
-  if (/ACOUGUE/i.test(file)) return "Açougue";
+  if (/ACOUGUE|ACOGUE/i.test(file)) return "Açougue";
   if (/SPASSO-\d/i.test(file)) return `Encarte ${file.match(/SPASSO-(\d+)/i)?.[1] ?? ""}`.trim();
   return file.replace(/-/g, " ");
 }
@@ -79,6 +80,32 @@ export function hashSpassoFlyerSet(imageUrls) {
 
 export function loadSpassoCampaignFile(raw) {
   return loadFlyerCampaignFile(raw);
+}
+
+/** @param {{ to?: string }[]} campaigns */
+export function latestCampaignEndDate(campaigns) {
+  let maxTo = null;
+  for (const campaign of campaigns ?? []) {
+    const to = campaign?.to;
+    if (!to || (maxTo !== null && to <= maxTo)) continue;
+    maxTo = to;
+  }
+  return maxTo;
+}
+
+/** @param {{ to?: string }[]} campaigns @param {string} [today] */
+export function campaignCacheIsActive(campaigns, today = todayInSaoPaulo()) {
+  const maxTo = latestCampaignEndDate(campaigns);
+  return maxTo !== null && maxTo >= today;
+}
+
+function todayInSaoPaulo(now = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
 }
 
 export function defaultSpassoValidityWindow(now = new Date()) {

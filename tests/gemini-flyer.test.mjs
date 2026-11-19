@@ -4,8 +4,10 @@ import {
   campaignSchemaJson,
   geminiApiKey,
   geminiExtractionEnabled,
+  isTransientGeminiError,
   parseGeminiCampaignsJson,
   resolveGeminiModel,
+  withGeminiTransientRetry,
 } from "../scripts/adapters/gemini-flyer.mjs";
 
 describe("gemini-flyer", () => {
@@ -41,6 +43,10 @@ describe("gemini-flyer", () => {
     process.env.CUSTOM_MODEL = "custom";
     assert.equal(resolveGeminiModel(["CUSTOM_MODEL", "GEMINI_MODEL"]), "custom");
     assert.equal(resolveGeminiModel(["MISSING"]), "gemini-3.8-flash");
+    assert.equal(
+      resolveGeminiModel(["GEMINI_AUDIT_MODEL", "GEMINI_MODEL"]),
+      "gemini-3.5-flash-lite",
+    );
   });
 
   it("parseGeminiCampaignsJson validates campaigns array", () => {
@@ -66,5 +72,24 @@ describe("gemini-flyer", () => {
 
   it("parseGeminiCampaignsJson rejects unrecoverable JSON", () => {
     assert.throws(() => parseGeminiCampaignsJson("{{{{", "Test"), /valid JSON/);
+  });
+
+  it("isTransientGeminiError detects HTTP overload codes", () => {
+    assert.equal(isTransientGeminiError(new Error("Gemini Spasso extraction failed (503): overload")), true);
+    assert.equal(isTransientGeminiError(new Error("Gemini Spasso extraction failed (404): missing")), false);
+  });
+
+  it("withGeminiTransientRetry retries transient failures", async () => {
+    let calls = 0;
+    const value = await withGeminiTransientRetry(
+      async () => {
+        calls += 1;
+        if (calls < 2) throw new Error("Gemini Spasso extraction failed (503): overload");
+        return "ok";
+      },
+      { attempts: 3, delayMs: 1 },
+    );
+    assert.equal(value, "ok");
+    assert.equal(calls, 2);
   });
 });

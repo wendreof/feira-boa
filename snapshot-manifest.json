@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-17T12:13:22.238Z",
+  "updatedAt": "2026-11-18T13:45:49.915Z",
   "current": [
     {
       "role": "current",
       "storeId": "bigbom",
       "storeName": "Big Bom",
       "branch": "Vila Zanetti · São João",
-      "fetchedAt": "2026-11-17T12:12:41.967Z",
+      "fetchedAt": "2026-11-18T13:35:47.330Z",
       "supersededAt": null,
       "offerCount": 24,
       "status": "ok",
@@ -20,7 +20,7 @@
       "storeId": "corso",
       "storeName": "Corso",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
-      "fetchedAt": "2026-11-17T12:12:46.085Z",
+      "fetchedAt": "2026-11-18T13:35:51.810Z",
       "supersededAt": null,
       "offerCount": 123,
       "status": "ok",
@@ -33,12 +33,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-17T12:13:22.238Z",
+      "fetchedAt": "2026-11-18T13:45:49.915Z",
       "supersededAt": null,
-      "offerCount": 27,
+      "offerCount": 61,
       "status": "ok",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-16",
+      "validFrom": "2026-11-17",
+      "validTo": "2026-11-30",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {
@@ -46,9 +46,9 @@
       "storeId": "paguemenos",
       "storeName": "Pague Menos",
       "branch": "Loja 33 · Jardim Santo André",
-      "fetchedAt": "2026-11-17T12:12:50.825Z",
+      "fetchedAt": "2026-11-18T13:35:58.985Z",
       "supersededAt": null,
-      "offerCount": 632,
+      "offerCount": 631,
       "status": "ok",
       "validFrom": "2026-11-16",
       "validTo": "2026-11-22",
@@ -72,7 +72,7 @@
       "storeId": "spani",
       "storeName": "Spani Atacadista",
       "branch": "São João da Boa Vista · Jardim das Flores",
-      "fetchedAt": "2026-11-17T12:13:22.231Z",
+      "fetchedAt": "2026-11-18T13:45:49.888Z",
       "supersededAt": null,
       "offerCount": 939,
       "status": "ok",
@@ -85,12 +85,12 @@
       "storeId": "spasso",
       "storeName": "Spasso Sabores",
       "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-      "fetchedAt": "2026-11-17T12:12:51.766Z",
+      "fetchedAt": "2026-11-17T13:35:54.533Z",
       "supersededAt": null,
       "offerCount": 127,
       "status": "ok",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
     }
   ],
@@ -126,12 +126,12 @@
       "storeId": "fortemix",
       "storeName": "Forte Mix",
       "branch": "Rede Forte · SJBV e região",
-      "fetchedAt": "2026-11-15T03:00:09.241Z",
-      "supersededAt": "2026-11-16T12:58:29.514Z",
-      "offerCount": 32,
+      "fetchedAt": "2026-11-17T12:15:25.359Z",
+      "supersededAt": "2026-11-17T12:19:27.214Z",
+      "offerCount": 27,
       "status": "ok",
-      "validFrom": "2026-11-13",
-      "validTo": "2026-11-13",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-16",
       "sourceUrl": "https://smfortemix.com.br/"
     },
     {
@@ -172,6 +172,19 @@
       "validFrom": "2026-11-09",
       "validTo": "2026-11-15",
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "role": "previous",
+      "storeId": "spasso",
+      "storeName": "Spasso Sabores",
+      "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
+      "fetchedAt": "2026-11-17T12:31:36.855Z",
+      "supersededAt": "2026-11-17T13:35:54.534Z",
+      "offerCount": 127,
+      "status": "ok",
+      "validFrom": "2026-08-12",
+      "validTo": "2026-11-07",
+      "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
     }
   ]
 }

@@ -49,37 +49,6 @@
     );
 }
 
-:root[data-christmas="on"] .brand {
-  position: relative;
-}
-
-:root[data-christmas="on"] .sidebar-brand-mark {
-  position: relative;
-}
-
-:root[data-christmas="on"] .brand::after,
-:root[data-christmas="on"] .sidebar-brand-mark::after {
-  content: "";
-  position: absolute;
-  top: -9px;
-  width: 26px;
-  height: 20px;
-  pointer-events: none;
-  background: no-repeat center / contain
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23d42426' d='M4 18 16 2l12 16Z'/%3E%3Cpath fill='%23fff' d='M16 2 5 17h22Z'/%3E%3Ccircle cx='26' cy='7' r='3' fill='%23fff'/%3E%3Crect x='1' y='17' width='30' height='5' rx='2.5' fill='%23fff'/%3E%3C/svg%3E");
-  filter: drop-shadow(0 2px 3px #0003);
-}
-
-:root[data-christmas="on"] .brand::after {
-  left: 18px;
-  transform: translateX(-50%);
-}
-
-:root[data-christmas="on"] .sidebar-brand-mark::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 @keyframes christmas-snow-drift {
   from {
     background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
@@ -93,18 +62,5 @@
   :root[data-christmas="on"] body::before {
     animation: none;
     opacity: 0.22;
-  }
-}
-
-@media (max-width: 760px) {
-  :root[data-christmas="on"] .brand::after,
-  :root[data-christmas="on"] .sidebar-brand-mark::after {
-    width: 22px;
-    height: 17px;
-    top: -7px;
-  }
-
-  :root[data-christmas="on"] .brand::after {
-    left: 15px;
   }
 }

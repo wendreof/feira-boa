@@ -2,6 +2,27 @@
 
 const SAO_PAULO_TZ = "America/Sao_Paulo";
 
+export const FAVICON_DEFAULT = "favicon.svg";
+export const FAVICON_CHRISTMAS = "favicon-christmas.svg";
+
+export const PUSH_NOTIFICATION_ICON_DEFAULT = "icons/notification-96.png";
+export const PUSH_NOTIFICATION_ICON_CHRISTMAS = "icons/notification-christmas-96.png";
+export const PUSH_NOTIFICATION_BADGE_DEFAULT = "icons/badge-72.png";
+export const PUSH_NOTIFICATION_BADGE_CHRISTMAS = "icons/badge-christmas-72.png";
+
+export const MANIFEST_DEFAULT = "manifest.webmanifest";
+export const MANIFEST_CHRISTMAS = "manifest-christmas.webmanifest";
+
+export const PWA_ICON_QUERY = "?v=20261117-ref";
+/** Cache-bust for tab + sidebar brand mark (same rev as PWA icons). */
+export const BRAND_FAVICON_HREF = `${FAVICON_DEFAULT}${PWA_ICON_QUERY}`;
+export const PWA_ICON_192_DEFAULT = "icons/icon-192.png";
+export const PWA_ICON_192_CHRISTMAS = "icons/icon-christmas-192.png";
+export const PWA_ICON_512_DEFAULT = "icons/icon-512.png";
+export const PWA_ICON_512_CHRISTMAS = "icons/icon-christmas-512.png";
+export const PWA_MASKABLE_512_DEFAULT = "icons/maskable-512.png";
+export const PWA_MASKABLE_512_CHRISTMAS = "icons/maskable-christmas-512.png";
+
 /**
  * @param {string} [timeZone]
  * @param {Date} [now]
@@ -44,13 +65,73 @@ export function parseChristmasSeasonQuery(searchParams) {
 }
 
 /**
+ * Default: on 1 Dec–6 Jan (São Paulo calendar). Preview via ?christmas=1 or localStorage; opt out via ?christmas=0.
  * @param {ChristmasSeasonOptions} [options]
  * @returns {boolean}
  */
 export function resolveChristmasSeasonEnabled(options = {}) {
-  const { today, queryOverride = null, storageOverride = null, now = new Date() } = options;
+  const { queryOverride = null, storageOverride = null, today, now = new Date() } = options;
   if (queryOverride === true || storageOverride === true) return true;
   if (queryOverride === false || storageOverride === false) return false;
   const resolvedToday = today ?? todayIsoInTimeZone(SAO_PAULO_TZ, now);
   return isChristmasSeasonDate(resolvedToday);
+}
+
+/**
+ * Server-side (push/Telegram): same rules as the site theme, without browser overrides.
+ * @param {{ today?: string, now?: Date, christmas?: boolean } & ChristmasSeasonOptions} [options]
+ */
+export function resolveChristmasSeasonForNotifications(options = {}) {
+  const { today, now = new Date(), christmas = undefined } = options;
+  if (typeof christmas === "boolean") return christmas;
+  const resolvedToday = today ?? todayIsoInTimeZone(SAO_PAULO_TZ, now);
+  return resolveChristmasSeasonEnabled({ ...options, today: resolvedToday, now });
+}
+
+/**
+ * Root-relative favicon. Brand mark is year-round; season only gates CSS theme.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
+ */
+export function siteFaviconPath(_options = {}) {
+  return `/${BRAND_FAVICON_HREF}`;
+}
+
+/**
+ * Absolute brand PNG URL (SVG favicons do not render as a raster everywhere).
+ * @param {string | URL} siteUrl
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
+ */
+export function siteFaviconUrl(siteUrl, _options = {}) {
+  const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
+  return new URL(`${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`, base).href;
+}
+
+/**
+ * Web Push icon/badge. Always the default brand files (season does not swap marks).
+ * @param {string | URL} siteUrl
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
+ * @returns {{ icon: string, badge: string }}
+ */
+export function sitePushNotificationAssets(siteUrl, _options = {}) {
+  const base = typeof siteUrl === "string" ? new URL(siteUrl) : siteUrl;
+  return {
+    icon: new URL(PUSH_NOTIFICATION_ICON_DEFAULT, base).href,
+    badge: new URL(PUSH_NOTIFICATION_BADGE_DEFAULT, base).href,
+  };
+}
+
+/**
+ * Web app manifest href. Icons live on the default manifest year-round.
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
+ */
+export function siteManifestHref(_options = {}) {
+  return MANIFEST_DEFAULT;
+}
+
+/**
+ * Apple touch / home-screen icon href (relative, includes cache query).
+ * @param {Parameters<typeof resolveChristmasSeasonForNotifications>[0]} [_options]
+ */
+export function siteAppleTouchIconHref(_options = {}) {
+  return `${PWA_ICON_192_DEFAULT}${PWA_ICON_QUERY}`;
 }

@@ -34,6 +34,9 @@ export function sendTelegramMessage(token, chatId, text, options = {}) {
     text,
     disable_web_page_preview: !linkPreview,
   };
+  if (!linkPreview) {
+    params.link_preview_options = { is_disabled: true };
+  }
   if (replyMarkup) params.reply_markup = replyMarkup;
   return telegramCall(token, "sendMessage", params);
 }

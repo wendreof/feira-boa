@@ -1,3 +1,5 @@
+import { isOfferActive } from "./offer-validity.mjs";
+
 /**
  * @param {string} today ISO date in America/Sao_Paulo (YYYY-MM-DD)
  */
@@ -7,17 +9,13 @@ export function addCalendarDays(today, days) {
   return date.toISOString().slice(0, 10);
 }
 
-function isActiveOffer(offer, today) {
-  return today >= offer.validFrom && today <= offer.validTo;
-}
-
 /**
  * @param {{ offers: any[], stores: any[], archivedCampaigns?: any[], updatedAt: string }} feed
  * @param {string} today
  * @param {Record<string, { needsReview?: boolean, error?: boolean }>} sourceStatus
  */
 export function summarizeCatalog(feed, today, sourceStatus = {}) {
-  const active = feed.offers.filter((offer) => isActiveOffer(offer, today));
+  const active = feed.offers.filter((offer) => isOfferActive(offer, today));
   const archivedCampaigns = feed.archivedCampaigns ?? [];
   const archivedOffers = archivedCampaigns.reduce((total, campaign) => total + (campaign.offers?.length ?? 0), 0);
   const statuses = Object.values(sourceStatus);
@@ -63,7 +61,7 @@ export function monitoredSourceUrlForStore(storeName, sourceStatus) {
  */
 export function summarizeStoreCatalog(store, feed, today) {
   const storeOffers = feed.offers.filter((offer) => offer.store === store.name);
-  const active = storeOffers.filter((offer) => isActiveOffer(offer, today));
+  const active = storeOffers.filter((offer) => isOfferActive(offer, today));
   const archived = (feed.archivedCampaigns ?? []).find((campaign) => campaign.store?.name === store.name);
   return {
     activeCount: active.length,

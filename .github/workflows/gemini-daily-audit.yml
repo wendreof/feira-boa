@@ -1,0 +1,55 @@
+name: Daily Gemini offer audit
+
+on:
+  schedule:
+    # Once per day, 11:00 America/Sao_Paulo (UTC-3) = 14:00 UTC
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: feira-boa-gemini-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run daily flyer audit
+        id: audit
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_AUDIT_MODEL: gemini-3.5-flash-lite
+        run: node scripts/audit-offers-gemini.mjs
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemini-audit-report
+          path: gemini-audit-report.json
+          if-no-files-found: ignore
+
+      - name: Open or update failure issue
+        if: steps.audit.outcome == 'failure'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/github-issue.mjs "[ops] Gemini daily offer audit failed"
+
+      - name: Fail on critical mismatches
+        if: steps.audit.outcome == 'failure'
+        run: exit 1

@@ -1,4 +1,5 @@
-const CACHE_NAME = "feira-boa-shell-v21";
+const CACHE_NAME = "feira-boa-shell-v25";
+const BRAND_FAVICON = "/favicon.svg?v=20261117-ref";
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(self.location.hostname);
 const NOTIFICATION_ICON = "/icons/notification-96.png";
 const NOTIFICATION_BADGE = "/icons/badge-72.png";
@@ -28,12 +29,19 @@ const SHELL = [
   "/notification-badge.js",
   "/pwa.js",
   "/manifest.webmanifest",
-  "/favicon.svg",
+  "/manifest-christmas.webmanifest",
+  BRAND_FAVICON,
+  "/favicon-christmas.svg?v=20261117-ref",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
   "/icons/maskable-512.png",
+  "/icons/icon-christmas-192.png",
+  "/icons/icon-christmas-512.png",
+  "/icons/maskable-christmas-512.png",
   "/icons/notification-96.png",
+  "/icons/notification-christmas-96.png",
   "/icons/badge-72.png",
+  "/icons/badge-christmas-72.png",
   "/offers.json",
   "/source-status.js",
 ];
@@ -137,8 +145,8 @@ self.addEventListener("push", (event) => {
       body: payload.body,
       tag: payload.tag,
       data: { url: payload.url },
-      icon: assetUrl(NOTIFICATION_ICON),
-      badge: assetUrl(NOTIFICATION_BADGE),
+      icon: payload.icon || assetUrl(NOTIFICATION_ICON),
+      badge: payload.badge || assetUrl(NOTIFICATION_BADGE),
     });
   })());
 });

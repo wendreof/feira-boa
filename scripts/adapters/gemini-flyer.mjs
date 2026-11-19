@@ -3,6 +3,8 @@ import { fetchWithRetry } from "./http.mjs";
 
 export const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 export const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
+/** Lighter model for daily audit / advisory scripts (quota-friendly). */
+export const DEFAULT_GEMINI_AUDIT_MODEL = "gemini-3.5-flash-lite";
 
 const BASE_CATEGORIES = [
   "Hortifruti",
@@ -48,6 +50,35 @@ export function geminiExtractionEnabled() {
   return geminiApiKey().length > 0;
 }
 
+/** @param {unknown} error */
+export function isTransientGeminiError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    /\((503|429|500|502|504)\)/.test(message) ||
+    /overloaded|unavailable|resource exhausted|rate limit/i.test(message) ||
+    /terminated|aborted|ECONNRESET|fetch failed/i.test(message)
+  );
+}
+
+/**
+ * @template T
+ * @param {() => Promise<T>} fn
+ * @param {{ attempts?: number, delayMs?: number }} [options]
+ */
+export async function withGeminiTransientRetry(fn, { attempts = 3, delayMs = 4_000 } = {}) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      if (!isTransientGeminiError(error) || attempt === attempts) throw error;
+      await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+    }
+  }
+  throw lastError ?? new Error("Gemini transient retry exhausted.");
+}
+
 /**
  * @param {string} url
  * @param {{ label?: string, defaultMime?: string }} [options]
@@ -69,6 +100,12 @@ export function resolveGeminiModel(modelEnvKeys) {
   for (const key of modelEnvKeys) {
     const value = process.env[key]?.trim();
     if (value) return value;
+  }
+  const auditOnly =
+    modelEnvKeys.length > 0 &&
+    modelEnvKeys.every((key) => key === "GEMINI_AUDIT_MODEL" || key.startsWith("GEMINI_AUDIT"));
+  if (auditOnly || modelEnvKeys.includes("GEMINI_AUDIT_MODEL")) {
+    return DEFAULT_GEMINI_AUDIT_MODEL;
   }
   return DEFAULT_GEMINI_MODEL;
 }
@@ -114,19 +151,24 @@ export async function generateFlyerCampaignsViaGemini({
     },
   };
 
-  const res = await fetchWithRetry(
-    endpoint,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    },
-    { attempts: 5, delayMs: 2_000, timeoutMs },
-  );
-  if (!res.ok) {
-    const detail = await res.text();
-    throw new Error(`Gemini ${errorLabel} extraction failed (${res.status}): ${detail.slice(0, 300)}`);
-  }
+  const res = await withGeminiTransientRetry(async () => {
+    const response = await fetchWithRetry(
+      endpoint,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+      { attempts: 6, delayMs: 2_500, timeoutMs },
+    );
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(
+        `Gemini ${errorLabel} extraction failed (${response.status}): ${detail.slice(0, 300)}`,
+      );
+    }
+    return response;
+  }, { attempts: 4, delayMs: 5_000 });
 
   const payload = await res.json();
   const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("") ?? "";

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-23T03:09:50.841Z",
+  "updatedAt": "2026-11-23T03:11:28.394Z",
   "current": [
     {
       "role": "current",
@@ -46,12 +46,12 @@
       "storeId": "paguemenos",
       "storeName": "Pague Menos",
       "branch": "Loja 33 · Jardim Santo André",
-      "fetchedAt": "2026-11-18T13:35:58.985Z",
+      "fetchedAt": "2026-11-23T03:11:28.394Z",
       "supersededAt": null,
-      "offerCount": 631,
+      "offerCount": 630,
       "status": "ok",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-29",
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {
@@ -139,12 +139,12 @@
       "storeId": "paguemenos",
       "storeName": "Pague Menos",
       "branch": "Loja 33 · Jardim Santo André",
-      "fetchedAt": "2026-11-15T22:32:54.288Z",
-      "supersededAt": "2026-11-16T19:20:52.159Z",
-      "offerCount": 746,
+      "fetchedAt": "2026-11-18T13:35:58.985Z",
+      "supersededAt": "2026-11-23T03:11:28.395Z",
+      "offerCount": 631,
       "status": "ok",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
       "sourceUrl": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0"
     },
     {

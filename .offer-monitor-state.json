@@ -9,8 +9,8 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
-    "checked_at": "2026-11-23T03:09:51.379Z",
-    "last_success_at": "2026-11-23T03:09:51.379Z",
+    "checked_at": "2026-11-23T03:11:28.783Z",
+    "last_success_at": "2026-11-23T03:11:28.783Z",
     "last_error": null,
     "needs_review": true
   },
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-23T03:09:53.991Z",
-    "last_success_at": "2026-11-23T03:09:53.991Z",
+    "checked_at": "2026-11-23T03:11:31.451Z",
+    "last_success_at": "2026-11-23T03:11:31.451Z",
     "last_error": null,
     "needs_review": true
   },
@@ -39,8 +39,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://smfortemix.com.br/",
-    "checked_at": "2026-11-23T03:09:55.425Z",
-    "last_success_at": "2026-11-23T03:09:55.425Z",
+    "checked_at": "2026-11-23T03:11:32.554Z",
+    "last_success_at": "2026-11-23T03:11:32.554Z",
     "last_error": null,
     "needs_review": true
   },
@@ -55,10 +55,11 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-23T03:09:56.906Z",
-    "last_success_at": "2026-11-23T03:09:56.906Z",
+    "checked_at": "2026-11-23T03:11:33.940Z",
+    "last_success_at": "2026-11-23T03:11:33.940Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false,
+    "review_note": "Liberada pela verificação automática de plausibilidade."
   },
   "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf": {
     "url": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf",
@@ -70,7 +71,7 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-23T03:09:57.943Z",
+    "checked_at": "2026-11-23T03:11:34.382Z",
     "last_success_at": "2026-11-04T13:07:19.091Z",
     "last_error": "TypeError",
     "needs_review": false
@@ -86,7 +87,7 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-23T03:10:05.105Z",
+    "checked_at": "2026-11-23T03:11:40.776Z",
     "last_success_at": "2026-11-18T13:55:49.590Z",
     "last_error": "Error",
     "needs_review": true
@@ -101,8 +102,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-23T03:10:07.910Z",
-    "last_success_at": "2026-11-23T03:10:07.910Z",
+    "checked_at": "2026-11-23T03:11:43.285Z",
+    "last_success_at": "2026-11-23T03:11:43.285Z",
     "last_error": null,
     "needs_review": true
   }

@@ -51,6 +51,9 @@ export async function extractSpassoCampaignsViaGemini(imageUrls) {
   const campaigns = [];
 
   for (let batchIndex = 0; batchIndex < batches.length; batchIndex += 1) {
+    if (batchIndex > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 4_000));
+    }
     const urls = batches[batchIndex];
     const images = await Promise.all(
       urls.map((url) => downloadFlyerImageBase64(url, { label: "Spasso flyer", defaultMime: "image/png" })),
@@ -64,7 +67,7 @@ export async function extractSpassoCampaignsViaGemini(imageUrls) {
           errorLabel: "Spasso",
           timeoutMs: 180_000,
         }),
-      { attempts: 3, delayMs: 6_000 },
+      { attempts: 6, delayMs: 6_000 },
     );
     campaigns.push(...part);
   }

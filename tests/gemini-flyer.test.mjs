@@ -4,6 +4,7 @@ import {
   campaignSchemaJson,
   geminiApiKey,
   geminiExtractionEnabled,
+  geminiRetryDelayMs,
   isTransientGeminiError,
   parseGeminiCampaignsJson,
   resolveGeminiModel,
@@ -76,7 +77,15 @@ describe("gemini-flyer", () => {
 
   it("isTransientGeminiError detects HTTP overload codes", () => {
     assert.equal(isTransientGeminiError(new Error("Gemini Spasso extraction failed (503): overload")), true);
+    assert.equal(isTransientGeminiError(new Error("Gemini Spasso extraction failed (429): quota")), true);
     assert.equal(isTransientGeminiError(new Error("Gemini Spasso extraction failed (404): missing")), false);
+  });
+
+  it("geminiRetryDelayMs backs off longer on HTTP 429", () => {
+    const rateLimited = new Error("Gemini Corso extraction failed (429): Resource exhausted");
+    assert.equal(geminiRetryDelayMs(rateLimited, 1, 4_000), 15_000);
+    assert.equal(geminiRetryDelayMs(rateLimited, 3, 4_000), 60_000);
+    assert.equal(geminiRetryDelayMs(new Error("Gemini failed (503)"), 2, 4_000), 8_000);
   });
 
   it("withGeminiTransientRetry retries transient failures", async () => {

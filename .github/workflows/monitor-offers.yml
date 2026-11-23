@@ -78,6 +78,8 @@ jobs:
         run: node scripts/apply-plausibility-review.mjs
 
       - name: Verify ingest freshness
+        env:
+          INGEST_STORE: ${{ github.event.inputs.store || 'all' }}
         run: node scripts/post-ingest-health.mjs
 
       - name: Save updated offers and source status

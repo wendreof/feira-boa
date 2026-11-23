@@ -5,14 +5,14 @@
     "branch": "Vila Zanetti · São João",
     "store_id": "big-bom",
     "store_key": "big-bom-vila-zanetti-sao-joao",
-    "sha256": "b1adf9470c6fe9bace018b6ad287aa449fb48f6a01ddec84b1ef02f634708922",
+    "sha256": "7e93a1f1865e45f273d9ef1b2aca1ae5ac89f13d4d9cc296beeb7531dd8f8891",
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
-    "checked_at": "2026-11-18T13:55:39.681Z",
-    "last_success_at": "2026-11-18T13:55:39.681Z",
+    "checked_at": "2026-11-23T03:09:51.379Z",
+    "last_success_at": "2026-11-23T03:09:51.379Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://corso.com.br/jornalfrente.php": {
     "url": "https://corso.com.br/jornalfrente.php",
@@ -20,14 +20,14 @@
     "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
     "store_id": "corso",
     "store_key": "corso-rua-eduardo-lopes-castilho-495-sao-joao",
-    "sha256": "d72e91bedd2b993a526c93317f00ebb8df551eb0ff0e72ddaa72a1c84ddaf9fe",
+    "sha256": "f5e6844d586f24d7df05a9afcd61867dae34000e1ca8ddd45359ff2331ca1c45",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-18T13:55:41.302Z",
-    "last_success_at": "2026-11-18T13:55:41.302Z",
+    "checked_at": "2026-11-23T03:09:53.991Z",
+    "last_success_at": "2026-11-23T03:09:53.991Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://smfortemix.com.br/": {
     "url": "https://smfortemix.com.br/",
@@ -35,12 +35,12 @@
     "branch": "Rede Forte · SJBV e região",
     "store_id": "forte-mix",
     "store_key": "forte-mix-rede-forte-sjbv-e-regiao",
-    "sha256": "5a142c98ef16e38c6eb3e025a611314786d2f7a18be40ee2ba8a5236bb27ba75",
+    "sha256": "e88b07151044d25004977a8a03290b545daf7f10b8ff86ad50511d04332533dc",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://smfortemix.com.br/",
-    "checked_at": "2026-11-18T13:55:42.132Z",
-    "last_success_at": "2026-11-18T13:55:42.132Z",
+    "checked_at": "2026-11-23T03:09:55.425Z",
+    "last_success_at": "2026-11-23T03:09:55.425Z",
     "last_error": null,
     "needs_review": true
   },
@@ -50,15 +50,15 @@
     "branch": "Loja 33 · Jardim Santo André",
     "store_id": "pague-menos",
     "store_key": "pague-menos-loja-33-jardim-santo-andre",
-    "catalog_total": 647,
-    "week_window": "2026-11-16/2026-11-22",
+    "catalog_total": 648,
+    "week_window": "2026-11-23/2026-11-29",
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-18T13:55:43.153Z",
-    "last_success_at": "2026-11-18T13:55:43.153Z",
+    "checked_at": "2026-11-23T03:09:56.906Z",
+    "last_success_at": "2026-11-23T03:09:56.906Z",
     "last_error": null,
-    "needs_review": false
+    "needs_review": true
   },
   "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf": {
     "url": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf",
@@ -70,7 +70,7 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-18T13:55:43.963Z",
+    "checked_at": "2026-11-23T03:09:57.943Z",
     "last_success_at": "2026-11-04T13:07:19.091Z",
     "last_error": "TypeError",
     "needs_review": false
@@ -86,9 +86,9 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-18T13:55:49.590Z",
+    "checked_at": "2026-11-23T03:10:05.105Z",
     "last_success_at": "2026-11-18T13:55:49.590Z",
-    "last_error": null,
+    "last_error": "Error",
     "needs_review": true
   },
   "https://spassosabores.com.br/ofertas-sao-joao/": {
@@ -97,12 +97,12 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "9c0bdae74d07f7e124b3899152655acfb7be083d10efa2a3532f27b149a89c4a",
+    "sha256": "5f962d36fb2d0f1b98b7e014e949350e0db47a9ea425e4717e4139b511b6f3d4",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-18T13:55:51.563Z",
-    "last_success_at": "2026-11-18T13:55:51.563Z",
+    "checked_at": "2026-11-23T03:10:07.910Z",
+    "last_success_at": "2026-11-23T03:10:07.910Z",
     "last_error": null,
     "needs_review": true
   }

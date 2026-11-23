@@ -14,6 +14,7 @@ import {
   isSpassoSectionBannerName,
   spassoCampaignOfferValidity,
 } from "../domain/spasso-weekday-validity.mjs";
+import { isTransientGeminiError } from "./gemini-flyer.mjs";
 import { extractSpassoCampaignsViaGemini, geminiExtractionEnabled } from "./spasso-gemini.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
@@ -112,18 +113,33 @@ async function resolveCampaigns(flyer, cache) {
     };
   }
 
-  const campaigns = await extractSpassoCampaignsViaGemini(flyer.imageUrls);
-  const extractionMethod = "gemini";
-  const total = countOffers(campaigns);
+  try {
+    const campaigns = await extractSpassoCampaignsViaGemini(flyer.imageUrls);
+    const extractionMethod = "gemini";
+    const total = countOffers(campaigns);
 
-  if (total < MIN_OFFERS_GEMINI) {
-    throw new Error(
-      `Spasso flyer extraction incomplete (${total} offers, need at least ${MIN_OFFERS_GEMINI}).`,
-    );
+    if (total < MIN_OFFERS_GEMINI) {
+      throw new Error(
+        `Spasso flyer extraction incomplete (${total} offers, need at least ${MIN_OFFERS_GEMINI}).`,
+      );
+    }
+
+    writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
+    return { campaigns, extractionMethod };
+  } catch (error) {
+    if (cache.campaigns.length > 0 && isTransientGeminiError(error)) {
+      console.warn(
+        "[Spasso Sabores] Gemini rate-limited; reusing last transcription with updated flyer hash until the next successful vision run.",
+      );
+      writeCache({
+        flyerHash: flyer.hash,
+        campaigns: cache.campaigns,
+        extractionMethod: "cache_stale_hash",
+      });
+      return { campaigns: cache.campaigns, extractionMethod: "cache_stale_hash" };
+    }
+    throw error;
   }
-
-  writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
-  return { campaigns, extractionMethod };
 }
 
 export async function extractSpasso(customUrl = null) {

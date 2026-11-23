@@ -114,8 +114,15 @@ async function resolveCampaigns(flyer, cache) {
   let extractionMethod = "ocr";
 
   if (geminiExtractionEnabled()) {
-    campaigns = await extractCorsoCampaignsViaGemini(flyer);
-    extractionMethod = "gemini";
+    try {
+      campaigns = await extractCorsoCampaignsViaGemini(flyer);
+      extractionMethod = "gemini";
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[Corso] Gemini extraction failed (${message}); trying OCR.`);
+      campaigns = [];
+      extractionMethod = "ocr";
+    }
   }
 
   const geminiCount = countOffers(campaigns);

@@ -61,11 +61,25 @@ export function isTransientGeminiError(error) {
 }
 
 /**
+ * @param {unknown} error
+ * @param {number} attempt 1-based
+ * @param {number} [baseDelayMs]
+ */
+export function geminiRetryDelayMs(error, attempt, baseDelayMs = 4_000) {
+  const message = error instanceof Error ? error.message : String(error);
+  const is429 = /\(429\)/.test(message) || /rate limit|resource exhausted/i.test(message);
+  if (is429) {
+    return Math.min(120_000, 15_000 * 2 ** (attempt - 1));
+  }
+  return baseDelayMs * attempt;
+}
+
+/**
  * @template T
  * @param {() => Promise<T>} fn
  * @param {{ attempts?: number, delayMs?: number }} [options]
  */
-export async function withGeminiTransientRetry(fn, { attempts = 3, delayMs = 4_000 } = {}) {
+export async function withGeminiTransientRetry(fn, { attempts = 6, delayMs = 4_000 } = {}) {
   let lastError = null;
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
@@ -73,7 +87,7 @@ export async function withGeminiTransientRetry(fn, { attempts = 3, delayMs = 4_0
     } catch (error) {
       lastError = error;
       if (!isTransientGeminiError(error) || attempt === attempts) throw error;
-      await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+      await new Promise((resolve) => setTimeout(resolve, geminiRetryDelayMs(error, attempt, delayMs)));
     }
   }
   throw lastError ?? new Error("Gemini transient retry exhausted.");
@@ -168,7 +182,7 @@ export async function generateFlyerCampaignsViaGemini({
       );
     }
     return response;
-  }, { attempts: 4, delayMs: 5_000 });
+  }, { attempts: 6, delayMs: 5_000 });
 
   const payload = await res.json();
   const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("") ?? "";

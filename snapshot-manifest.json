@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-23T03:11:28.394Z",
+  "updatedAt": "2026-11-23T12:30:35.750Z",
   "current": [
     {
       "role": "current",
@@ -72,12 +72,12 @@
       "storeId": "spani",
       "storeName": "Spani Atacadista",
       "branch": "São João da Boa Vista · Jardim das Flores",
-      "fetchedAt": "2026-11-18T13:45:49.888Z",
+      "fetchedAt": "2026-11-23T12:30:35.750Z",
       "supersededAt": null,
       "offerCount": 939,
       "status": "ok",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-29",
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
@@ -165,12 +165,12 @@
       "storeId": "spani",
       "storeName": "Spani Atacadista",
       "branch": "São João da Boa Vista · Jardim das Flores",
-      "fetchedAt": "2026-11-15T22:33:45.335Z",
-      "supersededAt": "2026-11-16T19:21:46.740Z",
-      "offerCount": 936,
+      "fetchedAt": "2026-11-18T13:45:49.888Z",
+      "supersededAt": "2026-11-23T12:30:35.750Z",
+      "offerCount": 939,
       "status": "ok",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-22",
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {

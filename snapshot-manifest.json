@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-18T13:45:49.915Z",
+  "updatedAt": "2026-11-23T21:50:49.362Z",
   "current": [
     {
       "role": "current",
       "storeId": "bigbom",
       "storeName": "Big Bom",
       "branch": "Vila Zanetti · São João",
-      "fetchedAt": "2026-11-18T13:35:47.330Z",
+      "fetchedAt": "2026-11-23T21:50:49.362Z",
       "supersededAt": null,
       "offerCount": 24,
       "status": "ok",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-19",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-26",
       "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
     },
     {
@@ -100,13 +100,13 @@
       "storeId": "bigbom",
       "storeName": "Big Bom",
       "branch": "Vila Zanetti · São João",
-      "fetchedAt": "2026-11-15T22:32:40.904Z",
-      "supersededAt": "2026-11-16T19:20:34.031Z",
-      "offerCount": 66,
+      "fetchedAt": "2026-11-18T13:35:47.330Z",
+      "supersededAt": "2026-11-23T21:50:18.467Z",
+      "offerCount": 24,
       "status": "ok",
-      "validFrom": "2026-11-13",
-      "validTo": "2026-11-15",
-      "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas-1.pdf"
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-19",
+      "sourceUrl": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf"
     },
     {
       "role": "previous",

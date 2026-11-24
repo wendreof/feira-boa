@@ -16,7 +16,7 @@ const BIGBOM_STORE = {
   source: "Folheto oficial · São João da Boa Vista",
 };
 
-const DEFAULT_FLYER_URL = "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas-1.pdf";
+const DEFAULT_FLYER_URL = "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (official public flyer extraction)";
 
 export async function discoverBigBomFlyer(pageUrl = "https://bigbom.com.br/") {

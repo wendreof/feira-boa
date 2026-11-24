@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-24T02:02:51.123Z",
+  "updatedAt": "2026-11-24T02:15:47.223Z",
   "current": [
     {
       "role": "current",
@@ -85,12 +85,12 @@
       "storeId": "spasso",
       "storeName": "Spasso Sabores",
       "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-      "fetchedAt": "2026-11-17T13:35:54.533Z",
+      "fetchedAt": "2026-11-24T02:15:47.223Z",
       "supersededAt": null,
-      "offerCount": 127,
+      "offerCount": 120,
       "status": "ok",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-21",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-28",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
     }
   ],
@@ -178,12 +178,12 @@
       "storeId": "spasso",
       "storeName": "Spasso Sabores",
       "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
-      "fetchedAt": "2026-11-17T12:31:36.855Z",
-      "supersededAt": "2026-11-17T13:35:54.534Z",
+      "fetchedAt": "2026-11-17T13:35:54.533Z",
+      "supersededAt": "2026-11-24T02:15:47.224Z",
       "offerCount": 127,
       "status": "ok",
-      "validFrom": "2026-08-12",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-16",
+      "validTo": "2026-11-21",
       "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/"
     }
   ]

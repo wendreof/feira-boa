@@ -9,7 +9,7 @@
     "from": "2026-11-23",
     "to": "2026-11-28"
   },
-  "fetchedAt": "2026-11-24T02:15:47.223Z",
+  "fetchedAt": "2026-11-24T05:10:24.588Z",
   "sourceUrl": "https://spassosabores.com.br/ofertas-sao-joao/",
   "flyerHash": "41294e345ba42739",
   "flyerImages": [
@@ -20,7 +20,7 @@
     "https://spassosabores.com.br/wp-content/uploads/2026/11/PAG-3.png",
     "https://spassosabores.com.br/wp-content/uploads/2026/11/PAG-4.png"
   ],
-  "extractionMethod": "gemini",
+  "extractionMethod": "cache",
   "offers": [
     {
       "id": "spasso-pessego-nacional-100g-1-49-2-3",

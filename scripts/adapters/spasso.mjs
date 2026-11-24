@@ -16,10 +16,13 @@ import {
 } from "../domain/spasso-weekday-validity.mjs";
 import { isTransientGeminiError } from "./gemini-flyer.mjs";
 import { extractSpassoCampaignsViaGemini, geminiExtractionEnabled } from "./spasso-gemini.mjs";
+import { ocrSpassoFlyerImages } from "./spasso-ocr.mjs";
+import { parseSpassoFlyerOcrText, pickSpassoExtractionWinner } from "../domain/spasso-flyer-ocr.mjs";
 
 const SPASSO_URL = "https://spassosabores.com.br/ofertas-sao-joao/";
 const CACHE_PATH = new URL("./data/spasso-campaigns.json", import.meta.url);
 const MIN_OFFERS_GEMINI = 20;
+const MIN_OFFERS_OCR = 8;
 
 const SPASSO_STORE = {
   name: "Spasso Sabores",
@@ -98,38 +101,55 @@ async function resolveCampaigns(flyer, cache) {
     return { campaigns: cache.campaigns, extractionMethod: "cache" };
   }
 
-  if (!geminiExtractionEnabled()) {
-    if (cache.campaigns.length > 0) {
-      console.warn(
-        "[Spasso Sabores] Flyer hash changed; reusing last transcription until Gemini runs in CI.",
-      );
-      return { campaigns: cache.campaigns, extractionMethod: "cache_stale_hash" };
-    }
-    return {
-      campaigns: [],
-      extractionMethod: "skipped_no_api_key",
-      skipReason:
-        "GEMINI_API_KEY is not set. Spasso vision extraction skipped; commit scripts/adapters/data/spasso-campaigns.json after a CI run or set the key locally.",
-    };
+  let ocrCampaigns = [];
+  try {
+    const ocrText = await ocrSpassoFlyerImages(flyer.imageUrls);
+    ocrCampaigns = parseSpassoFlyerOcrText(ocrText);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`[Spasso Sabores] OCR failed (${message}); continuing without OCR.`);
   }
 
-  try {
-    const campaigns = await extractSpassoCampaignsViaGemini(flyer.imageUrls);
-    const extractionMethod = "gemini";
-    const total = countOffers(campaigns);
-
-    if (total < MIN_OFFERS_GEMINI) {
-      throw new Error(
-        `Spasso flyer extraction incomplete (${total} offers, need at least ${MIN_OFFERS_GEMINI}).`,
-      );
+  let geminiCampaigns = null;
+  if (geminiExtractionEnabled() && countOffers(ocrCampaigns) < MIN_OFFERS_GEMINI) {
+    try {
+      geminiCampaigns = await extractSpassoCampaignsViaGemini(flyer.imageUrls);
+    } catch (error) {
+      const transient = isTransientGeminiError(error);
+      const message = error instanceof Error ? error.message : String(error);
+      if (transient) {
+        console.warn(`[Spasso Sabores] Gemini rate-limited (${message}); using OCR or cache fallback.`);
+      } else {
+        console.warn(`[Spasso Sabores] Gemini extraction failed (${message}); using OCR if sufficient.`);
+      }
+      if (transient && countOffers(ocrCampaigns) < MIN_OFFERS_OCR && cache.campaigns.length > 0) {
+        writeCache({
+          flyerHash: flyer.hash,
+          campaigns: cache.campaigns,
+          extractionMethod: "cache_stale_hash",
+        });
+        return { campaigns: cache.campaigns, extractionMethod: "cache_stale_hash" };
+      }
+      if (!transient) {
+        throw error;
+      }
     }
+  }
 
-    writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
-    return { campaigns, extractionMethod };
-  } catch (error) {
-    if (cache.campaigns.length > 0 && isTransientGeminiError(error)) {
+  const { campaigns, extractionMethod } = pickSpassoExtractionWinner({
+    ocr: ocrCampaigns,
+    gemini: geminiCampaigns,
+    minGemini: MIN_OFFERS_GEMINI,
+  });
+
+  const total = countOffers(campaigns);
+  const minRequired =
+    extractionMethod === "gemini" ? MIN_OFFERS_GEMINI : Math.min(MIN_OFFERS_OCR, MIN_OFFERS_GEMINI);
+
+  if (total < minRequired) {
+    if (cache.campaigns.length > 0) {
       console.warn(
-        "[Spasso Sabores] Gemini rate-limited; reusing last transcription with updated flyer hash until the next successful vision run.",
+        "[Spasso Sabores] Extraction incomplete; reusing last transcription with updated flyer hash.",
       );
       writeCache({
         flyerHash: flyer.hash,
@@ -138,8 +158,21 @@ async function resolveCampaigns(flyer, cache) {
       });
       return { campaigns: cache.campaigns, extractionMethod: "cache_stale_hash" };
     }
-    throw error;
+    if (!geminiExtractionEnabled()) {
+      return {
+        campaigns: [],
+        extractionMethod: "skipped_no_api_key",
+        skipReason:
+          "GEMINI_API_KEY is not set and OCR did not yield enough offers. Set the key or improve OCR.",
+      };
+    }
+    throw new Error(
+      `Spasso flyer extraction incomplete (${total} offers, need at least ${minRequired}).`,
+    );
   }
+
+  writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
+  return { campaigns, extractionMethod };
 }
 
 export async function extractSpasso(customUrl = null) {

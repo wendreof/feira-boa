@@ -60,16 +60,38 @@ export function isTransientGeminiError(error) {
   );
 }
 
+/** @param {unknown} error */
+export function isGeminiRateLimitError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return /\(429\)/.test(message) || /rate limit|resource exhausted|quota exceeded/i.test(message);
+}
+
+/** CI ingest should not burn 25m on nested 429 backoffs. */
+export function geminiIngestFastFailEnabled() {
+  if (process.env.GEMINI_INGEST_FAST_FAIL === "0") return false;
+  if (process.env.GEMINI_INGEST_FAST_FAIL === "1") return true;
+  return process.env.GITHUB_ACTIONS === "true";
+}
+
+/** @returns {{ attempts: number, delayMs: number, maxRateLimitDelayMs: number, fetchAttempts: number }} */
+export function resolveGeminiIngestRetryOptions() {
+  if (geminiIngestFastFailEnabled()) {
+    return { attempts: 2, delayMs: 3_000, maxRateLimitDelayMs: 20_000, fetchAttempts: 3 };
+  }
+  return { attempts: 6, delayMs: 5_000, maxRateLimitDelayMs: 120_000, fetchAttempts: 6 };
+}
+
 /**
  * @param {unknown} error
  * @param {number} attempt 1-based
  * @param {number} [baseDelayMs]
+ * @param {number} [maxRateLimitDelayMs]
  */
-export function geminiRetryDelayMs(error, attempt, baseDelayMs = 4_000) {
+export function geminiRetryDelayMs(error, attempt, baseDelayMs = 4_000, maxRateLimitDelayMs = 120_000) {
   const message = error instanceof Error ? error.message : String(error);
   const is429 = /\(429\)/.test(message) || /rate limit|resource exhausted/i.test(message);
   if (is429) {
-    return Math.min(120_000, 15_000 * 2 ** (attempt - 1));
+    return Math.min(maxRateLimitDelayMs, 15_000 * 2 ** (attempt - 1));
   }
   return baseDelayMs * attempt;
 }
@@ -77,9 +99,12 @@ export function geminiRetryDelayMs(error, attempt, baseDelayMs = 4_000) {
 /**
  * @template T
  * @param {() => Promise<T>} fn
- * @param {{ attempts?: number, delayMs?: number }} [options]
+ * @param {{ attempts?: number, delayMs?: number, maxRateLimitDelayMs?: number }} [options]
  */
-export async function withGeminiTransientRetry(fn, { attempts = 6, delayMs = 4_000 } = {}) {
+export async function withGeminiTransientRetry(
+  fn,
+  { attempts = 6, delayMs = 4_000, maxRateLimitDelayMs = 120_000 } = {},
+) {
   let lastError = null;
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
@@ -87,7 +112,12 @@ export async function withGeminiTransientRetry(fn, { attempts = 6, delayMs = 4_0
     } catch (error) {
       lastError = error;
       if (!isTransientGeminiError(error) || attempt === attempts) throw error;
-      await new Promise((resolve) => setTimeout(resolve, geminiRetryDelayMs(error, attempt, delayMs)));
+      await new Promise((resolve) =>
+        setTimeout(
+          resolve,
+          geminiRetryDelayMs(error, attempt, delayMs, maxRateLimitDelayMs),
+        ),
+      );
     }
   }
   throw lastError ?? new Error("Gemini transient retry exhausted.");
@@ -165,6 +195,7 @@ export async function generateFlyerCampaignsViaGemini({
     },
   };
 
+  const ingestRetry = resolveGeminiIngestRetryOptions();
   const res = await withGeminiTransientRetry(async () => {
     const response = await fetchWithRetry(
       endpoint,
@@ -173,7 +204,7 @@ export async function generateFlyerCampaignsViaGemini({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       },
-      { attempts: 6, delayMs: 2_500, timeoutMs },
+      { attempts: ingestRetry.fetchAttempts, delayMs: 2_500, timeoutMs },
     );
     if (!response.ok) {
       const detail = await response.text();
@@ -182,7 +213,7 @@ export async function generateFlyerCampaignsViaGemini({
       );
     }
     return response;
-  }, { attempts: 6, delayMs: 5_000 });
+  }, ingestRetry);
 
   const payload = await res.json();
   const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text).join("") ?? "";

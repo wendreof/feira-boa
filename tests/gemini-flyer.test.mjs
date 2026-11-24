@@ -4,8 +4,11 @@ import {
   campaignSchemaJson,
   geminiApiKey,
   geminiExtractionEnabled,
+  geminiIngestFastFailEnabled,
   geminiRetryDelayMs,
+  isGeminiRateLimitError,
   isTransientGeminiError,
+  resolveGeminiIngestRetryOptions,
   parseGeminiCampaignsJson,
   resolveGeminiModel,
   withGeminiTransientRetry,
@@ -86,6 +89,23 @@ describe("gemini-flyer", () => {
     assert.equal(geminiRetryDelayMs(rateLimited, 1, 4_000), 15_000);
     assert.equal(geminiRetryDelayMs(rateLimited, 3, 4_000), 60_000);
     assert.equal(geminiRetryDelayMs(new Error("Gemini failed (503)"), 2, 4_000), 8_000);
+    assert.equal(geminiRetryDelayMs(rateLimited, 3, 4_000, 20_000), 20_000);
+  });
+
+  it("resolveGeminiIngestRetryOptions uses fast profile on CI", () => {
+    const prev = process.env.GITHUB_ACTIONS;
+    process.env.GITHUB_ACTIONS = "true";
+    assert.equal(geminiIngestFastFailEnabled(), true);
+    const fast = resolveGeminiIngestRetryOptions();
+    assert.equal(fast.attempts, 2);
+    assert.equal(fast.maxRateLimitDelayMs, 20_000);
+    if (prev === undefined) delete process.env.GITHUB_ACTIONS;
+    else process.env.GITHUB_ACTIONS = prev;
+  });
+
+  it("isGeminiRateLimitError detects quota errors", () => {
+    assert.equal(isGeminiRateLimitError(new Error("failed (429): quota")), true);
+    assert.equal(isGeminiRateLimitError(new Error("failed (503)")), false);
   });
 
   it("withGeminiTransientRetry retries transient failures", async () => {

@@ -62,6 +62,9 @@ jobs:
       - name: Ingest live offers
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_INGEST_FAST_FAIL: "1"
+          SPASSO_GEMINI_MODEL: gemini-2.5-flash-lite
+          CORSO_GEMINI_MODEL: gemini-2.5-flash-lite
         run: |
           if [ -n "${{ github.event.inputs.store }}" ] && [ "${{ github.event.inputs.store }}" != "all" ]; then
             node scripts/ingest-offers.mjs --store "${{ github.event.inputs.store }}" --path "${{ github.event.inputs.path_or_url }}"

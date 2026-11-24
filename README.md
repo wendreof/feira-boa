@@ -50,13 +50,14 @@ flowchart TB
   subgraph ingest [Ingest in repo]
     io[ingest-offers.mjs]
     adp[scripts/adapters per store]
-    gem[corso-gemini.mjs optional GEMINI_API_KEY]
+    ocr[Tesseract por in CI]
+    gem[corso-gemini spasso-gemini optional GEMINI_API_KEY]
   end
 
   subgraph persist [Versioned state]
     st[state per store .json]
     prev[state/previous]
-    cache[corso-campaigns.json]
+    cache[corso-campaigns.json spasso-campaigns.json]
   end
 
   subgraph feed [Public feed]
@@ -72,10 +73,12 @@ flowchart TB
 
   apis --> adp
   pdf --> adp
+  corso --> ocr
   corso --> gem
+  spasso --> ocr
+  spasso --> gem
+  ocr --> adp
   gem --> adp
-  corso --> adp
-  spasso --> adp
   manual --> adp
   io --> adp
   adp --> st
@@ -169,12 +172,12 @@ Adapters in `scripts/adapters/` build the catalog from official sources. Monitor
 |---------------|-------------|
 | API / structured page | Automatic in `ingest:offers` (e.g. Pague Menos VTEX) |
 | PDF / site scrape | Dedicated adapters (e.g. Big Bom, Spani) |
-| Image flyers | **Corso** and **Spasso**: Gemini pipeline (`*-gemini.mjs`) plus curated data |
+| Image flyers | **Corso**: Tesseract OCR with optional Gemini (`corso-ocr.mjs` / `corso-gemini.mjs`). **Spasso**: **OCR first** (`spasso-ocr.mjs`); Gemini only when OCR is thin; curated cache in `scripts/adapters/data/*-campaigns.json` |
 | WhatsApp / app campaigns | **Forte Mix**: manual JSON in `scripts/adapters/data/fortemix-campaigns.json` |
 
 Curated flyers (image/PDF): workflow in [`.agents/skills/offer-ingestion/SKILL.md`](.agents/skills/offer-ingestion/SKILL.md).
 
-**Schedule (GitHub Actions):** workflow `monitor-offers.yml` runs **four times per day** (06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo), ingests, commits `offers.json` + `state/`, and triggers Cloudflare deploy. `needs_review` on a source blocks **price alerts**, not the public feed.
+**Schedule (GitHub Actions):** workflow `monitor-offers.yml` runs **four times per day** (06:00, 09:00, 15:00, and 18:00 America/Sao_Paulo), ingests, commits `offers.json` + `state/`, and triggers Cloudflare deploy. Ingest sets `GEMINI_INGEST_FAST_FAIL=1` so quota **429** responses fail fast and adapters can fall back to OCR or stale campaign cache instead of hitting the job timeout. `needs_review` on a source blocks **price alerts**, not the public feed.
 
 Pague Menos offers come from the online catalog and may differ from the physical store — the site shows that notice.
 

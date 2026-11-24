@@ -59,6 +59,7 @@ function countOffers(campaigns) {
 
 function campaignsToOffers(campaigns, pageUrl, flyerImageUrls = []) {
   const offers = [];
+  const seenOfferIds = new Set();
   let validFrom = null;
   let validTo = null;
 
@@ -73,7 +74,7 @@ function campaignsToOffers(campaigns, pageUrl, flyerImageUrls = []) {
       const taxonomy = classifyProduct(name, item.cat, item.cat);
       const offer = createOffer({
         storeId: "spasso",
-        idKey: `${item.name}-${item.brand}-${item.detail}-${campaign.from ?? validity.from}`,
+        idKey: `${item.name}-${item.brand}-${item.detail}-${item.price}-${(validity.validWeekdays ?? []).join(",")}`,
         store: SPASSO_STORE,
         sourceUrl: pageUrl,
         product: {
@@ -87,9 +88,10 @@ function campaignsToOffers(campaigns, pageUrl, flyerImageUrls = []) {
         taxonomy,
       });
 
-      if (validateOffer(offer)) {
-        offers.push(offer);
-      }
+      if (!validateOffer(offer)) continue;
+      if (seenOfferIds.has(offer.id)) continue;
+      seenOfferIds.add(offer.id);
+      offers.push(offer);
     }
   }
 

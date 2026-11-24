@@ -2,8 +2,8 @@ import {
   campaignSchemaJson,
   downloadFlyerImageBase64,
   geminiExtractionEnabled,
+  geminiIngestFastFailEnabled,
   generateFlyerCampaignsViaGemini,
-  withGeminiTransientRetry,
 } from "./gemini-flyer.mjs";
 
 export { geminiExtractionEnabled };
@@ -49,26 +49,23 @@ export async function extractSpassoCampaignsViaGemini(imageUrls) {
 
   const batches = chunkFlyerImageUrls(imageUrls);
   const campaigns = [];
+  const batchPauseMs = geminiIngestFastFailEnabled() ? 2_000 : 4_000;
 
   for (let batchIndex = 0; batchIndex < batches.length; batchIndex += 1) {
     if (batchIndex > 0) {
-      await new Promise((resolve) => setTimeout(resolve, 4_000));
+      await new Promise((resolve) => setTimeout(resolve, batchPauseMs));
     }
     const urls = batches[batchIndex];
     const images = await Promise.all(
       urls.map((url) => downloadFlyerImageBase64(url, { label: "Spasso flyer", defaultMime: "image/png" })),
     );
-    const part = await withGeminiTransientRetry(
-      () =>
-        generateFlyerCampaignsViaGemini({
-          prompt: spassoPrompt(batchIndex + 1, batches.length),
-          images,
-          modelEnvKeys: ["SPASSO_GEMINI_MODEL", "GEMINI_MODEL"],
-          errorLabel: "Spasso",
-          timeoutMs: 180_000,
-        }),
-      { attempts: 6, delayMs: 6_000 },
-    );
+    const part = await generateFlyerCampaignsViaGemini({
+      prompt: spassoPrompt(batchIndex + 1, batches.length),
+      images,
+      modelEnvKeys: ["SPASSO_GEMINI_MODEL", "GEMINI_MODEL"],
+      errorLabel: "Spasso",
+      timeoutMs: geminiIngestFastFailEnabled() ? 90_000 : 180_000,
+    });
     campaigns.push(...part);
   }
 

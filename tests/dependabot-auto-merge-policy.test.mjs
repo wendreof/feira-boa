@@ -121,7 +121,7 @@ describe("dependabot-auto-merge workflow", () => {
     const text = readFileSync(workflowPath, "utf8");
     assert.match(text, /dependabot\[bot\]/);
     assert.match(text, /dependabot\//);
-    assert.match(text, /dependabot\/fetch-metadata@v2/);
+    assert.match(text, /dependabot\/fetch-metadata@v3/);
     assert.match(text, /evaluate-dependabot-merge\.mjs/);
     assert.match(text, /build-and-test/);
     assert.match(text, /gh pr merge/);

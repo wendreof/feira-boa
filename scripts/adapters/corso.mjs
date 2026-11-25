@@ -7,6 +7,8 @@ import { validateOffer } from "../domain/validation.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 import {
   discoverCorsoFlyerFromHtml,
+  capCorsoCampaignsToFrenteWeekend,
+  extractCorsoFrenteWeekendWindow,
   latestValidityEnd,
   loadCorsoCampaignFile,
   parseCorsoFlyerText,
@@ -51,6 +53,12 @@ function writeCache({ flyerHash, campaigns, extractionMethod }) {
 
 function countOffers(campaigns) {
   return campaigns.reduce((sum, campaign) => sum + campaign.offers.length, 0);
+}
+
+export function applyFrenteWeekendCap(campaigns, frenteOcr) {
+  const window = extractCorsoFrenteWeekendWindow(frenteOcr);
+  if (!window) return campaigns;
+  return capCorsoCampaignsToFrenteWeekend(campaigns, window);
 }
 
 function ocrValidityIsNewerThanCache(ocrText, cache) {
@@ -107,7 +115,10 @@ async function resolveCampaigns(flyer, cache) {
     !ocrValidityIsNewerThanCache(frenteOcr, cache);
 
   if (cacheIsCurrent) {
-    return { campaigns: cache.campaigns, extractionMethod: "cache" };
+    return {
+      campaigns: applyFrenteWeekendCap(cache.campaigns, frenteOcr),
+      extractionMethod: "cache",
+    };
   }
 
   let campaigns = [];
@@ -150,8 +161,9 @@ async function resolveCampaigns(flyer, cache) {
     );
   }
 
-  writeCache({ flyerHash: flyer.hash, campaigns, extractionMethod });
-  return { campaigns, extractionMethod };
+  const capped = applyFrenteWeekendCap(campaigns, frenteOcr);
+  writeCache({ flyerHash: flyer.hash, campaigns: capped, extractionMethod });
+  return { campaigns: capped, extractionMethod };
 }
 
 export async function extractCorso(customUrl = null) {

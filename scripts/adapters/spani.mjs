@@ -14,7 +14,8 @@ const STORE_BRANCH = "São João da Boa Vista · Jardim das Flores";
 const STORE_SOURCE = "Ofertas online oficiais · retirada na loja";
 const USER_AGENT = "FeiraBoaOfferIngest/1.0 (VIP Commerce public store API)";
 const PAGE_SIZE = 20;
-const MAX_PAGES = 50;
+/** VIP Commerce `em-oferta` for SJDV reached 163 pages (3258 items) in late 2025; keep headroom for growth. */
+export const SPANI_PAGE_SAFETY_CAP = 250;
 
 function apiUrl(path) {
   return `${storeConfig.apiBase}${path}`;
@@ -175,11 +176,11 @@ export async function extractSpani(customUrl = null) {
   const sessaoId = await openClientSession(token);
 
   const products = [];
-  let totalPages = MAX_PAGES;
-  for (let page = 1; page <= totalPages && page <= MAX_PAGES; page += 1) {
+  let totalPages = 1;
+  for (let page = 1; page <= totalPages && page <= SPANI_PAGE_SAFETY_CAP; page += 1) {
     const payload = await fetchOfferPage(page, token, sessaoId, fetch, customPath);
     products.push(...payload.data);
-    totalPages = Math.min(Number(payload.paginator?.total_pages) || page, MAX_PAGES);
+    totalPages = Number(payload.paginator?.total_pages) || page;
     if (page >= totalPages || payload.data.length < PAGE_SIZE) break;
   }
 

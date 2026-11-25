@@ -9,7 +9,7 @@ import { parseDateRange, parsePrice } from "../scripts/domain/parsing.mjs";
 import { validateOffer, validateSnapshot } from "../scripts/domain/validation.mjs";
 import { slugText as slug } from "../src/shared/text.mjs";
 import { buildPagueMenosOffer, getWeekValidity } from "../scripts/adapters/paguemenos.mjs";
-import { buildSpaniOffer } from "../scripts/adapters/spani.mjs";
+import { buildSpaniOffer, SPANI_PAGE_SAFETY_CAP } from "../scripts/adapters/spani.mjs";
 
 test("parseDateRange handles various Brazilian flyer date formats", () => {
   const d1 = parseDateRange("Ofertas válidas de 19/10 até 21/10/2026");
@@ -216,6 +216,14 @@ test("buildPagueMenosOffer extracts package details and maps catalog categories"
   const cosmetic = buildPagueMenosOffer(product("Espuma de Barbear Hidratante"), { validity });
   assert.equal(cosmetic.department, "Higiene e cuidados");
   assert.equal(cosmetic.productType, "Higiene pessoal");
+});
+
+test("Spani pagination safety cap covers full VIP Commerce em-oferta depth", () => {
+  const observedTotalPages = 163;
+  assert.ok(
+    SPANI_PAGE_SAFETY_CAP >= observedTotalPages,
+    `expected cap >= ${observedTotalPages} pages (20 items/page for SJDV em-oferta)`,
+  );
 });
 
 test("buildSpaniOffer maps VIP Commerce promo prices and bundle notes", () => {

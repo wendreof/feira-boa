@@ -6,6 +6,7 @@ import {
   capCorsoCampaignsToFrenteWeekend,
   discoverCorsoFlyerFromHtml,
   extractCorsoFrenteWeekendWindow,
+  latestValidityEnd,
   loadCorsoCampaignFile,
   parseCorsoFlyerText,
   parseCorsoValidityHints,
@@ -42,11 +43,33 @@ test("capCorsoCampaignsToFrenteWeekend clamps campaigns to frente window", () =>
   const campaigns = [
     { from: "2026-11-10", to: "2026-11-20", offers: [{ name: "A" }] },
     { from: "2026-11-15", to: "2026-11-18", offers: [{ name: "B" }] },
+    { from: "2026-11-01", to: "2026-11-05", offers: [{ name: "C" }] },
+    { from: "2026-11-20", to: "2026-11-25", offers: [{ name: "D" }] },
   ];
   const capped = capCorsoCampaignsToFrenteWeekend(campaigns, window);
-  assert.equal(capped.length, 2);
+  assert.equal(capped.length, 4);
   assert.deepEqual(capped[0], { from: "2026-11-13", to: "2026-11-14", offers: [{ name: "A" }] });
   assert.deepEqual(capped[1], { from: "2026-11-14", to: "2026-11-14", offers: [{ name: "B" }] });
+  assert.deepEqual(capped[2], { from: "2026-11-13", to: "2026-11-13", offers: [{ name: "C" }] });
+  assert.deepEqual(capped[3], { from: "2026-11-14", to: "2026-11-14", offers: [{ name: "D" }] });
+  assert.deepEqual(capCorsoCampaignsToFrenteWeekend(null, window), null);
+
+  const inverted = capCorsoCampaignsToFrenteWeekend(
+    [{ from: "2026-11-14", to: "2026-11-13", offers: [{ name: "E" }] }],
+    window,
+  );
+  assert.deepEqual(inverted[0], { from: "2026-11-14", to: "2026-11-14", offers: [{ name: "E" }] });
+});
+
+test("latestValidityEnd picks the farthest campaign end date", () => {
+  assert.equal(latestValidityEnd(null), null);
+  assert.equal(
+    latestValidityEnd([
+      { from: "2026-11-13", to: "2026-11-14", offers: [] },
+      { from: "2026-11-13", to: "2026-11-20", offers: [] },
+    ]),
+    "2026-11-20",
+  );
 });
 
 test("applyFrenteWeekendCap delegates to frente OCR window", async () => {

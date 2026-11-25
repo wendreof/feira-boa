@@ -9,7 +9,7 @@
     "from": "2026-11-23",
     "to": "2026-11-29"
   },
-  "fetchedAt": "2026-11-25T13:49:21.995Z",
+  "fetchedAt": "2026-11-25T19:02:25.374Z",
   "sourceUrl": "https://www.spanionline.com.br/ofertas",
   "offers": [
     {
@@ -4277,30 +4277,6 @@
       "storeCategory": "21",
       "price": 9.49,
       "previousPrice": 10.59,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 4 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-23",
-      "validTo": "2026-11-29",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-905-2026-11-23",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Velas Prata N 6 Pacote C/8",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "21",
-      "price": 10.49,
-      "previousPrice": 11.79,
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 4 un. · Preço online oficial; pode variar na loja física",
@@ -17487,30 +17463,6 @@
       "sourceUrl": "https://www.spanionline.com.br/ofertas"
     },
     {
-      "id": "spani-3737-2026-11-23",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Refrigerante Kuat 2l",
-      "detail": "UN",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Refrigerantes",
-      "productTypes": [
-        "Refrigerantes"
-      ],
-      "storeCategory": "34",
-      "price": 6.49,
-      "previousPrice": 6.79,
-      "icon": "🥤",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 6 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-23",
-      "validTo": "2026-11-29",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
       "id": "spani-11940-2026-11-23",
       "store": "Spani Atacadista",
       "storeLogo": "logos/spani.png",
@@ -28546,30 +28498,6 @@
       "storeCategory": "48",
       "price": 19.45,
       "previousPrice": 21,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
-      "validFrom": "2026-11-23",
-      "validTo": "2026-11-29",
-      "source": "Ofertas online oficiais · retirada na loja",
-      "sourceUrl": "https://www.spanionline.com.br/ofertas"
-    },
-    {
-      "id": "spani-7049-2026-11-23",
-      "store": "Spani Atacadista",
-      "storeLogo": "logos/spani.png",
-      "branch": "São João da Boa Vista · Jardim das Flores",
-      "name": "Conhaque Presidente 900ml",
-      "detail": "UN",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "storeCategory": "48",
-      "price": 14.99,
-      "previousPrice": 16.19,
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 3 un. · Preço online oficial; pode variar na loja física",
@@ -48903,6 +48831,30 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Mais por menos · mín. 2 un. · Preço online oficial; pode variar na loja física",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-29",
+      "source": "Ofertas online oficiais · retirada na loja",
+      "sourceUrl": "https://www.spanionline.com.br/ofertas"
+    },
+    {
+      "id": "spani-12868-2026-11-23",
+      "store": "Spani Atacadista",
+      "storeLogo": "logos/spani.png",
+      "branch": "São João da Boa Vista · Jardim das Flores",
+      "name": "Banana Nanica 1kg",
+      "detail": "KG",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
+      "productTypes": [
+        "Hortifruti"
+      ],
+      "storeCategory": "119",
+      "price": 3.89,
+      "previousPrice": 7.49,
+      "icon": "🍌",
+      "tone": "#edf4e9",
+      "note": "Oferta · Preço online oficial; pode variar na loja física",
       "validFrom": "2026-11-23",
       "validTo": "2026-11-29",
       "source": "Ofertas online oficiais · retirada na loja",

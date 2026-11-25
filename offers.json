@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-24T19:59:27.491Z",
+  "updatedAt": "2026-11-25T03:58:58.576Z",
   "stores": [
     {
       "name": "Sempre Vale",
@@ -4628,7 +4628,7 @@
         "Mercearia"
       ],
       "storeCategory": "Mercearia/Molhos Frios/Catchup",
-      "price": 27.49,
+      "price": 25.89,
       "previousPrice": null,
       "icon": "🥫",
       "tone": "#edf4e9",
@@ -10296,7 +10296,7 @@
         "Lavanderia e limpeza"
       ],
       "storeCategory": "Limpeza/Roupas/Tira Manchas",
-      "price": 42.99,
+      "price": 49.99,
       "previousPrice": null,
       "icon": "🧺",
       "tone": "#edf4e9",
@@ -11424,7 +11424,7 @@
         "Sucos e bebidas"
       ],
       "storeCategory": "Bebidas/Água, Energético e Chá/Isotônico",
-      "price": 4.69,
+      "price": 4.59,
       "previousPrice": null,
       "icon": "🥤",
       "tone": "#edf4e9",
@@ -13585,7 +13585,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 14.99,
-      "previousPrice": 23.99,
+      "previousPrice": 21.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -13609,7 +13609,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 14.99,
-      "previousPrice": 21.99,
+      "previousPrice": 23.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",
@@ -14905,7 +14905,7 @@
       ],
       "storeCategory": "Café da Manhã/Café/Cápsulas",
       "price": 24.99,
-      "previousPrice": 27.99,
+      "previousPrice": 26.99,
       "icon": "☕",
       "tone": "#edf4e9",
       "note": "Preço online oficial; pode variar na loja física",

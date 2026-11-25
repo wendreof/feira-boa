@@ -99,6 +99,11 @@ export function campaignCacheIsActive(campaigns, today = todayInSaoPaulo()) {
   return maxTo !== null && maxTo >= today;
 }
 
+/** @param {{ flyerHash?: string | null, campaigns?: unknown[] }} cache @param {string} liveFlyerHash */
+export function spassoCacheMatchesFlyer(cache, liveFlyerHash) {
+  return Boolean(cache?.campaigns?.length && cache.flyerHash === liveFlyerHash);
+}
+
 function todayInSaoPaulo(now = new Date()) {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Sao_Paulo",

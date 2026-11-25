@@ -3,11 +3,14 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  capCorsoCampaignsToFrenteWeekend,
   discoverCorsoFlyerFromHtml,
+  extractCorsoFrenteWeekendWindow,
   loadCorsoCampaignFile,
   parseCorsoFlyerText,
   parseCorsoValidityHints,
 } from "../scripts/domain/corso-flyer.mjs";
+import { isOfferActive } from "../scripts/domain/offer-validity.mjs";
 
 test("discoverCorsoFlyerFromHtml reads jornal hash and image URLs", async () => {
   const html = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-page.html", import.meta.url)), "utf8");
@@ -34,6 +37,29 @@ test("parseCorsoFlyerText pairs hortifruti price grids from OCR snippet", async 
   assert.ok(alface);
   assert.equal(alface.price, 4.18);
   assert.equal(alface.oldPrice, 5.18);
+});
+
+test("extractCorsoFrenteWeekendWindow reads SEXTA e SÁBADO banner", async () => {
+  const sample = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-ocr-sample.txt", import.meta.url)), "utf8");
+  const window = extractCorsoFrenteWeekendWindow(sample);
+  assert.deepEqual(window, { from: "2026-11-13", to: "2026-11-14" });
+});
+
+test("capCorsoCampaignsToFrenteWeekend clamps gemini windows to frente weekend", () => {
+  const campaigns = [
+    { from: "2026-11-20", to: "2026-11-26", offers: [{ name: "A" }] },
+    { from: "2026-11-20", to: "2026-11-21", offers: [{ name: "B" }] },
+  ];
+  const capped = capCorsoCampaignsToFrenteWeekend(campaigns, { from: "2026-11-20", to: "2026-11-21" });
+  assert.deepEqual(
+    capped.map((c) => ({ from: c.from, to: c.to })),
+    [
+      { from: "2026-11-20", to: "2026-11-21" },
+      { from: "2026-11-20", to: "2026-11-21" },
+    ],
+  );
+  const offer = { validFrom: "2026-11-20", validTo: capped[0].to };
+  assert.equal(isOfferActive(offer, "2026-11-25"), false);
 });
 
 test("loadCorsoCampaignFile accepts legacy array and wrapped cache", () => {

@@ -272,6 +272,43 @@ export function latestValidityEnd(campaigns) {
   return campaigns.reduce((max, c) => (c.to > max ? c.to : max), campaigns[0].to);
 }
 
+const FRENTE_WEEKEND_LINE =
+  /ofertas?\s+v[aá]lidas?\s*:?\s*[^.\n]{0,120}?sexta\s+e\s+s[aá]bado\s*[-–]?\s*\d{1,2}\s+e\s+\d{1,2}\/\d{1,2}\/\d{4}/i;
+
+/** Weekend banner on jornal-frente (authoritative for the active flyer window). */
+export function extractCorsoFrenteWeekendWindow(frenteOcrText) {
+  if (!frenteOcrText || typeof frenteOcrText !== "string") return null;
+  const match = frenteOcrText.match(FRENTE_WEEKEND_LINE);
+  if (!match) return null;
+  return parseValidityFromLine(match[0]);
+}
+
+/**
+ * @param {Array<{ from: string, to: string, offers: unknown[] }>} campaigns
+ * @param {{ from: string, to: string }} window
+ */
+export function capCorsoCampaignsToFrenteWeekend(campaigns, window) {
+  if (!window || !Array.isArray(campaigns)) return campaigns;
+  return campaigns
+    .map((campaign) => {
+      let from = campaign.from < window.from ? window.from : campaign.from;
+      let to = campaign.to > window.to ? window.to : campaign.to;
+      if (from > window.to) {
+        from = window.to;
+        to = window.to;
+      }
+      if (to < window.from) {
+        from = window.from;
+        to = window.from;
+      }
+      if (from > to) {
+        to = from;
+      }
+      return { ...campaign, from, to };
+    })
+    .filter((campaign) => campaign.from <= window.to && campaign.to >= window.from);
+}
+
 export function loadCorsoCampaignFile(raw) {
   return loadFlyerCampaignFile(raw);
 }

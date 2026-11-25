@@ -1,7 +1,7 @@
 {
-  "flyerHash": "41294e345ba42739",
-  "updatedAt": "2026-11-24T02:15:47.208Z",
-  "extractionMethod": "gemini",
+  "flyerHash": "aa4fa1ae2b186228",
+  "updatedAt": "2026-11-25T13:30:13.652Z",
+  "extractionMethod": "cache_stale_hash",
   "campaigns": [
     {
       "from": "2026-11-17",

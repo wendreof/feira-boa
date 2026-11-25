@@ -9,9 +9,9 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://bigbom.com.br/wp-content/uploads/2026/11/Big-Ofertas.pdf",
-    "checked_at": "2026-11-25T13:14:48.481Z",
+    "checked_at": "2026-11-25T13:30:44.807Z",
     "last_success_at": "2026-11-25T13:14:48.481Z",
-    "last_error": null,
+    "last_error": "TypeError",
     "needs_review": false
   },
   "https://corso.com.br/jornalfrente.php": {
@@ -24,8 +24,8 @@
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://corso.com.br/jornalfrente.php",
-    "checked_at": "2026-11-25T13:14:50.272Z",
-    "last_success_at": "2026-11-25T13:14:50.272Z",
+    "checked_at": "2026-11-25T13:31:20.319Z",
+    "last_success_at": "2026-11-25T13:31:20.319Z",
     "last_error": null,
     "needs_review": false
   },
@@ -35,12 +35,12 @@
     "branch": "Rede Forte · SJBV e região",
     "store_id": "forte-mix",
     "store_key": "forte-mix-rede-forte-sjbv-e-regiao",
-    "sha256": "73cedd57dbaf9ea8a4bc2c16978ca3955e52b4a99a57365ee8aa37cc91dbbf77",
+    "sha256": "f98f5b07547985d9b733f92180c96f50a73f91ad291550025d303ca44b7ba217",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://smfortemix.com.br/",
-    "checked_at": "2026-11-25T13:14:51.389Z",
-    "last_success_at": "2026-11-25T13:14:51.389Z",
+    "checked_at": "2026-11-25T13:31:20.741Z",
+    "last_success_at": "2026-11-25T13:31:20.741Z",
     "last_error": null,
     "needs_review": true
   },
@@ -55,8 +55,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.superpaguemenos.com.br/ofertas?productclusterids=161&fuzzy=0&operator=and&facets=productclusterids%2Cfuzzy%2Coperator&sort=score_desc&page=0",
-    "checked_at": "2026-11-25T13:14:54.046Z",
-    "last_success_at": "2026-11-25T13:14:54.046Z",
+    "checked_at": "2026-11-25T13:31:21.760Z",
+    "last_success_at": "2026-11-25T13:31:21.760Z",
     "last_error": null,
     "needs_review": false
   },
@@ -70,7 +70,7 @@
     "status": 200,
     "content_type": "application/pdf",
     "final_url": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf",
-    "checked_at": "2026-11-25T13:14:54.223Z",
+    "checked_at": "2026-11-25T13:31:21.865Z",
     "last_success_at": "2026-11-04T13:07:19.091Z",
     "last_error": "TypeError",
     "needs_review": false
@@ -86,8 +86,8 @@
     "status": 200,
     "content_type": "application/json",
     "final_url": "https://www.spanionline.com.br/ofertas",
-    "checked_at": "2026-11-25T13:15:00.936Z",
-    "last_success_at": "2026-11-25T13:15:00.936Z",
+    "checked_at": "2026-11-25T13:31:27.091Z",
+    "last_success_at": "2026-11-25T13:31:27.091Z",
     "last_error": null,
     "needs_review": true
   },
@@ -97,13 +97,14 @@
     "branch": "Av. Dr. Durval Nicolau, 1572 · São João",
     "store_id": "spasso-sabores",
     "store_key": "spasso-sabores-av-dr-durval-nicolau-1572-sao-joao",
-    "sha256": "8a28c0144fe9061e3c362d93c2d668145db5164a205d09ad05454c52b00868a1",
+    "sha256": "fdd566b88401fd52f9a475397e5ca53f5ac7e157271c3fff66ddb0b84ae9d7e7",
     "status": 200,
     "content_type": "text/html; charset=UTF-8",
     "final_url": "https://spassosabores.com.br/ofertas-sao-joao/",
-    "checked_at": "2026-11-25T13:15:03.004Z",
-    "last_success_at": "2026-11-25T13:15:03.004Z",
+    "checked_at": "2026-11-25T13:31:29.239Z",
+    "last_success_at": "2026-11-25T13:31:29.239Z",
     "last_error": null,
-    "needs_review": true
+    "needs_review": false,
+    "review_note": "Liberada pela verificação automática de plausibilidade."
   }
 }

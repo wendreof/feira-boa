@@ -11,6 +11,7 @@ import {
   parseCorsoValidityHints,
 } from "../scripts/domain/corso-flyer.mjs";
 import { isOfferActive } from "../scripts/domain/offer-validity.mjs";
+import { applyFrenteWeekendCap } from "../scripts/adapters/corso.mjs";
 
 test("discoverCorsoFlyerFromHtml reads jornal hash and image URLs", async () => {
   const html = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-page.html", import.meta.url)), "utf8");
@@ -27,6 +28,35 @@ test("parseCorsoValidityHints extracts weekend flyer window", async () => {
   assert.ok(hints.some((range) => range.from === "2026-11-13" && range.to === "2026-11-14"));
 });
 
+test("extractCorsoFrenteWeekendWindow uses frente banner only", async () => {
+  const sample = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-ocr-sample.txt", import.meta.url)), "utf8");
+  assert.deepEqual(extractCorsoFrenteWeekendWindow(sample), {
+    from: "2026-11-13",
+    to: "2026-11-14",
+  });
+  assert.equal(extractCorsoFrenteWeekendWindow("sem banner de validade"), null);
+});
+
+test("capCorsoCampaignsToFrenteWeekend clamps campaigns to frente window", () => {
+  const window = { from: "2026-11-13", to: "2026-11-14" };
+  const campaigns = [
+    { from: "2026-11-10", to: "2026-11-20", offers: [{ name: "A" }] },
+    { from: "2026-11-15", to: "2026-11-18", offers: [{ name: "B" }] },
+  ];
+  const capped = capCorsoCampaignsToFrenteWeekend(campaigns, window);
+  assert.equal(capped.length, 2);
+  assert.deepEqual(capped[0], { from: "2026-11-13", to: "2026-11-14", offers: [{ name: "A" }] });
+  assert.deepEqual(capped[1], { from: "2026-11-14", to: "2026-11-14", offers: [{ name: "B" }] });
+});
+
+test("applyFrenteWeekendCap delegates to frente OCR window", async () => {
+  const sample = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-ocr-sample.txt", import.meta.url)), "utf8");
+  const campaigns = [{ from: "2026-11-01", to: "2026-11-30", offers: [] }];
+  const capped = applyFrenteWeekendCap(campaigns, sample);
+  assert.deepEqual(capped[0], { from: "2026-11-13", to: "2026-11-14", offers: [] });
+  assert.deepEqual(applyFrenteWeekendCap(campaigns, "no weekend line"), campaigns);
+});
+
 test("parseCorsoFlyerText pairs hortifruti price grids from OCR snippet", async () => {
   const sample = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-ocr-sample.txt", import.meta.url)), "utf8");
   const campaigns = parseCorsoFlyerText(sample);
@@ -37,12 +67,6 @@ test("parseCorsoFlyerText pairs hortifruti price grids from OCR snippet", async 
   assert.ok(alface);
   assert.equal(alface.price, 4.18);
   assert.equal(alface.oldPrice, 5.18);
-});
-
-test("extractCorsoFrenteWeekendWindow reads SEXTA e SÁBADO banner", async () => {
-  const sample = await readFile(fileURLToPath(new URL("./fixtures/corso-flyer-ocr-sample.txt", import.meta.url)), "utf8");
-  const window = extractCorsoFrenteWeekendWindow(sample);
-  assert.deepEqual(window, { from: "2026-11-13", to: "2026-11-14" });
 });
 
 test("capCorsoCampaignsToFrenteWeekend clamps gemini windows to frente weekend", () => {

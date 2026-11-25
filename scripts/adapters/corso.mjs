@@ -55,7 +55,7 @@ function countOffers(campaigns) {
   return campaigns.reduce((sum, campaign) => sum + campaign.offers.length, 0);
 }
 
-function applyFrenteWeekendCap(campaigns, frenteOcr) {
+export function applyFrenteWeekendCap(campaigns, frenteOcr) {
   const window = extractCorsoFrenteWeekendWindow(frenteOcr);
   if (!window) return campaigns;
   return capCorsoCampaignsToFrenteWeekend(campaigns, window);

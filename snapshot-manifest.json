@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T13:49:21.995Z",
+  "updatedAt": "2026-11-25T13:50:56.445Z",
   "current": [
     {
       "role": "current",
@@ -20,12 +20,12 @@
       "storeId": "corso",
       "storeName": "Corso",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
-      "fetchedAt": "2026-11-25T13:29:23.350Z",
+      "fetchedAt": "2026-11-25T13:50:56.445Z",
       "supersededAt": null,
       "offerCount": 122,
       "status": "ok",
       "validFrom": "2026-11-20",
-      "validTo": "2026-11-26",
+      "validTo": "2026-11-21",
       "sourceUrl": "https://corso.com.br/jornalfrente.php"
     },
     {
@@ -113,12 +113,12 @@
       "storeId": "corso",
       "storeName": "Corso",
       "branch": "Rua Eduardo Lopes Castilho, 495 · São João",
-      "fetchedAt": "2026-11-18T13:35:51.810Z",
-      "supersededAt": "2026-11-24T02:02:51.123Z",
-      "offerCount": 123,
+      "fetchedAt": "2026-11-25T13:29:23.350Z",
+      "supersededAt": "2026-11-25T13:50:56.446Z",
+      "offerCount": 122,
       "status": "ok",
-      "validFrom": "2026-11-13",
-      "validTo": "2026-11-19",
+      "validFrom": "2026-11-20",
+      "validTo": "2026-11-26",
       "sourceUrl": "https://corso.com.br/jornalfrente.php"
     },
     {

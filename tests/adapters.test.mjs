@@ -570,6 +570,16 @@ test("normalizeOfferPresentation turns LV/PG codes into bundle notices", () => {
   assert.equal(personal.detail, "11 unidades");
   assert.equal(personal.note, "Leve 12 e pague 11");
 
+  const tropolino = normalizeOfferPresentation({
+    name: "TOALHA UMEDECIDA TROPOLINO PAGUE 100 LEVE 120 UNIDADES",
+    brand: "",
+    detail: "Unidade",
+    note: "",
+  });
+  assert.equal(tropolino.name, "Toalha Umedecida Tropolino");
+  assert.equal(tropolino.detail, "Unidade");
+  assert.equal(tropolino.note, "Leve 120 e pague 100");
+
   const cupNoodles = normalizeOfferPresentation({
     name: "a Mais COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L 1 Macarrão Instantâneo CUP NOODLES",
     brand: "",

@@ -38,6 +38,7 @@ test("cleaned flyer offers satisfy the presentation guard", () => {
     { name: "Papel Higiênico Folha Dupla Absolute 30m", brand: "", detail: "Leve 12un Pague 11un", note: "" },
     { name: "Maionese Light Leve 600g Pague", brand: "", detail: "500g", note: "" },
     { name: "a Mais COMPRE 2 UNIDS. E GANHE GUARANÁ ANTÁRCTICA 2L 1 Macarrão Instantâneo CUP NOODLES", brand: "", detail: "65/72g", note: "" },
+    { name: "TOALHA UMEDECIDA TROPOLINO PAGUE 100 LEVE 120 UNIDADES", brand: "", detail: "Unidade", note: "" },
   ];
   for (const source of dirtyOffers) {
     const cleaned = normalizeOfferPresentation(source);

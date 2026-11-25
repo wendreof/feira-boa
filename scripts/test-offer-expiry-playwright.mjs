@@ -4,7 +4,7 @@
  */
 import { readFileSync } from "node:fs";
 import { chromium } from "playwright";
-import { expiryHighlightLabel } from "../src/view/format.ts";
+import { expiryHighlightLabel, offerValidityLabel } from "../src/view/format.ts";
 import {
   SITE_URL,
   dismissLoginGate,
@@ -49,6 +49,11 @@ async function collectCardExpiryDom(page) {
           return getComputedStyle(sticker).display !== "none";
         })(),
         stickerText: card.querySelector(".offer-sticker")?.textContent?.trim() ?? "",
+        validUntilText: (() => {
+          const valid = card.querySelector(".valid-until");
+          if (!valid || valid.hidden) return null;
+          return valid.querySelector("strong")?.textContent?.trim() ?? null;
+        })(),
       };
     });
   });
@@ -70,6 +75,10 @@ function assertListViewCards(cards, offersById, failures) {
         failures.push(`${card.id}: expected footer "${expected}", got "${card.footerFlagText ?? "none"}"`);
       }
       if (!card.flagAfterVerOferta) failures.push(`${card.id}: expiry flag must follow ver oferta link`);
+      const validity = offerValidityLabel(offer);
+      if (card.validUntilText !== validity) {
+        failures.push(`${card.id}: expected validity "${validity}", got "${card.validUntilText ?? "none"}"`);
+      }
     } else if (card.footerFlagText) {
       failures.push(`${card.id}: unexpected footer flag "${card.footerFlagText}"`);
     }
@@ -91,6 +100,10 @@ function assertGridViewCards(cards, offersById, failures) {
       if (!card.stickerVisible) failures.push(`${card.id}: expected visible expiry sticker in grid`);
       if (card.stickerText !== expected) {
         failures.push(`${card.id}: expected sticker "${expected}", got "${card.stickerText}"`);
+      }
+      const validity = offerValidityLabel(offer);
+      if (card.validUntilText !== validity) {
+        failures.push(`${card.id}: expected validity "${validity}", got "${card.validUntilText ?? "none"}"`);
       }
     }
   }

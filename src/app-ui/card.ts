@@ -109,7 +109,7 @@ export function updateOfferCard(refs: CardRefs, offer: Offer): void {
   const expiryLabel = archived ? null : expiryHighlightLabel(offer);
   refs.expiryFlag.textContent = expiryLabel ?? "";
   refs.expiryFlag.hidden = !expiryLabel;
-  refs.validWrap.hidden = Boolean(expiryLabel);
+  refs.validWrap.hidden = false;
   refs.validWrap.classList.toggle("has-expiry-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-soon", Boolean(expiryLabel));
   refs.root.classList.toggle("is-expiring-today", expiryLabel === "Último dia");

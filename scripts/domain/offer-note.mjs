@@ -58,6 +58,8 @@ export function extractBundleCodes(text, payHint = "") {
     .replace(/\bl(\d+)p(\d+)\b/gi, (full, take, pay) => pushNote(take, pay))
     .replace(new RegExp(`\\bleve\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}\\s*,?\\s*(?:e\\s+|de\\s+)?pague\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}`, "gi"),
       (full, takeQty, takeUnit, payQty, payUnit) => pushNote(formatBundleAmount(takeQty, takeUnit), formatBundleAmount(payQty, payUnit)))
+    .replace(new RegExp(`\\bpague\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}\\s*,?\\s*(?:e\\s+|de\\s+)?\\bleve\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}`, "gi"),
+      (full, payQty, payUnit, takeQty, takeUnit) => pushNote(formatBundleAmount(takeQty, takeUnit), formatBundleAmount(payQty, payUnit)))
     .replace(new RegExp(`\\s*\\bleve\\s*(\\d+(?:[.,]\\d+)?)\\s*${BUNDLE_UNIT}\\s*,?\\s*pague(?!\\s*\\d)`, "gi"),
       (full, takeQty, takeUnit) => {
         const pay = String(payHint).match(BUNDLE_AMOUNT);

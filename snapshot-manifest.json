@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T13:38:04.054Z",
+  "updatedAt": "2026-11-25T13:49:21.995Z",
   "current": [
     {
       "role": "current",
@@ -72,9 +72,9 @@
       "storeId": "spani",
       "storeName": "Spani Atacadista",
       "branch": "São João da Boa Vista · Jardim das Flores",
-      "fetchedAt": "2026-11-25T13:30:44.409Z",
+      "fetchedAt": "2026-11-25T13:49:21.995Z",
       "supersededAt": null,
-      "offerCount": 938,
+      "offerCount": 2705,
       "status": "ok",
       "validFrom": "2026-11-23",
       "validTo": "2026-11-29",

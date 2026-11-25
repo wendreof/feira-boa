@@ -7,6 +7,7 @@ import {
   discoverSpassoFlyersFromHtml,
   hashSpassoFlyerSet,
   loadSpassoCampaignFile,
+  spassoCacheMatchesFlyer,
 } from "../scripts/domain/spasso-flyer.mjs";
 
 test("discoverSpassoFlyersFromHtml collects newest flyer families and hash", async () => {
@@ -37,6 +38,13 @@ test("loadSpassoCampaignFile accepts legacy array and wrapped cache", () => {
     campaigns: [{ from: "2026-01-01", to: "2026-01-02", offers: [] }],
   });
   assert.equal(wrapped.flyerHash, "abc123");
+});
+
+test("spassoCacheMatchesFlyer requires live hash alignment", () => {
+  const cache = { flyerHash: "old", campaigns: [{ offers: [] }] };
+  assert.equal(spassoCacheMatchesFlyer(cache, "old"), true);
+  assert.equal(spassoCacheMatchesFlyer(cache, "new"), false);
+  assert.equal(spassoCacheMatchesFlyer({ flyerHash: "x", campaigns: [] }, "x"), false);
 });
 
 test("campaignCacheIsActive is false when every campaign ended before today", () => {

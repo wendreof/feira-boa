@@ -9,6 +9,7 @@ import {
   defaultSpassoValidityWindow,
   discoverSpassoFlyersFromHtml,
   loadSpassoCampaignFile,
+  spassoCacheMatchesFlyer,
 } from "../domain/spasso-flyer.mjs";
 import {
   isSpassoSectionBannerName,
@@ -99,7 +100,7 @@ function campaignsToOffers(campaigns, pageUrl, flyerImageUrls = []) {
 }
 
 async function resolveCampaigns(flyer, cache) {
-  if (cache.flyerHash === flyer.hash && cache.campaigns.length > 0) {
+  if (spassoCacheMatchesFlyer(cache, flyer.hash)) {
     return { campaigns: cache.campaigns, extractionMethod: "cache" };
   }
 
@@ -124,7 +125,7 @@ async function resolveCampaigns(flyer, cache) {
       } else {
         console.warn(`[Spasso Sabores] Gemini extraction failed (${message}); using OCR if sufficient.`);
       }
-      if (transient && countOffers(ocrCampaigns) < MIN_OFFERS_OCR && cache.campaigns.length > 0) {
+      if (transient && countOffers(ocrCampaigns) < MIN_OFFERS_OCR && spassoCacheMatchesFlyer(cache, flyer.hash)) {
         writeCache({
           flyerHash: flyer.hash,
           campaigns: cache.campaigns,
@@ -149,9 +150,18 @@ async function resolveCampaigns(flyer, cache) {
     extractionMethod === "gemini" ? MIN_OFFERS_GEMINI : Math.min(MIN_OFFERS_OCR, MIN_OFFERS_GEMINI);
 
   if (total < minRequired) {
-    if (cache.campaigns.length > 0) {
+    const ocrCount = countOffers(ocrCampaigns);
+    if (ocrCount >= MIN_OFFERS_OCR && cache.flyerHash !== flyer.hash) {
+      writeCache({
+        flyerHash: flyer.hash,
+        campaigns: ocrCampaigns,
+        extractionMethod: "ocr",
+      });
+      return { campaigns: ocrCampaigns, extractionMethod: "ocr" };
+    }
+    if (spassoCacheMatchesFlyer(cache, flyer.hash)) {
       console.warn(
-        "[Spasso Sabores] Extraction incomplete; reusing last transcription with updated flyer hash.",
+        "[Spasso Sabores] Extraction incomplete; reusing last transcription for the current flyer hash.",
       );
       writeCache({
         flyerHash: flyer.hash,

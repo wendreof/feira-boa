@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T03:58:58.576Z",
+  "updatedAt": "2026-11-25T13:14:48.115Z",
   "current": [
     {
       "role": "current",
@@ -46,9 +46,9 @@
       "storeId": "paguemenos",
       "storeName": "Pague Menos",
       "branch": "Loja 33 · Jardim Santo André",
-      "fetchedAt": "2026-11-25T03:58:53.313Z",
+      "fetchedAt": "2026-11-25T13:14:48.115Z",
       "supersededAt": null,
-      "offerCount": 552,
+      "offerCount": 528,
       "status": "ok",
       "validFrom": "2026-11-23",
       "validTo": "2026-11-29",

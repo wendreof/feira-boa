@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { classifyProduct } from "../domain/taxonomy.mjs";
 import { mergeBrandIntoName } from "../domain/brands.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { promoTagsForCampaign } from "../domain/offer-promo-tags.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
@@ -96,6 +97,7 @@ function campaignsToOffers(campaigns, pageUrl) {
         },
         validity: { from: campaign.from, to: campaign.to },
         taxonomy,
+        promoTags: promoTagsForCampaign(campaign),
       });
 
       if (validateOffer(offer)) {

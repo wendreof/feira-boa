@@ -17,8 +17,9 @@ export const DEFAULT_OFFER_TONE = "#edf4e9";
  * @param {object} fields.product { name, detail, storeCategory?, price, previousPrice?, note? }
  * @param {{ from: string, to: string, validWeekdays?: number[] | null }} fields.validity
  * @param {{ department: string, productType: string, productTypes: string[] }} fields.taxonomy
+ * @param {string[]} [fields.promoTags] optional campaign tags (e.g. black-friday)
  */
-export function createOffer({ storeId, idKey, store, sourceUrl, product, validity, taxonomy }) {
+export function createOffer({ storeId, idKey, store, sourceUrl, product, validity, taxonomy, promoTags }) {
   const offer = {
     id: `${storeId}-${slugText(idKey)}`,
     store: store.name,
@@ -45,6 +46,9 @@ export function createOffer({ storeId, idKey, store, sourceUrl, product, validit
   });
   if (Array.isArray(validity.validWeekdays) && validity.validWeekdays.length > 0) {
     offer.validWeekdays = validity.validWeekdays;
+  }
+  if (Array.isArray(promoTags) && promoTags.length > 0) {
+    offer.promoTags = promoTags;
   }
   return offer;
 }

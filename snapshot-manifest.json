@@ -59,13 +59,13 @@
       "storeId": "sempre",
       "storeName": "Sempre Vale",
       "branch": "Durval Nicolau",
-      "fetchedAt": "2026-11-09T01:02:52.207Z",
+      "fetchedAt": "2026-11-26T18:49:24.448Z",
       "supersededAt": null,
-      "offerCount": 77,
+      "offerCount": 78,
       "status": "ok",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf"
     },
     {
       "role": "current",
@@ -152,13 +152,13 @@
       "storeId": "sempre",
       "storeName": "Sempre Vale",
       "branch": "Durval Nicolau",
-      "fetchedAt": "2026-11-04T13:06:29.674Z",
-      "supersededAt": "2026-11-06T03:21:28.659Z",
-      "offerCount": 72,
+      "fetchedAt": "2026-11-09T01:02:52.207Z",
+      "supersededAt": "2026-11-26T18:49:24.451Z",
+      "offerCount": 77,
       "status": "ok",
-      "validFrom": "2026-11-02",
-      "validTo": "2026-11-04",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/f0d68491-e374-4955-a346-9fc9ff49c896-campanha-587-crop-baixa(3).pdf"
+      "validFrom": "2026-11-05",
+      "validTo": "2026-11-08",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
     },
     {
       "role": "previous",

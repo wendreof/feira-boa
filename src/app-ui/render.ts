@@ -15,6 +15,7 @@ import type { Offer } from "../types";
 import { refreshAlertsInvitePanel } from "./alerts-invite";
 import { browseFiltersActive } from "./browse-filters";
 import { storeNameFromSearch } from "../../scripts/domain/store-search-label.mjs";
+import { PROMO_TAG_BLACK_FRIDAY, offerHasPromoTag } from "../../scripts/domain/offer-promo-tags.mjs";
 import { hideOfferGridLoading } from "./offer-grid-loading";
 import { bindIncrementalMountGrid, mountOffersIncrementally } from "./incremental-mount";
 import {
@@ -196,11 +197,15 @@ export function renderOffers(options?: RenderOffersOptions): void {
     const matchesSectorFilter = matchesSector(offer);
     const matchesReaction = sortSelect.value === "top-rated" ? (likes.get(offer.id) ?? 0) > 0 : true;
     const matchesDiscount = sortSelect.value === "discount" ? discountRatio(offer) > 0 : true;
+    const matchesBlackFriday = sortSelect.value === "black-friday"
+      ? offerHasPromoTag(offer, PROMO_TAG_BLACK_FRIDAY)
+      : true;
     return (appState.sharedOfferId ? offer.id === appState.sharedOfferId : isActive(offer, today)) && (appState.sharedOfferId || appState.activeStore === "Todas as lojas" || offer.store === appState.activeStore) &&
     (appState.sharedOfferId || matchesSectorFilter) &&
     (appState.sharedOfferId || !appState.activeProductType || category.subcategory === appState.activeProductType) &&
     (appState.sharedOfferId || !appState.favoriteOnly || appState.favoriteIds.has(offer.id)) &&
     (appState.sharedOfferId || matchesReaction) && (appState.sharedOfferId || matchesDiscount) &&
+    (appState.sharedOfferId || matchesBlackFriday) &&
     (appState.sharedOfferId || min === null || offer.price >= min) && (appState.sharedOfferId || max === null || offer.price <= max) && (appState.sharedOfferId || matchesSearch(offer, input.value));
   });
   if (sortSelect.value === "recommended") matching = [...matching].sort((a, b) => randomOfferRank(a) - randomOfferRank(b));

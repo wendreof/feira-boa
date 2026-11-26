@@ -3,6 +3,7 @@ import { classifyProduct } from "../domain/taxonomy.mjs";
 import { fetchWithRetry } from "./http.mjs";
 import { validateOffer } from "../domain/validation.mjs";
 import { createOffer } from "./offer-factory.mjs";
+import { promoTagsForCampaign } from "../domain/offer-promo-tags.mjs";
 import { logoUrlForStoreId } from "../../src/shared/store-logos.mjs";
 
 const SEMPREVALE_STORE = {
@@ -90,6 +91,7 @@ export async function extractSempreVale(customUrl = null) {
         },
         validity: { from: campaign.from, to: campaign.to },
         taxonomy,
+        promoTags: promoTagsForCampaign(campaign),
       });
 
       if (validateOffer(offer)) {

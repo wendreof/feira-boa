@@ -5,107 +5,536 @@
     "branch": "Durval Nicolau",
     "logo": "logos/semprevale.png",
     "source": "Folheto oficial · Durval Nicolau",
-    "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf",
-    "from": "2026-11-05",
-    "to": "2026-11-08"
+    "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+    "from": "2026-11-26",
+    "to": "2026-11-29"
   },
-  "fetchedAt": "2026-11-09T01:02:52.207Z",
-  "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf",
+  "fetchedAt": "2026-11-26T18:49:24.448Z",
+  "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
   "offers": [
     {
-      "id": "sempre-leite-longa-vida-lider-1l-2026-11-06",
+      "id": "sempre-saco-de-lixo-embalixo-profissional-preto-50l-30-un-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Leite Longa Vida Líder",
-      "detail": "1L",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
+      "name": "Saco de Lixo Embalixo Profissional Preto",
+      "detail": "50L 30 un.",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
       "productTypes": [
-        "Leites"
+        "Outros"
       ],
-      "price": 3.99,
-      "previousPrice": 5.79,
-      "icon": "🥛",
+      "price": 14.99,
+      "previousPrice": 39.99,
+      "icon": "🏷️",
       "tone": "#edf4e9",
-      "note": "Limite por cliente 24 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 5 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-arroz-tipo-1-prato-fino-5kg-2026-11-06",
+      "id": "sempre-feijao-carioca-broto-legal-1kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Arroz Tipo 1 Prato Fino",
-      "detail": "5kg",
+      "name": "Feijão Carioca Broto Legal",
+      "detail": "1kg",
       "category": "Mercearia",
       "department": "Mercearia",
       "productType": "Mercearia",
       "productTypes": [
         "Mercearia"
       ],
-      "price": 24.9,
-      "previousPrice": 33.9,
-      "icon": "🍚",
+      "price": 6.99,
+      "previousPrice": 9.98,
+      "icon": "🍲",
       "tone": "#edf4e9",
       "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-cafe-caboclo-500g-2026-11-06",
+      "id": "sempre-azeite-argentino-extra-virgem-cocinero-500ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Café Caboclo",
+      "name": "Azeite Argentino Extra Virgem Cocinero",
+      "detail": "500ml",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "price": 19.9,
+      "previousPrice": 29.9,
+      "icon": "🥫",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-creme-de-leite-piracanjuba-italac-200g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Creme de Leite Piracanjuba / Italac",
+      "detail": "200g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "price": 2.49,
+      "previousPrice": 3.59,
+      "icon": "🥛",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 6 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-leite-em-po-ninho-instantaneo-380g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Leite em Pó Ninho Instantâneo",
+      "detail": "380g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Leites",
+      "productTypes": [
+        "Leites"
+      ],
+      "price": 14.9,
+      "previousPrice": 21.58,
+      "icon": "🥛",
+      "tone": "#edf4e9",
+      "note": "10% grátis · Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-bombom-lacta-favoritos-250-6g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Bombom Lacta Favoritos",
+      "detail": "250,6g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 8.99,
+      "previousPrice": 15.98,
+      "icon": "🍫",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-panetone-marilan-frutas-chocolate-400g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Panetone Marilan Frutas / Chocolate",
+      "detail": "400g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 9.99,
+      "previousPrice": 18.9,
+      "icon": "🎂",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-maionese-hellmann-s-tradicional-500g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Maionese Hellmann's Tradicional",
       "detail": "500g",
       "category": "Mercearia",
       "department": "Mercearia",
-      "productType": "Café",
+      "productType": "Mercearia",
       "productTypes": [
-        "Café"
+        "Mercearia"
       ],
-      "price": 18.9,
-      "previousPrice": 26.9,
-      "icon": "☕",
+      "price": 6.99,
+      "previousPrice": 11.98,
+      "icon": "🥫",
       "tone": "#edf4e9",
       "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-cerveja-lager-heineken-350ml-2026-11-06",
+      "id": "sempre-molho-de-tomate-quero-fugini-sache-240g-300g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Cerveja Lager Heineken",
-      "detail": "350ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Cervejas",
+      "name": "Molho de Tomate Quero / Fugini Sachê",
+      "detail": "240g / 300g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Cervejas"
+        "Mercearia"
       ],
-      "price": 4.29,
-      "previousPrice": 5.69,
-      "icon": "🍺",
+      "price": 0.99,
+      "previousPrice": 2.29,
+      "icon": "🥫",
       "tone": "#edf4e9",
-      "note": "Limite por cliente 36 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 6 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-refrigerante-coca-cola-2l-2026-11-06",
+      "id": "sempre-sorvete-nestle-tradicional-1-5l-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Sorvete Nestlé Tradicional",
+      "detail": "1,5L",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
+      "productTypes": [
+        "Congelados"
+      ],
+      "price": 17.9,
+      "previousPrice": 26.9,
+      "icon": "🍨",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-requeijao-vigor-200g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Requeijão Vigor",
+      "detail": "200g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Queijos e requeijão",
+      "productTypes": [
+        "Queijos e requeijão"
+      ],
+      "price": 6.49,
+      "previousPrice": 9.98,
+      "icon": "🧀",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-leite-fermentado-frutap-800g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Leite Fermentado Frutap",
+      "detail": "800g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Leites",
+      "productTypes": [
+        "Leites"
+      ],
+      "price": 7.99,
+      "previousPrice": 13.39,
+      "icon": "🥛",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-lava-roupas-liquido-omo-lavagem-perfeita-1-8l-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Lava Roupas Líquido Omo Lavagem Perfeita",
+      "detail": "1,8L",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 18.9,
+      "previousPrice": 31.9,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-amaciante-concentrado-downy-refil-750ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Amaciante Concentrado Downy Refil",
+      "detail": "750ml",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 11.9,
+      "previousPrice": 20.9,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-desodorante-aerosol-rexona-150ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Desodorante Aerosol Rexona",
+      "detail": "150ml",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 10.9,
+      "previousPrice": 18.9,
+      "icon": "🧴",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-linguica-toscana-seara-granel-kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Linguiça Toscana Seara Granel",
+      "detail": "Kg",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
+      "productTypes": [
+        "Frios",
+        "Churrasco"
+      ],
+      "price": 13.9,
+      "previousPrice": 23.9,
+      "icon": "🌭",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 5 kg",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-presunto-seara-s-capa-cada-100g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Presunto Seara s/ Capa",
+      "detail": "Cada 100g",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Frios",
+      "productTypes": [
+        "Frios"
+      ],
+      "price": 2.39,
+      "previousPrice": 3.99,
+      "icon": "🍖",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-aguardente-ypioca-prata-965ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Aguardente Ypióca Prata",
+      "detail": "965ml",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
+      "productTypes": [
+        "Outros"
+      ],
+      "price": 15.99,
+      "previousPrice": 29.9,
+      "icon": "🏷️",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-whisky-johnnie-walker-black-label-750ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Whisky Johnnie Walker Black Label",
+      "detail": "750ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Bebidas alcoólicas",
+      "productTypes": [
+        "Bebidas alcoólicas"
+      ],
+      "price": 139.9,
+      "previousPrice": 199.9,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-suco-integral-aurora-uva-1-5l-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Suco Integral Aurora Uva",
+      "detail": "1,5L",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
+      "productTypes": [
+        "Sucos e bebidas"
+      ],
+      "price": 14.9,
+      "previousPrice": 22.9,
+      "icon": "🧃",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 6 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-refrigerante-coca-cola-2l-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -117,181 +546,308 @@
       "productTypes": [
         "Refrigerantes"
       ],
-      "price": 8.99,
-      "previousPrice": 10.49,
+      "price": 7.99,
+      "previousPrice": 11.98,
       "icon": "🥤",
       "tone": "#edf4e9",
-      "note": "Limite por cliente 12 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 6 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-margarina-qualy-c-sal-500g-2026-11-06",
+      "id": "sempre-cerveja-lager-heineken-350ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Margarina Qualy c/ Sal",
-      "detail": "500g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Manteiga",
+      "name": "Cerveja Lager Heineken",
+      "detail": "350ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Cervejas",
       "productTypes": [
-        "Manteiga"
+        "Cervejas"
       ],
-      "price": 5.99,
-      "previousPrice": 10.98,
-      "icon": "🧂",
+      "price": 3.89,
+      "previousPrice": 5.69,
+      "icon": "🍺",
       "tone": "#edf4e9",
-      "note": "Limite por cliente 2 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 60 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-coxa-c-sobrecoxa-de-frango-avelicia-pacote-kg-2026-11-06",
+      "id": "sempre-ovos-brancos-casagrande-20-un-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Coxa c/ Sobrecoxa de Frango Avelícia Pacote",
-      "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
+      "name": "Ovos Brancos Casagrande",
+      "detail": "20 un.",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Ovos",
       "productTypes": [
-        "Frango",
-        "Churrasco"
+        "Ovos"
       ],
-      "price": 6.99,
-      "previousPrice": 8.99,
-      "icon": "🍗",
+      "price": 7.99,
+      "previousPrice": 15.98,
+      "icon": "🥚",
       "tone": "#edf4e9",
-      "note": "Limite por cliente 5 kg",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-linguica-toscana-sadia-kg-2026-11-06",
+      "id": "sempre-papel-higienico-folha-dupla-mili-12-rolos-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Linguiça Toscana Sadia",
-      "detail": "Kg",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios",
-      "productTypes": [
-        "Frios",
-        "Churrasco"
-      ],
-      "price": 15.9,
-      "previousPrice": 24.9,
-      "icon": "🌭",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 3 kg",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-queijo-mussarela-peca-kg-2026-11-06",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Queijo Mussarela Peça",
-      "detail": "Kg",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
-      "productTypes": [
-        "Queijos e requeijão"
-      ],
-      "price": 29.9,
-      "previousPrice": 54.9,
-      "icon": "🧀",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 5 kg",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-papel-higienico-folha-dupla-mili-dual-12-rolos-30m-2026-11-06",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Papel Higiênico Folha Dupla Mili Dual",
-      "detail": "12 Rolos 30m",
+      "name": "Papel Higiênico Folha Dupla Mili",
+      "detail": "12 rolos",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Papel higiênico",
       "productTypes": [
         "Papel higiênico"
       ],
-      "price": 17.9,
+      "price": 10.95,
       "previousPrice": 21.9,
       "icon": "🧻",
       "tone": "#edf4e9",
       "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-lava-roupas-em-po-omo-todo-ciclo-2kg-2026-11-06",
+      "id": "sempre-lava-roupas-em-po-brilhante-2-2kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Lava Roupas em Pó Omo Todo Ciclo",
-      "detail": "2kg",
+      "name": "Lava Roupas em Pó Brilhante",
+      "detail": "2,2kg",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Lavanderia e limpeza",
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 22.9,
-      "previousPrice": 33.9,
+      "price": 15.9,
+      "previousPrice": 23.9,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-lava-loucas-liquido-ype-500ml-2026-11-06",
+      "id": "sempre-lasanha-seara-perdigao-600g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Lava-Louças Líquido Ypê",
-      "detail": "500ml",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "name": "Lasanha Seara / Perdigão",
+      "detail": "600g",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Outros"
+        "Congelados"
       ],
-      "price": 2.29,
-      "previousPrice": 3.09,
-      "icon": "🏷️",
+      "price": 11.9,
+      "previousPrice": 18.9,
+      "icon": "🍝",
       "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-06",
-      "validTo": "2026-11-07",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-bisteca-do-lombo-copa-lombo-suina-kg-2026-11-05",
+      "id": "sempre-lampada-led-elgin-branca-9w-bivolt-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Lâmpada LED Elgin Branca",
+      "detail": "9W bivolt",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Casa",
+      "productTypes": [
+        "Casa"
+      ],
+      "price": 1.99,
+      "previousPrice": 5.99,
+      "icon": "💡",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 15 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-salgadinho-doritos-nacho-183g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Salgadinho Doritos Nacho",
+      "detail": "183g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 9.99,
+      "previousPrice": 19.98,
+      "icon": "🥨",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 3 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-sabonete-lux-botanicals-85g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Sabonete Lux Botanicals",
+      "detail": "85g",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 1.89,
+      "previousPrice": 2.99,
+      "icon": "🧴",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 12 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-filezinho-de-frango-seara-soltinhos-1kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Filézinho de Frango Seara Soltinhos",
+      "detail": "1kg",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
+      "productTypes": [
+        "Frango"
+      ],
+      "price": 14.98,
+      "previousPrice": 23.9,
+      "icon": "🍗",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 5 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-acem-peito-bovino-pedaco-moido-granel-kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Acém / Peito Bovino Pedaço / Moído Granel",
+      "detail": "Kg",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carne bovina",
+      "productTypes": [
+        "Carne bovina"
+      ],
+      "price": 39.9,
+      "previousPrice": null,
+      "icon": "🥩",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-carne-moida-suina-fresca-kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Carne Moída Suína Fresca",
+      "detail": "Kg",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Carnes suínas",
+      "productTypes": [
+        "Carnes suínas",
+        "Churrasco"
+      ],
+      "price": 19.98,
+      "previousPrice": null,
+      "icon": "🥩",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-bisteca-do-lombo-copa-lombo-suina-kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -304,112 +860,21 @@
         "Carnes suínas",
         "Churrasco"
       ],
-      "price": 14.98,
-      "previousPrice": 19.98,
+      "price": 13.98,
+      "previousPrice": null,
       "icon": "🐖",
       "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-file-filezinho-de-frango-ad-oro-soltinho-1kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Filé / Filézinho de Frango Ad'oro Soltinho",
-      "detail": "1kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Frango",
-      "productTypes": [
-        "Frango"
-      ],
-      "price": 17.98,
-      "previousPrice": 23.9,
-      "icon": "🍗",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-costela-bovina-minga-friboi-granel-kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Costela Bovina Minga Friboi Granel",
-      "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
-      "productTypes": [
-        "Carne bovina",
-        "Churrasco"
-      ],
-      "price": 27.9,
-      "previousPrice": 32.9,
-      "icon": "🥩",
-      "tone": "#edf4e9",
       "note": "Limite por cliente 10 kg",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-acem-peito-bovino-pedaco-moido-granel-kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Acém / Peito Bovino Pedaço / Moído Granel",
-      "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
-      "productTypes": [
-        "Carne bovina"
-      ],
-      "price": 38.9,
-      "previousPrice": 47.9,
-      "icon": "🥩",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 5 kg",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-fraldinha-bovina-friboi-picanha-bovina-fatiada-kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Fraldinha Bovina Friboi / Picanha Bovina Fatiada",
-      "detail": "Kg",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Carne bovina",
-      "productTypes": [
-        "Carne bovina",
-        "Churrasco"
-      ],
-      "price": 47.9,
-      "previousPrice": 54.9,
-      "icon": "🥩",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 5 kg",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-pernil-suino-com-osso-congelado-pururuca-kg-2026-11-05",
+      "id": "sempre-pernil-suino-com-osso-congelado-pururuca-kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -421,322 +886,77 @@
       "productTypes": [
         "Carnes suínas"
       ],
-      "price": 10.98,
+      "price": 9.98,
       "previousPrice": 14.98,
       "icon": "🐖",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-salsicha-hot-dog-seara-granel-kg-2026-11-05",
+      "id": "sempre-batata-congelada-mccain-airfryer-600g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Salsicha Hot Dog Seara Granel",
-      "detail": "Kg",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios",
+      "name": "Batata Congelada McCain Airfryer",
+      "detail": "600g",
+      "category": "Hortifruti",
+      "department": "Hortifruti",
+      "productType": "Hortifruti",
       "productTypes": [
-        "Frios"
+        "Hortifruti"
       ],
-      "price": 8.99,
-      "previousPrice": 12.98,
-      "icon": "🫔",
+      "price": 14.9,
+      "previousPrice": 22.9,
+      "icon": "🥔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-linguica-calabresa-cozida-ceratti-kg-2026-11-05",
+      "id": "sempre-hamburguer-bovino-maturatta-180g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Linguiça Calabresa Cozida Ceratti",
-      "detail": "Kg",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios",
+      "name": "Hambúrguer Bovino Maturatta",
+      "detail": "180g",
+      "category": "Congelados",
+      "department": "Congelados",
+      "productType": "Congelados",
       "productTypes": [
-        "Frios",
-        "Churrasco"
-      ],
-      "price": 22.9,
-      "previousPrice": 26.9,
-      "icon": "🌭",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-file-de-tilapia-aurora-800g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Filé de Tilápia Aurora",
-      "detail": "800g",
-      "category": "Açougue e peixaria",
-      "department": "Açougue e peixaria",
-      "productType": "Peixes",
-      "productTypes": [
-        "Peixes"
-      ],
-      "price": 42.9,
-      "previousPrice": 49.9,
-      "icon": "🐟",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-cafe-melitta-500g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Café Melitta",
-      "detail": "500g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Café",
-      "productTypes": [
-        "Café"
-      ],
-      "price": 22.9,
-      "previousPrice": 29.9,
-      "icon": "☕",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-feijao-carioca-nene-1kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Feijão Carioca Nene",
-      "detail": "1kg",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
+        "Congelados"
       ],
       "price": 6.99,
-      "previousPrice": 8.49,
-      "icon": "🍲",
+      "previousPrice": 7.99,
+      "icon": "🍔",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-acucar-cristal-maisdoce-5kg-2026-11-05",
+      "id": "sempre-chicken-bits-rezende-1kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Açúcar Cristal Maisdoce",
-      "detail": "5kg",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 13.49,
-      "previousPrice": 16.59,
-      "icon": "🍬",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-achocolatado-em-po-toddy-370g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Achocolatado em Pó Toddy",
-      "detail": "370g",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
-      "productTypes": [
-        "Outros"
-      ],
-      "price": 8.99,
-      "previousPrice": 11.98,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-creme-de-leite-italac-200g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Creme de Leite Italac",
-      "detail": "200g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 2.99,
-      "previousPrice": 3.39,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-macarrao-semola-galo-parafuso-ave-maria-spaguetti-500g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Macarrão Sêmola Galo Parafuso / Ave Maria / Spaguetti",
-      "detail": "500g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 3.79,
-      "previousPrice": 4.99,
-      "icon": "🍝",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-molho-de-tomate-fugini-sache-300g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Molho de Tomate Fugini Sachê",
-      "detail": "300g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 1.49,
-      "previousPrice": 2.29,
-      "icon": "🥫",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-hellmann-s-ketchup-380g-maionese-500g-380g-500g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Hellmann's Ketchup 380g / Maionese 500g",
-      "detail": "380g / 500g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 8.99,
-      "previousPrice": 11.98,
-      "icon": "🥫",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-bombom-lacta-favoritos-250-6g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Bombom Lacta Favoritos",
-      "detail": "250,6g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "price": 11.99,
-      "previousPrice": 15.98,
-      "icon": "🍫",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-leite-condensado-italac-semidesnatado-395g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Leite Condensado Italac Semidesnatado",
-      "detail": "395g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 5.89,
-      "previousPrice": 6.98,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 5 un.",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-big-chicken-perdigao-queijo-1kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Big Chicken Perdigão Queijo",
+      "name": "Chicken Bits Rezende",
       "detail": "1kg",
       "category": "Açougue e peixaria",
       "department": "Açougue e peixaria",
@@ -744,68 +964,25 @@
       "productTypes": [
         "Frango"
       ],
-      "price": 32.9,
-      "previousPrice": 39.9,
-      "icon": "🧀",
-      "tone": "#edf4e9",
-      "note": "Exceto loja 15-34",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-presunto-sadia-s-capa-fatiado-cada-100g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Presunto Sadia s/ Capa Fatiado",
-      "detail": "Cada 100g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Frios",
-      "productTypes": [
-        "Frios"
-      ],
-      "price": 2.89,
-      "previousPrice": 3.99,
-      "icon": "🍖",
+      "price": 23.9,
+      "previousPrice": 25.9,
+      "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-requeijao-vigor-200g-2026-11-05",
+      "id": "sempre-iogurte-liquido-nestle-1150g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Requeijão Vigor",
-      "detail": "200g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Queijos e requeijão",
-      "productTypes": [
-        "Queijos e requeijão"
-      ],
-      "price": 6.99,
-      "previousPrice": 9.98,
-      "icon": "🧀",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 3 un.",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-iogurte-liquido-frutap-sabores-1150g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Iogurte Líquido Frutap Sabores",
+      "name": "Iogurte Líquido Nestlé",
       "detail": "1150g",
       "category": "Frios e laticínios",
       "department": "Frios e laticínios",
@@ -813,45 +990,129 @@
       "productTypes": [
         "Iogurtes"
       ],
-      "price": 11.9,
-      "previousPrice": 15.98,
+      "price": 15.99,
+      "previousPrice": 16.98,
       "icon": "🥛",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-sorvete-variatta-special-1-8l-2026-11-05",
+      "id": "sempre-suco-natural-one-laranja-900ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Sorvete Variatta Special",
-      "detail": "1,8L",
-      "category": "Congelados",
-      "department": "Congelados",
-      "productType": "Congelados",
+      "name": "Suco Natural One Laranja",
+      "detail": "900ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
       "productTypes": [
-        "Congelados"
+        "Sucos e bebidas"
       ],
-      "price": 26.9,
-      "previousPrice": 35.9,
-      "icon": "🍨",
+      "price": 9.99,
+      "previousPrice": 13.98,
+      "icon": "🧃",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-bolo-confeitado-morango-sempre-vale-kg-2026-11-05",
+      "id": "sempre-pao-de-forma-bisnaguinha-seven-boys-450g-300g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Bolo Confeitado Morango Sempre Vale",
+      "name": "Pão de Forma / Bisnaguinha Seven Boys",
+      "detail": "450g / 300g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "price": 4.99,
+      "previousPrice": 8.99,
+      "icon": "🍞",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 2 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-biscoito-de-polvilho-cassini-palito-100g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Biscoito de Polvilho Cassini Palito",
+      "detail": "100g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 6.49,
+      "previousPrice": 7.99,
+      "icon": "🍪",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-suspiro-artesanal-sempre-vale-180g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Suspiro Artesanal Sempre Vale",
+      "detail": "180g",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
+      "productTypes": [
+        "Outros"
+      ],
+      "price": 16.9,
+      "previousPrice": 19.98,
+      "icon": "🏷️",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-pao-frances-kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Pão Francês",
       "detail": "Kg",
       "category": "Outros",
       "department": "Outros",
@@ -859,18 +1120,21 @@
       "productTypes": [
         "Outros"
       ],
-      "price": 48.9,
-      "previousPrice": 59.9,
-      "icon": "🎂",
+      "price": 13.9,
+      "previousPrice": 19.9,
+      "icon": "🍞",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-pao-de-forma-wickbold-integral-450g-2026-11-05",
+      "id": "sempre-pao-de-forma-wickbold-integral-450g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -882,45 +1146,25 @@
       "productTypes": [
         "Mercearia"
       ],
-      "price": 7.99,
+      "price": 8.49,
       "previousPrice": 10.9,
       "icon": "🍞",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-pudim-leite-condensado-sempre-vale-kg-2026-11-05",
+      "id": "sempre-farofa-de-mandioca-yoki-400g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Pudim Leite Condensado Sempre Vale",
-      "detail": "Kg",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 36.9,
-      "previousPrice": 42.9,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-panetone-artesanal-sempre-vale-400g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Panetone Artesanal Sempre Vale",
+      "name": "Farofa de Mandioca Yoki",
       "detail": "400g",
       "category": "Outros",
       "department": "Outros",
@@ -928,202 +1172,47 @@
       "productTypes": [
         "Outros"
       ],
-      "price": 11.9,
-      "previousPrice": 13.98,
+      "price": 5.99,
+      "previousPrice": 6.99,
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-maionese-frango-sempre-vale-kg-2026-11-05",
+      "id": "sempre-batata-pringles-original-134g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Maionese Frango Sempre Vale",
-      "detail": "Kg",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 36.9,
-      "previousPrice": 42.9,
-      "icon": "🥫",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-batata-pringles-sabores-100g-a-109g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Batata Pringles Sabores",
-      "detail": "100g a 109g",
+      "name": "Batata Pringles Original",
+      "detail": "134g",
       "category": "Mercearia",
       "department": "Mercearia",
       "productType": "Doces e snacks",
       "productTypes": [
         "Doces e snacks"
       ],
-      "price": 11.99,
-      "previousPrice": 15.98,
+      "price": 14.9,
+      "previousPrice": 18.99,
       "icon": "🥨",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-leite-em-po-ninho-380g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Leite em Pó Ninho",
-      "detail": "380g",
-      "category": "Frios e laticínios",
-      "department": "Frios e laticínios",
-      "productType": "Leites",
-      "productTypes": [
-        "Leites"
-      ],
-      "price": 17.99,
-      "previousPrice": 21.58,
-      "icon": "🥛",
-      "tone": "#edf4e9",
-      "note": "+10% grátis",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-creme-de-avela-nutella-350g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Creme de Avelã Nutella",
-      "detail": "350g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "price": 25.99,
-      "previousPrice": 38.99,
-      "icon": "🍫",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-chocolate-wafer-lacta-bis-100-8g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Chocolate Wafer Lacta Bis",
-      "detail": "100,8g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "price": 5.99,
-      "previousPrice": 7.98,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-biscoito-wafer-bauducco-140g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Biscoito Wafer Bauducco",
-      "detail": "140g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Doces e snacks",
-      "productTypes": [
-        "Doces e snacks"
-      ],
-      "price": 3.69,
-      "previousPrice": 4.59,
-      "icon": "🍪",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-tempero-sazon-60g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Tempero Sazón",
-      "detail": "60g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 4.99,
-      "previousPrice": 6.39,
-      "icon": "🧂",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-macarrao-instantaneo-nissin-85g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Macarrão Instantâneo Nissin",
-      "detail": "85g",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 2.89,
-      "previousPrice": 3.39,
-      "icon": "🍝",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-milho-verde-fugini-170g-2026-11-05",
+      "id": "sempre-milho-verde-fugini-170g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -1140,17 +1229,72 @@
       "icon": "🌽",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-biscoito-marilan-maizena-300g-2026-11-05",
+      "id": "sempre-azeitona-verde-vale-fertil-500g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Biscoito Marilan Maizena",
+      "name": "Azeitona Verde Vale Fértil",
+      "detail": "500g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "price": 16.99,
+      "previousPrice": 21.9,
+      "icon": "🫒",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-achocolatado-em-po-nescau-leve-350g-pague-330g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Achocolatado em Pó Nescau",
+      "detail": "Leve 350g pague 330g",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
+      "productTypes": [
+        "Outros"
+      ],
+      "price": 7.99,
+      "previousPrice": 10.35,
+      "icon": "🥛",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-biscoito-marilan-300g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Biscoito Marilan",
       "detail": "300g",
       "category": "Mercearia",
       "department": "Mercearia",
@@ -1158,18 +1302,333 @@
       "productTypes": [
         "Doces e snacks"
       ],
-      "price": 4.99,
+      "price": 5.49,
       "previousPrice": 6.39,
       "icon": "🍪",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-energetico-monster-energy-473ml-2026-11-05",
+      "id": "sempre-oleo-de-soja-soya-900ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Óleo de Soja Soya",
+      "detail": "900ml",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
+      "productTypes": [
+        "Outros"
+      ],
+      "price": 7.69,
+      "previousPrice": 8.59,
+      "icon": "🥫",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-cafe-melitta-500g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Café Melitta",
+      "detail": "500g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
+      "productTypes": [
+        "Café"
+      ],
+      "price": 24.9,
+      "previousPrice": 29.9,
+      "icon": "☕",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-arroz-tipo-1-gaspar-5kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Arroz Tipo 1 Gaspar",
+      "detail": "5kg",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
+      "productTypes": [
+        "Mercearia"
+      ],
+      "price": 18.9,
+      "previousPrice": 22.9,
+      "icon": "🍚",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-cafe-paulista-barretos-500g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Café Paulista Barretos",
+      "detail": "500g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Café",
+      "productTypes": [
+        "Café"
+      ],
+      "price": 14.9,
+      "previousPrice": 19.99,
+      "icon": "☕",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-leite-longa-vida-lider-1l-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Leite Longa Vida Líder",
+      "detail": "1L",
+      "category": "Frios e laticínios",
+      "department": "Frios e laticínios",
+      "productType": "Leites",
+      "productTypes": [
+        "Leites"
+      ],
+      "price": 4.49,
+      "previousPrice": 5.49,
+      "icon": "🥛",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-chocolate-wafer-lacta-bis-100-8g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Chocolate Wafer Lacta Bis",
+      "detail": "100,8g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 5.99,
+      "previousPrice": null,
+      "icon": "🍪",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-chocolate-lacta-80g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Chocolate Lacta",
+      "detail": "80g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 6.99,
+      "previousPrice": null,
+      "icon": "🍫",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-biscoito-recheado-passatempo-130g-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Biscoito Recheado Passatempo",
+      "detail": "130g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Doces e snacks",
+      "productTypes": [
+        "Doces e snacks"
+      ],
+      "price": 2.29,
+      "previousPrice": 2.98,
+      "icon": "🍪",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 36 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-cerveja-lager-amstel-350ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Cerveja Lager Amstel",
+      "detail": "350ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Cervejas",
+      "productTypes": [
+        "Cervejas"
+      ],
+      "price": 3.19,
+      "previousPrice": 3.99,
+      "icon": "🍺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-cerveja-puro-malte-3-0-350ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Cerveja Puro Malte 3.0",
+      "detail": "350ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Cervejas",
+      "productTypes": [
+        "Cervejas"
+      ],
+      "price": 2.39,
+      "previousPrice": 2.79,
+      "icon": "🍺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-cerveja-amstel-ultra-330ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Cerveja Amstel Ultra",
+      "detail": "330ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Cervejas",
+      "productTypes": [
+        "Cervejas"
+      ],
+      "price": 5.99,
+      "previousPrice": 7.99,
+      "icon": "🍺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-agua-mineral-lindoya-verao-s-gas-510ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Água Mineral Lindoya Verão s/ Gás",
+      "detail": "510ml",
+      "category": "Bebidas",
+      "department": "Bebidas",
+      "productType": "Sucos e bebidas",
+      "productTypes": [
+        "Sucos e bebidas"
+      ],
+      "price": 1.49,
+      "previousPrice": 1.99,
+      "icon": "💧",
+      "tone": "#edf4e9",
+      "note": "Limite por cliente 6 un.",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-energetico-monster-energy-473ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -1182,362 +1641,98 @@
         "Sucos e bebidas"
       ],
       "price": 7.99,
-      "previousPrice": 9.99,
+      "previousPrice": 9.79,
       "icon": "🥤",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-agua-mineral-lindoya-verao-c-gas-speciali-1-25l-2026-11-05",
+      "id": "sempre-assadeira-feirinha-fort-lar-1-un-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Água Mineral Lindoya Verão c/ Gás Speciali",
-      "detail": "1,25L",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Sucos e bebidas",
-      "productTypes": [
-        "Sucos e bebidas"
-      ],
-      "price": 2.29,
-      "previousPrice": 3.39,
-      "icon": "💧",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-refrigerante-bioleve-zero-1-5l-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Refrigerante Bioleve Zero",
-      "detail": "1,5L",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Refrigerantes",
-      "productTypes": [
-        "Refrigerantes"
-      ],
-      "price": 5.99,
-      "previousPrice": 6.99,
-      "icon": "🥤",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-suco-integral-hugo-pietro-1-35l-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Suco Integral Hugo Pietro",
-      "detail": "1,35L",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Sucos e bebidas",
-      "productTypes": [
-        "Sucos e bebidas"
-      ],
-      "price": 14.9,
-      "previousPrice": 19.99,
-      "icon": "🧃",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-cerveja-pilsen-crystal-350ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Cerveja Pilsen Crystal",
-      "detail": "350ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Cervejas",
-      "productTypes": [
-        "Cervejas"
-      ],
-      "price": 1.99,
-      "previousPrice": 2.89,
-      "icon": "🍺",
-      "tone": "#edf4e9",
-      "note": "Limite por cliente 48 un.",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-vinho-nacional-pergola-1l-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Vinho Nacional Pérgola",
-      "detail": "1L",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
-      "productTypes": [
-        "Bebidas alcoólicas"
-      ],
-      "price": 24.9,
-      "previousPrice": 32.9,
-      "icon": "🍷",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-vinho-chileno-casillero-del-diablo-750ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Vinho Chileno Casillero del Diablo",
-      "detail": "750ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
-      "productTypes": [
-        "Bebidas alcoólicas"
-      ],
-      "price": 44.9,
-      "previousPrice": 59.9,
-      "icon": "🍷",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-aperitivo-aperol-750ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Aperitivo Aperol",
-      "detail": "750ml",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
-      "productTypes": [
-        "Bebidas alcoólicas"
-      ],
-      "price": 39.9,
-      "previousPrice": 59.9,
-      "icon": "🍷",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-whisky-white-horse-escoces-1l-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Whisky White Horse Escocês",
-      "detail": "1L",
-      "category": "Bebidas",
-      "department": "Bebidas",
-      "productType": "Bebidas alcoólicas",
-      "productTypes": [
-        "Bebidas alcoólicas"
-      ],
-      "price": 79.9,
-      "previousPrice": 99.9,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-carvao-jacare-2-5kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Carvão Jacaré",
-      "detail": "2,5kg",
+      "name": "Assadeira Feirinha Fort Lar",
+      "detail": "1 un.",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Casa",
       "productTypes": [
         "Casa"
       ],
-      "price": 23.99,
-      "previousPrice": 26.9,
+      "price": 19.99,
+      "previousPrice": 34.99,
       "icon": "🏷️",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-filtro-de-papel-melitta-103-30-unidades-2026-11-05",
+      "id": "sempre-pilha-rayovac-alcalina-aaa-l4p3-aa-lv4pg3-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Filtro de Papel Melitta 103",
-      "detail": "30 Unidades",
-      "category": "Mercearia",
-      "department": "Mercearia",
-      "productType": "Mercearia",
-      "productTypes": [
-        "Mercearia"
-      ],
-      "price": 4.99,
-      "previousPrice": 6.99,
-      "icon": "☕",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-pilha-rayovac-alcalina-palito-aaa-pequena-aa-cartela-c-4-unidades-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Pilha Rayovac Alcalina Palito AAA / Pequena AA",
-      "detail": "Cartela c/ 4 Unidades",
+      "name": "Pilha Rayovac Alcalina",
+      "detail": "AAA L4P3 / AA LV4PG3",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Casa",
       "productTypes": [
         "Casa"
       ],
-      "price": 15.99,
+      "price": 12.99,
       "previousPrice": 23.9,
       "icon": "🔋",
       "tone": "#edf4e9",
-      "note": "Leve 4 e pague 3",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-alimento-pedigree-whiskas-sabores-sache-2026-11-05",
+      "id": "sempre-sandalia-havaianas-top-1-par-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Alimento Pedigree / Whiskas Sabores",
-      "detail": "Sachê",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "name": "Sandália Havaianas Top",
+      "detail": "1 par",
+      "category": "Vestuário e calçados",
+      "department": "Vestuário e calçados",
+      "productType": "Calçados",
       "productTypes": [
-        "Outros"
+        "Calçados"
       ],
-      "price": 2.99,
-      "previousPrice": 4.99,
-      "icon": "🏷️",
-      "tone": "#edf4e9",
-      "note": "A partir de 3 unidades",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-racao-energy-dog-adulto-1kg-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Ração Energy Dog Adulto",
-      "detail": "1kg",
-      "category": "Pet",
-      "department": "Pet",
-      "productType": "Pet",
-      "productTypes": [
-        "Pet"
-      ],
-      "price": 9.99,
-      "previousPrice": null,
-      "icon": "🐾",
+      "price": 24.99,
+      "previousPrice": 39.99,
+      "icon": "👟",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-sabonete-dove-90g-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Sabonete Dove",
-      "detail": "90g",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "price": 4.9,
-      "previousPrice": 6.9,
-      "icon": "🧴",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-kit-shampoo-condicionador-dove-350ml-150ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Kit Shampoo + Condicionador Dove",
-      "detail": "350ml + 150ml",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "price": 29.9,
-      "previousPrice": 38.9,
-      "icon": "🧴",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-desodorante-aerosol-dove-150ml-2026-11-05",
+      "id": "sempre-desodorante-aerosol-dove-150ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -1549,87 +1744,177 @@
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 17.9,
-      "previousPrice": 22.9,
+      "price": 14.9,
+      "previousPrice": 21.9,
       "icon": "🧴",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-creme-dental-colgate-maxima-protecao-anticaries-90g-2026-11-05",
+      "id": "sempre-creme-dental-closeup-tripla-acao-70g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Creme Dental Colgate Máxima Proteção Anticáries",
-      "detail": "90g",
+      "name": "Creme Dental Closeup Tripla Ação",
+      "detail": "70g",
       "category": "Higiene e cuidados",
       "department": "Higiene e cuidados",
       "productType": "Higiene pessoal",
       "productTypes": [
         "Higiene pessoal"
       ],
-      "price": 4.79,
-      "previousPrice": 5.99,
+      "price": 2.99,
+      "previousPrice": null,
       "icon": "🪥",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-amaciante-concentrado-comfort-500ml-2026-11-05",
+      "id": "sempre-amaciante-ype-2l-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Amaciante Concentrado Comfort",
-      "detail": "500ml",
+      "name": "Amaciante Ypê",
+      "detail": "2L",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Lavanderia e limpeza",
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 10.9,
-      "previousPrice": 14.99,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "Leve 500ml e pague 400ml",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-lava-roupas-liquido-omo-lavagem-perfeita-900ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Lava Roupas Líquido Omo Lavagem Perfeita",
-      "detail": "900ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
-      "productTypes": [
-        "Lavanderia e limpeza"
-      ],
-      "price": 15.9,
-      "previousPrice": 19.9,
+      "price": 9.9,
+      "previousPrice": 12.9,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-limpador-multiuso-casa-limpeza-500ml-2026-11-05",
+      "id": "sempre-absorvente-mili-noturno-suave-com-abas-32-un-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Absorvente Mili Noturno Suave com Abas",
+      "detail": "32 un.",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 16.9,
+      "previousPrice": 25.9,
+      "icon": "🧻",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-fralda-huggies-roupinha-absorcao-meguinha-p-ao-xxg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Fralda Huggies Roupinha Absorção Meguinha",
+      "detail": "P ao XXG",
+      "category": "Outros",
+      "department": "Outros",
+      "productType": "Outros",
+      "productTypes": [
+        "Outros"
+      ],
+      "price": 29.9,
+      "previousPrice": 42.9,
+      "icon": "🧻",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-desinfetante-urca-2l-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Desinfetante Urca",
+      "detail": "2L",
+      "category": "Casa e limpeza",
+      "department": "Casa e limpeza",
+      "productType": "Lavanderia e limpeza",
+      "productTypes": [
+        "Lavanderia e limpeza"
+      ],
+      "price": 5.99,
+      "previousPrice": 7.89,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-limpador-perfumado-casa-e-perfume-500ml-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Limpador Perfumado Casa e Perfume",
+      "detail": "500ml",
+      "category": "Higiene e cuidados",
+      "department": "Higiene e cuidados",
+      "productType": "Higiene pessoal",
+      "productTypes": [
+        "Higiene pessoal"
+      ],
+      "price": 5.99,
+      "previousPrice": 7.99,
+      "icon": "🧺",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-limpador-multiuso-casa-limpeza-500ml-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
@@ -1646,148 +1931,117 @@
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-limpador-perfumado-casa-e-perfume-1l-2026-11-05",
+      "id": "sempre-esponja-brilhus-multiuso-leve-4-pague-3-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Limpador Perfumado Casa e Perfume",
-      "detail": "1L",
-      "category": "Higiene e cuidados",
-      "department": "Higiene e cuidados",
-      "productType": "Higiene pessoal",
-      "productTypes": [
-        "Higiene pessoal"
-      ],
-      "price": 9.9,
-      "previousPrice": 13.99,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-limpador-cif-cremoso-original-250ml-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Limpador CIF Cremoso Original",
-      "detail": "250ml",
+      "name": "Esponja Brilhus Multiuso",
+      "detail": "Leve 4 pague 3",
       "category": "Casa e limpeza",
       "department": "Casa e limpeza",
       "productType": "Lavanderia e limpeza",
       "productTypes": [
         "Lavanderia e limpeza"
       ],
-      "price": 9.9,
-      "previousPrice": 12.79,
-      "icon": "🧺",
-      "tone": "#edf4e9",
-      "note": "+20% grátis",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-papel-higienico-folha-dupla-dalia-12-rolos-20m-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Papel Higiênico Folha Dupla Dalia",
-      "detail": "12 Rolos 20m",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Papel higiênico",
-      "productTypes": [
-        "Papel higiênico"
-      ],
-      "price": 11.9,
-      "previousPrice": 13.9,
-      "icon": "🧻",
-      "tone": "#edf4e9",
-      "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
-      "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
-    },
-    {
-      "id": "sempre-desinfetante-triex-2l-2026-11-05",
-      "store": "Sempre Vale",
-      "storeLogo": "logos/semprevale.png",
-      "branch": "Durval Nicolau",
-      "name": "Desinfetante Triex",
-      "detail": "2L",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
-      "productTypes": [
-        "Lavanderia e limpeza"
-      ],
-      "price": 5.99,
-      "previousPrice": 7.59,
+      "price": 2.99,
+      "previousPrice": 8.99,
       "icon": "🧺",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-fralda-huggies-roupinha-absorcao-meguinha-tamanhos-p-ao-xxg-2026-11-05",
+      "id": "sempre-coxa-c-sobrecoxa-de-frango-avelicia-pacote-kg-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Fralda Huggies Roupinha Absorção Meguinha",
-      "detail": "Tamanhos P ao XXG",
-      "category": "Outros",
-      "department": "Outros",
-      "productType": "Outros",
+      "name": "Coxa c/ Sobrecoxa de Frango Avelícia Pacote",
+      "detail": "Kg",
+      "category": "Açougue e peixaria",
+      "department": "Açougue e peixaria",
+      "productType": "Frango",
       "productTypes": [
-        "Outros"
+        "Frango"
       ],
-      "price": 29.9,
-      "previousPrice": 42.9,
-      "icon": "🧻",
+      "price": 6.99,
+      "previousPrice": 8.99,
+      "icon": "🍗",
       "tone": "#edf4e9",
       "note": "",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     },
     {
-      "id": "sempre-inseticida-raid-aerosol-420ml-2026-11-05",
+      "id": "sempre-leite-condensado-italac-semidesnatado-395g-2026-11-26",
       "store": "Sempre Vale",
       "storeLogo": "logos/semprevale.png",
       "branch": "Durval Nicolau",
-      "name": "Inseticida Raid Aerosol",
-      "detail": "420ml",
-      "category": "Casa e limpeza",
-      "department": "Casa e limpeza",
-      "productType": "Lavanderia e limpeza",
+      "name": "Leite Condensado Italac Semidesnatado",
+      "detail": "395g",
+      "category": "Mercearia",
+      "department": "Mercearia",
+      "productType": "Mercearia",
       "productTypes": [
-        "Lavanderia e limpeza"
+        "Mercearia"
       ],
-      "price": 21.9,
-      "previousPrice": 25.9,
-      "icon": "🪰",
+      "price": 5.79,
+      "previousPrice": 6.98,
+      "icon": "🥛",
       "tone": "#edf4e9",
-      "note": "Leve mais e pague menos",
-      "validFrom": "2026-11-05",
-      "validTo": "2026-11-08",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
       "source": "Folheto oficial · Durval Nicolau",
-      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/70b9a213-9222-4732-8f1a-999c94f9544b-campanha-600-crop-baixa(3).pdf"
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
+    },
+    {
+      "id": "sempre-racao-energy-dog-adulto-1kg-2026-11-26",
+      "store": "Sempre Vale",
+      "storeLogo": "logos/semprevale.png",
+      "branch": "Durval Nicolau",
+      "name": "Ração Energy Dog Adulto",
+      "detail": "1kg",
+      "category": "Pet",
+      "department": "Pet",
+      "productType": "Pet",
+      "productTypes": [
+        "Pet"
+      ],
+      "price": 8.99,
+      "previousPrice": null,
+      "icon": "🐾",
+      "tone": "#edf4e9",
+      "note": "",
+      "validFrom": "2026-11-26",
+      "validTo": "2026-11-29",
+      "source": "Folheto oficial · Durval Nicolau",
+      "sourceUrl": "https://www.semprevale.com.br/downloads/ofertas/black_baixa(3).pdf",
+      "promoTags": [
+        "black-friday"
+      ]
     }
   ],
   "status": "ok"

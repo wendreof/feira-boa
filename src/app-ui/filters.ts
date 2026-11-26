@@ -9,6 +9,7 @@ import {
   RANDOM_POPULAR_DEPARTMENT_IDS,
 } from "../../scripts/domain/popular-category-order.mjs";
 import { buildDepartmentOfferCounts } from "../../scripts/domain/department-offer-counts.mjs";
+import { PROMO_TAG_BLACK_FRIDAY, offerHasPromoTag } from "../../scripts/domain/offer-promo-tags.mjs";
 import { QUICK_DEPARTMENT_CHIPS, PINNED_TAXONOMY_CHIP_LABELS } from "./quick-departments";
 import { offerCategory, offerOrder, CATEGORY_ICONS, matchesSector } from "./offer-model";
 import type { Offer } from "../types";
@@ -78,6 +79,9 @@ export function renderPopularItems(): void {
   const quickSorts = [
     { id: "top-rated", label: "Mais curtidos", icon: "👍" },
     { id: "discount", label: "Maiores descontos", icon: "🏷️" },
+    ...(activeOffers.some((offer) => offerHasPromoTag(offer, PROMO_TAG_BLACK_FRIDAY))
+      ? [{ id: "black-friday", label: "Black Friday", icon: "🛍️" }]
+      : []),
   ];
   const departmentChip = (id: string, pinned: boolean): { id: string; label: string; icon: string; pinned: boolean } => {
     const synthetic = QUICK_DEPARTMENT_CHIPS[id];

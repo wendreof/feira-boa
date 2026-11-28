@@ -9,10 +9,10 @@
     "from": "2026-11-27",
     "to": "2026-11-28"
   },
-  "fetchedAt": "2026-11-27T18:43:32.696Z",
+  "fetchedAt": "2026-11-28T03:07:36.238Z",
   "sourceUrl": "https://corso.com.br/jornalfrente.php",
   "flyerHash": "1795774793",
-  "extractionMethod": "gemini",
+  "extractionMethod": "cache",
   "offers": [
     {
       "id": "corso-alface-unidade-2026-11-27",
